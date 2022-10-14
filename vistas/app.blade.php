@@ -3,18 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        @yield('title')
-                <link rel="stylesheet" href="public/asset/css/style.css" >
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" >
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-        </head>
-    <body>
-        @if(isset ($_SESSION['usuario']))
-                <div>
-                        <button class="boton2" type="button" href="index.php?botonlogout" name="botonlogout" id="logout">
-                        <span class="bi bi-power">   Cerrar Sesion</span></button>
-                </div>
-        @end if
+        <title>@yield('title')</title>
+        <link rel="stylesheet" href="asset/css/style.css" >
+        <!--<link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css">-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    </head>
+     <body>
+
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="800px" height="600px" viewBox="0 0 800 600" enable-background="new 0 0 800 600" xml:space="preserve">
                 <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="174.7899" y1="186.34" x2="330.1259" y2="186.34" gradientTransform="matrix(0.8538 0.5206 -0.5206 0.8538 147.9521 -79.1468)">
                         <stop  offset="0" style="stop-color:#FFC035"/>
@@ -48,15 +43,11 @@
                 </linearGradient>
         <circle fill="url(#SVGID_5_)" cx="435.095" cy="184.986" r="63.504"/>
         </svg>
-        <br/>        
-                       
-       
-        <!--@yield('navbar')-->
-        @yield('mensaje')
-    <!--@yield('content')-->        
-               
-    <!-- Scripts -->
-        <script src="public/asset/js/preValidacionForm.js"></script>
-       
+        
+        @yield('content')
+
+        <!-- Scripts -->
+        <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/jquery/jquery-3.6.0.min.js"></script>-->
     </body>
 </html>
