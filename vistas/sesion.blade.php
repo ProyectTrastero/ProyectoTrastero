@@ -4,8 +4,8 @@
 {{-- Sección aporta el título de la página --}}
 @section('title', 'Inicio de Sesion')
 
-{{-- Sección mensaje --}}
-@section('mensaje')
+{{-- Sección content --}}
+@section('content')
         <div class="container">
                 <h2>Iniciar sesion</h2>
                         <form method="POST" action="index.php" id='formsesion'>

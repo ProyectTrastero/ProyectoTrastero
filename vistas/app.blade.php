@@ -4,9 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>@yield('title')</title>
-        <link rel="stylesheet" href="asset/css/style.css" >
-        <!--<link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css">-->
+        
+        <link rel="stylesheet" href="<?php __DIR__ ?> ./../public/asset/css/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="<?php __DIR__ ?> ./../public/asset/css/style.css" >
     </head>
      <body>
 

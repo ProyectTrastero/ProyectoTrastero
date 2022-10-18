@@ -4,12 +4,18 @@
         -webkit-box-sizing:border-box;
         -moz-box-sizing:border-box;
 }
+.container{
+    margin-left: 10%;
+    top: 30%;
+    max-width: 30%;
+    background:#fff;
+}
 
 body{
         font-family: 'Open Sans', sans-serif;
         background: #e2e2e2;
 }
-
+/*
 svg{
         position:fixed;
         top:10px;
@@ -23,7 +29,7 @@ svg{
         display:block;
         margin-bottom:80px;
         width:450px;
-        height:490px;
+       
     background:#fff;
     border-radius:5px;
     overflow:hidden;
