@@ -4,8 +4,9 @@
 {{-- Sección aporta el título de la página --}}
 @section('title', 'Mi trastero Inicio')
 
-{{-- Sección mensaje --}}
+{{-- Sección content --}}
 @section('content')
+
 @if (isset($_SESSION ['usuario']))
 <div class="container">
         <div>
