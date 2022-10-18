@@ -1,0 +1,31 @@
+<?php /* Usamos la vista app como plantilla */ ?>
+<?php $_shouldextend[1]=1; ?>
+
+<?php /* Sección aporta el título de la página */ ?>
+<?php $this->startSection('title', 'Inicio de Sesion'); ?>
+
+<?php /* Sección content */ ?>
+<?php $this->startSection('content'); ?>
+ <div class="container">
+ <h2>Iniciar sesion</h2>
+ <form method="POST" action="index.php" id='formsesion'>
+ <input id="inputNombre" type="text" placeholder="Nombre" class="nombre">
+ <br/>
+ <input id="inputPassword" type="password" placeholder="Contraseña" class="pwd">
+ </form>
+ <a href="#" class="link"> ¿Has olvidado tu contraseña?</a>
+ </br>
+ 
+ <button type="button" href="index.php?prosesion" id="prosesion">
+ <span>Login</span>
+ </button>
+ <button type="button" href="index.php?botonregistro" id="registro">
+ <span> Registrarse</span>
+ </button>
+ <?php if(isset($error)): ?>
+ <div class="alert alert-danger" role="alert">Error Credenciales</div>
+ <?php endif; ?>        
+ </div>                
+<?php $this->stopSection(); ?>
+
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('app'); } ?>

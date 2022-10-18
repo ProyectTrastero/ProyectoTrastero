@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
     if (count($errores) > 0) {
         echo $blade->run('registro', ['error' => $errores,'datos' => $datos]);
     } else {
-        header("location: ../index.php?error=none");
+        header("location: ../public/index.php?error=none");
         
     }
 } 

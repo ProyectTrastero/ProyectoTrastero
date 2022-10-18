@@ -15,13 +15,13 @@ body{
         font-family: 'Open Sans', sans-serif;
         background: #e2e2e2;
 }
-
+/*
 svg{
         position:fixed;
         top:10px;
         left:40px;
 }
-/*
+
 .container{
         position:relative;
         top:200px;
