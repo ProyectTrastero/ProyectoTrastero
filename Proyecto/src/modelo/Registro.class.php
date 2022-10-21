@@ -1,16 +1,13 @@
 <?php
 
-class Signup extends Dbh {
+class Registro extends Dbh {
 
-    public function __construct() {
-        parent::__construct();
-        $this->db = new Dbh();
-    }
+   
     //la tabla es de prueba
     protected function agregarUsuario($usuario,$nombre,$apellido,$contrasena,$telefono,$email){
         $query="insert into usuarios (usuario, contraseña, nombre, apellidos, correo, telefono) values(?, ?, ?, ?, ?, ?)";
-        //$stmt = $this->connect()->prepare($query);
-        $stmt = $this->db->connect()->prepare($query);
+        $stmt = $this->connect()->prepare($query);
+        
 
         //encriptamos la contraseña
         $hasshedContrasena = password_hash($contrasena, PASSWORD_DEFAULT);
@@ -28,8 +25,8 @@ class Signup extends Dbh {
     //comprobamos si el usuario o el email ya existe 
     protected function checkUsuario ($usuario, $email){
         $query = "select usuario from usuarios where usuario = ? or correo = ?;";
-        //$stmt = $this->connect()->prepare($query);
-        $stmt = $this->db->connect()->prepare($query);
+        $stmt = $this->connect()->prepare($query);
+        
 
         //si falla nos redirige a la pagina de registro nuevamente
         if(!$stmt->execute(array($usuario, $email))){

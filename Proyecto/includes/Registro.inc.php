@@ -33,18 +33,19 @@ if (isset($_POST['submit'])) {
     include '../src/modelo/Registro.class.php';
     include '../src/controllers/Registro.controller.php';
 
-    $signup = new SignUpController($usuario, $nombre, $apellido, $contrasena, $contrasenaRepeat,
+    $registrar = new RegistroController($usuario, $nombre, $apellido, $contrasena, $contrasenaRepeat,
             $telefono, $email);
 
     //ejecutamos metodo registrar usuario el cual tiene todas las comprobaciones
 
-    $errores = $signup->registrarUsuario();
+    $errores = $registrar->registrarUsuario();
     
     
-    
+    //si tenemos errores volvemos a lanzar la vista registro 
     if (count($errores) > 0) {
         echo $blade->run('registro', ['error' => $errores,'datos' => $datos]);
     } else {
+        //si no hay errores
         header("location: ../public/index.php?error=none");
         
     }
