@@ -4,11 +4,10 @@
 <?php /* Sección aporta el título de la página */ ?>
 <?php $this->startSection('title', 'Mi trastero Inicio'); ?>
 
-<?php /* Sección content */ ?>
+<?php /* Sección mensaje */ ?>
 <?php $this->startSection('content'); ?>
-
-<?php if(isset($_SESSION ['usuario'])): ?>
-<div class="container">
+ <?php if(isset($_SESSION ['usuario'])): ?>
+ <div class="container">
  <div>
  <h3>Bienvenido {$usuario->getNombre()} a la mejor solucion para tu trastero, podras añadir, modificar y ordenar tu trastero desde tu casa</h3>
  </div>
@@ -19,9 +18,9 @@
  <a type="button" href="index.php?botoncrear" name="botoncrear" id="crear">
  <span class="bi bi-plus-circle">   Crear nuevo trastero</span></a>
  </div>
-</div>
-<?php else: ?>
-<div class="container">
+ </div>
+ <?php else: ?>
+ <div class="container">
  <div>
  <h3>Bienvenido a la mejor solucion para tu trastero, podras añadir, modificar y ordenar tu trastero desde tu casa</h3>
  </div>
@@ -32,8 +31,8 @@
  <a type="button" href="index.php?botonregistro" name="botonregistro" id="registro">
  <span class="bi bi-person-plus-fill">   Registrar Usuario</span></a>
  </div>
-</div>
-<?php endif; ?>
+ </div>
+ <?php endif; ?>
 
 <?php $this->stopSection(); ?>
 

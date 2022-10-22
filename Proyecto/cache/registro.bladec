@@ -4,7 +4,7 @@
 <?php /* Sección aporta el título de la página */ ?>
 <?php $this->startSection('title', 'Registro Usuario'); ?>
 
-<?php /* Sección mensaje */ ?>
+<?php /* Sección content */ ?>
 <?php $this->startSection('content'); ?>
 <div class="container position-absolute top-0 start-0">
  
@@ -59,28 +59,7 @@
  </form>
  </div>
 
-
- <!-- comment 
- <form method="POST" action="index.php" id='formregistro'>
- <input id="inputUsuario" type="text" placeholder="Usuario" class="usuario">
- <br/>
- <input id="inputNombre" type="text" placeholder="Nombre" class="nombre">
- <br/>
- <input id="inputApellidos" type="text" placeholder="Apellidos" class="apellidos">
- <br/>
- <input id="inputEmail" type="text" placeholder="Email" class="email">
- <br/>
- <input id="inputPassword" type="password" placeholder="Contraseña" class="pwd">
- </form>
- </br></br>                
- <button class="registro" href="index.php?botonproregistro" id="proregistro">
- <span>Confirmar</span>
- </button>
- <?php if(isset($error)): ?>
- <div class="alert alert-danger" role="alert">Error al crear Usuario</div>
- <?php endif; ?>
- 
- -->
 </div>                
+
 <?php $this->stopSection(); ?>
 <?php if (isset($_shouldextend[1])) { echo $this->runChild('app'); } ?>
