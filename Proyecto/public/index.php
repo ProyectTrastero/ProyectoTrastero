@@ -29,11 +29,7 @@ if(isset($_GET['error'])=="none"){
 }
 
 
-if (isset($_REQUEST['botonregistro'])){
-        echo $blade->run("registro");
-}
 
-
-echo $blade->run('inicio');
-
+//echo $blade->run('inicio');
+echo $blade->run('perfil');
 
