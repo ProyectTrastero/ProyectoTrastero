@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/FAMILIA/Dropbox/xamppInstall/htdocs/MiTrastero/Proyecto/cache/app.bladec</file>
-            <file>file:/C:/Users/FAMILIA/Dropbox/xamppInstall/htdocs/MiTrastero/Proyecto/cache/sesion.bladec</file>
-            <file>file:/C:/Users/FAMILIA/Dropbox/xamppInstall/htdocs/MiTrastero/Proyecto/cache/inicio.bladec</file>
-            <file>file:/C:/Users/FAMILIA/Dropbox/xamppInstall/htdocs/MiTrastero/Proyecto/cache/registro.bladec</file>
+            <file>file:/C:/wamp64/www/MiTrastero/Proyecto/public/asset/css/bootstrap/bootstrap.css</file>
+            <file>file:/C:/wamp64/www/MiTrastero/Proyecto/vistas/inicio.blade.php</file>
+            <file>file:/C:/wamp64/www/MiTrastero/Proyecto/cache/inicio.bladec</file>
+            <file>file:/C:/wamp64/www/MiTrastero/Proyecto/index.php</file>
         </group>
     </open-files>
 </project-private>
