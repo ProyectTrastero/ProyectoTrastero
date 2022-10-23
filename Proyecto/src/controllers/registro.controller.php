@@ -1,28 +1,33 @@
 <?php
 
+use App\Usuario;
 
-class RegistroController extends Registro{
+class RegistroController extends Usuario{
 
     
-    private $usuario;
-    private $nombre;
-    private $apellido;
-    private $contrasena;
+    
     private $contrasenaRepeat;
     private $telefono;
-    private $email;
+   
 
     public function __construct( $usuario, $nombre, $apellido,
     $contrasena, $contrasenaRepeat, $telefono, $email)
     {
-        parent::__construct();
-        $this->usuario=$usuario;
-        $this->nombre=$nombre;
-        $this->apellido=$apellido;
-        $this->contrasena=$contrasena;
+        parent::__construct(
+            $usuario,
+            $nombre,
+            $apellido,
+            $email,
+            $contrasena
+        );
+
+        // $this->usuario=$usuario;
+        // $this->nombre=$nombre;
+        // $this->apellido=$apellido;
+        //$this->contrasena=$contrasena;
         $this->contrasenaRepeat=$contrasenaRepeat;
         $this->telefono=$telefono;
-        $this->email=$email;
+        // $this->email=$email;
         
     }
 
@@ -53,15 +58,15 @@ class RegistroController extends Registro{
         if(!$this->telefonoInvalido()){
             array_push($errores,"telefonoInvalido");
         }
-        if(empty(!$this->usuario) && !empty($this->email)){
+        if(empty(!$this->getUsuario()) && !empty($this->getEmail())){
             if(!$this->checkUsuarioExiste()){
                 array_push($errores,"usuarioExiste");
             }
         }
         //si no hay errores agregamos el usuario a la base de datos
         if(count($errores)== 0){
-            $this->agregarUsuario($this->usuario, $this->nombre, $this->apellido,
-                                $this->contrasena, $this->telefono, $this->email);
+            $this->agregarUsuario($this->getUsuario(), $this->getNombre(), $this->getApellidos(),
+                                $this->getClave(), $this->telefono, $this->getEmail());
             return $errores;
         }else{
             return $errores;
@@ -72,8 +77,8 @@ class RegistroController extends Registro{
     //si hay algun campo vacio
     private function camposVacios(){
 
-        if(empty($this->usuario) || empty($this->nombre) || empty($this->apellido) 
-        || empty($this->contrasena) || empty($this->contrasenaRepeat) || empty($this->telefono) || empty($this->email)){
+        if(empty($this->getUsuario()) || empty($this->getNombre()) || empty($this->getApellidos()) 
+        || empty($this->getClave()) || empty($this->contrasenaRepeat) || empty($this->telefono) || empty($this->getEmail())){
 
             return false;
         }else{
@@ -83,7 +88,7 @@ class RegistroController extends Registro{
     //formatio valido : debe comenzar con una letra,solo se aceptan catacteres alfanumericos, (-) y (_)
     //longitud minima de 4 y maxima de 30
     private function usuarioInvalido(){
-        $usuario=$this->sanearInput($this->usuario);
+        $usuario=$this->sanearInput($this->getUsuario());
         if(!preg_match("/^[a-zA-Z][a-zA-Z0-9-_]{3,29}$/", $usuario)){
             return false;
         }else{
@@ -92,7 +97,7 @@ class RegistroController extends Registro{
     }
     //formato valido: solo letras longitud minima de 3 y maxima de 20
     private function nombreInvalido(){
-        $nombre=$this->sanearInput($this->nombre);
+        $nombre=$this->sanearInput($this->getNombre());
         if(!preg_match("/^[A-Za-z]{3,20}$/", $nombre)){
             return false;
         }else{
@@ -101,7 +106,7 @@ class RegistroController extends Registro{
     }
    //formato valido: solo letras longitud minima de 3 y maxima de 20
     private function apellidoInvalido(){
-        $apellido=$this->sanearInput($this->apellido);
+        $apellido=$this->sanearInput($this->getApellidos());
         if(!preg_match("/[A-Za-z]{3,20}$/", $apellido)){
             return false;
         }else{
@@ -110,7 +115,7 @@ class RegistroController extends Registro{
     }
 
     private function contrasenasNoIguales(){
-        $contrasena=$this->sanearInput($this->contrasena);
+        $contrasena=$this->sanearInput($this->getClave());
         $contrasenaRepeat=$this->sanearInput($this->contrasenaRepeat);
         if($contrasena !== $contrasenaRepeat){
             return false;
@@ -121,7 +126,7 @@ class RegistroController extends Registro{
 
     //contraseña de 8 a 16 caracteres, al menos un digito, una minuscula y una mayuscula
     private function contrasenaInvalida(){
-        $contrasena=$this->sanearInput($this->contrasena);
+        $contrasena=$this->sanearInput($this->getClave());
         if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",$contrasena)){
             return false;
         }else{
@@ -130,7 +135,7 @@ class RegistroController extends Registro{
     }
     //formato valido email@email.com
     private function emailInvalido(){
-        $email=$this->sanearInput($this->email);
+        $email=$this->sanearInput($this->getEmail());
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             return false;
         }else{
@@ -151,8 +156,8 @@ class RegistroController extends Registro{
     }
     //verificamos si el usuario o el email ya existe en la base de datos
     private function checkUsuarioExiste(){
-        $usuario=$this->sanearInput($this->usuario);
-        $email=$this->sanearInput($this->email);
+        $usuario=$this->sanearInput($this->getUsuario());
+        $email=$this->sanearInput($this->getEmail());
         if(!$this->checkUsuario($usuario, $email)){
             return false;
         }else{

@@ -3,6 +3,7 @@
 require "../vendor/autoload.php";
 use eftec\bladeone\BladeOne;
 
+
 /*
   use App\{
   BD,
@@ -30,6 +31,6 @@ if(isset($_GET['error'])=="none"){
 
 
 
-//echo $blade->run('inicio');
-echo $blade->run('perfil');
+echo $blade->run('inicio');
+//echo $blade->run('perfil');
 
