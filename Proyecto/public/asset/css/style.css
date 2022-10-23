@@ -6,13 +6,13 @@
         -moz-box-sizing: border-box;
 }
 
-.container {
+/* .container {
         margin-left: 10%;
         top: 30%;
         max-width: 30%;
         background: #fff;
         z-index: 1;
-}
+} */
 
 body {
         font-family: 'Open Sans', sans-serif;

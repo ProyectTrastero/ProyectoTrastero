@@ -5,7 +5,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>@yield('title')</title>
-        <link rel="stylesheet" href="<?php __DIR__ ?> ./../public/asset/css/bootstrap/bootstrap.css">
+        <link rel="stylesheet" href="<?php __DIR__ ?> ./../public/asset/css/bootstrap.css">
+        {{-- fontAwesome --}}
+        <link rel="stylesheet" href="<?php __DIR__ ?> ./../public/asset/css/all.css">
         <link rel="stylesheet" href="<?php __DIR__ ?> ./../public/asset/css/style.css" > 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     </head>
@@ -50,6 +52,6 @@
         <!-- Scripts -->
         <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="assets/js/jquery/jquery-3.6.0.min.js"></script>-->
-        <script src="<?php __Dir__ ?> ./../public/asset/js/bootstrap/bootstrap.js"></script>
+        <script src="<?php __Dir__ ?> ./../public/asset/js/bootstrap.js"></script>
     </body>
 </html>
