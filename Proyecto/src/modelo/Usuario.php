@@ -87,8 +87,6 @@ class Usuario {
     }
 
     
-
-
     /**
      * Recupera un objeto usuario dado su nombre de usuario y clave
      *
@@ -112,10 +110,38 @@ class Usuario {
      * Para modificar el Usuario
      */
     public function persiste(PDO $bd): bool {
-        $sql = "update usuarios set alias = :alias, nombre = :nombre, apellidos = apellidos, clave = :clave, email = :email where id = :id";
+        $sql = "update usuarios set alias = :alias, nombre = :nombre, apellidos = apellidos, clave = :clave, correo = :correo where id = :id";
         $sth = $bd->prepare($sql);
-        $result = $sth->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $this->clave, ":email" => $this->email, ":id" => $this->id]);
+        $result = $sth->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $this->clave, ":correo" => $this->correo, ":id" => $this->id]);
         return ($result);
     }
 
+    
+    
+    /*
+     * Funcion para agregar un usuario
+     */
+    public function agregarUsuario(PDO $bd, string $alias, string $clave, string $nombre, string $apellidos, string $correo){
+        $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+        $query="insert into usuarios (alias, nombre, clave, apellidos, correo) values(:alias, :nombre, :clave, :apellidos, :correo)";
+        $stmt = $bd->prepare($query);
+        $stmt->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $this->clave, ":correo" => $this->correo]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, Usuario::class);
+        $resultado = ($sth->fetch()) ?: null;
+        return $resultado;
+        
+        //encriptamos la contraseña
+        /*$hasshedContrasena = password_hash($clave, PASSWORD_DEFAULT);
+
+        if(!$stmt->execute(array($alias,$hasshedContrasena,$nombre,$apellidos,$email))){
+            $stmt=null;
+            return false;
+        }else{
+            //si todo bien simplemente cerramos la conexion
+            $stmt = null;
+            return true;
+        }*/
+    }
+
+   
 }
