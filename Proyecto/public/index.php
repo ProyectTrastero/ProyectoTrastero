@@ -9,7 +9,7 @@ use App\{
     Usuario
 };
 
-// Inicializa el acceso a las variables de entorno
+//Inicializa el acceso a las variables de entorno
 // $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
 // $dotenv->load();
 
