@@ -2,15 +2,16 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use eftec\bladeone\BladeOne;
-// use Dotenv\Dotenv;
-// use App\{
-//     BD,
-//     Usuario
-// };
+use Dotenv\Dotenv;
+
+use App\{
+    BD,
+    Usuario
+};
 
 // Inicializa el acceso a las variables de entorno
-// $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
-// $dotenv->load();
+$dotenv = Dotenv::createImmutable(__DIR__ . "/../");
+$dotenv->load();
 
 
 
