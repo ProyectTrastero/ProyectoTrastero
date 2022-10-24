@@ -22,7 +22,7 @@
                 
                         <a>¿Aún no te has regitrado?</a><br/>
                         <div>   
-                            <button type="submit" id="registro" name="botonregistro"><span> Registrarse </span></button>
+                            <button type="button" id="registro" name="botonregistro"><a href="registro.php">Registrarse</a></button>
                         </div>
                  </form>        
 

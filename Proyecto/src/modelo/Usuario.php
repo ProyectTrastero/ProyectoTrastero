@@ -7,7 +7,7 @@ use \PDO as PDO;
 /**
  * Usuario representa al usuario que está usando la aplicación
  */
-class Usuario {
+class Usuario extends BD {
     private $id;
     private $alias;
     private $nombre;
@@ -121,14 +121,23 @@ class Usuario {
     /*
      * Funcion para agregar un usuario
      */
-    public function agregarUsuario(PDO $bd, string $alias, string $clave, string $nombre, string $apellidos, string $correo){
-        $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+    public function agregarUsuario( string $alias, string $clave, string $nombre, string $apellidos, string $correo){
+        //$bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $query="insert into usuarios (alias, nombre, clave, apellidos, correo) values(:alias, :nombre, :clave, :apellidos, :correo)";
-        $stmt = $bd->prepare($query);
-        $stmt->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $this->clave, ":correo" => $this->correo]);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, Usuario::class);
-        $resultado = ($sth->fetch()) ?: null;
-        return $resultado;
+        //$stmt = $bd->prepare($query);
+        $stmt=$this->getConexion()->prepare($query);
+        //encriptamos la contraseña
+        $hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
+        //si falla el insert
+        if(!$stmt->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $hasshedContraseña, ":correo" => $this->email])){
+            $stmt=null;
+            return false;
+        }else{
+        //si todo bien
+           $stmt=null;
+           return true;
+        }
+       
         
         //encriptamos la contraseña
         /*$hasshedContrasena = password_hash($clave, PASSWORD_DEFAULT);
@@ -141,6 +150,30 @@ class Usuario {
             $stmt = null;
             return true;
         }*/
+    }
+    //comprobamos si el usuario o el email ya existe 
+    protected function checkUsuario ($alias, $correo){
+        $query = "select alias from usuarios where alias = :alias or correo = :correo ;";
+        $stmt = $this->getConexion()->prepare($query);
+        //$stmt = $this->connect()->prepare($query);
+        
+
+        //si falla nos redirige a la pagina de registro nuevamente
+        if(!$stmt->execute([":alias"=>$alias, ":correo"=>$correo])){
+            //cerramos conexion
+            $stmt = null;
+            return false;
+            
+        }
+        //si no falla la sentencia comprobamos si tenemos algun resultado
+        //si mayor que 0 es que ya existe
+        if($stmt->rowCount() > 0 ){
+            $stmt = null;
+            return false;
+        }else{
+            $stmt = null;
+            return true;
+        }
     }
 
    

@@ -1,33 +1,29 @@
 <?php
 
+use App\Usuario;
 
-class Validacion extends Registro{
-    private $usuario;
-    private $nombre;
-    private $apellido;
-    private $contrasena;
-    private $contrasenaRepeat;
-    private $email;
+class Validacion extends Usuario{
+    
+    private $contraseñaRepeat;
+    
 
-    public function __construct( $usuario, $nombre, $apellido,
-    $contrasena, $contrasenaRepeat, $email)
+    public function __construct( $alias, $nombre, $apellido,
+    $contraseña, $contraseñaRepeat, $email)
     {
-        parent::__construct();
-        $this->usuario=$usuario;
-        $this->nombre=$nombre;
-        $this->apellido=$apellido;
-        $this->contrasena=$contrasena;
-        $this->contrasenaRepeat=$contrasenaRepeat;
-        $this->email=$email;
+        parent::__construct($id=1,$alias,$nombre,$apellido,$email,$contraseña);
+
+        $this->contraseñaRepeat= $contraseñaRepeat;
         
     }
 
     public function registrarUsuario(){
        $errores= array();
+       /*
         if(!$this->camposVacios()){
             
             array_push($errores,"camposVacios");
         }
+        */
         if(!$this->usuarioInvalido()){
             array_push($errores,"usuarioInvalido");
         }
@@ -47,37 +43,39 @@ class Validacion extends Registro{
             array_push($errores,"emailInvalido");
         }
         
-        if(empty(!$this->usuario) && !empty($this->email)){
+        if(empty(!$this->getAlias()) && !empty($this->getEmail())){
             if(!$this->checkUsuarioExiste()){
                 array_push($errores,"usuarioExiste");
             }
         }
         //si no hay errores agregamos el usuario a la base de datos
         if(count($errores)== 0){
-            $this->agregarUsuario($this->usuario, $this->nombre, $this->apellido,
-                                $this->contrasena, $this->email);
+            $this->agregarUsuario($this->getAlias(), $this->getNombre(), $this->getApellidos(),
+                                $this->getClave(), $this->getEmail());
             return $errores;
         }else{
             return $errores;
         }
         
     }
-
     //si hay algun campo vacio
+    /*no me funciona tengo que ver por que
     private function camposVacios(){
 
-        if(empty($this->usuario) || empty($this->nombre) || empty($this->apellido) 
-        || empty($this->contrasena) || empty($this->contrasenaRepeat) || empty($this->email)){
+        if(empty($this->getAlias()) || empty($this->getNombre()) || empty($this->getApellidos()) 
+        || empty($this->getClave()) || empty($this->contrasenaRepeat)  || empty($this->getEmail())){
 
             return false;
         }else{
             return true;
         }
     }
+     
+     */
     //formatio valido : debe comenzar con una letra,solo se aceptan catacteres alfanumericos, (-) y (_)
     //longitud minima de 4 y maxima de 30
     private function usuarioInvalido(){
-        $usuario=$this->sanearInput($this->usuario);
+        $usuario=$this->sanearInput($this->getAlias());
         if(!preg_match("/^[a-zA-Z][a-zA-Z0-9-_]{3,29}$/", $usuario)){
             return false;
         }else{
@@ -86,7 +84,7 @@ class Validacion extends Registro{
     }
     //formato valido: solo letras longitud minima de 3 y maxima de 20
     private function nombreInvalido(){
-        $nombre=$this->sanearInput($this->nombre);
+        $nombre=$this->sanearInput($this->getNombre());
         if(!preg_match("/^[A-Za-z]{3,20}$/", $nombre)){
             return false;
         }else{
@@ -95,7 +93,7 @@ class Validacion extends Registro{
     }
    //formato valido: solo letras longitud minima de 3 y maxima de 20
     private function apellidoInvalido(){
-        $apellido=$this->sanearInput($this->apellido);
+        $apellido=$this->sanearInput($this->getApellidos());
         if(!preg_match("/[A-Za-z]{3,20}$/", $apellido)){
             return false;
         }else{
@@ -104,9 +102,9 @@ class Validacion extends Registro{
     }
 
     private function contrasenasNoIguales(){
-        $contrasena=$this->sanearInput($this->contrasena);
-        $contrasenaRepeat=$this->sanearInput($this->contrasenaRepeat);
-        if($contrasena !== $contrasenaRepeat){
+        $contrasena=$this->sanearInput($this->getClave());
+        $contraseñaRepeat=$this->sanearInput($this->contraseñaRepeat);
+        if($contrasena !== $contraseñaRepeat){
             return false;
         }else{
             return true;
@@ -115,7 +113,7 @@ class Validacion extends Registro{
 
     //contraseña de 8 a 16 caracteres, al menos un digito, una minuscula y una mayuscula
     private function contrasenaInvalida(){
-        $contrasena=$this->sanearInput($this->contrasena);
+        $contrasena=$this->sanearInput($this->getClave());
         if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",$contrasena)){
             return false;
         }else{
@@ -124,7 +122,7 @@ class Validacion extends Registro{
     }
     //formato valido email@email.com
     private function emailInvalido(){
-        $email=$this->sanearInput($this->email);
+        $email=$this->sanearInput($this->getEmail());
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             return false;
         }else{
@@ -132,10 +130,11 @@ class Validacion extends Registro{
         }
     }
     
+    
     //verificamos si el usuario o el email ya existe en la base de datos
     private function checkUsuarioExiste(){
-        $usuario=$this->sanearInput($this->usuario);
-        $email=$this->sanearInput($this->email);
+        $usuario=$this->sanearInput($this->getAlias());
+        $email=$this->sanearInput($this->getEmail());
         if(!$this->checkUsuario($usuario, $email)){
             return false;
         }else{

@@ -1,5 +1,6 @@
 <?php
 require "../vendor/autoload.php";
+include "../src/app/BD.php";
 
 use eftec\bladeone\BladeOne;
 use Dotenv\Dotenv;
@@ -9,8 +10,8 @@ use App\{
 };
 
 // Inicializa el acceso a las variables de entorno
-$dotenv = Dotenv::createImmutable(__DIR__ . "/../");
-$dotenv->load();
+// $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
+// $dotenv->load();
 
 // Inicializa el acceso a las variables de entorno
 $views = __DIR__ . '/../vistas';

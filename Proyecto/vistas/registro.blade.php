@@ -35,12 +35,12 @@
             <div class="alert alert-danger form-text p-1" role="alert">Email invalido</div>  
             @endif
 
-            <div class="mb-3"><input id="inputPassword" type="password" name="clave" placeholder="Contraseña" class="pwd form-control" value="{{$datos['contrasena']}}"></div>
+            <div class="mb-3"><input id="inputPassword" type="password" name="clave" placeholder="Contraseña" class="pwd form-control" value="{{$datos['clave']}}"></div>
             @if(isset($error) && in_array("contrasenaInvalida", $error)) 
             <div class="alert alert-danger form-text p-1" role="alert">Contraseña invalido</div>  
             @endif
 
-            <div class="mb-3"><input id="inputPasswordRepeat" type="password" name="contrasenaRepeat" placeholder="Repite la contraseña" class="pwdRepeat form-control" value="{{$datos['contrasenaRepeat']}}"></div>
+            <div class="mb-3"><input id="inputPasswordRepeat" type="password" name="contraseñaRepeat" placeholder="Repite la contraseña" class="pwdRepeat form-control" value="{{$datos['contraseñaRepeat']}}"></div>
             @if(isset($error) && in_array("contrasenasNoIguales", $error)) 
             <div class="alert alert-danger form-text p-1" role="alert">Las contraseñas no coinciden</div>  
             @endif
