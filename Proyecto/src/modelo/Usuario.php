@@ -139,17 +139,7 @@ class Usuario extends BD {
         }
        
         
-        //encriptamos la contraseña
-        /*$hasshedContrasena = password_hash($clave, PASSWORD_DEFAULT);
-
-        if(!$stmt->execute(array($alias,$hasshedContrasena,$nombre,$apellidos,$email))){
-            $stmt=null;
-            return false;
-        }else{
-            //si todo bien simplemente cerramos la conexion
-            $stmt = null;
-            return true;
-        }*/
+      
     }
     //comprobamos si el usuario o el email ya existe 
     protected function checkUsuario ($alias, $correo){

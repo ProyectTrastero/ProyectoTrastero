@@ -18,12 +18,11 @@ class Validacion extends Usuario{
 
     public function registrarUsuario(){
        $errores= array();
-       /*
+       
         if(!$this->camposVacios()){
-            
             array_push($errores,"camposVacios");
         }
-        */
+        
         if(!$this->usuarioInvalido()){
             array_push($errores,"usuarioInvalido");
         }
@@ -59,11 +58,11 @@ class Validacion extends Usuario{
         
     }
     //si hay algun campo vacio
-    /*no me funciona tengo que ver por que
+    //
     private function camposVacios(){
 
         if(empty($this->getAlias()) || empty($this->getNombre()) || empty($this->getApellidos()) 
-        || empty($this->getClave()) || empty($this->contrasenaRepeat)  || empty($this->getEmail())){
+        || empty($this->getClave()) || empty($this->contraseñaRepeat)  || empty($this->getEmail())){
 
             return false;
         }else{
@@ -71,36 +70,40 @@ class Validacion extends Usuario{
         }
     }
      
-     */
+     
     //formatio valido : debe comenzar con una letra,solo se aceptan catacteres alfanumericos, (-) y (_)
     //longitud minima de 4 y maxima de 30
     private function usuarioInvalido(){
-        $usuario=$this->sanearInput($this->getAlias());
-        if(!preg_match("/^[a-zA-Z][a-zA-Z0-9-_]{3,29}$/", $usuario)){
+        $this->setAlias($this->sanearInput($this->getAlias()));
+        if(!preg_match("/^[a-zA-Z][a-zA-Z0-9-_]{3,29}$/", $this->getAlias())){
             return false;
         }else{
             return true;
         }
     }
-    //formato valido: solo letras longitud minima de 3 y maxima de 20
+    //formato valido: no hay limite para la cantidad de nombres, 
+    //el primer nombre debe tener una longitud minima de 3 y maxima de 20
+    // y el resto de nombres una longitud minima de 2 y maxima 20
     private function nombreInvalido(){
-        $nombre=$this->sanearInput($this->getNombre());
-        if(!preg_match("/^[A-Za-z]{3,20}$/", $nombre)){
+        $this->setNombre($this->sanearInput($this->getNombre()));
+        if(!preg_match("/^[A-Za-z]{3,20}(\s([A-Za-z]{2,20})*)*$/", $this->getNombre())){
             return false;
         }else{
             return true;
         }
     }
-   //formato valido: solo letras longitud minima de 3 y maxima de 20
+   //formato valido: no hay limite para la cantidad de apellidos, 
+   //el primer apellido debe tener una logitud minima de 3 y maxima de 20 
+   //y el resto de apellidos una longitud minima de 2 y maxima de 20
     private function apellidoInvalido(){
-        $apellido=$this->sanearInput($this->getApellidos());
-        if(!preg_match("/[A-Za-z]{3,20}$/", $apellido)){
+        $this->setApellidos($this->sanearInput($this->getApellidos()));
+        if(!preg_match("/^[A-Za-z]{3,20}(\s([A-Za-z]{2,20})*)*$/", $this->getApellidos())){
             return false;
         }else{
             return true;
         }
     }
-
+    //comprobamos que las contraseñas coincidan
     private function contrasenasNoIguales(){
         $contrasena=$this->sanearInput($this->getClave());
         $contraseñaRepeat=$this->sanearInput($this->contraseñaRepeat);
@@ -111,10 +114,10 @@ class Validacion extends Usuario{
         }
     }
 
-    //contraseña de 8 a 16 caracteres, al menos un digito, una minuscula y una mayuscula
+    //longitud minina 8, al menos un digito, una minuscula y una mayuscula
     private function contrasenaInvalida(){
-        $contrasena=$this->sanearInput($this->getClave());
-        if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",$contrasena)){
+        $this->setClave($this->sanearInput($this->getClave()));
+        if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/",$this->getClave())){
             return false;
         }else{
             return true;
@@ -122,8 +125,8 @@ class Validacion extends Usuario{
     }
     //formato valido email@email.com
     private function emailInvalido(){
-        $email=$this->sanearInput($this->getEmail());
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $this->setEmail($this->sanearInput($this->getEmail()));
+        if(!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL)){
             return false;
         }else{
             return true;
@@ -133,9 +136,8 @@ class Validacion extends Usuario{
     
     //verificamos si el usuario o el email ya existe en la base de datos
     private function checkUsuarioExiste(){
-        $usuario=$this->sanearInput($this->getAlias());
-        $email=$this->sanearInput($this->getEmail());
-        if(!$this->checkUsuario($usuario, $email)){
+        
+        if(!$this->checkUsuario($this->getAlias(), $this->getEmail())){
             return false;
         }else{
             return true;
@@ -145,7 +147,7 @@ class Validacion extends Usuario{
     }
     //saneamos lo introducido por el usuario en los imputs
     function sanearInput($data) {
-        //eliminamos caracteres innecesarios como espacios, saltos de linea, tabulaciones
+        //eliminamos caracteres innecesarios como espacios de más, saltos de linea, tabulaciones
         $data = trim($data);
         //eliminamos backslashes
         $data = stripslashes($data);
