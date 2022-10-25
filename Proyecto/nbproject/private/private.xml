@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/src/modelo/Usuario.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/public/index.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/vistas/sesion.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/composer.json</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/vendor/autoload.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/public/recuperarContraseña.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/vistas/acceso.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/public/acceso.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/src/app/BD.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/vistas/recuperarContraseña.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/public/registro.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/src/modelo/Trasteros.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/vendor/composer/ClassLoader.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/Proyecto/vistas/registro.blade.php</file>
+        </group>
+    </open-files>
+</project-private>
