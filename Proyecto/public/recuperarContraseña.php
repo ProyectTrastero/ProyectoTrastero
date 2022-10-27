@@ -1,11 +1,6 @@
 <?php
 
-
-
 //Create an instance; passing `true` enables exceptions
-
-
-
 /* 
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
@@ -17,10 +12,29 @@ use Dotenv\Dotenv;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
 use App\{
     BD,
     Usuario
 };
+
+// Inicializa el acceso a las variables de entorno
+$dotenv = Dotenv::createImmutable(__DIR__ . "/../");
+$dotenv->load();
+
+// Inicializa el acceso a las variables de entorno
+$views = __DIR__ . '/../vistas';
+$cache = __DIR__ . '/../cache';
+$blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
+
+// Establece conexión a la base de datos PDO
+try {
+    $bd = BD::getConexion();
+} catch (PDOException $error) {
+    echo $blade->run("cnxbderror", compact('error'));
+    die;
+}
+
 function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
     $mail = new PHPMailer(true);
     try {
@@ -52,23 +66,7 @@ function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
-// Inicializa el acceso a las variables de entorno
-$dotenv = Dotenv::createImmutable(__DIR__ . "/../");
-$dotenv->load();
 
-// Inicializa el acceso a las variables de entorno
-$views = __DIR__ . '/../vistas';
-$cache = __DIR__ . '/../cache';
-$blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
-
-// Establece conexión a la base de datos PDO
-try {
-    $bd = BD::getConexion();
-} catch (PDOException $error) {
-    echo $blade->run("cnxbderror", compact('error'));
-    die;
-}
-$mievp = Usuario::
 $existe=false;
 $mensaje="";
 $correo;
@@ -76,7 +74,7 @@ if(isset($_POST['enviar'])){
     $correo=trim(filter_input(INPUT_POST, 'correo', FILTER_SANITIZE_STRING));
     $existe = Usuario::existeCorreo($bd, $correo);
     if($existe){
-        $contraseña = Usuario::obtenerContraseña($bd, $correo) ;
+        $contraseña = Usuario::obtenerContraseña($bd, $correo);
         $alias= Usuario::obtenerAlias($bd, $correo);
         enviarCorreo($correo, $contraseña, $alias);
         $mensaje="Se le ha enviado un correo con sus credenciales a la dirección indicada.";

@@ -127,9 +127,9 @@ class Usuario extends BD {
         //$stmt = $bd->prepare($query);
         $stmt=$this->getConexion()->prepare($query);
         //encriptamos la contraseña
-        $hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
+       // $hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
         //si falla el insert
-        if(!$stmt->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $hasshedContraseña, ":correo" => $this->email])){
+        if(!$stmt->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $clave, ":correo" => $this->email])){
             $stmt=null;
             return false;
         }else{
@@ -188,7 +188,7 @@ class Usuario extends BD {
         return $contraseña;
     }
 
-    public static function obtenerAlias(PDO $bd, $correo, $alias){
+    public static function obtenerAlias(PDO $bd, $correo){
         $aliasrecuperado="";
         $consulta=$bd->query("select correo, alias from Usuarios");
         while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
