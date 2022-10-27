@@ -6,7 +6,8 @@ use Dotenv\Dotenv;
 
 use App\{
     BD,
-    Usuario
+    Usuario,
+    Validacion
 };
 
 // Inicializa el acceso a las variables de entorno
@@ -44,10 +45,7 @@ if (isset($_POST['submit'])) {
     
     $datos = array('alias' =>$alias,'nombre'=>$nombre,'apellidos'=>$apellidos,'email'=>$email,'clave'=>$clave,'contraseñaRepeat'=>$contraseñaRepeat);
 
-    include "../src/app/BD.php";
-	include '../src/modelo/Usuario.php';
-    include '../src/modelo/Validacion.php';
-
+    
     $validacion = new Validacion($alias, $nombre, $apellidos, $clave, $contraseñaRepeat, $email);
 
     //ejecutamos metodo registrar usuario el cual tiene todas las comprobaciones

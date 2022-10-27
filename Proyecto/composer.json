@@ -9,7 +9,8 @@
     ],
     "require": {
         "eftec/bladeone": "dev-master",
-        "vlucas/phpdotenv": "dev-master"
+        "vlucas/phpdotenv": "dev-master",
+        "phpmailer/phpmailer": "^6.6"
     },
      "autoload": {
         "psr-4": {
