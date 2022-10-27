@@ -68,7 +68,7 @@ try {
     echo $blade->run("cnxbderror", compact('error'));
     die;
 }
-
+$mievp = Usuario::
 $existe=false;
 $mensaje="";
 $correo;
