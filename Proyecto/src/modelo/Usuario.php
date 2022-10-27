@@ -164,4 +164,15 @@ class Usuario {
         }
         return $contraseña;
     }
+    
+    public static function obtenerAlias(PDO $bd, $correo){
+        $alias="";
+        $consulta=$bd->query("select alias, correo from Usuarios");
+        while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
+            if($correo==$registro->correo){
+                $alias=$registro->alias;
+            }
+        }
+        return $alias;
+    }
 }

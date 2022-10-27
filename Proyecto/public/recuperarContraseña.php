@@ -21,7 +21,7 @@ use App\{
     BD,
     Usuario
 };
-function enviarCorreo($correo, $contraseñaRecuperada){
+function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
     $mail = new PHPMailer(true);
     try {
     //Server settings
@@ -43,7 +43,7 @@ function enviarCorreo($correo, $contraseñaRecuperada){
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Credenciales de acceso';
-    $mail->Body    = 'Su contraseña de acceso a MiTrastero.com es: '. $contraseñaRecuperada;
+    $mail->Body    = 'Su alias de acceso  a MiTrastero.com es ' . $aliasRecuperado . ' y su contraseña '. $contraseñaRecuperada;
 //    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
@@ -77,7 +77,8 @@ if(isset($_POST['enviar'])){
     $existe = Usuario::existeCorreo($bd, $correo);
     if($existe){
         $contraseña = Usuario::obtenerContraseña($bd, $correo) ;
-        enviarCorreo($correo, $contraseña);
+        $alias= Usuario::obtenerAlias($bd, $correo);
+        enviarCorreo($correo, $contraseña, $alias);
         $mensaje="Se le ha enviado un correo con sus credenciales a la dirección indicada.";
 //        echo $blade->run("recuperarContraseña", compact('mensaje'));
     }else if($correo == ""){
