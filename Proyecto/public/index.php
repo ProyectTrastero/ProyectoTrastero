@@ -1,7 +1,5 @@
 <?php
 require "../vendor/autoload.php";
-include "../src/app/BD.php";
-include "../src/modelo/Usuario.php";
 
 use eftec\bladeone\BladeOne;
 use Dotenv\Dotenv;
@@ -10,7 +8,7 @@ use App\{
     Usuario
 };
 
-//Inicializa el acceso a las variables de entorno
+// Inicializa el acceso a las variables de entorno
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->load();
 
@@ -44,7 +42,7 @@ if (isset($_POST['procsesion'])) {
 }elseif (isset($_POST['botonregistro'])){
     header("location:../public/registro.php"); 
 }elseif (isset ($_POST['recuperarcontrasena'])){
-    //TODO TUYO EMMA
+    header("Location: recuperarContraseña.php");
     
 }else{
     echo $blade->run("sesion");

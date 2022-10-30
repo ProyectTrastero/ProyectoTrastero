@@ -187,5 +187,38 @@ class Usuario extends BD {
         }
     }
 
+    public static function  existeCorreo(PDO $bd, $correo): bool{
+        $existe=false;
+        $consulta=$bd->query("select correo from Usuarios");
+        while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
+            if($correo==$registro->correo){
+                $existe=true;
+            }
+        }
+        return $existe;
+    }
+    
+    public static function obtenerContraseña(PDO $bd, $correo){
+        $contraseña="";
+        $consulta=$bd->query("select correo, clave from Usuarios");
+        while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
+            if($correo==$registro->correo){
+                $contraseña=$registro->clave;
+            }
+        }
+        return $contraseña;
+    }
+
+    public static function obtenerAlias(PDO $bd, $correo, $alias){
+        $aliasrecuperado="";
+        $consulta=$bd->query("select correo, alias from Usuarios");
+        while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
+            if($correo==$registro->correo){
+                $aliasrecuperado=$registro->alias;
+            }
+        }
+        return $aliasrecuperado;
+    }
+
    
 }
