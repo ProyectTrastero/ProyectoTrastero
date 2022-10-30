@@ -49,8 +49,8 @@ class Validacion extends Usuario{
         }
         //si no hay errores agregamos el usuario a la base de datos
         if(count($errores)== 0){
-            $this->agregarUsuario($this->getAlias(), $this->getNombre(), $this->getApellidos(),
-                                $this->getClave(), $this->getEmail());
+            $this->agregarUsuario($this->getAlias(),  $this->getClave(),$this->getNombre(), $this->getApellidos(),
+                                $this->getEmail());
             return $errores;
         }else{
             return $errores;

@@ -14,7 +14,7 @@
                 <form method="POST" action="" id='formsesion'>
                                 <input id="inputNombre" type="text" placeholder="Nombre" name="nombre" class="nombre">
                                 <input id="inputPassword" type="password" placeholder="Contraseña" name="clave" class="clave">
-                                <a href="recuperarContraseña" class="link"> ¿Has olvidado tu contraseña?</a>
+                                <a href="recuperarContraseña.php" class="link"> ¿Has olvidado tu contraseña?</a>
                         </br>
                             <button type="submit" id="procsesion" name="procsesion"><span> Login </span> </button>
                         <br/><br/><br/>

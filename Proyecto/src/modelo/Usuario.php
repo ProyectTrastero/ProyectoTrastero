@@ -106,26 +106,6 @@ class Usuario extends BD {
         return $usuario;
     }
 
-    public function recuperarUsuario(string $alias, string $clave){
-        $stmt = $this->getConexion()->prepare('select clave from usuarios where alias = :alias or correo = :alias;');
-        //si falla la ejecucion de la select
-        //queda por consultar, ahora mismo permito iniciar sesion con el alias o con el correo
-        if(!$stmt->execute([":alias"=>$alias, ":correo"=>$alias])){
-            //cerramos la conexion
-            $stmt = null;
-            header("location: index.php?error=falloSentencia");
-            exit();
-        }
-        //si no encontramos una coincidencia
-        if($stmt->rowCount()==0){
-            //cerramos la conexion
-            $stmt = null;
-            header("location: index.php?error=usuarioNoEncontrado");
-            exit();
-        }
-
-        
-    }
     
     /**
      * Para modificar el Usuario
@@ -144,13 +124,13 @@ class Usuario extends BD {
      */
     public function agregarUsuario( string $alias, string $clave, string $nombre, string $apellidos, string $correo):bool {
         //$bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-        $query="insert into usuarios (alias, nombre, clave, apellidos, correo) values(:alias, :nombre, :clave, :apellidos, :correo)";
+        $query="insert into usuarios (alias,clave, nombre,  apellidos, correo) values(:alias,:clave, :nombre,  :apellidos, :correo)";
         //$stmt = $bd->prepare($query);
         $stmt=$this->getConexion()->prepare($query);
         //encriptamos la contraseña
-        $hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
+        //$hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
         //si falla el insert
-        if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":apellidos" => $apellidos, ":clave" => $hasshedContraseña, ":correo" => $correo])){
+        if(!$stmt->execute([":alias" => $alias,":clave" => $clave, ":nombre" => $nombre, ":apellidos" => $apellidos, ":correo" => $correo])){
             $stmt=null;
             return false;
         }else{
@@ -209,7 +189,7 @@ class Usuario extends BD {
         return $contraseña;
     }
 
-    public static function obtenerAlias(PDO $bd, $correo, $alias){
+    public static function obtenerAlias(PDO $bd, $correo){
         $aliasrecuperado="";
         $consulta=$bd->query("select correo, alias from Usuarios");
         while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
