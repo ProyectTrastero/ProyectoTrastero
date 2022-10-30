@@ -1,5 +1,5 @@
 <?php
-
+namespace App;
 use App\Usuario;
 
 class Validacion extends Usuario{
@@ -10,7 +10,7 @@ class Validacion extends Usuario{
     public function __construct( $alias, $nombre, $apellido,
     $contraseña, $contraseñaRepeat, $email)
     {
-        parent::__construct($id=1,$alias,$nombre,$apellido,$email,$contraseña);
+        parent::__construct(1,$alias,$nombre,$apellido,$email,$contraseña);
 
         $this->contraseñaRepeat= $contraseñaRepeat;
         
@@ -49,8 +49,8 @@ class Validacion extends Usuario{
         }
         //si no hay errores agregamos el usuario a la base de datos
         if(count($errores)== 0){
-            $this->agregarUsuario($this->getAlias(), $this->getNombre(), $this->getApellidos(),
-                                $this->getClave(), $this->getEmail());
+            $this->agregarUsuario($this->getAlias(),  $this->getClave(),$this->getNombre(), $this->getApellidos(),
+                                $this->getEmail());
             return $errores;
         }else{
             return $errores;
