@@ -105,6 +105,27 @@ class Usuario extends BD {
         $usuario = ($sth->fetch()) ?: null;
         return $usuario;
     }
+
+    public function recuperarUsuario(string $alias, string $clave){
+        $stmt = $this->getConexion()->prepare('select clave from usuarios where alias = :alias or correo = :alias;');
+        //si falla la ejecucion de la select
+        //queda por consultar, ahora mismo permito iniciar sesion con el alias o con el correo
+        if(!$stmt->execute([":alias"=>$alias, ":correo"=>$alias])){
+            //cerramos la conexion
+            $stmt = null;
+            header("location: index.php?error=falloSentencia");
+            exit();
+        }
+        //si no encontramos una coincidencia
+        if($stmt->rowCount()==0){
+            //cerramos la conexion
+            $stmt = null;
+            header("location: index.php?error=usuarioNoEncontrado");
+            exit();
+        }
+
+        
+    }
     
     /**
      * Para modificar el Usuario
@@ -121,7 +142,7 @@ class Usuario extends BD {
     /*
      * Funcion para agregar un usuario
      */
-    public function agregarUsuario( string $alias, string $clave, string $nombre, string $apellidos, string $correo){
+    public function agregarUsuario( string $alias, string $clave, string $nombre, string $apellidos, string $correo):bool {
         //$bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $query="insert into usuarios (alias, nombre, clave, apellidos, correo) values(:alias, :nombre, :clave, :apellidos, :correo)";
         //$stmt = $bd->prepare($query);
@@ -129,7 +150,7 @@ class Usuario extends BD {
         //encriptamos la contraseña
         $hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
         //si falla el insert
-        if(!$stmt->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $hasshedContraseña, ":correo" => $this->email])){
+        if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":apellidos" => $apellidos, ":clave" => $hasshedContraseña, ":correo" => $correo])){
             $stmt=null;
             return false;
         }else{
@@ -142,7 +163,7 @@ class Usuario extends BD {
       
     }
     //comprobamos si el usuario o el email ya existe 
-    protected function checkUsuario ($alias, $correo){
+    protected function checkUsuario (string $alias, string $correo):bool {
         $query = "select alias from usuarios where alias = :alias or correo = :correo ;";
         $stmt = $this->getConexion()->prepare($query);
         //$stmt = $this->connect()->prepare($query);

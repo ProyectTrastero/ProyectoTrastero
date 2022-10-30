@@ -1,6 +1,7 @@
 <?php
 require "../vendor/autoload.php";
 include "../src/app/BD.php";
+include "../src/modelo/Usuario.php";
 
 use eftec\bladeone\BladeOne;
 use Dotenv\Dotenv;

@@ -1,5 +1,5 @@
 <?php
-
+namespace App;
 use App\Usuario;
 
 class Validacion extends Usuario{
@@ -10,7 +10,7 @@ class Validacion extends Usuario{
     public function __construct( $alias, $nombre, $apellido,
     $contraseña, $contraseñaRepeat, $email)
     {
-        parent::__construct($id=1,$alias,$nombre,$apellido,$email,$contraseña);
+        parent::__construct(1,$alias,$nombre,$apellido,$email,$contraseña);
 
         $this->contraseñaRepeat= $contraseñaRepeat;
         
