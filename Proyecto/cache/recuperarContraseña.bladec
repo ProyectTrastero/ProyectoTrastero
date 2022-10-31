@@ -17,7 +17,7 @@
  </div>
  <div>
  <input class="btn btn-info" type="submit" name="enviar" value="Enviar">
- <input class="btn btn-info mr-3" type="submit" name="volver" value="Volver">
+ <input class="btn btn-info" type="submit" name="volver" value="Volver">
  </div>
  </div>
 </form>
