@@ -142,15 +142,39 @@ class Usuario extends BD {
         
       
     }
-    //comprobamos si el usuario o el email ya existe 
-    protected function checkUsuario (string $alias, string $correo):bool {
-        $query = "select alias from usuarios where alias = :alias or correo = :correo ;";
+    //comprobamos si el alias ya existe 
+    protected function checkExistAlias (string $alias):bool {
+        $query = "select alias from usuarios where alias = :alias;";
         $stmt = $this->getConexion()->prepare($query);
         //$stmt = $this->connect()->prepare($query);
         
 
-        //si falla nos redirige a la pagina de registro nuevamente
-        if(!$stmt->execute([":alias"=>$alias, ":correo"=>$correo])){
+        //si falla 
+        if(!$stmt->execute([":alias"=>$alias])){
+            //cerramos conexion
+            $stmt = null;
+            return false;
+            
+        }
+        //si no falla la sentencia comprobamos si tenemos algun resultado
+        //si mayor que 0 es que ya existe
+        if($stmt->rowCount() > 0 ){
+            $stmt = null;
+            return false;
+        }else{
+            $stmt = null;
+            return true;
+        }
+    }
+    //comprobamos si el correo ya existe 
+    protected function checkExistCorreo (string $correo):bool {
+        $query = "select alias from usuarios where correo = :correo ;";
+        $stmt = $this->getConexion()->prepare($query);
+        //$stmt = $this->connect()->prepare($query);
+        
+
+        //si falla 
+        if(!$stmt->execute([":correo"=>$correo])){
             //cerramos conexion
             $stmt = null;
             return false;

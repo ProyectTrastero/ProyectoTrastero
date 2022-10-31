@@ -42,9 +42,15 @@ class Validacion extends Usuario{
             array_push($errores,"emailInvalido");
         }
         
-        if(empty(!$this->getAlias()) && !empty($this->getEmail())){
-            if(!$this->checkUsuarioExiste()){
-                array_push($errores,"usuarioExiste");
+        if(empty(!$this->getAlias())){
+            if(!$this->checkExistAlias($this->getAlias())){
+                array_push($errores,"aliasExiste");
+            }
+        }
+
+        if(empty(!$this->getEmail())){
+            if(!$this->checkExistCorreo($this->getEmail())){
+                array_push($errores,"correoExiste");
             }
         }
         //si no hay errores agregamos el usuario a la base de datos
@@ -71,33 +77,33 @@ class Validacion extends Usuario{
     }
      
      
-    //formatio valido : debe comenzar con una letra,solo se aceptan catacteres alfanumericos, (-) y (_)
-    //longitud minima de 4 y maxima de 30
+    //formatio valido : Los alias solo pueden contener letras, números, guiones y guiones bajos
+    //y una longitud maxima de 100 caracteres
     private function usuarioInvalido(){
         $this->setAlias($this->sanearInput($this->getAlias()));
-        if(!preg_match("/^[a-zA-Z][a-zA-Z0-9-_]{3,29}$/", $this->getAlias())){
+        if(!preg_match("/^[a-zA-Z0-9-_]{1,100}$/", $this->getAlias())){
             return false;
         }else{
             return true;
         }
     }
-    //formato valido: no hay limite para la cantidad de nombres, 
-    //el primer nombre debe tener una longitud minima de 3 y maxima de 20
-    // y el resto de nombres una longitud minima de 2 y maxima 20
+    //formato valido: debe comenzar por una letra,
+    //solo se admiten espacios en blanco y letras
+    //longitud maxima de 100 caracteres
     private function nombreInvalido(){
         $this->setNombre($this->sanearInput($this->getNombre()));
-        if(!preg_match("/^[A-Za-z]{3,20}(\s([A-Za-z]{2,20})*)*$/", $this->getNombre())){
+        if(!preg_match("/^[A-Za-z][\sA-Za-z]{0,99}$/", $this->getNombre())){
             return false;
         }else{
             return true;
         }
     }
-   //formato valido: no hay limite para la cantidad de apellidos, 
-   //el primer apellido debe tener una logitud minima de 3 y maxima de 20 
-   //y el resto de apellidos una longitud minima de 2 y maxima de 20
+    //formato valido: debe comenzar por una letra,
+    //solo se admiten espacios en blanco y letras
+    //longitud maxima de 100 caracteres
     private function apellidoInvalido(){
         $this->setApellidos($this->sanearInput($this->getApellidos()));
-        if(!preg_match("/^[A-Za-z]{3,20}(\s([A-Za-z]{2,20})*)*$/", $this->getApellidos())){
+        if(!preg_match("/^[A-Za-z][\sA-Za-z]{0,99}$$/", $this->getApellidos())){
             return false;
         }else{
             return true;
@@ -134,17 +140,7 @@ class Validacion extends Usuario{
     }
     
     
-    //verificamos si el usuario o el email ya existe en la base de datos
-    private function checkUsuarioExiste(){
-        
-        if(!$this->checkUsuario($this->getAlias(), $this->getEmail())){
-            return false;
-        }else{
-            return true;
-        }
-        
-
-    }
+    
     //saneamos lo introducido por el usuario en los imputs
     function sanearInput($data) {
         //eliminamos caracteres innecesarios como espacios de más, saltos de linea, tabulaciones
