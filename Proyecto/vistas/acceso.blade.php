@@ -6,11 +6,21 @@
 
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
-<div class="">
-    <input type="button" name ="perfil" value="{{$usuario->getNombre()}}">
-    <input type="button" name="perfilusuario" value="Perfil">       
-    <input type="button" name="salir" value="Cerrar Sesion">
-</div>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <ul class="navbar-nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="<?php __DIR__ ?>./../public/editarPerfil.php">Editar perfil</a></li>
+        <li><a class="dropdown-item" href="#">Cerrar sesion</a></li>
+        
+      </ul>
+    </li>
+  </ul>
 @endsection
 
 {{-- Sección mensaje --}}

@@ -47,16 +47,19 @@ if (isset($_SESSION['usuario'])){
 
         
 //DANI SOLO PUEDES TOCAR AQUI       
-}elseif (isset($_REQUEST['perfilusuario'])) {
-        //Esta parte la esta haciendo Dani
-        $usuario = $_SESSION['usuario'];
-        $nombre = $usuario->getNombre();
-        $clave = $usuario->getClave();
-        $email = $usuario->getEmail();
-        echo $blade->run("perfil", compact('nombre', 'clave', 'email'));
-        die;
+// }elseif (isset($_REQUEST['perfilusuario'])) {
+//         //Esta parte la esta haciendo Dani
+//         $usuario = $_SESSION['usuario'];
 
-///HASTA AQUI ¡¡NO TOQUES MASSSSSSS¡¡¡¡¡jajajaja 
+//         $nombre = $usuario->getNombre();
+//         $apellidos = $usuario->getApellidos();
+//         $alias = $usuario->getAlias();
+//         $clave = $usuario->getClave();
+//         $email = $usuario->getEmail();
+//         echo $blade->run("perfil", compact('nombre','apellidos','alias', 'clave', 'email',));
+//         die;
+
+// ///HASTA AQUI ¡¡NO TOQUES MASSSSSSS¡¡¡¡¡jajajaja 
 }
 
 

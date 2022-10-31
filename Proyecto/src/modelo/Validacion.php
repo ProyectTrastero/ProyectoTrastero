@@ -3,15 +3,16 @@ namespace App;
 use App\Usuario;
 
 class Validacion extends Usuario{
-    
+    private $bd;
     private $contraseñaRepeat;
     
+    
 
-    public function __construct( $alias, $nombre, $apellido,
+    public function __construct($bd, $alias, $nombre, $apellido,
     $contraseña, $contraseñaRepeat, $email)
     {
         parent::__construct(1,$alias,$nombre,$apellido,$email,$contraseña);
-
+        $this->bd = $bd;
         $this->contraseñaRepeat= $contraseñaRepeat;
         
     }
@@ -43,20 +44,20 @@ class Validacion extends Usuario{
         }
         
         if(empty(!$this->getAlias())){
-            if(!$this->checkExistAlias($this->getAlias())){
+            if($this->existeAlias($this->bd, $this->getAlias())){
                 array_push($errores,"aliasExiste");
             }
         }
 
-        if(empty(!$this->getEmail())){
-            if(!$this->checkExistCorreo($this->getEmail())){
+        if(empty(!$this->getCorreo())){
+            if($this->existeCorreo($this->bd, $this->getCorreo())){
                 array_push($errores,"correoExiste");
             }
         }
         //si no hay errores agregamos el usuario a la base de datos
         if(count($errores)== 0){
-            $this->agregarUsuario($this->getAlias(),  $this->getClave(),$this->getNombre(), $this->getApellidos(),
-                                $this->getEmail());
+            $this->agregarUsuario($this->bd, $this->getAlias(),  $this->getClave(),$this->getNombre(), $this->getApellidos(),
+                                $this->getCorreo());
             return $errores;
         }else{
             return $errores;
@@ -68,7 +69,7 @@ class Validacion extends Usuario{
     private function camposVacios(){
 
         if(empty($this->getAlias()) || empty($this->getNombre()) || empty($this->getApellidos()) 
-        || empty($this->getClave()) || empty($this->contraseñaRepeat)  || empty($this->getEmail())){
+        || empty($this->getClave()) || empty($this->contraseñaRepeat)  || empty($this->getCorreo())){
 
             return false;
         }else{
@@ -131,8 +132,8 @@ class Validacion extends Usuario{
     }
     //formato valido email@email.com
     private function emailInvalido(){
-        $this->setEmail($this->sanearInput($this->getEmail()));
-        if(!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL)){
+        $this->setCorreo($this->sanearInput($this->getCorreo()));
+        if(!filter_var($this->getCorreo(), FILTER_VALIDATE_EMAIL)){
             return false;
         }else{
             return true;

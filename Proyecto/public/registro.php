@@ -19,6 +19,14 @@ $views = __DIR__ . '/../vistas';
 $cache = __DIR__ . '/../cache';
 $blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
 
+// Establece conexión a la base de datos PDO
+try {
+    $bd = BD::getConexion();
+} catch (PDOException $error) {
+    echo $blade->run("cnxbderror", compact('error'));
+    die;
+}
+
 
 if (isset($_POST['submit'])) {
     
@@ -39,7 +47,7 @@ if (isset($_POST['submit'])) {
     $datos = array('alias' =>$alias,'nombre'=>$nombre,'apellidos'=>$apellidos,'email'=>$email,'clave'=>$clave,'contraseñaRepeat'=>$contraseñaRepeat);
 
     
-    $validacion = new Validacion($alias, $nombre, $apellidos, $clave, $contraseñaRepeat, $email);
+    $validacion = new Validacion($bd, $alias, $nombre, $apellidos, $clave, $contraseñaRepeat, $email);
     
     //ejecutamos metodo registrar usuario el cual tiene todas las comprobaciones
     

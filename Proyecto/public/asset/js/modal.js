@@ -8,7 +8,7 @@
       // Button that triggered the modal
       const button = event.relatedTarget
       // Extract info from data-bs-* attributes
-      const recipient = button.getAttribute('data-bs-whatever')
+      const recipient = button.getAttribute('data-bs-usuario')
 
       // Update the modal's content.
       const modalTitle = exampleModal.querySelector('.modal-title')
@@ -18,3 +18,5 @@
       modalBodyInput.value = recipient
     })
   }
+  const daniel = querySelector('.container');
+  daniel.value="hola mundo";
