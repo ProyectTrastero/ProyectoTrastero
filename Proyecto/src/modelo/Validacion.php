@@ -1,88 +1,79 @@
 <?php
 namespace App;
-use App\Usuario;
+use PDO;
 
-class Validacion extends Usuario{
-    private $bd;
-    private $contraseñaRepeat;
-    
-    
+class Validacion{
 
-    public function __construct($bd, $alias, $nombre, $apellido,
-    $contraseña, $contraseñaRepeat, $email)
-    {
-        parent::__construct(1,$alias,$nombre,$apellido,$email,$contraseña);
-        $this->bd = $bd;
-        $this->contraseñaRepeat= $contraseñaRepeat;
-        
+    static function validarRegistro(array $datos, PDO $bd){
+    $errores = array();
+
+    if (!Validacion::camposVacios($datos)) {
+        array_push($errores, "camposVacios");
     }
 
-    public function registrarUsuario(){
-       $errores= array();
-       
-        if(!$this->camposVacios()){
-            array_push($errores,"camposVacios");
-        }
-        
-        if(!$this->usuarioInvalido()){
-            array_push($errores,"usuarioInvalido");
-        }
-        if(!$this->nombreInvalido()){
-            array_push($errores,"nombreInvalido");
-        }
-        if(!$this->apellidoInvalido()){
-            array_push($errores,"apellidoInvalido");
-        }
-        if(!$this->contrasenasNoIguales()){
-            array_push($errores,"contrasenasNoIguales");
-        }
-        if(!$this->contrasenaInvalida()){
-            array_push($errores,"contrasenaInvalida");
-        }
-        if(!$this->emailInvalido()){
-            array_push($errores,"emailInvalido");
-        }
-        
-        if(empty(!$this->getAlias())){
-            if($this->existeAlias($this->bd, $this->getAlias())){
-                array_push($errores,"aliasExiste");
-            }
-        }
-
-        if(empty(!$this->getCorreo())){
-            if($this->existeCorreo($this->bd, $this->getCorreo())){
-                array_push($errores,"correoExiste");
-            }
-        }
-        //si no hay errores agregamos el usuario a la base de datos
-        if(count($errores)== 0){
-            $this->agregarUsuario($this->bd, $this->getAlias(),  $this->getClave(),$this->getNombre(), $this->getApellidos(),
-                                $this->getCorreo());
-            return $errores;
-        }else{
-            return $errores;
-        }
-        
+    if (!Validacion::aliasInvalido($datos['alias'])) {
+        array_push($errores, "aliasInvalido");
     }
+    if (!Validacion::nombreInvalido($datos['nombre'])) {
+        array_push($errores, "nombreInvalido");
+    }
+    if (!Validacion::apellidoInvalido($datos['apellidos'])) {
+        array_push($errores, "apellidoInvalido");
+    }
+    if (!Validacion::contrasenasNoIguales($datos['clave'], $datos['claveRepeat'])) {
+        array_push($errores, "contrasenasNoIguales");
+    }
+    if (!Validacion::contrasenaInvalida($datos['clave'])) {
+        array_push($errores, "contrasenaInvalida");
+    }
+    if (!Validacion::correoInvalido($datos['correo'])) {
+        array_push($errores, "emailInvalido");
+    }
+
+    if (empty(!$datos['alias'])) {
+        if (Usuario::existeAlias($bd, $datos['alias'])) {
+            array_push($errores, "aliasExiste");
+        }
+    }
+
+    if (empty(!$datos['correo'])) {
+        if (Usuario::existeCorreo($bd, $datos['correo'])) {
+            array_push($errores, "correoExiste");
+        }
+    }
+    //si no hay errores agregamos el usuario a la base de datos
+    if (count($errores) == 0) {
+        Usuario::agregarUsuario(
+            $bd,
+            $datos['alias'],
+            $datos['clave'],
+            $datos['nombre'],
+            $datos['apellidos'],
+            $datos['correo']
+        );
+    }
+    return $errores;
+}
+    
     //si hay algun campo vacio
     //
-    private function camposVacios(){
+    static function camposVacios(array $campos):bool{
 
-        if(empty($this->getAlias()) || empty($this->getNombre()) || empty($this->getApellidos()) 
-        || empty($this->getClave()) || empty($this->contraseñaRepeat)  || empty($this->getCorreo())){
-
-            return false;
-        }else{
+        foreach ($campos as $campo) {
+            if(empty($campo)){
+                return false;
+            }
             return true;
         }
+
     }
      
      
     //formatio valido : Los alias solo pueden contener letras, números, guiones y guiones bajos
     //y una longitud maxima de 100 caracteres
-    private function usuarioInvalido(){
-        $this->setAlias($this->sanearInput($this->getAlias()));
-        if(!preg_match("/^[a-zA-Z0-9-_]{1,100}$/", $this->getAlias())){
+    static function aliasInvalido($alias){
+        
+        if(!preg_match("/^[a-zA-Z0-9-_]{1,100}$/", $alias)){
             return false;
         }else{
             return true;
@@ -91,9 +82,9 @@ class Validacion extends Usuario{
     //formato valido: debe comenzar por una letra,
     //solo se admiten espacios en blanco y letras
     //longitud maxima de 100 caracteres
-    private function nombreInvalido(){
-        $this->setNombre($this->sanearInput($this->getNombre()));
-        if(!preg_match("/^[A-Za-z][\sA-Za-z]{0,99}$/", $this->getNombre())){
+    static function nombreInvalido($nombre){
+        
+        if(!preg_match("/^[A-Za-z][\sA-Za-z]{0,99}$/", $nombre)){
             return false;
         }else{
             return true;
@@ -102,19 +93,18 @@ class Validacion extends Usuario{
     //formato valido: debe comenzar por una letra,
     //solo se admiten espacios en blanco y letras
     //longitud maxima de 100 caracteres
-    private function apellidoInvalido(){
-        $this->setApellidos($this->sanearInput($this->getApellidos()));
-        if(!preg_match("/^[A-Za-z][\sA-Za-z]{0,99}$$/", $this->getApellidos())){
+    static function apellidoInvalido($apellidos){
+        
+        if(!preg_match("/^[A-Za-z][\sA-Za-z]{0,99}$$/", $apellidos)){
             return false;
         }else{
             return true;
         }
     }
     //comprobamos que las contraseñas coincidan
-    private function contrasenasNoIguales(){
-        $contrasena=$this->sanearInput($this->getClave());
-        $contraseñaRepeat=$this->sanearInput($this->contraseñaRepeat);
-        if($contrasena !== $contraseñaRepeat){
+    static function contrasenasNoIguales($clave, $claveRepeat){
+        
+        if($clave !== $claveRepeat){
             return false;
         }else{
             return true;
@@ -122,18 +112,18 @@ class Validacion extends Usuario{
     }
 
     //longitud minina 8, al menos un digito, una minuscula y una mayuscula
-    private function contrasenaInvalida(){
-        $this->setClave($this->sanearInput($this->getClave()));
-        if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/",$this->getClave())){
+    static function contrasenaInvalida($clave){
+        
+        if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/",$clave)){
             return false;
         }else{
             return true;
         }
     }
     //formato valido email@email.com
-    private function emailInvalido(){
-        $this->setCorreo($this->sanearInput($this->getCorreo()));
-        if(!filter_var($this->getCorreo(), FILTER_VALIDATE_EMAIL)){
+    static function correoInvalido($correo){
+        
+        if(!filter_var($correo, FILTER_VALIDATE_EMAIL)){
             return false;
         }else{
             return true;
@@ -143,17 +133,17 @@ class Validacion extends Usuario{
     
     
     //saneamos lo introducido por el usuario en los imputs
-    function sanearInput($data) {
+    static function sanearInput($input) {
         //eliminamos caracteres innecesarios como espacios de más, saltos de linea, tabulaciones
-        $data = trim($data);
+        $input = trim($input);
         //eliminamos backslashes
-        $data = stripslashes($data);
+        $input = stripslashes($input);
         //combierte caracteres especiales en entidades html
-        $data = htmlspecialchars($data);
-        return $data;
+        $input = htmlspecialchars($input);
+        return $input;
     }
 
-
 }
+
 
 

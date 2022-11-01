@@ -53,7 +53,7 @@ class Usuario{
         return $this->apellidos;
     }
 
-    public function getCorreo() {
+    public function getEmail() {
         return $this->correo;
     }
 
@@ -78,7 +78,7 @@ class Usuario{
         $this->apellidos = $apellidos;
     }
 
-    public function setCorreo($correo): void {
+    public function setEmail($correo): void {
         $this->correo = $correo;
     }
 
@@ -122,7 +122,7 @@ class Usuario{
     /*
      * Funcion para agregar un usuario
      */
-    public function agregarUsuario(PDO $bd, string $alias, string $clave, string $nombre, string $apellidos, string $correo):bool {
+    public static function agregarUsuario(PDO $bd, string $alias, string $clave, string $nombre, string $apellidos, string $correo):bool {
         //$bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $query="insert into usuarios (alias,clave, nombre,  apellidos, correo) values(:alias,:clave, :nombre,  :apellidos, :correo)";
        

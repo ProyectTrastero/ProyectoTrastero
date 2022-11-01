@@ -30,36 +30,33 @@ session_start();
 if (isset($_SESSION['usuario'])){
     $usuario = $_SESSION['usuario'];
     $idUsuario = intval($usuario->getId());
-    $trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
-    $_SESSION['trasteros'] = $trasteros;
+    //$trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
+    //$_SESSION['trasteros'] = $trasteros;
     
-    echo $blade->run("acceso", compact ('usuario', 'trasteros'));
+    //echo $blade->run("acceso", compact ('usuario', 'trasteros'));
+    echo $blade->run("acceso", compact ('usuario'));
 
-    
-}elseif (isset($_REQUEST['salir'])) {
-// Destruyo la sesión
+    if (isset($_REQUEST['cerrarSesion'])) {
+        // Destruyo la sesión
         session_unset();
         session_destroy();
         setcookie(session_name(), '', 0, '/');
-// Invoco la vista del formulario de iniciar sesion
-        echo $blade->run("sesion");
+        // Invoco la vista del formulario de iniciar sesion
+        header('location: index.php');
+        //echo $blade->run("sesion");
         die;
+    }
+
+    if (isset($_REQUEST['perfilUsuario'])) {
+        //Esta parte la esta haciendo Dani
+        $usuario = $_SESSION['usuario'];
+        header('location: editarPerfil.php');
+        //echo $blade->run("perfil", compact('nombre','apellidos','alias', 'clave', 'correo',));
+        die;
+    }
+    
+}
 
         
-//DANI SOLO PUEDES TOCAR AQUI       
-// }elseif (isset($_REQUEST['perfilusuario'])) {
-//         //Esta parte la esta haciendo Dani
-//         $usuario = $_SESSION['usuario'];
-
-//         $nombre = $usuario->getNombre();
-//         $apellidos = $usuario->getApellidos();
-//         $alias = $usuario->getAlias();
-//         $clave = $usuario->getClave();
-//         $email = $usuario->getEmail();
-//         echo $blade->run("perfil", compact('nombre','apellidos','alias', 'clave', 'email',));
-//         die;
-
-// ///HASTA AQUI ¡¡NO TOQUES MASSSSSSS¡¡¡¡¡jajajaja 
-}
 
 

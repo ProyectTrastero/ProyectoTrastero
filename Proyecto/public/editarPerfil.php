@@ -27,9 +27,16 @@ session_start();
 
 if (isset($_SESSION['usuario'])) {
 	$usuario = $_SESSION['usuario'];
-	
-	echo $blade->run("perfil", compact('usuario'));
+    $nombre = $usuario->getNombre();
+    $apellidos = $usuario->getApellidos();
+    $alias = $usuario->getAlias();
+    $clave = $usuario->getClave();
+    $correo = $usuario->getEmail();
+
+	echo $blade->run("perfil", compact('nombre','apellidos','alias', 'clave', 'correo',));
     
 
 	die;
 }
+
+

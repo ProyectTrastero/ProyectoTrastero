@@ -114,6 +114,15 @@ button{
         transition:.5s;
 }
 
+nav button {
+		width: 90%;
+    height: 100%;
+    padding: 0.5rem;
+    background-color: white;
+    color: black;
+    
+}
+
 .boton2{
         float:right;
         margin-top: 25px;

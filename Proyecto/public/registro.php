@@ -27,43 +27,41 @@ try {
     die;
 }
 
-
+$datos = array();
 if (isset($_POST['submit'])) {
-    
-    //recuperamos la informacion
-    (isset($_POST['alias'])) ? $alias = $_POST['alias'] : $alias="";
-    
-    (isset($_POST['nombre'])) ? $nombre = $_POST['nombre'] : $nombre="";
-    
-    (isset($_POST['apellidos'])) ? $apellidos = $_POST['apellidos'] : $apellidos="";
-    
-    (isset($_POST['email'])) ? $email = $_POST['email'] : $email="";
-    
-    (isset($_POST['clave'])) ? $clave = $_POST['clave'] : $clave="";
-    
-    (isset($_POST['contraseñaRepeat'])) ? $contraseñaRepeat = $_POST['contraseñaRepeat'] : $contraseñaRepeat="";
-    
-    //array para enviar a la vista y asi mantener los datos
-    $datos = array('alias' =>$alias,'nombre'=>$nombre,'apellidos'=>$apellidos,'email'=>$email,'clave'=>$clave,'contraseñaRepeat'=>$contraseñaRepeat);
 
+    //recuperamos la informacion
+    (isset($_POST['alias'])) ? $alias = Validacion::sanearInput(filter_input(INPUT_POST, "alias")) : $alias = "";
+
+    (isset($_POST['nombre'])) ? $nombre = Validacion::sanearInput(filter_input(INPUT_POST, "nombre")) : $nombre = "";
+
+    (isset($_POST['apellidos'])) ? $apellidos = Validacion::sanearInput(filter_input(INPUT_POST, "apellidos")) : $apellidos = "";
+
+    (isset($_POST['correo'])) ? $correo = Validacion::sanearInput(filter_input(INPUT_POST, "correo")) : $correo = "";
+
+    (isset($_POST['clave'])) ? $clave = Validacion::sanearInput(filter_input(INPUT_POST, "clave")) : $clave = "";
+
+    (isset($_POST['claveRepeat'])) ? $claveRepeat = Validacion::sanearInput(filter_input(INPUT_POST, "claveRepeat")) : $claveRepeat = "";
+
+    //array con los datos del formulario
+    $datos = array('alias' => $alias, 'nombre' => $nombre, 'apellidos' => $apellidos, 'correo' => $correo, 'clave' => $clave, 'claveRepeat' => $claveRepeat);
     
-    $validacion = new Validacion($bd, $alias, $nombre, $apellidos, $clave, $contraseñaRepeat, $email);
+    //ejecutamos metodo validarRegistro el cual tiene todas las comprobaciones
+    $errores = Validacion::validarRegistro($datos, $bd);
     
-    //ejecutamos metodo registrar usuario el cual tiene todas las comprobaciones
-    
-    $errores = $validacion->registrarUsuario();
-    
-    
-    //si tenemos errores volvemos a lanzar la vista registro 
+    //si tenemos errores volvemos a lanzar la vista registro con los datos que ha introducido y los errores que hemos obtenido
     if (count($errores) > 0) {
-        echo $blade->run('registro', ['error' => $errores,'datos' => $datos]);
+        echo $blade->run('registro', ['error' => $errores, 'datos' => $datos]);
     } else {
         //si no hay errores vamos a el index el cual redirige a acceso, no se si mejor deberia ir a acceso desde aca
         header("location: ../public/index.php?error=none");
-        
     }
-}else{
+} else {
 
     //por defecto muestra vista registro
     echo $blade->run("registro");
 }
+
+
+
+
