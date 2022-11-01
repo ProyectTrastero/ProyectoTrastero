@@ -2,7 +2,9 @@
 require "../vendor/autoload.php";
 use eftec\bladeone\BladeOne;
 use Dotenv\Dotenv;
-use App\BD;
+use App\{
+    BD
+};
 
 // Inicializa blade
 $views = __DIR__ . '/../vistas';
@@ -27,5 +29,7 @@ if (isset($_SESSION['usuario'])) {
 	$usuario = $_SESSION['usuario'];
 	
 	echo $blade->run("perfil", compact('usuario'));
+    
+
 	die;
 }
