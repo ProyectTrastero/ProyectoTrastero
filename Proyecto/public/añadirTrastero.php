@@ -12,7 +12,9 @@ use Dotenv\Dotenv;
 use App\{
     BD,
     Usuario,
-    Validacion
+    Validacion, 
+    Estanteria, 
+    Balda
 };
 // Inicializa el acceso a las variables de entorno
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
@@ -26,55 +28,87 @@ $blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
 
 session_start();
 
-if(empty($_SESSION['nuevoTrastero'])){
-    $nuevoTrastero=array();
-    $numeroEstanterias=0;
+if(empty($_SESSION['datosTrastero'])){
+    $datosTrastero = array();
+    $estanterias = array();
+    $baldas = array();
+    $cajas = array();
+    $datosTrastero['estanterias']=$estanterias;
+    $datosTrastero['baldas']=$baldas;
+    $datosTrastero['cajas']=$cajas;
     
-    $_SESSION['numeroEstanterias']=$numeroEstanterias;      
-    $_SESSION['nuevoTrastero']=$nuevoTrastero;
+    
+    $_SESSION['datosTrastero']=$datosTrastero;
     
 }else{
-    $nuevoTrastero=$_SESSION['nuevoTrastero'];
-    $numeroEstanterias=$_SESSION['numeroEstanterias'];
+    $datosTrastero=$_SESSION['datosTrastero'];
+    $estanterias = $datosTrastero['estanterias'];
+    $baldas=$datosTrastero['baldas'];
+    $cajas = $datosTrastero ['cajas'];
+   
 }
 
 
 
 if(isset($_POST['añadirEstanteria'])){
-    $numeroEstanterias++;
-    $nuevaEstanteria=array();
-    $nuevoTrastero[$numeroEstanterias]=$nuevaEstanteria;
-    $_SESSION['nuevoTrastero']=$nuevoTrastero;
-    $_SESSION['numeroEstanterias']=$numeroEstanterias;
-    echo $blade->run('añadirTrastero', compact('nuevoTrastero'));
+    $estanterias[]= new Estanteria();
+    $datosTrastero['estanterias']= $estanterias;
+    $_SESSION['datosTrastero']=$datosTrastero;
+//    echo $blade->run('añadirTrastero', compact('estanterias', 'baldas', 'cajas'));
+    echo $blade->run('añadirTrastero', compact('estanterias', 'baldas', 'cajas'));
+}else if(isset($_POST['añadirBalda'])){
+    $baldas[]= array();
+    $datosTrastero['baldas'] = $baldas;
+    $_SESSION['datosTrastero']=$datosTrastero;
+//    echo $blade->run('añadirTrastero', compact('estanterias', 'baldas', 'cajas'));
+    echo $blade->run('añadirTrastero', compact('estanterias', 'baldas', 'cajas'));
+ 
 }else if(isset($_POST['añadirCaja'])){
-    if(isset($_POST['volver'])){
-        echo $blade->run('añadirTrastero');
-    }else if(isset($_POST['añadirUbicacion'])){
+    echo $blade->run('ubicacionCaja');
+}else if(isset($_POST['añadirUbicacion'])){
         if(!filter_has_var(INPUT_POST,'sinAsignar')) {
-            $_SESSION['ucbalda']= 1;
-            $_SESSION['ucestanteria']=2;
+            //Modificar cuando esté la clase preparada
+           $cajas[]= array();
+           $datosTrastero['cajas']= $cajas;
+           $_SESSION['datosTrastero']=$datosTrastero;
         }else{
-            $_SESSION['ucbalda']="";
-            $_SESSION['ucestanteria']="";
+              //Modificar cuando esté la clase preparada
+           $cajas[]=array();
+           $datosTrastero['cajas']= $cajas;
+           $_SESSION['datosTrastero']=$datosTrastero;
         }
+        echo $blade->run('añadirTrastero', compact('estanterias', 'baldas', 'cajas'));
+}else  if(isset($_POST['volver'])){
         echo $blade->run('añadirTrastero');
-    }else{
-        echo $blade->run('ubicacionCaja');
-    }
-    echo $blade->run('añadirTrastero', compact('nuevoTrastero'));
 }else if(isset($_POST['volverAcceso'])){
     $_SESSION['nuevoTrastero']=array();
-     echo $blade->run('añadirTrastero');
+    //Cambiar por la paginad de acceso que no está terminada
+      echo $blade->run('añadirTrastero', compact('estanterias', 'baldas', 'cajas'));
     //header("Location: acceso.php");
 }else if(isset($_POST['guardar'])){
     $nuevoTrastero['nombre']=trim(filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_STRING));
     $_SESSION['nuevoTrastero']= array();
     header ("Location: acceso.php");    
-}elseif(isset($_POST['eliminarEstanteria'])){
-    echo "probando";
+}else if(isset($_POST['eliminarEstanteria'])){
+    $numeroEstanteria=trim(filter_input(INPUT_POST, 'numeroEstanteria', FILTER_SANITIZE_STRING));
+    unset($estanterias[$numeroEstanteria]);
+  
+    $datosTrastero['estanterias']= $estanterias;
+    $_SESSION['datosTrastero']=$datosTrastero;
+    
+    echo $blade->run('añadirTrastero', compact('estanterias', 'baldas', 'cajas'));
+    
+}else if(isset($_POST['eliminarBalda'])){
+    $numeroBalda=trim(filter_input(INPUT_POST, 'numeroBalda', FILTER_SANITIZE_STRING));
+    unset($baldas[$numeroBalda]);
+  
+    $datosTrastero['baldas']= $baldas;
+    $_SESSION['datosTrastero']=$datosTrastero;
+    
+    echo $blade->run('añadirTrastero', compact('estanterias', 'baldas', 'cajas'));
+    
 }else{
-    echo $blade->run('añadirTrastero');
+   echo $blade->run('añadirTrastero', compact('estanterias', 'baldas', 'cajas'));
 }
 
 

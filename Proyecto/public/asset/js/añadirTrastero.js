@@ -1,12 +1,12 @@
 window.addEventListener("load", iniciar);
-var estanterias;
+var ocultos;
 
 function iniciar(){
-    estanterias= document.getElementsByClassName("papeleraOculta");
-    for(i=0;i<estanterias.length;i++){
-        
-        estanterias[i].addEventListener("mouseover", añadirPapelera);
-        estanterias[i].addEventListener("mouseout", eliminarPapelera);
+    ocultos= document.getElementsByClassName("papeleraOculta");
+    
+    for(i=0;i<ocultos.length;i++){
+        ocultos[i].addEventListener("mouseover", añadirPapelera);
+        ocultos[i].addEventListener("mouseout", eliminarPapelera);
     }
 }
     
@@ -19,13 +19,24 @@ function añadirPapelera(e){
         var atributo=document.createAttribute("type");
         var atributo2 = document.createAttribute("name");
         var atributo3 = document.createAttribute("value");
+       
         atributo.value = "submit";
-        atributo2.value = "eliminarEstanteria";
+        if(elemento.innerHTML.includes("Estanteria")){
+            atributo2.value = "eliminarEstanteria";
+        }
+         if(elemento.innerHTML.includes("Balda")){
+            atributo2.value = "eliminarBalda";
+        }
+         if(elemento.innerHTML.includes("Caja")){
+            atributo2.value = "eliminarCaja";
+        }
         atributo3.value = "Eliminar";
+       
         boton.setAttributeNode(atributo);
         boton.setAttributeNode(atributo2);
         boton.setAttributeNode(atributo3);
-        if((elemento.children.length==0)&&(e.target.tagName=="TH")){
+        
+        if((elemento.children.length==0)&&(e.target.tagName==="H6")){
         elemento.appendChild(papelera);
         elemento.appendChild(boton);
     }
@@ -34,8 +45,8 @@ function añadirPapelera(e){
 
 function eliminarPapelera(e){
     var elemento = e.target;
-    var papelera=elemento. firstElementChild;
-    var boton=elemento.lastChild;
+    var papelera=elemento.children[0];
+    var boton=elemento.children[1];
     var retardo=setTimeout(function(){
         elemento.removeChild(papelera);
         elemento.removeChild(boton);
