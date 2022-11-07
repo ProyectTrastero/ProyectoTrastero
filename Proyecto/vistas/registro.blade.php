@@ -38,7 +38,7 @@
             </div>  
             @endif
 
-            <div class="mb-3"><input id="inputEmail" type="email" name="email" placeholder="E-mail" class="email form-control" value="{{$datos['email']}}"></div>
+            <div class="mb-3"><input id="inputEmail" type="email" name="correo" placeholder="E-mail" class="email form-control" value="{{$datos['correo']}}"></div>
             @if(isset($error) && in_array("emailInvalido", $error)) 
             <div class="alert alert-danger form-text p-1" role="alert">Email invalido</div>  
             @endif
@@ -53,7 +53,7 @@
             </div>  
             @endif
 
-            <div class="mb-3"><input id="inputPasswordRepeat" type="password" name="contraseñaRepeat" placeholder="Repite la contraseña" class="pwdRepeat form-control" value="{{$datos['contraseñaRepeat']}}"></div>
+            <div class="mb-3"><input id="inputPasswordRepeat" type="password" name="claveRepeat" placeholder="Repite la contraseña" class="pwdRepeat form-control" value="{{$datos['claveRepeat']}}"></div>
             @if(isset($error) && in_array("contrasenasNoIguales", $error)) 
             <div class="alert alert-danger form-text p-1" role="alert">Las contraseñas no coinciden</div>  
             @endif

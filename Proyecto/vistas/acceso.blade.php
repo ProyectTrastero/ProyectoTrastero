@@ -6,11 +6,25 @@
 
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
-<div class="">
-    <input type="button" name ="perfil" value="{{$usuario->getNombre()}}">
-    <input type="button" name="perfilusuario" value="Perfil">       
-    <input type="button" name="salir" value="Cerrar Sesion">
+<form class="d-flex" action="">
+<div class="nav-item dropdown">
+    
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>  
+    </a>
+    
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><button>Perfil</button></li>
+        <li><button>Cerrar Sesión</button></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Something</a></li>
+    </ul>
+    
 </div>
+</form>
+
+    
+
 @endsection
 
 {{-- Sección mensaje --}}
