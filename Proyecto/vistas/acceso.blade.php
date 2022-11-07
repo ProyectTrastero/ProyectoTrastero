@@ -6,14 +6,14 @@
 
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
-<form class="d-flex" action="">
+<form class="d-flex" action="<?php __DIR__ ?>./../public/acceso.php" method="POST">
     <div class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>  
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><button>Perfil</button></li>
-            <li><button>Cerrar Sesión</button></li>
+            <li><button class="dropdown" name="perfilUsuario">Perfil</button></li>
+            <li><button class="dropdown" name="cerrarSesion">Cerrar Sesión</button></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something</a></li>
         </ul>

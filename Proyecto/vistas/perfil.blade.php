@@ -3,15 +3,14 @@
 
 @section('title', 'Perfil Usuario')
 
-
 @section('content')
     <div class="container">
-        <form action="">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             
             <div class="row mb-3">
                 <label for="nombre" class="col-sm-2 col-lg-1 col-form-label form-text">Nombre: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="nombre" id="nombre" disabled>
+                    <input class="form-control" type="text" name="nombre" id="nombre" value="{{$nombre}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
                     <i class="fa-solid fa-pen-to-square"></i>
@@ -20,33 +19,34 @@
             <div class="row mb-3">
                 <label for="apellido" class="col-sm-2 col-lg-1 col-form-label form-text">Apellido: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="apellido" id="apellido" disabled>
+                    <input class="form-control" type="text" name="apellido" id="apellido" value="{{$apellidos}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i></button>
             </div>
             <div class="row mb-3">
-                <label for="usuario" class="col-sm-2 col-lg-1 col-form-label form-text">Usuario: </label>
+                <label for="usuario" class="col-sm-2 col-lg-1 col-form-label form-text">Alias: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="usuario" id="usuario" disabled>
+                    <input class="form-control" type="text" name="alias" id="alias" value="{{$alias}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i></button>
             </div>
             <div class="row mb-3">
-                <label for="password" class="col-sm-2 col-lg-1 col-form-label form-text">Password: </label>
+                <label for="password" class="col-sm-2 col-lg-1 col-form-label form-text">Clave: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="password" id="password" disabled>
+                    <input class="form-control" type="text" name="password" id="password" value="{{$clave}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i></button>
             </div>
             <div class="row mb-3">
                 <label for="correo" class="col-sm-2 col-lg-1 col-form-label form-text">Correo: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="email" name="correo" id="Correo" disabled>
+                    <input class="form-control" type="email" name="correo" id="Correo" value="{{$correo}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i></button>
             </div>
 			
-            <button type="submit" class="btn btn-primary">Volver</button>
+            <button type="submit" class="btn btn-primary" name="volver" value="volver">Volver</button>
+            <button type="submit" class="btn btn-primary" name="guardar" value="guardar" >Guardar</button>
 
         </form>
     </div>

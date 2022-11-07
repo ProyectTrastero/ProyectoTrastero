@@ -6,7 +6,6 @@ use Dotenv\Dotenv;
 
 use App\{
     BD,
-    Usuario,
     Validacion
 };
 

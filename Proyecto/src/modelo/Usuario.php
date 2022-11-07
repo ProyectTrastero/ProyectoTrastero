@@ -14,6 +14,7 @@ class Usuario{
     private $apellidos;
     private $email;
     private $clave;
+    private $correo;
    
     public function __construct(int $id=null,string $alias=null,string $nombre=null,string $apellidos=null,string $email=null, string $clave=null) {
         if (!is_null($id)) {
@@ -60,7 +61,9 @@ class Usuario{
     public function getClave() {
         return $this->clave;
     }
-
+    public function getCorreo(){
+        return $this->correo;
+    }
     
     public function setId($id): void {
         $this->id = $id;
