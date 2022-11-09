@@ -48,7 +48,7 @@ if (isset($_REQUEST['acceder'])) {
         session_destroy();
         setcookie(session_name(), '', 0, '/');
 // Invoco la vista del formulario de iniciar sesion
-        echo $blade->run("sesion");
+        header("location:../public/index.php"); 
         die;
 
         
