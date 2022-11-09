@@ -149,6 +149,13 @@ h3{
     font-weight:lighter;
     color:#8b0000;
 }
+.menu{
+    position:relative;
+    width:150px;
+    left:65%;
+    display:block;
+    
+}
 /*
 .sig{
    position:absolute;
