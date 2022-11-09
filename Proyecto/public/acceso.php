@@ -27,13 +27,22 @@ try {
 
 session_start();
 
-if (isset($_SESSION['usuario'])){
+if (isset($_REQUEST['acceder'])) {
+        $usuario = $_SESSION['usuario'];
+        $trasteros = $_SESSION['trasteros'];
+        $id = intval($_POST['id'])-1;
+        $miTrastero = $trasteros[$id];
+        echo $blade->run("AccederTrastero", compact ('usuario', 'miTrastero'));
+        die;
+
+        
+}elseif (isset($_SESSION['usuario'])){
     $usuario = $_SESSION['usuario'];
     $idUsuario = intval($usuario->getId());
     $trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
     $_SESSION['trasteros'] = $trasteros;
-    
-    echo $blade->run("acceso", compact ('usuario', 'trasteros'));
+        echo $blade->run("acceso", compact ('usuario', 'trasteros'));
+        die;
 
     
 }elseif (isset($_REQUEST['salir'])) {
@@ -57,6 +66,7 @@ if (isset($_SESSION['usuario'])){
         die;
 
 ///HASTA AQUI ¡¡NO TOQUES MASSSSSSS¡¡¡¡¡jajajaja 
+        
 }
 
 

@@ -26,9 +26,9 @@ try {
 }
 
 if (isset($_POST['procsesion'])) {
-    $nombre = trim(filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_STRING));
+    $alias = trim(filter_input(INPUT_POST, 'alias', FILTER_SANITIZE_STRING));
     $clave = trim(filter_input(INPUT_POST, 'clave', FILTER_SANITIZE_STRING));
-    $usuario = Usuario::recuperaUsuarioPorCredencial($bd, $nombre, $clave);
+    $usuario = Usuario::recuperaUsuarioPorCredencial($bd, $alias, $clave);
         if ($usuario) {
             session_start();
             $_SESSION['usuario'] = $usuario;
@@ -42,7 +42,7 @@ if (isset($_POST['procsesion'])) {
 }elseif (isset($_POST['botonregistro'])){
     header("location:../public/registro.php"); 
 }elseif (isset ($_POST['recuperarcontrasena'])){
-    //TODO TUYO EMMA
+    header("location:../public/recuperarContraseña.php"); 
     
 }else{
     echo $blade->run("sesion");

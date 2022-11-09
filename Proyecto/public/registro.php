@@ -1,72 +1,61 @@
 <?php
-require "../vendor/autoload.php";
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use eftec\bladeone\BladeOne;
 use Dotenv\Dotenv;
+
 use App\{
     BD,
-    Usuario
+    Usuario,
+    Validacion
 };
 
 // Inicializa el acceso a las variables de entorno
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->load();
 
-// Inicializa el acceso a las variables de entorno
+// Inicializa blade
 $views = __DIR__ . '/../vistas';
 $cache = __DIR__ . '/../cache';
 $blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
 
-// Establece conexión a la base de datos PDO
-try {
-    $bd = BD::getConexion();
-} catch (PDOException $error) {
-    echo $blade->run("cnxbderror", compact('error'));
-    die;
-}
-
-include '../public/Validacion.php';
-
 
 if (isset($_POST['submit'])) {
-    $views = __DIR__ . '/../vistas';
-    $cache = __DIR__ . '/../cache';
-    $blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
-
+    
     //recuperamos la informacion
-    (isset($_POST['usuario'])) ? $usuario = $_POST['usuario'] : $usuario="";
+    (isset($_POST['alias'])) ? $alias = $_POST['alias'] : $alias="";
     
     (isset($_POST['nombre'])) ? $nombre = $_POST['nombre'] : $nombre="";
     
-    (isset($_POST['apellido'])) ? $apellido = $_POST['apellido'] : $apellido="";
-    
-    (isset($_POST['telefono'])) ? $telefono = $_POST['telefono'] : $telefono="";
+    (isset($_POST['apellidos'])) ? $apellidos = $_POST['apellidos'] : $apellidos="";
     
     (isset($_POST['email'])) ? $email = $_POST['email'] : $email="";
     
-    (isset($_POST['contrasena'])) ? $contrasena = $_POST['contrasena'] : $contrasena="";
+    (isset($_POST['clave'])) ? $clave = $_POST['clave'] : $clave="";
     
-    (isset($_POST['contrasenaRepeat'])) ? $contrasenaRepeat = $_POST['contrasenaRepeat'] : $contrasenaRepeat="";
+    (isset($_POST['contraseñaRepeat'])) ? $contraseñaRepeat = $_POST['contraseñaRepeat'] : $contraseñaRepeat="";
     
+    //array para enviar a la vista y asi mantener los datos
+    $datos = array('alias' =>$alias,'nombre'=>$nombre,'apellidos'=>$apellidos,'email'=>$email,'clave'=>$clave,'contraseñaRepeat'=>$contraseñaRepeat);
+
     
-    $datos = array('usuario' =>$usuario,'nombre'=>$nombre,'apellido'=>$apellido,'telefono'=>$telefono,'email'=>$email,'contrasena'=>$contrasena,'contrasenaRepeat'=>$contrasenaRepeat);
-
-   
-
-    $registrar = new RegistroController($usuario, $nombre, $apellido, $contrasena, $contrasenaRepeat,
-            $telefono, $email);
-
+    $validacion = new Validacion($alias, $nombre, $apellidos, $clave, $contraseñaRepeat, $email);
+    
     //ejecutamos metodo registrar usuario el cual tiene todas las comprobaciones
-
-    $errores = $registrar->registrarUsuario();
+    
+    $errores = $validacion->registrarUsuario();
     
     
     //si tenemos errores volvemos a lanzar la vista registro 
     if (count($errores) > 0) {
         echo $blade->run('registro', ['error' => $errores,'datos' => $datos]);
     } else {
-        //si no hay errores
+        //si no hay errores vamos a el index el cual redirige a acceso, no se si mejor deberia ir a acceso desde aca
         header("location: ../public/index.php?error=none");
         
     }
-} 
+}else{
+
+    //por defecto muestra vista registro
+    echo $blade->run("registro");
+}
