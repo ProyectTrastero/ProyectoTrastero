@@ -14,6 +14,7 @@ class Usuario extends BD {
     private $apellidos;
     private $email;
     private $clave;
+    private $correo;
    
     public function __construct(int $id=null,string $alias=null,string $nombre=null,string $apellidos=null,string $email=null, string $clave=null) {
         if (!is_null($id)) {
@@ -60,6 +61,9 @@ class Usuario extends BD {
     public function getClave() {
         return $this->clave;
     }
+    public function getCorreo(){
+        return $this->correo;
+    }
 
     
     public function setId($id): void {
@@ -80,6 +84,10 @@ class Usuario extends BD {
 
     public function setEmail($email): void {
         $this->email = $email;
+    }
+    
+    public function setCorreo($correo):void{
+        $this->correo=$correo;
     }
 
     public function setClave($clave): void {
@@ -106,18 +114,7 @@ class Usuario extends BD {
         return $usuario;
     }
 
-    
-    /**
-     * Para modificar el Usuario
-     */
-    public function persiste(PDO $bd): bool {
-        $sql = "update usuarios set alias = :alias, nombre = :nombre, apellidos = apellidos, clave = :clave, correo = :correo where id = :id";
-        $sth = $bd->prepare($sql);
-        $result = $sth->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $this->clave, ":correo" => $this->correo, ":id" => $this->id]);
-        return ($result);
-    }
-
-    
+     
     
     /*
      * Funcion para agregar un usuario
@@ -141,6 +138,25 @@ class Usuario extends BD {
        
         
       
+    }
+    
+        /**
+     * Para modificar el Usuario
+     */
+    public static function modificarUsuario(PDO $bd,  int $id, string $alias, string $nombre, string $apellidos, string $clave, string $correo): bool {
+        $sql = "update usuarios set alias = :alias, nombre = :nombre, apellidos = :apellidos, clave = :clave, correo = :correo where id = :id";
+        //$sql = "update usuarios set alias = :alias , nombre = :nombre where id = :id";
+        $stmt = $bd->prepare($sql);
+        if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":apellidos" => $apellidos, ":clave" => $clave, ":correo" => $correo,":id" => $id])){
+        //if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":id" => $id])){
+            $stmt=null;
+            return false;
+        }else{
+            $stmt=null;
+            return true;
+        }
+
+        
     }
     //comprobamos si el alias ya existe 
     protected function checkExistAlias (string $alias):bool {

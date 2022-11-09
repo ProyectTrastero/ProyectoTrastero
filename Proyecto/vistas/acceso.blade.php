@@ -3,23 +3,22 @@
 
 {{-- Sección aporta el título de la página --}}
 @section('title', 'Mi trastero Inicio')
-
+<!--
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
-
-<div class="menu">
-    <form action="" method="POST"> 
-    <h5>{{$usuario->getNombre()}}</h5>
-    
-    <div>
-            <input class="btn btn-info" type="submit" name="perfilusuario" value="Ver Perfil">
-            <input class="btn btn-info mr-3" type="submit" name="salir" value="Cerrar Sesión">
+<form action="{{ $_SERVER["PHP_SELF"] }}">
+  <div class="nav-item dropdown">
+    <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
     </div>
-        
-    </form>
-</div>
+    <ul class="dropdown-menu">
+      <li><button class="dropdown" type="submit" name="perfilUsuario">Perfil usuario</button></li>
+      <li><button class="dropdown" type="submit" name="cerrarSesion">Cerrar sesión</button></li>
+    </ul>
+  </div>
+</form>
 @endsection
-
+-->
 {{-- Sección mensaje --}}
 @section('content')
 

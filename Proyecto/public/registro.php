@@ -19,31 +19,31 @@ $views = __DIR__ . '/../vistas';
 $cache = __DIR__ . '/../cache';
 $blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
 
+// Establece conexión a la base de datos PDO
+try {
+    $bd = BD::getConexion();
+} catch (PDOException $error) {
+    echo $blade->run("cnxbderror", compact('error'));
+    die;
+}
+
 
 if (isset($_POST['submit'])) {
     
     //recuperamos la informacion
-    (isset($_POST['alias'])) ? $alias = $_POST['alias'] : $alias="";
     
-    (isset($_POST['nombre'])) ? $nombre = $_POST['nombre'] : $nombre="";
-    
-    (isset($_POST['apellidos'])) ? $apellidos = $_POST['apellidos'] : $apellidos="";
-    
-    (isset($_POST['email'])) ? $email = $_POST['email'] : $email="";
-    
-    (isset($_POST['clave'])) ? $clave = $_POST['clave'] : $clave="";
-    
-    (isset($_POST['contraseñaRepeat'])) ? $contraseñaRepeat = $_POST['contraseñaRepeat'] : $contraseñaRepeat="";
+    (isset($_POST['alias'])) ? $alias = Validacion::sanearInput(filter_input(INPUT_POST, 'alias')) : $alias="";
+    (isset($_POST['nombre'])) ? $nombre = Validacion::sanearInput(filter_input(INPUT_POST, 'nombre')) : $nombre="";
+    (isset($_POST['apellidos'])) ? $apellidos = Validacion::sanearInput(filter_input(INPUT_POST, 'apellidos')) : $apellidos="";
+    (isset($_POST['correo'])) ? $correo = Validacion::sanearInput(filter_input(INPUT_POST, 'correo')) : $correo="";
+    (isset($_POST['clave'])) ? $clave = Validacion::sanearInput(filter_input(INPUT_POST, 'clave')) : $clave="";
+    (isset($_POST['claveRepeat'])) ? $claveRepeat = Validacion::sanearInput(filter_input(INPUT_POST, 'claveRepeat')) : $claveRepeat="";
     
     //array para enviar a la vista y asi mantener los datos
-    $datos = array('alias' =>$alias,'nombre'=>$nombre,'apellidos'=>$apellidos,'email'=>$email,'clave'=>$clave,'contraseñaRepeat'=>$contraseñaRepeat);
+    $datos = array('alias' =>$alias,'nombre'=>$nombre,'apellidos'=>$apellidos,'correo'=>$correo,'clave'=>$clave,'claveRepeat'=>$claveRepeat);
 
-    
-    $validacion = new Validacion($alias, $nombre, $apellidos, $clave, $contraseñaRepeat, $email);
-    
-    //ejecutamos metodo registrar usuario el cual tiene todas las comprobaciones
-    
-    $errores = $validacion->registrarUsuario();
+    //validamos los campos, si todos los campos son validos se registra el usuario
+    $errores = validarRegistro($bd,$datos);
     
     
     //si tenemos errores volvemos a lanzar la vista registro 
@@ -58,4 +58,57 @@ if (isset($_POST['submit'])) {
 
     //por defecto muestra vista registro
     echo $blade->run("registro");
+}
+
+function validarRegistro(PDO $bd, array $datos): array
+{
+    $errores = array();
+
+    if (!Validacion::camposVacios($datos)) {
+        array_push($errores, "camposVacios");
+    }
+
+    if (!Validacion::aliasInvalido($datos['alias'])) {
+        array_push($errores, "usuarioInvalido");
+    }
+    if (!Validacion::nombreInvalido($datos['nombre'])) {
+        array_push($errores, "nombreInvalido");
+    }
+    if (!Validacion::apellidoInvalido($datos['apellidos'])) {
+        array_push($errores, "apellidoInvalido");
+    }
+    if (!Validacion::clavesNoIguales($datos['clave'], $datos['claveRepeat'])) {
+        array_push($errores, "contrasenasNoIguales");
+    }
+    if (!Validacion::claveInvalida($datos['clave'])) {
+        array_push($errores, "contrasenaInvalida");
+    }
+    if (!Validacion::correoInvalido($datos['correo'])) {
+        array_push($errores, "emailInvalido");
+    }
+
+    if (!empty($datos['alias'])) {
+        if (!Usuario::checkExisteAlias($bd, $datos['alias'])) {
+            array_push($errores, "aliasExiste");
+        }
+    }
+
+    if (!empty($datos['correo'])) {
+        if (!Usuario::checkExisteCorreo($bd, $datos['correo'])) {
+            array_push($errores, "correoExiste");
+        }
+    }
+    //si no hay errores agregamos el usuario a la base de datos
+    if (count($errores) == 0) {
+        Usuario::agregarUsuario(
+            $bd,
+            $datos['alias'],
+            $datos['clave'],
+            $datos['nombre'],
+            $datos['apellidos'],
+            $datos['correo']
+        );
+    }
+
+    return $errores;
 }
