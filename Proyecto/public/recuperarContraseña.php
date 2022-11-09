@@ -67,6 +67,9 @@ function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
     }
 }
 
+
+
+
 $existe=false;
 $mensaje="";
 $correo;

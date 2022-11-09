@@ -6,6 +6,7 @@
         <title>@yield('title')</title>
         <!--<link rel="stylesheet" href="asset/css/style.css" >-->
         <link rel="stylesheet" href="asset/css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="asset/css/all.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     </head>
      <body>
@@ -14,9 +15,8 @@
                 <img src="asset/img/logo.png" alt="" width="80" height="80">
                 Mitrastero.com
         </a>
-        </nav>
         @yield('navbar')
-<!--        </nav>
+        </nav>
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="800px" height="600px" viewBox="0 0 800 600" enable-background="new 0 0 800 600" xml:space="preserve">
                 <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="174.7899" y1="186.34" x2="330.1259" y2="186.34" gradientTransform="matrix(0.8538 0.5206 -0.5206 0.8538 147.9521 -79.1468)">
                         <stop  offset="0" style="stop-color:#FFC035"/>
@@ -50,11 +50,12 @@
                 </linearGradient>
         <circle fill="url(#SVGID_5_)" cx="435.095" cy="184.986" r="63.504"/>
         </svg>
-        -->
+        
         @yield('content')
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="asset/js/jquery/jquery-3.6.0.min.js"></script>
+        <script src="asset/js/modal.js"></script>
     </body>
 </html>

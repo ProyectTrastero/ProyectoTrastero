@@ -7,7 +7,7 @@ use \PDO as PDO;
 /**
  * Usuario representa al usuario que está usando la aplicación
  */
-class Usuario extends BD {
+class Usuario{
     private $id;
     private $alias;
     private $nombre;
@@ -60,7 +60,9 @@ class Usuario extends BD {
     public function getClave() {
         return $this->clave;
     }
-
+    public function getCorreo(){
+        return $this->correo;
+    }
     
     public function setId($id): void {
         $this->id = $id;
@@ -81,6 +83,7 @@ class Usuario extends BD {
     public function setEmail($email): void {
         $this->email = $email;
     }
+
 
     public function setClave($clave): void {
         $this->clave = $clave;
@@ -105,6 +108,7 @@ class Usuario extends BD {
         $usuario = ($sth->fetch()) ?: null;
         return $usuario;
     }
+
     
     /**
      * Para modificar el Usuario
@@ -121,15 +125,15 @@ class Usuario extends BD {
     /*
      * Funcion para agregar un usuario
      */
-    public function agregarUsuario( string $alias, string $clave, string $nombre, string $apellidos, string $correo){
+    public static function agregarUsuario(PDO $bd, string $alias, string $clave, string $nombre, string $apellidos, string $correo):bool {
         //$bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-        $query="insert into usuarios (alias, nombre, clave, apellidos, correo) values(:alias, :nombre, :clave, :apellidos, :correo)";
+        $query="insert into usuarios (alias,clave, nombre,  apellidos, correo) values(:alias,:clave, :nombre,  :apellidos, :correo)";
         //$stmt = $bd->prepare($query);
-        $stmt=$this->getConexion()->prepare($query);
+        $stmt=$bd->prepare($query);
         //encriptamos la contraseña
-       // $hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
+        //$hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
         //si falla el insert
-        if(!$stmt->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $clave, ":correo" => $this->email])){
+        if(!$stmt->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $hasshedContraseña, ":correo" => $this->email])){
             $stmt=null;
             return false;
         }else{
@@ -137,19 +141,53 @@ class Usuario extends BD {
            $stmt=null;
            return true;
         }
-       
-        
-      
     }
-    //comprobamos si el usuario o el email ya existe 
-    protected function checkUsuario ($alias, $correo){
-        $query = "select alias from usuarios where alias = :alias or correo = :correo ;";
-        $stmt = $this->getConexion()->prepare($query);
-        //$stmt = $this->connect()->prepare($query);
-        
 
-        //si falla nos redirige a la pagina de registro nuevamente
-        if(!$stmt->execute([":alias"=>$alias, ":correo"=>$correo])){
+    /**
+     * Para modificar el Usuario
+     */
+    public static function modificarUsuario(PDO $bd,  int $id, string $alias, string $nombre, string $apellidos, string $clave, string $correo): bool {
+        $sql = "update usuarios set alias = :alias, nombre = :nombre, apellidos = :apellidos, clave = :clave, correo = :correo where id = :id";
+        //$sql = "update usuarios set alias = :alias , nombre = :nombre where id = :id";
+        $stmt = $bd->prepare($sql);
+        if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":apellidos" => $apellidos, ":clave" => $clave, ":correo" => $correo,":id" => $id])){
+        //if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":id" => $id])){
+            $stmt=null;
+            return false;
+        }else{
+            $stmt=null;
+            return true;
+        }
+
+        
+    }
+    //comprobamos si el alias ya existe 
+    public static function checkExisteAlias (PDO $bd, string $alias):bool {
+        $query = "select alias from usuarios where alias = :alias;";
+        $stmt =$bd->prepare($query);
+        //si falla 
+        if(!$stmt->execute([":alias"=>$alias])){
+            //cerramos conexion
+            $stmt = null;
+            return false;
+        }
+        //si no falla la sentencia comprobamos si tenemos algun resultado
+        //si mayor que 0 es que ya existe
+        if($stmt->rowCount() > 0 ){
+            $stmt = null;
+            return false;
+        }else{
+            $stmt = null;
+            return true;
+        }
+    }
+    //comprobamos si el correo ya existe 
+    public static function checkExisteCorreo (PDO $bd, string $correo):bool {
+        $query = "select alias from usuarios where correo = :correo ;";
+        $stmt = $bd->prepare($query);        
+
+        //si falla 
+        if(!$stmt->execute([":correo"=>$correo])){
             //cerramos conexion
             $stmt = null;
             return false;
@@ -188,7 +226,7 @@ class Usuario extends BD {
         return $contraseña;
     }
 
-    public static function obtenerAlias(PDO $bd, $correo){
+    public static function obtenerAlias(PDO $bd, $correo, $alias){
         $aliasrecuperado="";
         $consulta=$bd->query("select correo, alias from Usuarios");
         while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
