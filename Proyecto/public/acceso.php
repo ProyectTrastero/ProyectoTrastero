@@ -28,24 +28,23 @@ try {
 session_start();
 
 if (isset($_REQUEST['acceder'])) {
-        $usuario = $_SESSION['usuario'];
-        $trasteros = $_SESSION['trasteros'];
-        $id = intval($_POST['id'])-1;
-        $miTrastero = $trasteros[$id];
-        echo $blade->run("AccederTrastero", compact ('usuario', 'miTrastero'));
-        die;
-
-        
-}elseif (isset($_SESSION['usuario'])){
     $usuario = $_SESSION['usuario'];
-    $idUsuario = intval($usuario->getId());
-    $trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
-    $_SESSION['trasteros'] = $trasteros;
-        echo $blade->run("acceso", compact ('usuario', 'trasteros'));
-        die;
+    $trasteros = $_SESSION['trasteros'];
+    $id = intval($_POST['id'])-1;
+    $_SESSION['miTrastero'] = $trasteros[$id];
+    header("location:../public/accederTrastero.php"); 
 
     
-}elseif (isset($_REQUEST['salir'])) {
+}elseif (isset($_REQUEST['añadirTrastero'])) {  
+    
+    echo "Lo esta haciendo  emma";
+    die;
+      
+}elseif (isset($_REQUEST['modificar'])) { 
+    echo "tambien lo esta haciendo emma";
+    die;
+    
+}elseif (isset($_POST['salir'])) {
 // Destruyo la sesión
         session_unset();
         session_destroy();
@@ -56,7 +55,7 @@ if (isset($_REQUEST['acceder'])) {
 
         
 //DANI SOLO PUEDES TOCAR AQUI       
-}elseif (isset($_REQUEST['perfilusuario'])) {
+}elseif (isset($_POST['perfilusuario'])) {
         //Esta parte la esta haciendo Dani
         $usuario = $_SESSION['usuario'];
         $nombre = $usuario->getNombre();
@@ -66,6 +65,13 @@ if (isset($_REQUEST['acceder'])) {
         die;
 
 ///HASTA AQUI ¡¡NO TOQUES MASSSSSSS¡¡¡¡¡jajajaja 
+}elseif (isset($_SESSION['usuario'])){
+    $usuario = $_SESSION['usuario'];
+    $idUsuario = intval($usuario->getId());
+    $trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
+    $_SESSION['trasteros'] = $trasteros;
+        echo $blade->run("acceso", compact ('usuario', 'trasteros'));
+        die;
         
 }
 
