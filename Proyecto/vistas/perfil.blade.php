@@ -5,56 +5,110 @@
 
 @section('content')
     <div class="container">
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+      <h1 class="ml-4 mb-5">Perfil {{$datos['nombre']}}</h1>
+        <form method="POST" action="{{$_SERVER["PHP_SELF"]}}">
             
             <div class="row mb-3">
                 <label for="nombre" class="col-sm-2 col-lg-1 col-form-label form-text">Nombre: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="nombre" id="nombre" value="{{$nombre}}">
+                    <input class="form-control" type="text" name="nombre" id="nombre" value="{{$datos['nombre']}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Nombre:" data-bs-value="{{$nombre}}">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
             </div>
+            @if(isset($errores) && in_array("nombreInvalido", $errores)) 
             <div class="row mb-3">
-                <label for="apellido" class="col-sm-2 col-lg-1 col-form-label form-text">Apellido: </label>
-                <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="apellido" id="apellido" value="{{$apellidos}}">
-                </div>
-                <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Apellidos:" data-bs-value="{{$apellidos}}">
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </button>
+              <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+                  Solo se admiten letras y espacios en blanco.
+              </div>
             </div>
+            @endif
+            
+            <div class="row mb-3">
+              <label for="apellidos" class="col-sm-2 col-lg-1 col-form-label form-text">Apellidos: </label>
+              <div class="col-10 col-sm-8 col-md-5">
+                  <input class="form-control" type="text" name="apellidos" id="apellidos" value="{{$datos['apellidos']}}">
+              </div>
+              <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Apellidos:" data-bs-value="{{$apellidos}}">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </div>
+            @if(isset($errores) && in_array("apellidoInvalido", $errores)) 
+              <div class="row">
+                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+                    Solo se admiten letras y espacios en blanco.
+                </div>  
+              </div>
+            @endif
             <div class="row mb-3">
                 <label for="alias" class="col-sm-2 col-lg-1 col-form-label form-text">Alias: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="alias" id="alias" value="{{$alias}}">
+                    <input class="form-control" type="text" name="alias" id="alias" value="{{$datos['alias']}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Alias:" data-bs-value="{{$alias}}">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
             </div>
+            @if(isset($errores) && in_array("aliasInvalido", $errores)) 
+              <div class="row">
+                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+                  Los alias solo pueden contener letras, números, guiones y guiones bajos.
+                </div> 
+              </div> 
+            @endif
+            @if(isset($errores) && in_array("aliasExiste", $errores)) 
+              <div class="row">
+                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Este alias ya existe</div>
+              </div>  
+            @endif
             <div class="row mb-3">
-                <label for="clave" class="col-sm-2 col-lg-1 col-form-label form-text">Clave: </label>
-                <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="clave" id="clave" value="{{$clave}}">
-                </div>
-                <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Clave:" data-bs-value="{{$clave}}">
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </button>
+              <label for="clave" class="col-sm-2 col-lg-1 col-form-label form-text">Clave: </label>
+              <div class="col-10 col-sm-8 col-md-5">
+                  <input class="form-control" type="text" name="clave" id="clave" value="{{$datos['clave']}}">
+              </div>
+              <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Clave:" data-bs-value="{{$clave}}">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
             </div>
+            @if(isset($errores) && in_array("claveInvalida", $errores)) 
+              <div class="row">
+                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+                    Debe contener minimo 8 caracteres, una mayuscula una miniscula y un número. 
+                </div>  
+              </div>
+            @endif
+
             <div class="row mb-3">
-                <label for="correo" class="col-sm-2 col-lg-1 col-form-label form-text">Correo: </label>
-                <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="email" name="correo" id="Correo" value="{{$correo}}">
-                </div>
-                <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Correo:" data-bs-value="{{$correo}}">
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </button>
+              <label for="correo" class="col-sm-2 col-lg-1 col-form-label form-text">Correo: </label>
+              <div class="col-10 col-sm-8 col-md-5">
+                  <input class="form-control" type="email" name="correo" id="Correo" value="{{$datos['correo']}}">
+              </div>
+              <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Correo:" data-bs-value="{{$correo}}">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
             </div>
-			
-            <button type="submit" class="btn btn-primary" name="volver" value="volver">Volver</button>
-            <button type="submit" class="btn btn-primary" name="guardar" value="guardar" >Guardar</button>
+            @if(isset($errores) && in_array("correoInvalido", $errores)) 
+              <div class="row">
+                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Correo invalido</div>  
+              </div>
+            @endif
+            @if(isset($errores) && in_array("correoExiste", $errores)) 
+              <div class="row">
+                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Este correo ya existe</div>  
+              </div>
+            @endif
+            @if(isset($errores) && in_array("camposVacios", $errores)) 
+              <div class="row">
+                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Rellene todos los campos</div>  
+              </div>
+            @endif
+              
+            <div class="row">
+              <button type="submit" class="btn btn-primary col-4 col-lg-3" name="volver" value="volver">Volver</button>
+              <button type="submit" class="btn btn-primary col-4 col-lg-3 ml-2" name="guardar" value="guardar" >Guardar</button>
+            </div>
+
 
         </form>
     </div>

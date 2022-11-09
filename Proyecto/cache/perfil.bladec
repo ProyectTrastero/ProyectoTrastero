@@ -4,55 +4,110 @@
 
 <?php $this->startSection('content'); ?>
  <div class="container">
- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+ <h1 class="ml-4 mb-5">Perfil <?php echo \htmlentities($datos['nombre']??'', ENT_QUOTES, 'UTF-8', false); ?></h1>
+ <form method="POST" action="<?php echo \htmlentities($_SERVER["PHP_SELF"]??'', ENT_QUOTES, 'UTF-8', false); ?>">
  
  <div class="row mb-3">
  <label for="nombre" class="col-sm-2 col-lg-1 col-form-label form-text">Nombre: </label>
  <div class="col-10 col-sm-8 col-md-5">
- <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo \htmlentities($nombre??'', ENT_QUOTES, 'UTF-8', false); ?>" disabled>
+ <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo \htmlentities($datos['nombre']??'', ENT_QUOTES, 'UTF-8', false); ?>">
  </div>
  <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Nombre:" data-bs-value="<?php echo \htmlentities($nombre??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <i class="fa-solid fa-pen-to-square"></i>
  </button>
  </div>
+ <?php if(isset($errores) && in_array("nombreInvalido", $errores)): ?> 
  <div class="row mb-3">
- <label for="apellido" class="col-sm-2 col-lg-1 col-form-label form-text">Apellido: </label>
+ <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+ Solo se admiten letras y espacios en blanco.
+ </div>
+ </div>
+ <?php endif; ?>
+ 
+ <div class="row mb-3">
+ <label for="apellidos" class="col-sm-2 col-lg-1 col-form-label form-text">Apellidos: </label>
  <div class="col-10 col-sm-8 col-md-5">
- <input class="form-control" type="text" name="apellido" id="apellido" value="<?php echo \htmlentities($apellidos??'', ENT_QUOTES, 'UTF-8', false); ?>" disabled>
+ <input class="form-control" type="text" name="apellidos" id="apellidos" value="<?php echo \htmlentities($datos['apellidos']??'', ENT_QUOTES, 'UTF-8', false); ?>">
  </div>
  <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Apellidos:" data-bs-value="<?php echo \htmlentities($apellidos??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <i class="fa-solid fa-pen-to-square"></i>
  </button>
  </div>
+ <?php if(isset($errores) && in_array("apellidoInvalido", $errores)): ?> 
+ <div class="row">
+ <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+ Solo se admiten letras y espacios en blanco.
+ </div>  
+ </div>
+ <?php endif; ?>
  <div class="row mb-3">
- <label for="usuario" class="col-sm-2 col-lg-1 col-form-label form-text">Alias: </label>
+ <label for="alias" class="col-sm-2 col-lg-1 col-form-label form-text">Alias: </label>
  <div class="col-10 col-sm-8 col-md-5">
- <input class="form-control" type="text" name="usuario" id="usuario" value="<?php echo \htmlentities($alias??'', ENT_QUOTES, 'UTF-8', false); ?>" disabled>
+ <input class="form-control" type="text" name="alias" id="alias" value="<?php echo \htmlentities($datos['alias']??'', ENT_QUOTES, 'UTF-8', false); ?>">
  </div>
  <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Alias:" data-bs-value="<?php echo \htmlentities($alias??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <i class="fa-solid fa-pen-to-square"></i>
  </button>
  </div>
+ <?php if(isset($errores) && in_array("aliasInvalido", $errores)): ?> 
+ <div class="row">
+ <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+ Los alias solo pueden contener letras, números, guiones y guiones bajos.
+ </div> 
+ </div> 
+ <?php endif; ?>
+ <?php if(isset($errores) && in_array("aliasExiste", $errores)): ?> 
+ <div class="row">
+ <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Este alias ya existe</div>
+ </div>  
+ <?php endif; ?>
  <div class="row mb-3">
- <label for="password" class="col-sm-2 col-lg-1 col-form-label form-text">Clave: </label>
+ <label for="clave" class="col-sm-2 col-lg-1 col-form-label form-text">Clave: </label>
  <div class="col-10 col-sm-8 col-md-5">
- <input class="form-control" type="text" name="password" id="password" value="<?php echo \htmlentities($clave??'', ENT_QUOTES, 'UTF-8', false); ?>" disabled>
+ <input class="form-control" type="text" name="clave" id="clave" value="<?php echo \htmlentities($datos['clave']??'', ENT_QUOTES, 'UTF-8', false); ?>">
  </div>
  <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Clave:" data-bs-value="<?php echo \htmlentities($clave??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <i class="fa-solid fa-pen-to-square"></i>
  </button>
  </div>
+ <?php if(isset($errores) && in_array("claveInvalida", $errores)): ?> 
+ <div class="row">
+ <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+ Debe contener minimo 8 caracteres, una mayuscula una miniscula y un número. 
+ </div>  
+ </div>
+ <?php endif; ?>
+
  <div class="row mb-3">
  <label for="correo" class="col-sm-2 col-lg-1 col-form-label form-text">Correo: </label>
  <div class="col-10 col-sm-8 col-md-5">
- <input class="form-control" type="email" name="correo" id="Correo" value="<?php echo \htmlentities($correo??'', ENT_QUOTES, 'UTF-8', false); ?>" disabled>
+ <input class="form-control" type="email" name="correo" id="Correo" value="<?php echo \htmlentities($datos['correo']??'', ENT_QUOTES, 'UTF-8', false); ?>">
  </div>
  <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Correo:" data-bs-value="<?php echo \htmlentities($correo??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <i class="fa-solid fa-pen-to-square"></i>
  </button>
  </div>
+ <?php if(isset($errores) && in_array("correoInvalido", $errores)): ?> 
+ <div class="row">
+ <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Correo invalido</div>  
+ </div>
+ <?php endif; ?>
+ <?php if(isset($errores) && in_array("correoExiste", $errores)): ?> 
+ <div class="row">
+ <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Este correo ya existe</div>  
+ </div>
+ <?php endif; ?>
+ <?php if(isset($errores) && in_array("camposVacios", $errores)): ?> 
+ <div class="row">
+ <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Rellene todos los campos</div>  
+ </div>
+ <?php endif; ?>
  
- <a href="<?php __DIR__ ?>./../public/acceso.php"><button type="button" class="btn btn-primary">Volver</button></a>
+ <div class="row">
+ <button type="submit" class="btn btn-primary col-4 col-lg-3" name="volver" value="volver">Volver</button>
+ <button type="submit" class="btn btn-primary col-4 col-lg-3 ml-2" name="guardar" value="guardar" >Guardar</button>
+ </div>
+
 
  </form>
  </div>

@@ -27,7 +27,7 @@
             <div class="mb-3"><input id="inputNombre" type="text" name="nombre" placeholder="Nombre" class="nombre form-control" value="{{$datos['nombre']}}"></div>
             @if(isset($error) && in_array("nombreInvalido", $error)) 
             <div class="alert alert-danger form-text p-1" role="alert">
-                Debe comenzar por una letra, solo se admiten letras y espacios en blanco.
+                Solo se admiten letras y espacios en blanco.
             </div>  
             @endif
 

@@ -10,58 +10,7 @@ use PDO;
 
 class Validacion
 {
-    static function validarRegistro(PDO $bd, array $datos): array
-    {
-        $errores = array();
-
-        if (!Validacion::camposVacios($datos)) {
-            array_push($errores, "camposVacios");
-        }
-
-        if (!Validacion::aliasInvalido($datos['alias'])) {
-            array_push($errores, "usuarioInvalido");
-        }
-        if (!Validacion::nombreInvalido($datos['nombre'])) {
-            array_push($errores, "nombreInvalido");
-        }
-        if (!Validacion::apellidoInvalido($datos['apellidos'])) {
-            array_push($errores, "apellidoInvalido");
-        }
-        if (!Validacion::clavesNoIguales($datos['clave'], $datos['claveRepeat'])) {
-            array_push($errores, "contrasenasNoIguales");
-        }
-        if (!Validacion::claveInvalida($datos['clave'])) {
-            array_push($errores, "contrasenaInvalida");
-        }
-        if (!Validacion::correoInvalido($datos['correo'])) {
-            array_push($errores, "emailInvalido");
-        }
-
-        if (empty(!$datos['alias'])) {
-            if (!Usuario::checkExisteAlias($bd, $datos['alias'])) {
-                array_push($errores, "aliasExiste");
-            }
-        }
-
-        if (empty(!$datos['correo'])) {
-            if (!Usuario::checkExisteCorreo($bd, $datos['correo'])) {
-                array_push($errores, "correoExiste");
-            }
-        }
-        //si no hay errores agregamos el usuario a la base de datos
-        if (count($errores) == 0) {
-            Usuario::agregarUsuario(
-                $bd,
-                $datos['alias'],
-                $datos['clave'],
-                $datos['nombre'],
-                $datos['apellidos'],
-                $datos['correo']
-            );
-        }
-
-        return $errores;
-    }
+    
     //si hay algun campo vacio
     //
     static function camposVacios(array $campos): bool

@@ -85,6 +85,10 @@ class Usuario{
         $this->email = $email;
     }
 
+    public function setCorreo($correo):void{
+        $this->correo=$correo;
+    }
+
     public function setClave($clave): void {
         $this->clave = $clave;
     }
@@ -141,9 +145,25 @@ class Usuario{
            $stmt=null;
            return true;
         }
-       
+    }
+
+    /**
+     * Para modificar el Usuario
+     */
+    public static function modificarUsuario(PDO $bd,  int $id, string $alias, string $nombre, string $apellidos, string $clave, string $correo): bool {
+        $sql = "update usuarios set alias = :alias, nombre = :nombre, apellidos = :apellidos, clave = :clave, correo = :correo where id = :id";
+        //$sql = "update usuarios set alias = :alias , nombre = :nombre where id = :id";
+        $stmt = $bd->prepare($sql);
+        if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":apellidos" => $apellidos, ":clave" => $clave, ":correo" => $correo,":id" => $id])){
+        //if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":id" => $id])){
+            $stmt=null;
+            return false;
+        }else{
+            $stmt=null;
+            return true;
+        }
+
         
-      
     }
     //comprobamos si el alias ya existe 
     public static function checkExisteAlias (PDO $bd, string $alias):bool {
