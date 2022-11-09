@@ -12,10 +12,11 @@ class Usuario{
     private $alias;
     private $nombre;
     private $apellidos;
-    private $correo;
+    private $email;
     private $clave;
+    private $correo;
    
-    public function __construct(int $id=null,string $alias=null,string $nombre=null,string $apellidos=null,string $correo=null, string $clave=null) {
+    public function __construct(int $id=null,string $alias=null,string $nombre=null,string $apellidos=null,string $email=null, string $clave=null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
@@ -28,8 +29,8 @@ class Usuario{
         if (!is_null($apellidos)) {
             $this->apellidos = $apellidos;
         }
-        if (!is_null($correo)) {
-            $this->correo = $correo;
+        if (!is_null($email)) {
+            $this->email = $email;
         }
         if (!is_null($clave)) {
             $this->clave = $clave;
@@ -54,13 +55,15 @@ class Usuario{
     }
 
     public function getEmail() {
-        return $this->correo;
+        return $this->email;
     }
 
     public function getClave() {
         return $this->clave;
     }
-
+    public function getCorreo(){
+        return $this->correo;
+    }
     
     public function setId($id): void {
         $this->id = $id;
@@ -78,8 +81,8 @@ class Usuario{
         $this->apellidos = $apellidos;
     }
 
-    public function setEmail($correo): void {
-        $this->correo = $correo;
+    public function setEmail($email): void {
+        $this->email = $email;
     }
 
     public function setClave($clave): void {
@@ -125,7 +128,7 @@ class Usuario{
     public static function agregarUsuario(PDO $bd, string $alias, string $clave, string $nombre, string $apellidos, string $correo):bool {
         //$bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $query="insert into usuarios (alias,clave, nombre,  apellidos, correo) values(:alias,:clave, :nombre,  :apellidos, :correo)";
-       
+        //$stmt = $bd->prepare($query);
         $stmt=$bd->prepare($query);
         //encriptamos la contraseña
         //$hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
@@ -142,20 +145,46 @@ class Usuario{
         
       
     }
-    
-    public static function  existeAlias(PDO $bd, $alias): bool{
-        $query="select alias from usuarios where alias = :alias ;";
-        $stmt=$bd->prepare($query);
-        if(!$stmt->execute([":alias" => $alias])){
-            $stmt=null;
+    //comprobamos si el alias ya existe 
+    public static function checkExisteAlias (PDO $bd, string $alias):bool {
+        $query = "select alias from usuarios where alias = :alias;";
+        $stmt =$bd->prepare($query);
+        //si falla 
+        if(!$stmt->execute([":alias"=>$alias])){
+            //cerramos conexion
+            $stmt = null;
+            return false;
+        }
+        //si no falla la sentencia comprobamos si tenemos algun resultado
+        //si mayor que 0 es que ya existe
+        if($stmt->rowCount() > 0 ){
+            $stmt = null;
+            return false;
+        }else{
+            $stmt = null;
             return true;
         }
-        if($stmt->rowCount()>0){
-            $stmt=null;
-            return true;
-        }else{
-            $stmt=null;
+    }
+    //comprobamos si el correo ya existe 
+    public static function checkExisteCorreo (PDO $bd, string $correo):bool {
+        $query = "select alias from usuarios where correo = :correo ;";
+        $stmt = $bd->prepare($query);        
+
+        //si falla 
+        if(!$stmt->execute([":correo"=>$correo])){
+            //cerramos conexion
+            $stmt = null;
             return false;
+            
+        }
+        //si no falla la sentencia comprobamos si tenemos algun resultado
+        //si mayor que 0 es que ya existe
+        if($stmt->rowCount() > 0 ){
+            $stmt = null;
+            return false;
+        }else{
+            $stmt = null;
+            return true;
         }
     }
 

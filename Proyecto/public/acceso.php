@@ -28,13 +28,11 @@ try {
 session_start();
 
 if (isset($_SESSION['usuario'])){
-    $usuario = $_SESSION['usuario'];
-    $idUsuario = intval($usuario->getId());
-    //$trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
-    //$_SESSION['trasteros'] = $trasteros;
-    
-    //echo $blade->run("acceso", compact ('usuario', 'trasteros'));
-    echo $blade->run("acceso", compact ('usuario'));
+
+    if (isset($_REQUEST['perfilUsuario'])) {
+        header("location: editarPerfil.php");
+        die;
+    }
 
     if (isset($_REQUEST['cerrarSesion'])) {
         // Destruyo la sesión
@@ -47,16 +45,12 @@ if (isset($_SESSION['usuario'])){
         die;
     }
 
-    if (isset($_REQUEST['perfilUsuario'])) {
-        //Esta parte la esta haciendo Dani
-        $usuario = $_SESSION['usuario'];
-        header('location: editarPerfil.php');
-        //echo $blade->run("perfil", compact('nombre','apellidos','alias', 'clave', 'correo',));
-        die;
-    }
+
+    $usuario = $_SESSION['usuario'];
+    $idUsuario = intval($usuario->getId());
+    $trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
+    $_SESSION['trasteros'] = $trasteros;
     
+    echo $blade->run("acceso", compact ('usuario', 'trasteros'));
+
 }
-
-        
-
-

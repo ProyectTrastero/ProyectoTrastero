@@ -6,24 +6,19 @@
 
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <ul class="navbar-nav">
-    <li class="nav-item dropdown">
-      <form action="">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
-        </a>
-        <ul class="dropdown-menu">
-          <li><button type="submit" name="perfilUsuario">Perfil usuario</button></li>
-          <li><a class="dropdown-item" href="<?php __DIR__ ?>./../public/editarPerfil.php">Editar perfil</a></li>
-          <li><button type="submit" name="cerrarSesion">Cerrar sesión</button></li>
-      </form>
-        
-      </ul>
-    </li>
-  </ul>
+ 
+<form action="{{ htmlspecialchars($_SERVER["PHP_SELF"]) }}">
+  <div class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
+    </a>
+    <ul class="dropdown-menu">
+      <li><button type="submit" name="perfilUsuario">Perfil usuario</button></li>
+      <li><a class="dropdown-item" href="<?php __DIR__ ?>./../public/editarPerfil.php">Editar perfil</a></li>
+      <li><button type="submit" name="cerrarSesion">Cerrar sesión</button></li>
+    </ul>
+  </div>
+</form>
 @endsection
 
 {{-- Sección content --}}
