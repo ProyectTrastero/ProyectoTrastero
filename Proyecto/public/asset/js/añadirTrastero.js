@@ -13,12 +13,11 @@ function iniciar(){
     
 function añadirPapelera(e){
         var elemento = e.target;
-        var papelera= document.createElement("i");
+        var papelera= document.createElement("button");
         papelera.className="fa-sharp fa-solid fa-trash-can";
-        var boton = document.createElement("input");
+        //var boton = document.createElement("input");
         var atributo=document.createAttribute("type");
         var atributo2 = document.createAttribute("name");
-        var atributo3 = document.createAttribute("value");
        
         atributo.value = "submit";
         if(elemento.innerHTML.includes("Estanteria")){
@@ -30,15 +29,13 @@ function añadirPapelera(e){
          if(elemento.innerHTML.includes("Caja")){
             atributo2.value = "eliminarCaja";
         }
-        atributo3.value = "Eliminar";
+      
        
-        boton.setAttributeNode(atributo);
-        boton.setAttributeNode(atributo2);
-        boton.setAttributeNode(atributo3);
+        papelera.setAttributeNode(atributo);
+        papelera.setAttributeNode(atributo2);
         
-        if((elemento.children.length==0)&&(e.target.tagName==="H6")){
+        if((elemento.children.length==0)&&(e.target.tagName==="SPAN")){
         elemento.appendChild(papelera);
-        elemento.appendChild(boton);
     }
 
 }
@@ -46,10 +43,8 @@ function añadirPapelera(e){
 function eliminarPapelera(e){
     var elemento = e.target;
     var papelera=elemento.children[0];
-    var boton=elemento.children[1];
     var retardo=setTimeout(function(){
         elemento.removeChild(papelera);
-        elemento.removeChild(boton);
     }, 1000);  
 
 }

@@ -6,22 +6,22 @@
 
 {{-- Sección mensaje --}}
 @section('content')
+<script src="asset/js/ubicacionCaja.js"></script>
 <form action="" method="POST">     
     <div class="container">
         <div>Seleccione la ubicación de la caja:</div>
         <div>
             <label for="estanteria">Estantería</label>
-            <select name="estanteria">
-                <option>1</option>
-                <option>2</option>
+            <select id="seleccionEstanteria" name="estanteria">
+                @foreach($estanterias as $clave=>$valor)
+                <option>{{$clave}}</option>
+                @endforeach
             </select>
         </div>
         <div>
             <label for="balda">Balda</label>
-            <select name="balda">
-                <option>1</option>
-                <option>2</option>
-               
+            <select id="seleccionBalda" name="balda">
+                
             </select>  
         </div>
         <div>

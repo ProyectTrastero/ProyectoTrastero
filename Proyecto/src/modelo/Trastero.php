@@ -16,14 +16,12 @@ use \PDO as PDO;
  *
  * @author Nausicaa
  */
-class Trasteros {
+class Trastero {
     private $id;
-    private $idUsuario;
     private $nombre;
-    private $numEstanterias;
-    private $numCajas;
+    private $idUsuario;
 
-    public function __construct(int $id = null, int $idUsuario = null, string $nombre = null, int $numEstanterias = null, int $numCajas = null) {
+    public function __construct(int $id = null, string $nombre = null, int $idUsuario = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
@@ -32,12 +30,6 @@ class Trasteros {
         }
         if (!is_null($nombre)) {
             $this->nombre = $nombre;
-        }
-        if (!is_null($numEstanterias)) {
-            $this->numEstanterias = $numEstanterias;
-        }
-        if (!is_null($numCajas)) {
-            $this->numCajas = $numCajas;
         }
     }
 
@@ -53,14 +45,6 @@ class Trasteros {
         return $this->nombre;
     }
 
-    public function getNumEstanterias() {
-        return $this->numEstanterias;
-    }
-
-    public function getNumCajas() {
-        return $this->numCajas;
-    }
-
     public function setId($id): void {
         $this->id = $id;
     }
@@ -72,15 +56,6 @@ class Trasteros {
     public function setNombre($nombre): void {
         $this->nombre = $nombre;
     }
-
-    public function setNumEstanterias($numEstanterias): void {
-        $this->numEstanterias = $numEstanterias;
-    }
-
-    public function setNumCajas($numCajas): void {
-        $this->numCajas = $numCajas;
-    }
-
     
     public static function recuperaTrasteroPorUsuario(PDO $bd, int $idUsuario){
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
@@ -110,6 +85,15 @@ class Trasteros {
         $sth = null;
         $conProyecto = null;*/
     
+    public function añadirTastero($conexion): void{
+        $consulta="insert into Trasteros (nombre, idUsuario) values($this->nombre, $this->idUsuario)";
+        if($conexion->exec($consulta)==1){
+            echo "Trastero añadido correctamente";
+        } else {
+            echo "fallo al añadir Trastero a la base de datos";
+        }
+   }
+
     
 }    
 ?>

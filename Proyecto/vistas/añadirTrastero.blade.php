@@ -19,40 +19,44 @@
         <div>
             <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
             <input type="submit" name="añadirCaja" value="AÑADIR CAJA">
+            
+           
         </div>
     </form>
-    <div class="container">lugar de las estanterías 
-        @foreach ($estanterias as $clave => $valor)
+    <div class="container">
+        @foreach ($estanterias as $claveEstanteria => $baldas)
         <form action="" method="POST">
             <input type="submit" name="añadirBalda" value="AÑADIR BALDA">
-            <input type="hidden" name="numeroEstanteria" value="{{$clave}}">
+            <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
+            
         </form>
         <div class="container">
             <ul>
                 <li>
                     <form action="" method="POST">
-                        <input type="hidden" name="numeroEstanteria" value="{{$clave}}">
-                        <h6 class="papeleraOculta">Estanteria {{$clave}}</h6>
+                        <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
+                        <span class="papeleraOculta">Estanteria {{$claveEstanteria+1}}</span>
                     </form>
                 </li>
             
-            @foreach ($baldas as $clave =>$valor)
+            @foreach ($baldas as $claveBalda =>$valorBalda)
                 <ul> 
                     <li>
                         <form action="" method="POST">
-                            <input type="hidden" name="numeroBalda" value="{{$clave}}">
-                            <h6 class="papeleraOculta">Balda {{$clave}}</h6>
+                            <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
+                            <input type="hidden" name="numeroBalda" value="{{$claveBalda}}">
+                            <span class="papeleraOculta">Balda {{$claveBalda+1}}</span>
                         </form>
                     </li> 
                     <ul>
-                @foreach ($cajas as $clave =>$valor)
+<!--                @foreach ($cajas as $claveCaja =>$valorCaja)
                     <li>
                         <form action="" method="POST">
-                            <input type="hidden" name="numeroCaja" value="{{$clave}}">
-                            <h6 class="papeleraOculta">Caja {{$clave}}</h6>
+                            <input type="hidden" name="numeroCaja" value="{{$claveCaja}}">
+                            <h6 class="papeleraOculta">Caja {{$claveCaja+1}}</h6>
                         </form>
                     </li>   
-                @endforeach   
+                @endforeach   -->
                     </ul>
                 </ul>
             @endforeach
@@ -72,4 +76,3 @@
 </div>
 
 @endsection
-

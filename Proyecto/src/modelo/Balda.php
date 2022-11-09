@@ -8,21 +8,22 @@ use \PDO as PDO;
  *
  * @author Emma
  */
-class Estanteria {
+
+class Balda {
     private $id;
-    private $alias;
-    private $idTrastero;
+    private $numero;
+    private $idEstanteria;
  
     //Transformamos el alias a string antes de instanciar una estantería.
-    public function __construct(int $id = null, string $alias = null, int $idTrastero = null) {
+    public function __construct(int $id = null, int $numero = null, int $idEstanteria = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
-        if (!is_null($alias)) {
-            $this->alias = $alias;
+        if (!is_null($numero)) {
+            $this->numero = $numero;
         }
-        if (!is_null($idTrastero)) {
-            $this->idTrastero = $idTrastero;
+        if (!is_null($idEstanteria)) {
+            $this->idEstanteria = $idEstanteria;
         }
     }
     
@@ -30,24 +31,24 @@ class Estanteria {
         return $this->id;
     }
     
-    public function getAlias() {
-        return $this->alias;
+    public function getNumero() {
+        return $this->numero;
     }
 
-    public function getidTrastero() {
-        return $this->idTrastero;
+    public function getIdEstanteria() {
+        return $this->idEstanteria;
     }
-    
+ 
     public function setId($id): void {
         $this->id = $id;
     }
     
-    public function setAlias($idUsuario): void {
-        $this->alias = $alias;
+    public function setNumero($numero): void {
+        $this->numero = $numero;
     }
 
-    public function setIdTrastero($idTrastero): void {
-        $this->idTrastero = idTrastero;
+    public function setIdEstanteria($idEstanteria): void {
+        $this->idEstanteria = $idEstanteria;
     }
-    
+
 }
