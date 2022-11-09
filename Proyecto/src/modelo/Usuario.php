@@ -7,13 +7,14 @@ use \PDO as PDO;
 /**
  * Usuario representa al usuario que está usando la aplicación
  */
-class Usuario extends BD {
+class Usuario{
     private $id;
     private $alias;
     private $nombre;
     private $apellidos;
     private $email;
     private $clave;
+    private $correo;
    
     public function __construct(int $id=null,string $alias=null,string $nombre=null,string $apellidos=null,string $email=null, string $clave=null) {
         if (!is_null($id)) {
@@ -60,7 +61,9 @@ class Usuario extends BD {
     public function getClave() {
         return $this->clave;
     }
-
+    public function getCorreo(){
+        return $this->correo;
+    }
     
     public function setId($id): void {
         $this->id = $id;
@@ -80,6 +83,10 @@ class Usuario extends BD {
 
     public function setEmail($email): void {
         $this->email = $email;
+    }
+
+    public function setCorreo($correo):void{
+        $this->correo=$correo;
     }
 
     public function setClave($clave): void {
@@ -122,11 +129,11 @@ class Usuario extends BD {
     /*
      * Funcion para agregar un usuario
      */
-    public function agregarUsuario( string $alias, string $clave, string $nombre, string $apellidos, string $correo):bool {
+    public static function agregarUsuario(PDO $bd, string $alias, string $clave, string $nombre, string $apellidos, string $correo):bool {
         //$bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $query="insert into usuarios (alias,clave, nombre,  apellidos, correo) values(:alias,:clave, :nombre,  :apellidos, :correo)";
         //$stmt = $bd->prepare($query);
-        $stmt=$this->getConexion()->prepare($query);
+        $stmt=$bd->prepare($query);
         //encriptamos la contraseña
         //$hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
         //si falla el insert
@@ -138,23 +145,35 @@ class Usuario extends BD {
            $stmt=null;
            return true;
         }
-       
+    }
+
+    /**
+     * Para modificar el Usuario
+     */
+    public static function modificarUsuario(PDO $bd,  int $id, string $alias, string $nombre, string $apellidos, string $clave, string $correo): bool {
+        $sql = "update usuarios set alias = :alias, nombre = :nombre, apellidos = :apellidos, clave = :clave, correo = :correo where id = :id";
+        //$sql = "update usuarios set alias = :alias , nombre = :nombre where id = :id";
+        $stmt = $bd->prepare($sql);
+        if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":apellidos" => $apellidos, ":clave" => $clave, ":correo" => $correo,":id" => $id])){
+        //if(!$stmt->execute([":alias" => $alias, ":nombre" => $nombre, ":id" => $id])){
+            $stmt=null;
+            return false;
+        }else{
+            $stmt=null;
+            return true;
+        }
+
         
-      
     }
     //comprobamos si el alias ya existe 
-    protected function checkExistAlias (string $alias):bool {
+    public static function checkExisteAlias (PDO $bd, string $alias):bool {
         $query = "select alias from usuarios where alias = :alias;";
-        $stmt = $this->getConexion()->prepare($query);
-        //$stmt = $this->connect()->prepare($query);
-        
-
+        $stmt =$bd->prepare($query);
         //si falla 
         if(!$stmt->execute([":alias"=>$alias])){
             //cerramos conexion
             $stmt = null;
             return false;
-            
         }
         //si no falla la sentencia comprobamos si tenemos algun resultado
         //si mayor que 0 es que ya existe
@@ -167,11 +186,9 @@ class Usuario extends BD {
         }
     }
     //comprobamos si el correo ya existe 
-    protected function checkExistCorreo (string $correo):bool {
+    public static function checkExisteCorreo (PDO $bd, string $correo):bool {
         $query = "select alias from usuarios where correo = :correo ;";
-        $stmt = $this->getConexion()->prepare($query);
-        //$stmt = $this->connect()->prepare($query);
-        
+        $stmt = $bd->prepare($query);        
 
         //si falla 
         if(!$stmt->execute([":correo"=>$correo])){

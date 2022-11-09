@@ -28,6 +28,24 @@ try {
 session_start();
 
 if (isset($_SESSION['usuario'])){
+
+    if (isset($_REQUEST['perfilUsuario'])) {
+        header("location: editarPerfil.php");
+        die;
+    }
+
+    if (isset($_REQUEST['cerrarSesion'])) {
+        // Destruyo la sesión
+        session_unset();
+        session_destroy();
+        setcookie(session_name(), '', 0, '/');
+        // Invoco la vista del formulario de iniciar sesion
+        header('location: index.php');
+        //echo $blade->run("sesion");
+        die;
+    }
+
+
     $usuario = $_SESSION['usuario'];
     $idUsuario = intval($usuario->getId());
     $trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
@@ -35,28 +53,4 @@ if (isset($_SESSION['usuario'])){
     
     echo $blade->run("acceso", compact ('usuario', 'trasteros'));
 
-    
-}elseif (isset($_REQUEST['salir'])) {
-// Destruyo la sesión
-        session_unset();
-        session_destroy();
-        setcookie(session_name(), '', 0, '/');
-// Invoco la vista del formulario de iniciar sesion
-        echo $blade->run("sesion");
-        die;
-
-        
-//DANI SOLO PUEDES TOCAR AQUI       
-}elseif (isset($_REQUEST['perfilusuario'])) {
-        //Esta parte la esta haciendo Dani
-        $usuario = $_SESSION['usuario'];
-        $nombre = $usuario->getNombre();
-        $clave = $usuario->getClave();
-        $email = $usuario->getEmail();
-        echo $blade->run("perfil", compact('nombre', 'clave', 'email'));
-        die;
-
-///HASTA AQUI ¡¡NO TOQUES MASSSSSSS¡¡¡¡¡jajajaja 
 }
-
-
