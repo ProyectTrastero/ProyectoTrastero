@@ -6,11 +6,17 @@
 
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
-<div>
-    <input type="button" class="btn btn-default dropdown-toggle"
-           data-toggle="dropdown"> {{$usuario->getNombre()}} <span class="caret"></span><br/>
-    <input type="button" name="perfilusuario" value="Perfil"><br/>       
-    <input type="button" name="salir" value="Cerrar Sesion">
+
+<div class="menu">
+    <form action="" method="POST"> 
+    <h5>{{$usuario->getNombre()}}</h5>
+    
+    <div>
+            <input class="btn btn-info" type="submit" name="perfilusuario" value="Ver Perfil">
+            <input class="btn btn-info mr-3" type="submit" name="salir" value="Cerrar Sesión">
+    </div>
+        
+    </form>
 </div>
 @endsection
 
@@ -19,8 +25,10 @@
 
 <div class="container">
         <div>
+            <form method="POST" action="" id='formañadirtratero'>
             <h3>Diseña tu trastero</h3>
-            <button name="añadirTrastero" id="añadirTrastero"><span>Diseñar</span></button>
+            <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Diseñar</span></button>
+            </form>
         </div>
         <br/><br/><br/><br/>
         
