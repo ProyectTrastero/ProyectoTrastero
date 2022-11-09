@@ -6,6 +6,7 @@
         <title>@yield('title')</title>
         <link rel="stylesheet" href="asset/css/style.css" >
         <link rel="stylesheet" href="asset/css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="asset/css/all.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     </head>
      <body>
@@ -52,7 +53,7 @@
         
         @yield('content')
 
-        <!-- Scripts -->
+        <!-- Scripts-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="asset/js/jquery/jquery-3.6.0.min.js"></script>
     </body>
