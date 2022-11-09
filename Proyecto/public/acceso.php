@@ -33,15 +33,13 @@ if (isset($_REQUEST['acceder'])) {
     $id = intval($_POST['id'])-1;
     $_SESSION['miTrastero'] = $trasteros[$id];
     header("location:../public/accederTrastero.php"); 
-
     
 }elseif (isset($_REQUEST['añadirTrastero'])) {  
-    
-    echo "Lo esta haciendo  emma";
+    header("location:../public/añadirTrastero.php"); 
     die;
       
 }elseif (isset($_REQUEST['modificar'])) { 
-    echo "tambien lo esta haciendo emma";
+    header("location:../public/modificarTrastero.php"); 
     die;
     
 }elseif (isset($_POST['salir'])) {
