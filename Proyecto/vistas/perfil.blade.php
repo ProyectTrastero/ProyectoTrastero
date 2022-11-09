@@ -5,12 +5,12 @@
 
 @section('content')
     <div class="container">
-        <form action="">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             
             <div class="row mb-3">
                 <label for="nombre" class="col-sm-2 col-lg-1 col-form-label form-text">Nombre: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="nombre" id="nombre" value="{{$nombre}}" disabled>
+                    <input class="form-control" type="text" name="nombre" id="nombre" value="{{$nombre}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Nombre:" data-bs-value="{{$nombre}}">
                     <i class="fa-solid fa-pen-to-square"></i>
@@ -19,25 +19,25 @@
             <div class="row mb-3">
                 <label for="apellido" class="col-sm-2 col-lg-1 col-form-label form-text">Apellido: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="apellido" id="apellido" value="{{$apellidos}}" disabled>
+                    <input class="form-control" type="text" name="apellido" id="apellido" value="{{$apellidos}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Apellidos:" data-bs-value="{{$apellidos}}">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
             </div>
             <div class="row mb-3">
-                <label for="usuario" class="col-sm-2 col-lg-1 col-form-label form-text">Alias: </label>
+                <label for="alias" class="col-sm-2 col-lg-1 col-form-label form-text">Alias: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="usuario" id="usuario" value="{{$alias}}" disabled>
+                    <input class="form-control" type="text" name="alias" id="alias" value="{{$alias}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Alias:" data-bs-value="{{$alias}}">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
             </div>
             <div class="row mb-3">
-                <label for="password" class="col-sm-2 col-lg-1 col-form-label form-text">Password: </label>
+                <label for="clave" class="col-sm-2 col-lg-1 col-form-label form-text">Clave: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="password" id="password" value="{{$clave}}" disabled>
+                    <input class="form-control" type="text" name="clave" id="clave" value="{{$clave}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Clave:" data-bs-value="{{$clave}}">
                   <i class="fa-solid fa-pen-to-square"></i>
@@ -46,14 +46,15 @@
             <div class="row mb-3">
                 <label for="correo" class="col-sm-2 col-lg-1 col-form-label form-text">Correo: </label>
                 <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="email" name="correo" id="Correo" value="{{$correo}}" disabled>
+                    <input class="form-control" type="email" name="correo" id="Correo" value="{{$correo}}">
                 </div>
                 <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Correo:" data-bs-value="{{$correo}}">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
             </div>
 			
-            <a href="<?php __DIR__ ?>./../public/acceso.php"><button type="button" class="btn btn-primary">Volver</button></a>
+            <button type="submit" class="btn btn-primary" name="volver" value="volver">Volver</button>
+            <button type="submit" class="btn btn-primary" name="guardar" value="guardar" >Guardar</button>
 
         </form>
     </div>

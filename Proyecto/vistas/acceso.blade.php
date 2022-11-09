@@ -7,13 +7,13 @@
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
  
-<form action="{{ htmlspecialchars($_SERVER["PHP_SELF"]) }}">
+<form action="{{ $_SERVER["PHP_SELF"] }}">
   <div class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
     </a>
     <ul class="dropdown-menu">
-      <li><button type="submit" name="perfilUsuario">Perfil usuario</button></li>
+      <li><button class="dropdown" type="submit" name="perfilUsuario">Perfil usuario</button></li>
       <li><a class="dropdown-item" href="<?php __DIR__ ?>./../public/editarPerfil.php">Editar perfil</a></li>
       <li><button type="submit" name="cerrarSesion">Cerrar sesión</button></li>
     </ul>
