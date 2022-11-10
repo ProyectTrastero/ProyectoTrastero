@@ -40,7 +40,7 @@ class Caja {
     }
     
     public function getNumero() {
-        return $this->numeero;
+        return $this->numero;
     }
 
     public function getIdTrastero() {

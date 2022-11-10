@@ -15,7 +15,7 @@ class Balda {
     private $idEstanteria;
  
     //Transformamos el alias a string antes de instanciar una estantería.
-    public function __construct(int $id = null, int $numero = null, int $idEstanteria = null) {
+    public function __construct(int $id = null, string $numero = null, string $idEstanteria = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }

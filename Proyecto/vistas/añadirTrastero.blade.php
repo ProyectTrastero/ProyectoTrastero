@@ -22,7 +22,7 @@
             
            
         </div>
-    </form>
+    
     <div class="container">
         @foreach ($estanterias as $claveEstanteria => $baldas)
         <form action="" method="POST">
@@ -49,29 +49,47 @@
                         </form>
                     </li> 
                     <ul>
-<!--                @foreach ($cajas as $claveCaja =>$valorCaja)
-                    <li>
-                        <form action="" method="POST">
-                            <input type="hidden" name="numeroCaja" value="{{$claveCaja}}">
-                            <h6 class="papeleraOculta">Caja {{$claveCaja+1}}</h6>
-                        </form>
-                    </li>   
-                @endforeach   -->
+                        @foreach($cajas as $caja)
+                            @if(($caja->getIdEstanteria()==$claveEstanteria+1)&&($caja->getIdBalda()==$claveBalda+1))
+                            <li>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
+                                    <input type="hidden" name="numeroBalda" value="{{$claveBalda}}">
+                                    <input type="hidden" name="numeroCaja" value="{{$caja->getNumero()}}">
+                                    <span class="papeleraOculta">Caja {{$caja->getNumero()}}</span>
+                                </form>
+                            </li>
+                            @endif
+                        @endforeach
                     </ul>
                 </ul>
             @endforeach
             </ul>
         </div>
         @endforeach
-
     </div>
-    <form action="" method="POST">
+    <ul>
+        @foreach ($cajas as $caja)
+            @if(($caja->getIdBalda()==null)&&($caja->getIdEstanteria()==null))
+            
+                <li>
+                    <form action="" method="POST">
+                        <input type="hidden" name="numeroCaja" value="{{$caja->getNumero()}})">
+                        <span class="papeleraOculta">Caja {{$caja->getNumero()}}</span>
+                    </form>
+                </li> 
+            @endif
+        @endforeach   
+    </ul>
+    
     <div>
-        <input type="submit" name="volverAcceso" value="VOLVER">
-        <input type="submit" name="guardar" value="GUARDAR">
+        <!--<form action="" method="POST">-->
+            <input type="submit" name="volverAcceso" value="VOLVER">
+            <input type="submit" name="guardar" value="GUARDAR">
+        </form>
     </div>
 
-    </form>
+   
     
 </div>
 
