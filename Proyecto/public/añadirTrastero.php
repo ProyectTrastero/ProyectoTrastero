@@ -68,7 +68,7 @@ if(isset($_POST['añadirEstanteria'])){
     echo $blade->run('añadirTrastero', compact('estanterias'));
  
 }else if(isset($_POST['añadirCaja'])){
-    echo $blade->run('ubicacionCaja');
+    echo $blade->run('ubicacionCaja', compact('estanterias'));
 }else if(isset($_POST['añadirUbicacion'])){
         if(!filter_has_var(INPUT_POST,'sinAsignar')) {
 //            $numeroBalda = trim(filter_input(INPUT_POST, 'numeroBalda', FILTER_SANITIZE_STRING));
@@ -117,7 +117,7 @@ if(isset($_POST['añadirEstanteria'])){
     echo $blade->run('añadirTrastero', compact('estanterias'));
     
 }else{
-   echo $blade->run('añadirTrastero', compact('estanterias'));
+     echo $blade->run('añadirTrastero', compact('estanterias'));
 }
 
 

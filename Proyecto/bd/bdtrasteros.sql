@@ -11,7 +11,7 @@ create table if not exists usuarios(
     nombre varchar(100) not null,
     apellidos varchar(100) not null,
     clave varchar(100) not null, 
-    email varchar(100) unique not null
+    correo varchar(100) unique not null
 );
 
 -- 2.1.2 .- Tabla trasteros
