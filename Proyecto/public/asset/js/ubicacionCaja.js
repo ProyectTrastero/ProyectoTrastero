@@ -13,7 +13,8 @@ function iniciar(){
     }
 
 function obtenerEstanteria(){
-    seleccionada= estanteria.selectedIndex;
+    seleccionada= estanteria.options[estanteria.selectedIndex].text;
+   
 }
 
 function habilitarCombo(){
@@ -40,15 +41,17 @@ $(document).ready(function(){
                 data: {estanteriaSeleccionada: seleccionada},
                 success: function(result){
                     var numero=result.numeroBaldas;
+                    var listadoBaldas=Object.keys(numero);
+                   
                     if(balda.hasChildNodes()){
                         do{
                             var eliminado=balda.lastChild;
                            balda.removeChild(eliminado);  
                         }while(balda.hasChildNodes())
                     }
-                    for(i=0;i<numero;i++){
+                    for(i=0;i<listadoBaldas.length;i++){
                         var elemento=document.createElement("OPTION");
-                        elemento.innerHTML=i+1;
+                        elemento.innerHTML=parseInt(listadoBaldas[i])+1;
                         balda.appendChild(elemento);
                     }
                    

@@ -68,11 +68,13 @@ if(isset($_POST['añadirEstanteria'])){
         if(!filter_has_var(INPUT_POST,'sinAsignar')) {
             $numeroEstanteria=intVal(trim(filter_input(INPUT_POST, 'estanteria', FILTER_SANITIZE_STRING)));
             $numeroBalda= intVal(trim(filter_input(INPUT_POST, 'balda', FILTER_SANITIZE_STRING)));
-            $numeroCaja=count($cajas)+1;
-            $nuevaCaja = new Caja();
-            $nuevaCaja->setNumero($numeroCaja);
-            $nuevaCaja->setIdEstanteria($numeroEstanteria);
-            $nuevaCaja->setIdBalda($numeroBalda);
+//            $numeroCaja=count($cajas)+1;
+            $nuevaCaja = array();
+            $nuevaCaja['numeroEstanteria']=$numeroEstanteria;
+            $nuevaCaja['numeroBalda']=$numeroBalda;
+//            $nuevaCaja->setNumero($numeroCaja);
+//            $nuevaCaja->setIdEstanteria($numeroEstanteria);
+//            $nuevaCaja->setIdBalda($numeroBalda);
             $cajas[]= $nuevaCaja;
             
             $datosTrastero['cajas']=$cajas;
@@ -80,14 +82,12 @@ if(isset($_POST['añadirEstanteria'])){
             $_SESSION['datosTrastero']=$datosTrastero;
 
         }else{
-            $numeroCaja=count($cajas)+1;
+            
             $numeroEstanteria="";
             $numeroBalda="";
-            $nuevaCaja = new Caja();
-            $nuevaCaja->setNumero($numeroCaja);
-            $nuevaCaja->setNumero($numeroCaja);
-            $nuevaCaja->setIdEstanteria($numeroEstanteria);
-            $nuevaCaja->setIdBalda($numeroBalda);
+            $nuevaCaja = array();
+            $nuevaCaja['numeroEstanteria']=$numeroEstanteria;
+            $nuevaCaja['numeroBalda']=$numeroBalda;
             $cajas[]= $nuevaCaja;
             
             $datosTrastero['cajas']=$cajas;
@@ -124,7 +124,8 @@ if(isset($_POST['añadirEstanteria'])){
     $numeroEstanteria=trim(filter_input(INPUT_POST, 'numeroEstanteria', FILTER_SANITIZE_STRING));
     unset($estanterias[$numeroEstanteria]);
     foreach($cajas as $clave=>$valor){
-        if($valor->getIdEstanteria()==$numeroEstanteria+1){
+        
+        if((intVal($valor['numeroEstanteria'])-1)==intVal($numeroEstanteria)){
             unset($cajas[$clave]);
         }
     }
@@ -139,7 +140,7 @@ if(isset($_POST['añadirEstanteria'])){
     $numeroBalda=trim(filter_input(INPUT_POST, 'numeroBalda', FILTER_SANITIZE_STRING));
     unset($estanterias[$numeroEstanteria][$numeroBalda]);
     foreach($cajas as $clave=>$valor){
-        if($valor->getIdBalda()==$numeroBalda+1){
+        if((intVal($valor['numeroBalda'])-1)==(intVal($numeroBalda))){
             unset($cajas[$clave]);
         }
     }
@@ -153,7 +154,7 @@ if(isset($_POST['añadirEstanteria'])){
 }else if(isset($_POST['eliminarCaja'])){
     $numeroCaja= trim(filter_input(INPUT_POST, 'numeroCaja', FILTER_SANITIZE_STRING));
     foreach($cajas as $clave=>$valor){
-        if($valor->getNumero()==$numeroCaja){
+        if($clave==$numeroCaja){
             unset($cajas[$clave]);
         }
     }

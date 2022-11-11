@@ -10,7 +10,8 @@ session_start();
 $datosTrastero = $_SESSION['datosTrastero'];
 $estanterias=$datosTrastero['estanterias'];
 $estanteriaSeleccionada=filter_input(INPUT_POST, 'estanteriaSeleccionada',FILTER_SANITIZE_STRING);
-$numeroBaldas=count($estanterias[intval($estanteriaSeleccionada)]);
+//$numeroBaldas=count($estanterias[intval($estanteriaSeleccionada)]);
+$numeroBaldas=$estanterias[intVal($estanteriaSeleccionada)-1];
 $response=[];
 try {
     $response['numeroBaldas']=$numeroBaldas;  

@@ -18,6 +18,8 @@ function añadirPapelera(e){
         //var boton = document.createElement("input");
         var atributo=document.createAttribute("type");
         var atributo2 = document.createAttribute("name");
+        var atributo3 = document.createAttribute("style");
+        atributo3.value = "color: red";
        
         atributo.value = "submit";
         if(elemento.innerHTML.includes("Estanteria")){
@@ -33,6 +35,7 @@ function añadirPapelera(e){
        
         papelera.setAttributeNode(atributo);
         papelera.setAttributeNode(atributo2);
+        papelera.setAttributeNode(atributo3);
         
         if((elemento.children.length==0)&&(e.target.tagName==="SPAN")){
         elemento.appendChild(papelera);
