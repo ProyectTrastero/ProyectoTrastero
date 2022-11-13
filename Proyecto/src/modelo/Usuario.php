@@ -12,11 +12,10 @@ class Usuario extends BD {
     private $alias;
     private $nombre;
     private $apellidos;
-    private $email;
     private $clave;
     private $correo;
    
-    public function __construct(int $id=null,string $alias=null,string $nombre=null,string $apellidos=null,string $email=null, string $clave=null) {
+    public function __construct(int $id=null,string $alias=null,string $nombre=null,string $apellidos=null,string $correo=null, string $clave=null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
@@ -29,8 +28,8 @@ class Usuario extends BD {
         if (!is_null($apellidos)) {
             $this->apellidos = $apellidos;
         }
-        if (!is_null($email)) {
-            $this->email = $email;
+        if (!is_null($correo)) {
+            $this->correo = $correo;
         }
         if (!is_null($clave)) {
             $this->clave = $clave;
@@ -52,10 +51,6 @@ class Usuario extends BD {
 
     public function getApellidos() {
         return $this->apellidos;
-    }
-
-    public function getEmail() {
-        return $this->email;
     }
 
     public function getClave() {
@@ -82,9 +77,6 @@ class Usuario extends BD {
         $this->apellidos = $apellidos;
     }
 
-    public function setEmail($email): void {
-        $this->email = $email;
-    }
     
     public function setCorreo($correo):void{
         $this->correo=$correo;
