@@ -14,6 +14,7 @@ class Usuario{
     private $apellidos;
     private $email;
     private $clave;
+    private $correo;
    
     public function __construct(int $id=null,string $alias=null,string $nombre=null,string $apellidos=null,string $email=null, string $clave=null) {
         if (!is_null($id)) {
@@ -84,6 +85,9 @@ class Usuario{
         $this->email = $email;
     }
 
+    public function setCorreo($correo):void{
+        $this->correo=$correo;
+    }
 
     public function setClave($clave): void {
         $this->clave = $clave;
@@ -133,7 +137,7 @@ class Usuario{
         //encriptamos la contraseña
         //$hasshedContraseña = password_hash($clave, PASSWORD_DEFAULT);
         //si falla el insert
-        if(!$stmt->execute([":alias" => $this->alias, ":nombre" => $this->nombre, ":apellidos" => $this->apellidos, ":clave" => $hasshedContraseña, ":correo" => $this->email])){
+        if(!$stmt->execute([":alias" => $alias,":clave" => $clave, ":nombre" => $nombre, ":apellidos" => $apellidos, ":correo" => $correo])){
             $stmt=null;
             return false;
         }else{
@@ -226,7 +230,7 @@ class Usuario{
         return $contraseña;
     }
 
-    public static function obtenerAlias(PDO $bd, $correo, $alias){
+    public static function obtenerAlias(PDO $bd, $correo){
         $aliasrecuperado="";
         $consulta=$bd->query("select correo, alias from Usuarios");
         while($registro=$consulta->fetch(PDO::FETCH_OBJ)){

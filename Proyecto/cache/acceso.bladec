@@ -29,6 +29,7 @@
  <button name="añadirTrastero" id="añadirTrastero"><span>Diseñar</span></button>
  </div>
  <br/><br/><br/><br/>
+ <?php if(isset($_SESSION ['trasteros'])): ?>
  <div>
  <form method="POST" action="" id='formtrasteros'>
  <h3>Mis trasteros</h3>
@@ -44,6 +45,7 @@
  <br/><br/><br/>
  </form>     
  </div>
+ <?php endif; ?>
 </div>
 
 <?php $this->stopSection(); ?>
