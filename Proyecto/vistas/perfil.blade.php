@@ -5,6 +5,18 @@
 
 @section('content')
     <div class="container">
+      @if (@isset($_SESSION['msj']))
+        <div class="alert alert-{{$_SESSION['msj-type']}} alert-dismissible fade show" role="alert"">
+          {{$_SESSION['msj']}}
+          {{-- {{unset($_SESSION['msj'])}} --}}
+          <?php
+           unset($_SESSION['msj']); 
+           unset($_SESSION['msj-type']);
+           ?>
+           
+           <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> x </span>
+        </div>
+      @endif
       <h1 class="ml-4 mb-5">Perfil {{$datos['nombre']}}</h1>
         <form method="POST" action="{{$_SERVER["PHP_SELF"]}}">
             
@@ -13,9 +25,7 @@
                 <div class="col-10 col-sm-8 col-md-5">
                     <input class="form-control" type="text" name="nombre" id="nombre" value="{{$datos['nombre']}}">
                 </div>
-                <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Nombre:" data-bs-value="{{$nombre}}">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
+                
             </div>
             @if(isset($errores) && in_array("nombreInvalido", $errores)) 
             <div class="row mb-3">
@@ -30,9 +40,7 @@
               <div class="col-10 col-sm-8 col-md-5">
                   <input class="form-control" type="text" name="apellidos" id="apellidos" value="{{$datos['apellidos']}}">
               </div>
-              <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Apellidos:" data-bs-value="{{$apellidos}}">
-                <i class="fa-solid fa-pen-to-square"></i>
-              </button>
+              
             </div>
             @if(isset($errores) && in_array("apellidoInvalido", $errores)) 
               <div class="row">
@@ -46,9 +54,7 @@
                 <div class="col-10 col-sm-8 col-md-5">
                     <input class="form-control" type="text" name="alias" id="alias" value="{{$datos['alias']}}">
                 </div>
-                <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Alias:" data-bs-value="{{$alias}}">
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </button>
+                
             </div>
             @if(isset($errores) && in_array("aliasInvalido", $errores)) 
               <div class="row">
@@ -67,9 +73,7 @@
               <div class="col-10 col-sm-8 col-md-5">
                   <input class="form-control" type="text" name="clave" id="clave" value="{{$datos['clave']}}">
               </div>
-              <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Clave:" data-bs-value="{{$clave}}">
-                <i class="fa-solid fa-pen-to-square"></i>
-              </button>
+              
             </div>
             @if(isset($errores) && in_array("claveInvalida", $errores)) 
               <div class="row">
@@ -84,9 +88,7 @@
               <div class="col-10 col-sm-8 col-md-5">
                   <input class="form-control" type="email" name="correo" id="Correo" value="{{$datos['correo']}}">
               </div>
-              <button class="col col-sm-1 btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#perfilModal" data-bs-campo="Correo:" data-bs-value="{{$correo}}">
-                <i class="fa-solid fa-pen-to-square"></i>
-              </button>
+              
             </div>
             @if(isset($errores) && in_array("correoInvalido", $errores)) 
               <div class="row">
