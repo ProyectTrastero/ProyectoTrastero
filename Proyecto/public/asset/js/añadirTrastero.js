@@ -1,13 +1,51 @@
 window.addEventListener("load", iniciar);
 var ocultos;
-
+var antiguoNombre;
 function iniciar(){
     ocultos= document.getElementsByClassName("papeleraOculta");
     
     for(i=0;i<ocultos.length;i++){
         ocultos[i].addEventListener("mouseover", añadirPapelera);
         ocultos[i].addEventListener("mouseout", eliminarPapelera);
+        ocultos[i].addEventListener("dblclick", habilitarEdicion);
+        ocultos[i].addEventListener("blur", deshabilitarEdicion);
     }
+}
+
+function deshabilitarEdicion(e){
+    var elemento = e.target;
+    elemento.setAttribute("contenteditable", "false");
+    
+    var nombre = elemento.innerText;
+    $(document).ready(function(){
+            url="modificarNombreAjax.php";
+            
+            $.ajax({
+                type: "POST",
+                url: url, 
+                dataType: "json", 
+                data: {nuevoNombre: nombre, nombre: antiguoNombre},
+                success: function(result){
+                    var respuesta = result.cambiado;
+                    if(!respuesta){
+                        alert ("Ya existe un elemento con ese nombre.");
+                    }else{
+                        alert("cambiado correctamente");
+                    }
+                    
+                   
+            }}); 
+    });  
+    
+    
+}
+
+function habilitarEdicion(e){
+    var elemento = e.target;
+    antiguoNombre = elemento.innerText;
+    elemento.setAttribute("contenteditable", "true");
+    
+    
 }
     
     
@@ -15,20 +53,22 @@ function añadirPapelera(e){
         var elemento = e.target;
         var papelera= document.createElement("button");
         papelera.className="fa-sharp fa-solid fa-trash-can";
-        //var boton = document.createElement("input");
         var atributo=document.createAttribute("type");
         var atributo2 = document.createAttribute("name");
         var atributo3 = document.createAttribute("style");
-        atributo3.value = "color: red";
+        atributo3.value = "color: red; border: white";
        
+        var elementoAnterior=elemento.previousElementSibling;
+        var nombre = elementoAnterior.getAttribute("name");
+        
         atributo.value = "submit";
-        if(elemento.innerHTML.includes("Estanteria")){
+        if(nombre.includes("Estanteria")){
             atributo2.value = "eliminarEstanteria";
         }
-         if(elemento.innerHTML.includes("Balda")){
+         if(nombre.includes("Balda")){
             atributo2.value = "eliminarBalda";
         }
-         if(elemento.innerHTML.includes("Caja")){
+         if(nombre.includes("Caja")){
             atributo2.value = "eliminarCaja";
         }
       

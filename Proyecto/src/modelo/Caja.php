@@ -11,18 +11,18 @@ use \PDO as PDO;
 
 class Caja {
     private $id;
-    private $numero;
+    private $nombre;
     private $idTrastero;
     private $idEstanteria;
     private $idBalda;
  
     //Transformamos el alias a string antes de instanciar una estantería.
-    public function __construct(int $id = null, int $numero = null, int $idTrastero = null, int $idEstanteria = null, int $idBalda = null) {
+    public function __construct(int $id = null, string $nombre = null, int $idTrastero = null, int $idEstanteria = null, int $idBalda = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
-        if (!is_null($numero)) {
-            $this->numero = $numero;
+        if (!is_null($nombre)) {
+            $this->nombre = $nombre;
         }
         if (!is_null($idTrastero)) {
             $this->idTrastero = $idTrastero;
@@ -39,8 +39,8 @@ class Caja {
         return $this->id;
     }
     
-    public function getNumero() {
-        return $this->numero;
+    public function getNombre() {
+        return $this->nombre;
     }
 
     public function getIdTrastero() {
@@ -57,8 +57,8 @@ class Caja {
         $this->id = $id;
     }
     
-    public function setNumero($numero): void {
-        $this->numero = $numero;
+    public function setNombre($nombre): void {
+        $this->nombre = $nombre;
     }
 
     public function setIdTrastero($idTrastero): void {
