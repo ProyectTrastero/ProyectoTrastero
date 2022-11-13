@@ -142,4 +142,21 @@
  </div>
  </div>
 <?php $this->stopSection(); ?>
+<?php $erroresString = $errores ?>
+<script>
+ errores= <?php echo count($errores) ?>;
+ alert(errores);
+ mostrarAlert(errores);
+ function mostrarAlert(errores){
+ 
+ if(errores==1){
+ alert("entramos");
+ var alert = document.querySelectorAll('.alert')
+ alertList.forEach(function (alert) {
+ new bootstrap.Alert(alert)
+ })
+ }
+ }
+ 
+</script>
 <?php if (isset($_shouldextend[1])) { echo $this->runChild('app'); } ?>
