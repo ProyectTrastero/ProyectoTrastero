@@ -10,16 +10,16 @@ use \PDO as PDO;
  */
 class Estanteria {
     private $id;
-    private $numero;
+    private $nombre;
     private $idTrastero;
  
     //Transformamos el alias a string antes de instanciar una estantería.
-    public function __construct(int $id = null, string $numero = null, int $idTrastero = null) {
+    public function __construct(int $id = null, string $nombre = null, int $idTrastero = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
-        if (!is_null($numero)) {
-            $this->numero = $numero;
+        if (!is_null($nombre)) {
+            $this->nombre = $nombre;
         }
         if (!is_null($idTrastero)) {
             $this->idTrastero = $idTrastero;
@@ -30,7 +30,7 @@ class Estanteria {
         return $this->id;
     }
     
-    public function getNumero() {
+    public function getNombre() {
         return $this->numero;
     }
 
@@ -42,7 +42,7 @@ class Estanteria {
         $this->id = $id;
     }
     
-    public function setNumero($numero): void {
+    public function setNombre($numero): void {
         $this->numero = $numero;
     }
 
@@ -51,7 +51,7 @@ class Estanteria {
     }
     
     public function añadirEstanteria($conexion): void{
-        $consulta="insert into Estanterias (numero, idTrastero) values($this->numero, $this->idTrastero)";
+        $consulta="insert into Estanterias (nombre, idTrastero) values($this->nombre, $this->idTrastero)";
             if($conexion->exec($consulta)==1){
                 echo "Estantería añadida correctamente";
             } else {

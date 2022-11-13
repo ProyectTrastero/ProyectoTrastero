@@ -8,14 +8,15 @@ function iniciar(){
     estanteria = document.getElementById("seleccionEstanteria");
     balda = document.getElementById("seleccionBalda");
     estanteria.addEventListener("click", crearBaldas);
+    crearBaldas();
     sinAsignar = document.getElementById("sinAsignar");
     sinAsignar = document.addEventListener("change", habilitarCombo);
     }
 
 function obtenerEstanteria(){
     seleccionada= estanteria.options[estanteria.selectedIndex].text;
-   
 }
+
 
 function habilitarCombo(){
     if(document.getElementById("sinAsignar").checked){

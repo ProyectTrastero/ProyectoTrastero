@@ -5,11 +5,13 @@
         <group>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/respuestaAjax.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/app.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/modificarTrastero.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/recuperarContraseña.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Validacion.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/registro.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/ubicacionCaja.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/recuperarContraseña.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Estanteria.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/index.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/bd/bdtrasteros.sql</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/añadirTrastero.blade.php</file>
@@ -17,8 +19,10 @@
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/modificarTrastero.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vendor/composer/ClassLoader.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/acceso.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Trastero.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Balda.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Caja.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/añadirTrastero.js</file>
-            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Usuario.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/añadirTrastero.php</file>
         </group>
     </open-files>
