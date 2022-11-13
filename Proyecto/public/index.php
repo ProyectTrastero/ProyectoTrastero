@@ -42,7 +42,7 @@ if (isset($_POST['procsesion'])) {
 }elseif (isset($_POST['botonregistro'])){
     header("location:../public/registro.php"); 
 }elseif (isset ($_POST['recuperarcontrasena'])){
-    header("Location: recuperarContraseña.php");
+    header("location:../public/recuperarContraseña.php"); 
     
 }else{
     echo $blade->run("sesion");
