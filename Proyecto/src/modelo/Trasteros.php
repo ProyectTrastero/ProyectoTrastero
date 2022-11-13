@@ -89,10 +89,14 @@ class Trasteros {
         $sth->execute([":idUsuario" => $idUsuario]);
         $sth->setFetchMode(PDO::FETCH_CLASS, Trasteros::class);
         $trastero = array();
-        while ($trastero = ($sth->fetch()) ?: null){
-            $trasteros[]=$trastero;
-        }
-        return $trasteros;
+            while ($trastero = ($sth->fetch()) ?: null){
+                $trasteros[]=$trastero;
+            }
+            if (isset($trasteros)){
+            return $trasteros;
+            }else{
+            return "";    
+            }
     }
     
     /*$sql = "select id, nombre from productos order by nombre";
