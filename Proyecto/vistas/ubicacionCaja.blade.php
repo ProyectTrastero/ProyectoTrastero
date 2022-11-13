@@ -14,7 +14,7 @@
             <label for="estanteria">Estantería</label>
             <select id="seleccionEstanteria" name="estanteria">
                 @foreach($estanterias as $clave=>$valor)
-                <option>{{$clave}}</option>
+                <option>{{$clave+1}}</option>
                 @endforeach
             </select>
         </div>
@@ -25,7 +25,7 @@
             </select>  
         </div>
         <div>
-            <label><input type="checkbox" name="sinAsignar">Sin asignar</label>
+            <label><input id="sinAsignar" type="checkbox" name="sinAsignar">Sin asignar</label>
         </div>
         <div>
             <input class="btn btn-info" type="submit" name="volver" value="Volver">

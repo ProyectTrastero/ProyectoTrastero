@@ -85,15 +85,24 @@ class Trastero {
         $sth = null;
         $conProyecto = null;*/
     
-    public function añadirTastero($conexion): void{
-        $consulta="insert into Trasteros (nombre, idUsuario) values($this->nombre, $this->idUsuario)";
+    public function añadirTrastero($conexion): void{
+        $consulta="insert into Trasteros (nombre, idUsuario) values ('$this->nombre', $this->idUsuario)";
         if($conexion->exec($consulta)==1){
             echo "Trastero añadido correctamente";
         } else {
             echo "fallo al añadir Trastero a la base de datos";
         }
    }
-
+   
+   public static function recuperarTrasteroPorUsuarioyNombre(PDO $bd, int $idUsuario, string $nombre): Trastero{
+        $consulta="select * from Trasteros where id=$idUsuario and nombre='$nombre'";
+        $registro=$bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Trastero::class);
+        $trastero = ($registro->fetch()) ?: null;
+        return $trastero;
+    }
+   
+ 
     
 }    
 ?>
