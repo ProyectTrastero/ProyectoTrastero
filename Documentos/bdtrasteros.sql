@@ -25,7 +25,7 @@ create table if not exists trasteros(
 -- 2.1.3.- Tabla estanterias
 create table if not exists estanterias(
     id int auto_increment primary key,
-    numero int,
+    nombre varchar(50),
     idTrastero int, 
     constraint fk_estanteria_trastero foreign key(idTrastero) references trasteros(id) on update cascade on delete cascade
 
@@ -34,7 +34,7 @@ create table if not exists estanterias(
 -- 2.1.4 Tabla baldas
 create table if not exists baldas(
     id int primary key,
-    numero int not null,
+    nombre varchar(50),
     idEstanteria int not null,
     constraint fk_balda_estanteria foreign key(idEstanteria) references estanterias(id) on update cascade on delete cascade 
 );
@@ -42,7 +42,7 @@ create table if not exists baldas(
 -- 2.1.5 Tabla cajas
 create table if not exists cajas(
     id int primary key,
-    numero varchar(20) not null,
+    nombre varchar(20),
     idtrastero int not null,
     idestanteria int,
     idbalda int,
