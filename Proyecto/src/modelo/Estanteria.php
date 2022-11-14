@@ -31,7 +31,7 @@ class Estanteria {
     }
     
     public function getNombre() {
-        return $this->numero;
+        return $this->nombre;
     }
 
     public function getidTrastero() {
@@ -42,8 +42,8 @@ class Estanteria {
         $this->id = $id;
     }
     
-    public function setNombre($numero): void {
-        $this->numero = $numero;
+    public function setNombre($nombre): void {
+        $this->nombre = $nombre;
     }
 
     public function setIdTrastero($idTrastero): void {

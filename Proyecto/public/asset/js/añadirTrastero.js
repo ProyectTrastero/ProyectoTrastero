@@ -7,7 +7,7 @@ function iniciar(){
     for(i=0;i<ocultos.length;i++){
         ocultos[i].addEventListener("mouseover", añadirPapelera);
         ocultos[i].addEventListener("mouseout", eliminarPapelera);
-        ocultos[i].addEventListener("dblclick", habilitarEdicion);
+        ocultos[i].addEventListener("click", habilitarEdicion);
         ocultos[i].addEventListener("blur", deshabilitarEdicion);
     }
 }
@@ -27,10 +27,10 @@ function deshabilitarEdicion(e){
                 data: {nuevoNombre: nombre, nombre: antiguoNombre},
                 success: function(result){
                     var respuesta = result.cambiado;
+                    var antiguoNombre = result.nombre;
                     if(!respuesta){
                         alert ("Ya existe un elemento con ese nombre.");
-                    }else{
-                        alert("cambiado correctamente");
+                        elemento.innerText = antiguoNombre;
                     }
                     
                    

@@ -20,10 +20,8 @@ class Trasteros {
     private $id;
     private $idUsuario;
     private $nombre;
-    private $numEstanterias;
-    private $numCajas;
 
-    public function __construct(int $id = null, int $idUsuario = null, string $nombre = null, int $numEstanterias = null, int $numCajas = null) {
+    public function __construct(int $id = null, int $idUsuario = null, string $nombre = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
@@ -32,12 +30,6 @@ class Trasteros {
         }
         if (!is_null($nombre)) {
             $this->nombre = $nombre;
-        }
-        if (!is_null($numEstanterias)) {
-            $this->numEstanterias = $numEstanterias;
-        }
-        if (!is_null($numCajas)) {
-            $this->numCajas = $numCajas;
         }
     }
 
@@ -53,13 +45,6 @@ class Trasteros {
         return $this->nombre;
     }
 
-    public function getNumEstanterias() {
-        return $this->numEstanterias;
-    }
-
-    public function getNumCajas() {
-        return $this->numCajas;
-    }
 
     public function setId($id): void {
         $this->id = $id;
@@ -73,13 +58,6 @@ class Trasteros {
         $this->nombre = $nombre;
     }
 
-    public function setNumEstanterias($numEstanterias): void {
-        $this->numEstanterias = $numEstanterias;
-    }
-
-    public function setNumCajas($numCajas): void {
-        $this->numCajas = $numCajas;
-    }
 
     
     public static function recuperaTrasteroPorUsuario(PDO $bd, int $idUsuario){
@@ -114,6 +92,22 @@ class Trasteros {
         $sth = null;
         $conProyecto = null;*/
     
+    public static function existeNombre($bd, $nombre, $idUsuario): bool{
+        $existe = false;
+        $consulta = "select * from trasteros where nombre = '$nombre' and idUsuario = '$idUsuario'";
+        $respuesta=$bd->query($consulta);
+        while($registro=$respuesta->fetch(PDO::FETCH_OBJ)){
+            if($nombre==$registro->nombre){
+                $existe = true;
+            }
+        }
+        return $existe;
+    }
+    
+    public function guardarTrastero($bd): void{
+        $consulta="insert into Trasteros (nombre, idUsuario) values('$this->nombre', $this->idUsuario)";
+        $bd->exec($consulta);
+    }
     
 }    
 ?>
