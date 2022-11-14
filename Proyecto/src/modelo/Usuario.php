@@ -103,11 +103,11 @@ class Usuario{
      *
      * @returns Usuario que corresponde a ese nombre y clave o null en caso contrario
      */
-    public static function recuperaUsuarioPorCredencial(PDO $bd, string $nombre, string $clave): ?Usuario {
+    public static function recuperaUsuarioPorCredencial(PDO $bd, string $alias, string $clave): ?Usuario {
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-        $sql = 'select * from usuarios where nombre=:nombre and clave=:clave';
+        $sql = 'select * from usuarios where alias=:alias and clave=:clave';
         $sth = $bd->prepare($sql);
-        $sth->execute([":nombre" => $nombre, ":clave" => $clave]);
+        $sth->execute([":alias" => $alias, ":clave" => $clave]);
         $sth->setFetchMode(PDO::FETCH_CLASS, Usuario::class);
         $usuario = ($sth->fetch()) ?: null;
         return $usuario;

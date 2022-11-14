@@ -26,9 +26,9 @@ try {
 }
 
 if (isset($_POST['procsesion'])) {
-    $nombre = trim(filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_STRING));
+    $alias = trim(filter_input(INPUT_POST, 'alias', FILTER_SANITIZE_STRING));
     $clave = trim(filter_input(INPUT_POST, 'clave', FILTER_SANITIZE_STRING));
-    $usuario = Usuario::recuperaUsuarioPorCredencial($bd, $nombre, $clave);
+    $usuario = Usuario::recuperaUsuarioPorCredencial($bd, $alias, $clave);
         if ($usuario) {
             session_start();
             $_SESSION['usuario'] = $usuario;

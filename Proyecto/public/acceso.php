@@ -27,8 +27,44 @@ try {
 
 session_start();
 
-if (isset($_SESSION['usuario'])){
+if (isset($_REQUEST['acceder'])) {
+    $usuario = $_SESSION['usuario'];
+    $trasteros = $_SESSION['trasteros'];
+    $id = intval($_POST['id'])-1;
+    $_SESSION['miTrastero'] = $trasteros[$id];
+    header("location:../public/accederTrastero.php"); 
+    
+}elseif (isset($_REQUEST['añadirTrastero'])) {  
+    header("location:../public/añadirTrastero.php"); 
+    die;
+      
+}elseif (isset($_REQUEST['modificar'])) { 
+    header("location:../public/modificarTrastero.php"); 
+    die;
 
+/*    
+}elseif (isset($_POST['salir'])) {
+// Destruyo la sesión
+        session_unset();
+        session_destroy();
+        setcookie(session_name(), '', 0, '/');
+// Invoco la vista del formulario de iniciar sesion
+        header("location:../public/index.php"); 
+        die;
+
+        
+//DANI SOLO PUEDES TOCAR AQUI       
+}elseif (isset($_POST['perfilusuario'])) {
+        //Esta parte la esta haciendo Dani
+        $usuario = $_SESSION['usuario'];
+        $nombre = $usuario->getNombre();
+        $clave = $usuario->getClave();
+        $email = $usuario->getEmail();
+        echo $blade->run("perfil", compact('nombre', 'clave', 'email'));
+        die;
+*/
+///HASTA AQUI ¡¡NO TOQUES MASSSSSSS¡¡¡¡¡jajajaja 
+}elseif (isset($_SESSION['usuario'])){
     if (isset($_REQUEST['perfilUsuario'])) {
         header("location: editarPerfil.php");
         die;
@@ -44,13 +80,16 @@ if (isset($_SESSION['usuario'])){
         //echo $blade->run("sesion");
         die;
     }
-
-
+    
+    
+    
     $usuario = $_SESSION['usuario'];
     $idUsuario = intval($usuario->getId());
     $trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
     $_SESSION['trasteros'] = $trasteros;
-    
-    echo $blade->run("acceso", compact ('usuario', 'trasteros'));
-
+        echo $blade->run("acceso", compact ('usuario', 'trasteros'));
+        die;
+        
 }
+
+
