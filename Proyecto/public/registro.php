@@ -28,7 +28,7 @@ try {
 }
 
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['registrarse'])) {
     
     //recuperamos la informacion
     
@@ -51,10 +51,12 @@ if (isset($_POST['submit'])) {
         echo $blade->run('registro', ['error' => $errores,'datos' => $datos]);
     } else {
         //si no hay errores vamos a el index el cual redirige a acceso, no se si mejor deberia ir a acceso desde aca
-        header("location: ../public/index.php?error=none");
-        
+        header("location: ../public/index.php");
     }
-}else{
+}else if(isset($_POST['volver'])){
+    header("location: ../public/index.php");
+}
+else{
 
     //por defecto muestra vista registro
     echo $blade->run("registro");
@@ -78,13 +80,13 @@ function validarRegistro(PDO $bd, array $datos): array
         array_push($errores, "apellidoInvalido");
     }
     if (!Validacion::clavesNoIguales($datos['clave'], $datos['claveRepeat'])) {
-        array_push($errores, "contrasenasNoIguales");
+        array_push($errores, "clavesNoIguales");
     }
     if (!Validacion::claveInvalida($datos['clave'])) {
-        array_push($errores, "contrasenaInvalida");
+        array_push($errores, "claveInvalida");
     }
     if (!Validacion::correoInvalido($datos['correo'])) {
-        array_push($errores, "emailInvalido");
+        array_push($errores, "correoInvalido");
     }
 
     if (!empty($datos['alias'])) {
