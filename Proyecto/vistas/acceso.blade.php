@@ -3,9 +3,10 @@
 
 {{-- Sección aporta el título de la página --}}
 @section('title', 'Mi trastero Inicio')
-<!--
+
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
+ 
 <form action="{{ $_SERVER["PHP_SELF"] }}">
   <div class="nav-item dropdown">
     <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -18,7 +19,8 @@
   </div>
 </form>
 @endsection
--->
+
+
 {{-- Sección mensaje --}}
 @section('content')
 
@@ -26,7 +28,7 @@
         <div>
             <form method="POST" action="" id='formañadirtratero'>
             <h3>Diseña tu trastero</h3>
-            <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Diseñar</span></button>
+            <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Añadir nuevo trastero</span></button>
             </form>
         </div>
         <br/><br/><br/><br/>

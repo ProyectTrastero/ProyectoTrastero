@@ -38,7 +38,8 @@ if (isset($_SESSION['usuario'])) {
     }
 
     if (isset($_POST['guardar'])) {
-        //obtenemos los datos
+        unset($_POST['guardar']);
+        //obtenemos los datos del formulario
         $id = $usuario->getId();
         (isset($_POST['nombre'])) ? $nombre = Validacion::sanearInput(filter_input(INPUT_POST, 'nombre')) : $nombre = "";
         (isset($_POST['apellidos'])) ? $apellidos = Validacion::sanearInput(filter_input(INPUT_POST, 'apellidos')) : $apellidos = "";
@@ -56,19 +57,29 @@ if (isset($_SESSION['usuario'])) {
         );
         //validamos los datos, si datos validos, se actualiza el usuario en la base de datos
         $errores = array();
-        $errores = validarCambiosPerfil($bd, $datos);
+        $errores = validarCambiosPerfil($bd, $datos,$usuario);
         //comprobamos si tenemos errores
         if (count($errores) > 0) {
+           if(in_array("noModificado", $errores)){
+                
+                $_SESSION['msj']="No se ha modificado ningun campo";
+                $_SESSION['msj-type']="info";
+            }
             echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos]);
             die;
         } else {
-            //si no tenemos errores actualizamos el $usuario en local
+            //si no obtenemos errores actualizamos el $usuario en local
             $usuario->setNombre($nombre);
             $usuario->setApellidos($apellidos);
             $usuario->setAlias($alias);
             $usuario->setClave($clave);
             $usuario->setCorreo($correo);
+            //inicializamos variable para mostrar mensaje
+            $_SESSION['msj']="Perfil actualizado con exito";
+            $_SESSION['msj-type']="success";
+            
         }
+        
     }
 
     $datos = array(
@@ -82,14 +93,20 @@ if (isset($_SESSION['usuario'])) {
     die;
 }
 
-function validarCambiosPerfil(PDO $bd, array $datos): array
+function validarCambiosPerfil(PDO $bd, array $datos, Usuario $usuario): array
 {
     $errores = array();
 
+    if($datos['nombre']==$usuario->getNombre() && $datos['apellidos'] == $usuario->getApellidos() && $datos['alias'] == $usuario->getAlias()
+        && $datos['clave'] == $usuario->getClave() && $datos['correo'] == $usuario->getCorreo()){
+            array_push($errores, 'noModificado');
+            return $errores;
+    }
+    
     if (!Validacion::camposVacios($datos)) {
         array_push($errores, 'camposVacios');
     }
-
+    
     if (!Validacion::nombreInvalido($datos['nombre'])) {
         array_push($errores, 'nombreInvalido');
     }
@@ -101,9 +118,8 @@ function validarCambiosPerfil(PDO $bd, array $datos): array
     if (!Validacion::aliasInvalido($datos['alias'])) {
         array_push($errores, 'aliasInvalido');
     }
-    $daniel= $GLOBALS['usuario']->getAlias();
 
-    if (!empty($datos['alias']) && $datos['alias'] != $GLOBALS['usuario']->getAlias()) {
+    if (!empty($datos['alias']) && $datos['alias'] != $usuario->getAlias()) {
         if (!Usuario::checkExisteAlias($bd, $datos['alias'])) {
             array_push($errores, "aliasExiste");
         }
@@ -117,7 +133,7 @@ function validarCambiosPerfil(PDO $bd, array $datos): array
         array_push($errores, 'correoInvalido');
     }
 
-    if (!empty($datos['alias']) && $datos['correo'] != $GLOBALS['usuario']->getCorreo()) {
+    if (!empty($datos['alias']) && $datos['correo'] != $usuario->getCorreo()) {
         if (!Usuario::checkExisteAlias($bd, $datos['alias'])) {
             array_push($errores, "correoExiste");
         }

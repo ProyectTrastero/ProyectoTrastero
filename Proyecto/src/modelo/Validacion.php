@@ -24,7 +24,7 @@ class Validacion
     }
 
 
-    //formatio valido : Los alias solo pueden contener letras, números, guiones y guiones bajos
+    //formatio valido : Los alias solo pueden contener letras, nÃºmeros, guiones y guiones bajos
     //y una longitud maxima de 100 caracteres
     static function aliasInvalido(string $alias): bool
     {
@@ -59,7 +59,7 @@ class Validacion
             return true;
         }
     }
-    //comprobamos que las contraseñas coincidan
+    //comprobamos que las contraseÃ±as coincidan
     static function clavesNoIguales(string $clave, string $claveRepeat): bool
     {
 
@@ -96,7 +96,7 @@ class Validacion
     //saneamos lo introducido por el usuario en los imputs
     static function sanearInput($data)
     {
-        //eliminamos caracteres innecesarios como espacios de más, saltos de linea, tabulaciones
+        //eliminamos caracteres innecesarios como espacios de mÃ¡s, saltos de linea, tabulaciones
         $data = trim($data);
         //eliminamos backslashes
         $data = stripslashes($data);
