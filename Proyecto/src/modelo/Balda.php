@@ -61,5 +61,29 @@ class Balda {
     public function setIdEstanteria($idEstanteria): void {
         $this->idEstanteria = $idEstanteria;
     }
+    
+    public function añadirBalda($bd){
+        $consulta="insert into Baldas (nombre, idEstanteria) values('$this->nombre', $this->idEstanteria)";
+        $bd->exec($consulta);
+    }
+    
+    public function actualizarNombre($bd, $nuevoNombre){
+       $consulta="update Baldas set nombre = '$nuevoNombre' where id = $this->id";
+       $bd->exec($consulta);
+   }
+   
+   public static function obtenerIdPorNombre($bd, $nombre, $idEstanteria): int{
+        $consulta=$bd->query("select id from baldas where nombre='$nombre' and idEstanteria=$idEstanteria");
+        $registro=$consulta->fetch(PDO::FETCH_OBJ);
+        $idRecuperado=$registro->id;
+        
+        return $idRecuperado;
+   }
+   
+   public function eliminar($bd): void{
+       $consulta ="delete from Baldas where id = $this->id";
+       $bd->exec($consulta);
+       
+   }
 
 }

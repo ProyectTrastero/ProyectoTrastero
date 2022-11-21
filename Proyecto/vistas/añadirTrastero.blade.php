@@ -20,13 +20,18 @@
             <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
             <input type="submit" name="añadirCaja" value="AÑADIR CAJA">
             <input type="submit" name="volverAcceso" value="VOLVER">
+            @if($datosTrastero['tipo']=="guardar")
             <input type="submit" name="guardar" value="GUARDAR">
+            @else
+            <input type="submit" name="modificar" value="MODIFICAR">
+            @endif
+            
         </form>
     </div>
     
     <div class="container">
         <div class="row">
-            @foreach ($estanterias as $claveEstanteria => $baldas)
+            @foreach ($datosTrastero['estanterias'] as $claveEstanteria => $baldas)
             @php
                 $indice=0
             @endphp
@@ -34,50 +39,57 @@
                 <ul>
                     <li>
                         <form action="" method="POST">
-                            <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
-                            <input type="hidden" name="nombreEstanteria" value="{{$almacenEstanterias[$claveEstanteria]->getNombre()}}">
-                            <span class="papeleraOculta" contenteditable="false">{{$almacenEstanterias[$claveEstanteria]->getNombre()}}</span>
+                            <input type="hidden" name="nombreEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()}}">
+                            <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}"> 
+                            <input type="hidden" name="idEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()}}">
+                            <span class="papeleraOculta" contenteditable="false">{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()}}</span>
                         </form>
                     </li>
                 @php
                     $baldasRecuperadas=array()
                 @endphp
                 @foreach ($baldas as $claveBalda =>$valorBalda)  
-                @foreach ($almacenBaldas as $clave=>$balda)
-                    @if($balda->getIdEstanteria()==$claveEstanteria+1)
+                @foreach ($datosTrastero['almacenBaldas'] as $clave=>$balda)
+                    @if($balda->getIdEstanteria()==$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId())
                         @php
-                        $baldasRecuperadas[]= $almacenBaldas[$clave]
+                        $baldasRecuperadas[]= $datosTrastero['almacenBaldas'][$clave]
                         @endphp
                     @endif
                 @endforeach
-
+             
                     <ul> 
                         <li>
                             <form action="" method="POST">
+                                <input type="hidden" name="idEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()}}">
                                 <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
+                                <input type="hidden" name="nombreEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()}}">
                                 <input type="hidden" name="numeroBalda" value="{{$claveBalda}}">
+                                <input type="hidden" name="idBalda" value="{{$baldasRecuperadas[$indice]->getId()}}">
                                 <input type="hidden" name="nombreBalda" value="{{$baldasRecuperadas[$indice]->getNombre()}}">
                                 <span class="papeleraOculta" contenteditable="false">{{$baldasRecuperadas[$indice]->getNombre()}}</span>
-
                             </form>
                         </li> 
                         <ul>
-                             @php
-                                $indice++
-                            @endphp
-                            @foreach($almacenCajas as $claveCaja=>$valorCaja)
-                                @if((intVal($valorCaja->getIdEstanteria())==$claveEstanteria+1)&&(intVal($valorCaja->getIdBalda())==$claveBalda+1))
+                         
+                            @foreach($datosTrastero['almacenCajas'] as $claveCaja=>$valorCaja)
+                                @if(($valorCaja->getIdEstanteria()==$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId())&&($valorCaja->getIdBalda()==$baldasRecuperadas[$indice]->getId()))
                                 <li>
                                     <form action="" method="POST">
+                                        <input type="hidden" name="idEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()}}">
                                         <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
                                         <input type="hidden" name="numeroBalda" value="{{$claveBalda}}">
-                                        <input type="hidden" name="nombreBalda" value="{{$nombreBalda}}">
+                                        <input type="hidden" name="nombreBalda" value="{{$baldasRecuperadas[$indice]->getNombre()}}">
+                                        <input type="hidden" name="idBalda" value="{{$baldasRecuperadas[$indice]->getId()}}">
                                         <input type="hidden" name="nombreCaja" value="{{$valorCaja->getNombre()}}">
+                                        <input type="hidden" name="idCaja" value="{{$valorCaja->getId()}}">
                                         <span class="papeleraOculta" contenteditable="false">{{$valorCaja->getNombre()}}</span>
                                     </form>
                                 </li>
                                 @endif
                             @endforeach
+                            @php
+                                $indice++
+                            @endphp
                         </ul>
                     </ul>
                 @endforeach
@@ -85,6 +97,7 @@
                 <form action="" method="POST">
                     <input type="submit" name="añadirBalda" value="AÑADIR BALDA">
                     <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
+                    <input type="hidden" name="nombreEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()}}">
                 </form>
             </div>
             @endforeach
@@ -92,11 +105,12 @@
     </div>
     <div>
         <ul>
-            @foreach ($almacenCajas as $claveCaja=>$valorCaja)
+            @foreach ($datosTrastero['almacenCajas'] as $claveCaja=>$valorCaja)
                 @if(($valorCaja->getIdBalda()=="")&&($valorCaja->getIdEstanteria()==""))
                     <li>
                         <form action="" method="POST">
                             <input type="hidden" name="nombreCaja" value="{{$valorCaja->getNombre()}}">
+                            <input type="hidden" name="idCaja" value="{{$valorCaja->getId()}}">
                             <span class="papeleraOculta" contenteditable="false">{{$valorCaja->getNombre()}}</span>
                         </form>
                     </li> 

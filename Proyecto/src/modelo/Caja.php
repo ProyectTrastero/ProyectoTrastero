@@ -71,4 +71,33 @@ class Caja {
         $this->idBalda = $idBalda;
     }
     
+    public function actualizarNombre($bd, $nuevoNombre){
+       $consulta="update Cajas set nombre = '$nuevoNombre' where id = $this->id";
+       $bd->exec($consulta);
+   }
+   
+   public static function obtenerIdPorNombre($bd, $nombre, $idTrastero): int{
+        $consulta=$bd->query("select id from cajas where nombre='$nombre' and idTrastero=$idTrastero");
+        $registro=$consulta->fetch(PDO::FETCH_OBJ);
+        $idRecuperado=$registro->id;
+        
+        return $idRecuperado;
+   }
+   
+   public function añadirCaja($bd){
+       if($this->idEstanteria==null){
+           $consulta="insert into Cajas (nombre, idTrastero) values('$this->nombre',$this->idTrastero)";
+           $bd->exec($consulta);
+       }else{
+           $consulta="insert into Cajas (nombre, idTrastero, idEstanteria, idBalda) values('$this->nombre',$this->idTrastero, $this->idEstanteria, $this->idBalda)";
+           $bd->exec($consulta); 
+       }
+        
+    }
+    
+    public function eliminar($bd): void{
+       $consulta = "delete from Cajas where id = $this->id";
+       $bd->exec($consulta);
+   }
+    
 }

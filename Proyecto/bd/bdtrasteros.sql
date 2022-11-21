@@ -11,7 +11,7 @@ create table if not exists usuarios(
     nombre varchar(100) not null,
     apellidos varchar(100) not null,
     clave varchar(100) not null, 
-    email varchar(100) unique not null
+    correo varchar(100) unique not null
 );
 
 -- 2.1.2 .- Tabla trasteros
@@ -25,7 +25,7 @@ create table if not exists trasteros(
 -- 2.1.3.- Tabla estanterias
 create table if not exists estanterias(
     id int auto_increment primary key,
-    nombre varchar(50),
+    nombre varchar(100),
     idTrastero int, 
     constraint fk_estanteria_trastero foreign key(idTrastero) references trasteros(id) on update cascade on delete cascade
 
@@ -33,16 +33,16 @@ create table if not exists estanterias(
 
 -- 2.1.4 Tabla baldas
 create table if not exists baldas(
-    id int primary key,
-    nombre varchar(50),
+    id int auto_increment primary key,
+    nombre varchar(100),
     idEstanteria int not null,
     constraint fk_balda_estanteria foreign key(idEstanteria) references estanterias(id) on update cascade on delete cascade 
 );
 
 -- 2.1.5 Tabla cajas
 create table if not exists cajas(
-    id int primary key,
-    nombre varchar(20),
+    id int auto_increment primary key,
+    nombre varchar(100),
     idtrastero int not null,
     idestanteria int,
     idbalda int,
@@ -68,8 +68,8 @@ create table if not exists productos(
 
 -- 2.1.7 Tabla etiquetas
 create table if not exists etiquetas(
-    id int primary key,
-    nombre varchar(20) not null,
+    id int auto_increment primary key,
+    nombre varchar(50) not null,
     idUsuario int not null,
     idProducto int(20) not null,
     constraint fk_etiqueta_producto foreign key(idProducto) references productos(id) on update cascade on delete cascade,

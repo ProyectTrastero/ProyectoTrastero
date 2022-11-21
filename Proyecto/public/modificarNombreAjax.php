@@ -5,6 +5,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
  */
 require "../vendor/autoload.php";
+
+use eftec\bladeone\BladeOne;
+use Dotenv\Dotenv;
 use App\{
     BD,
     Usuario,
@@ -14,6 +17,23 @@ use App\{
     Caja,
     Trastero
 };
+
+// Inicializa el acceso a las variables de entorno
+$dotenv = Dotenv::createImmutable(__DIR__ . "/../");
+$dotenv->load();
+
+
+// Inicializa el acceso a las variables de entorno
+$views = __DIR__ . '/../vistas';
+$cache = __DIR__ . '/../cache';
+$blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
+
+try {
+    $bd = BD::getConexion();
+} catch (PDOException $error) {
+    echo $blade->run("cnxbderror", compact('error'));
+    die;
+}
 
 session_start();
 
@@ -57,18 +77,22 @@ if(existeNombre($nuevoNombre, $almacenCajas, $almacenBaldas, $almacenEstanterias
     foreach($almacenBaldas as $clave=>$valor){
         if($valor->getNombre()==$nombre){
             $valor->setNombre($nuevoNombre);
+            $valor->actualizarNombre($bd, $nuevoNombre);
+            
         }
     }
     
     foreach($almacenCajas as $clave=>$valor){
         if($valor->getNombre()==$nombre){
             $valor->setNombre($nuevoNombre);
+            $valor->actualizarNombre($bd, $nuevoNombre);
         }
     }
     
     foreach($almacenEstanterias as $clave=>$valor){
         if($valor->getNombre()==$nombre){
             $valor->setNombre($nuevoNombre);
+            $valor->actualizarNombre($bd, $nuevoNombre);
         }
     }
     

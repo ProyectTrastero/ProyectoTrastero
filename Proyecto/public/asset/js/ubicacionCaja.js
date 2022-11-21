@@ -41,18 +41,18 @@ $(document).ready(function(){
                 dataType: "json", 
                 data: {estanteriaSeleccionada: seleccionada},
                 success: function(result){
-                    var numero=result.numeroBaldas;
-                    var listadoBaldas=Object.keys(numero);
+                    var listadoBaldas=result.nombreBaldas;
+//                    var listadoBaldas=Object.keys(nombres);
                    
                     if(balda.hasChildNodes()){
                         do{
-                            var eliminado=balda.lastChild;
+                           var eliminado=balda.lastChild;
                            balda.removeChild(eliminado);  
                         }while(balda.hasChildNodes())
                     }
                     for(i=0;i<listadoBaldas.length;i++){
                         var elemento=document.createElement("OPTION");
-                        elemento.innerHTML=parseInt(listadoBaldas[i])+1;
+                        elemento.innerHTML=listadoBaldas[i];
                         balda.appendChild(elemento);
                     }
                    

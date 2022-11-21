@@ -50,12 +50,29 @@ class Estanteria {
         $this->idTrastero = $idTrastero;
     }
     
-    public function añadirEstanteria($conexion): void{
-        $consulta="insert into Estanterias (nombre, idTrastero) values($this->nombre, $this->idTrastero)";
-            if($conexion->exec($consulta)==1){
-                echo "Estantería añadida correctamente";
-            } else {
-                echo "fallo al añadir estanteria";
-            }
+    public function añadirEstanteria($bd): void{
+        $consulta="insert into Estanterias (nombre, idTrastero) values('$this->nombre', $this->idTrastero)";
+        $bd->exec($consulta);
+            
    }
+   
+   public static function obtenerIdPorNombre($bd, $nombre, $idTrastero): int{
+        $consulta=$bd->query("select id from estanterias where nombre='$nombre' and idTrastero=$idTrastero");
+        $registro=$consulta->fetch(PDO::FETCH_OBJ);
+        $idRecuperado=$registro->id;
+        
+        return $idRecuperado;
+   }
+   
+   public function actualizarNombre($bd, $nuevoNombre): void{
+       $consulta="update Estanterias set nombre = '$nuevoNombre' where id = $this->id";
+       $bd->exec($consulta);
+   }
+   
+   public function eliminar($bd): void{
+       $consulta ="delete from Estanterias where id = $this->id";
+       $bd->exec($consulta);
+   }
+   
+  
 }

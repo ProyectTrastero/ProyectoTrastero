@@ -94,7 +94,7 @@ class Trasteros {
     
     public static function existeNombre($bd, $nombre, $idUsuario): bool{
         $existe = false;
-        $consulta = "select * from trasteros where nombre = '$nombre' and idUsuario = '$idUsuario'";
+        $consulta = "select * from trasteros where nombre = '$nombre' and idUsuario = $idUsuario";
         $respuesta=$bd->query($consulta);
         while($registro=$respuesta->fetch(PDO::FETCH_OBJ)){
             if($nombre==$registro->nombre){
@@ -108,6 +108,26 @@ class Trasteros {
         $consulta="insert into Trasteros (nombre, idUsuario) values('$this->nombre', $this->idUsuario)";
         $bd->exec($consulta);
     }
+    
+    public function recuperarTrasteroPorNombre($bd, $nombreTrastero): Trasteros{
+        $consulta = "select * from Trasteros where nombre='$nombreTrastero'";
+        $registro=$bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Trasteros::class);
+        $trastero = ($registro->fetch()) ?: null;
+        return $trastero;
+    }
+    
+    public function eliminar($bd): void{
+       $consulta ="delete from Trasteros where id = $this->id";
+       $bd->exec($consulta);
+       
+   }
+   
+   public function actualizarNombre($bd, $nuevoNombre){
+        $consulta="update Trasteros set nombre = '$nuevoNombre' where id = $this->id";
+       $bd->exec($consulta);
+   }
+    
     
 }    
 ?>
