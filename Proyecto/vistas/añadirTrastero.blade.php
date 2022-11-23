@@ -9,22 +9,24 @@
 
 <script src="https://kit.fontawesome.com/12104efb99.js" crossorigin="anonymous"></script>
 <script src="asset/js/añadirTrastero.js"></script>
-<div class="container">
+<div class="container" disabled="true">
     <div>
         <p>{{$mensaje}}</p>
     </div>
     <div>
         <form action="" method="POST">
-            <label for="nombre">NOMBRE:</label>
-            <input type="text" name="nombre" id="nombre">
-            <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
-            <input type="submit" name="añadirCaja" value="AÑADIR CAJA">
-            <input type="submit" name="volverAcceso" value="VOLVER">
-            @if($datosTrastero['tipo']=="guardar")
-            <input type="submit" name="guardar" value="GUARDAR">
-            @else
-            <input type="submit" name="modificar" value="MODIFICAR">
-            @endif
+            <fieldset>
+                <label for="nombre">NOMBRE:</label>
+                <input type="text" name="nombre" id="nombre">
+                <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
+                <input type="submit" name="añadirCaja" value="AÑADIR CAJA">
+            </fieldset>
+                <input type="submit" name="volverAcceso" value="VOLVER">
+                @if($datosTrastero['tipo']=="guardar")
+                <input type="submit" name="guardar" value="GUARDAR">
+                @else
+                <input type="submit" name="modificar" value="MODIFICAR">
+                @endif
             
         </form>
     </div>
@@ -109,9 +111,11 @@
                 @if(($valorCaja->getIdBalda()=="")&&($valorCaja->getIdEstanteria()==""))
                     <li>
                         <form action="" method="POST">
+                        <fieldset disabled>    
                             <input type="hidden" name="nombreCaja" value="{{$valorCaja->getNombre()}}">
                             <input type="hidden" name="idCaja" value="{{$valorCaja->getId()}}">
                             <span class="papeleraOculta" contenteditable="false">{{$valorCaja->getNombre()}}</span>
+                            </fieldset>
                         </form>
                     </li> 
                 @endif
