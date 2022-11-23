@@ -29,6 +29,31 @@
  <input type="text" name="palabraBuscar" placeholder="producto">
  <button type="submit" name="buscarProducto">Buscar</button>
  </form>
+ <br/>
+ <br/>
+ <br/>
+ <div>     
+ <form method="POST" action="" name="formEtiquetas">
+
+ <!--me falta el  select-->
+ <button type="submit" name="añadirEtiquetas">Añadir Etiqueta</button>
+ </form> 
+ </div>
+ 
+ <div>
+ <?php if(isset ($etiquetas)): ?>
+ <?php if($etiquetas != ""): ?>
+ <?php $__currentLoopData = $etiquetas; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $valor): $loop = $this->incrementLoopIndices();  ?>
+ <td class="col-3"> <?php echo \htmlentities($valor->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <?php else: ?>
+ <div>           
+ <h4>Aun no tiene ninguna etiqueta</h4>    
+ </div>
+ <?php endif; ?>
+ <?php endif; ?>
+ </div>
  
  <?php if(isset ($productos)): ?>
  <?php if($productos != ""): ?>
@@ -61,17 +86,15 @@
  </div>
  <?php else: ?>
  <div>           
- <form method="POST" action="" id='formbusqueda'>
- <h2>No existen productos con esa busqueda</h2>
- <br/><br/><br/>
- </form>     
+ <h2>No existen productos con esa busqueda</h2>    
  </div>
  <?php endif; ?>
  <?php endif; ?>
  
 <div class="container">
- <h3>hacemos cositas con las busquedas</h3><!-- comment -->
- <button class ="info" name="volverTrasteros">Volver</button>
+ <form method="POST" action="" name="formVolver">
+ <button class ="volver" name="volverTrasteros">Volver</button>
+ </form>
 </div>
 <?php $this->stopSection(); ?>
 

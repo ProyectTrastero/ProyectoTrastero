@@ -29,6 +29,30 @@
         <input type="text" name="palabraBuscar" placeholder="producto">
         <button type="submit" name="buscarProducto">Buscar</button>
     </form>
+    <br/>
+    <br/>
+    <br/>
+    <div>     
+        <form method="POST" action="" name="formEtiquetas">
+
+           <!--me falta el  select-->
+            <button type="submit" name="añadirEtiquetas">Añadir Etiqueta</button>
+        </form> 
+    </div>
+    
+    <div>
+        @if (isset ($etiquetas))
+            @if ($etiquetas != "")
+                    @foreach ($etiquetas as $valor)
+                    <td class="col-3"> {{$valor->getNombre()  }}</td>
+                    @endforeach
+            @else
+                <div>           
+                    <h4>Aun no tiene ninguna etiqueta</h4>    
+                </div>
+            @endif
+        @endif
+    </div>
     
         @if (isset ($productos))
             @if ($productos != "")
@@ -60,17 +84,15 @@
             </div>
             @else
             <div>           
-            <form method="POST" action="" id='formbusqueda'>
-                <h2>No existen productos con esa busqueda</h2>
-                <br/><br/><br/>
-            </form>     
+                <h2>No existen productos con esa busqueda</h2>    
             </div>
             @endif
         @endif
     
 <div class="container">
-    <h3>hacemos cositas con las busquedas</h3><!-- comment -->
-    <button class ="info" name="volverTrasteros">Volver</button>
+    <form method="POST" action="" name="formVolver">
+        <button class ="volver" name="volverTrasteros">Volver</button>
+    </form>
 </div>
 @endsection
 

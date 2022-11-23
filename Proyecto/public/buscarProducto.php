@@ -27,7 +27,7 @@ try {
 
 session_start();
 
-if (isset($_REQUEST['buscarProducto'])) {
+if (isset($_POST['buscarProducto'])) {
     $palabra = $_POST ['palabraBuscar'];
     $productos= App\Producto::recuperaProductosPorPalabra($bd, $palabra);
     $_SESSION['productos'] = $productos;
@@ -36,7 +36,7 @@ if (isset($_REQUEST['buscarProducto'])) {
     echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero'));
     die; 
     
-}elseif (isset($_REQUEST['añadirEtiqueta'])) {  
+}elseif (isset($_POST['añadirEtiquetas'])) {  
     header("location:../public/añadirEtiqueta.php"); 
     die;
       
@@ -45,7 +45,7 @@ if (isset($_REQUEST['buscarProducto'])) {
     die;
 }elseif (isset($_REQUEST['eleminaSeleccion'])) {
     echo "Borrado";
-}elseif (isset($_REQUEST['volverTrasteros'])) {
+}elseif (isset($_POST['volverTrasteros'])) {
     header("location:../public/accederTrastero.php"); 
     die;
 }else{
@@ -69,6 +69,14 @@ if (isset($_REQUEST['buscarProducto'])) {
     $trasteros = $_SESSION['trasteros'];
     $miTrastero = $_SESSION['miTrastero'];
  
-    echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero'));
+    $idUsuario = $usuario->getId();
+    $idUsuario  = intval($idUsuario);
+    
+    $etiquetas = App\Etiqueta::recuperaEtiquetasPorUsuario($bd, $idUsuario);
+    
+    $_SESSION['etiquetas'] = $etiquetas;
+
+    
+    echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas'));
     die;
 }

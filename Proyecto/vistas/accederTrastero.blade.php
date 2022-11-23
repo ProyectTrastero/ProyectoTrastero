@@ -2,7 +2,7 @@
 @extends('app')
 
 {{-- Sección aporta el título de la página --}}
-@section('title', 'Trastero Seleccionado')
+@section('title', 'Mi trastero Inicio')
 
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
@@ -20,16 +20,18 @@
 </form>
 @endsection
 
+
 {{-- Sección mensaje --}}
 @section('content')
 
 <div class="container">
-    <form method="POST" action="">
-        <h3>{{$miTrastero->getNombre()}}</h3>
-        <button name="verTrastero" id="verTrastero"><span>Ver trastero</span></button>
-        <button name="añadirProducto" id="añadirProducto"><span>Añadir Producto</span></button>
-        <button name="buscarProducto" id="buscarProducto"><span>Buscar Producto</span></button>
-        <br/><br/><br/>        
-        <button class ="info" name="volverTodosTrasteros">Volver</button>
-    </form>
+            <form method="POST" action="">
+                <h3>{{$miTrastero->getNombre()}}</h3>
+                <button name="verTrastero" id="verTrastero"><span>Ver trastero</span></button>
+                <button name="añadirProducto" id="añadirProducto"><span>Añadir Producto</span></button>
+                <button name="buscarProducto" id="buscarProducto"><span>Buscar Producto</span></button>
+            <br/><br/><br/> 
+                <button class ="volver" name="volverTodosTrasteros">Volver</button>
+            </form>
 </div>
+@endsection
