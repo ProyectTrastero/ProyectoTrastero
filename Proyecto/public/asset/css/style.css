@@ -17,7 +17,7 @@ body {
 	/* grid-template-columns: auto minmax(max-content, 490px); */
     align-items: center;
 }
-
+/* daniel */
 .signUp, .formEditPerfil{
 	max-width: 680px;
     margin: auto;
