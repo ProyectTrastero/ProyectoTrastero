@@ -66,8 +66,8 @@
                                 <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
                                 <input type="hidden" name="nombreEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()}}">
                                 <input type="hidden" name="numeroBalda" value="{{$claveBalda}}">
-                                <input type="hidden" name="idBalda" value="{{$baldasRecuperadas[$indice]->getId()}}">
                                 <input type="hidden" name="nombreBalda" value="{{$baldasRecuperadas[$indice]->getNombre()}}">
+                                <input type="hidden" name="idBalda" value="{{$baldasRecuperadas[$indice]->getId()}}">
                                 <span class="papeleraOculta" contenteditable="false">{{$baldasRecuperadas[$indice]->getNombre()}}</span>
                             </form>
                         </li> 
@@ -77,12 +77,13 @@
                                 @if(($valorCaja->getIdEstanteria()==$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId())&&($valorCaja->getIdBalda()==$baldasRecuperadas[$indice]->getId()))
                                 <li>
                                     <form action="" method="POST">
-                                        <input type="hidden" name="idEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()}}">
+                                       
                                         <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
                                         <input type="hidden" name="numeroBalda" value="{{$claveBalda}}">
                                         <input type="hidden" name="nombreBalda" value="{{$baldasRecuperadas[$indice]->getNombre()}}">
                                         <input type="hidden" name="idBalda" value="{{$baldasRecuperadas[$indice]->getId()}}">
                                         <input type="hidden" name="nombreCaja" value="{{$valorCaja->getNombre()}}">
+                                        <input type="hidden" name="idEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()}}">
                                         <input type="hidden" name="idCaja" value="{{$valorCaja->getId()}}">
                                         <span class="papeleraOculta" contenteditable="false">{{$valorCaja->getNombre()}}</span>
                                     </form>
@@ -111,11 +112,10 @@
                 @if(($valorCaja->getIdBalda()=="")&&($valorCaja->getIdEstanteria()==""))
                     <li>
                         <form action="" method="POST">
-                        <fieldset disabled>    
+                         
                             <input type="hidden" name="nombreCaja" value="{{$valorCaja->getNombre()}}">
                             <input type="hidden" name="idCaja" value="{{$valorCaja->getId()}}">
                             <span class="papeleraOculta" contenteditable="false">{{$valorCaja->getNombre()}}</span>
-                            </fieldset>
                         </form>
                     </li> 
                 @endif

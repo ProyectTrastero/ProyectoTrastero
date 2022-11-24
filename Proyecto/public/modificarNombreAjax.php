@@ -67,20 +67,32 @@ function existeNombre($nombre, $almacenBaldas, $almacenCajas, $almacenEstanteria
 
 
 $existe = false;
-$nombre=trim(filter_input(INPUT_POST, 'nombre',FILTER_SANITIZE_STRING));
-$nuevoNombre =trim(filter_input(INPUT_POST, 'nuevoNombre',FILTER_SANITIZE_STRING));
+$idElemento = trim(filter_input(INPUT_POST, 'id',FILTER_SANITIZE_STRING));
+$nombre = trim(filter_input(INPUT_POST, 'nombre',FILTER_SANITIZE_STRING));
+$nuevoNombre = trim(filter_input(INPUT_POST, 'nuevoNombre',FILTER_SANITIZE_STRING));
 $response=[];
 if(existeNombre($nuevoNombre, $almacenCajas, $almacenBaldas, $almacenEstanterias)){
     $response['cambiado']=false;
     $response['nombre'] = $nombre;
 }else{
-    foreach($almacenBaldas as $clave=>$valor){
-        if($valor->getNombre()==$nombre){
+    
+    if(str_contains($nombre, 'Balda')){
+        $idEstanteria = Balda::obtenerIdEstanteria($bd, $idElemento);
+        foreach($almacenBaldas as $clave=>$valor){
+        if($valor->getNombre()==$nombre && $valor->getIdEstanteria()==$idEstanteria){
             $valor->setNombre($nuevoNombre);
             $valor->actualizarNombre($bd, $nuevoNombre);
-            
         }
     }
+        
+    }else{
+//        foreach($almacenBaldas as $clave=>$valor){
+//        if($valor->getNombre()==$nombre){
+//            $valor->setNombre($nuevoNombre);
+//            $valor->actualizarNombre($bd, $nuevoNombre);
+//            
+//        }
+//    }
     
     foreach($almacenCajas as $clave=>$valor){
         if($valor->getNombre()==$nombre){
@@ -95,6 +107,10 @@ if(existeNombre($nuevoNombre, $almacenCajas, $almacenBaldas, $almacenEstanterias
             $valor->actualizarNombre($bd, $nuevoNombre);
         }
     }
+        
+    }
+    
+//    
     
     
     $response['cambiado']=true;

@@ -44,7 +44,7 @@ if(empty($_SESSION['datosTrastero'])){
     $almacenCajas = array();
     $mensaje="";
     $indiceNombre = 1;
-    
+    $trasteroGuardado = false;
     
     $usuario = $_SESSION['usuario'];
     $idUsuario = $usuario->getId();
@@ -61,7 +61,7 @@ if(empty($_SESSION['datosTrastero'])){
         $indiceNombre++; 
      }
     }
-     
+    $datosTrastero['guardado'] = $trasteroGuardado; 
     $datosTrastero['trastero'] = $nuevoTrastero;
     $datosTrastero['almacenEstanterias']=$almacenEstanterias;
     $datosTrastero['almacenBaldas']=$almacenBaldas;
@@ -78,6 +78,7 @@ if(empty($_SESSION['datosTrastero'])){
     $almacenBaldas =$datosTrastero['almacenBaldas'];
     $almacenCajas =$datosTrastero['almacenCajas'];
     $nuevoTrastero =$datosTrastero['trastero'];
+    $trasteroGuardado = $datosTrastero['guardado'];
     $mensaje = "";
 }
 
@@ -178,25 +179,27 @@ if(isset($_POST['añadirEstanteria'])){
 }else if(isset($_POST['volver'])){
     echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
 }else if(isset($_POST['volverAcceso'])){
-    $nuevoTrastero->eliminar($bd);
-    foreach($almacenEstanterias as $clave=>$valor){
-        $valor->eliminar($bd);
-    } 
-    
-    foreach($almacenBaldas as $clave=>$valor){
-        $valor->eliminar($bd);
-    } 
-    
-    foreach($almacenCajas as $clave=>$valor){
-        $valor->eliminar($bd);
-    } 
+    if(!$trasteroGuardado){
+        $nuevoTrastero->eliminar($bd);
+        foreach($almacenEstanterias as $clave=>$valor){
+            $valor->eliminar($bd);
+        } 
+
+        foreach($almacenBaldas as $clave=>$valor){
+            $valor->eliminar($bd);
+        } 
+
+        foreach($almacenCajas as $clave=>$valor){
+            $valor->eliminar($bd);
+        } 
+    }
     
     $_SESSION['datosTrastero'] = array();
-    $_SESSION['almacenEstanterias'] = array();
-    $_SESSION['almacenBaldas'] = array() ;
-    $_SESSION['almacenCajas'] = array();
-    $_SESSION['estanterias'] = array();
-    
+//    $_SESSION['almacenEstanterias'] = array();
+//    $_SESSION['almacenBaldas'] = array();
+//    $_SESSION['almacenCajas'] = array();
+//    $_SESSION['estanterias'] = array();
+//    
     header("Location: acceso.php");
     
 }else if(isset($_POST['guardar'])){
@@ -205,11 +208,18 @@ if(isset($_POST['añadirEstanteria'])){
     if($nombreTrastero!=""){
         if(!Trasteros::existeNombre($bd, $nombreTrastero, $idUsuario)){
             $nuevoTrastero->actualizarNombre($bd, $nombreTrastero);
-            $_SESSION['datosTrastero'] = array();
-            $_SESSION['almacenBaldas'] = array() ;
-            $_SESSION['almacenCajas'] = array();
-            $_SESSION['estanterias'] = array();
-            header ("Location: acceso.php");    
+            $trasteroGuardado = true;
+            $datosTrastero['guardado']=$trasteroGuardado;
+            $_SESSION['datosTrastero'] = $datosTrastero;
+//            $_SESSION['datosTrastero'] = array();
+//            $_SESSION['almacenBaldas'] = array() ;
+//            $_SESSION['almacenCajas'] = array();
+//            $_SESSION['estanterias'] = array();
+//            $_SESSION['guardado'] = $trasteroGuardado;
+//            
+            $mensaje = "Su trastero se ha creado correctamente. Pulse volver para volver a la página principal";
+            echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+//            header ("Location: acceso.php");    
         }else{
             $mensaje = "Ya existe un trastero para este usuario con este nombre.";
             echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));

@@ -1,6 +1,8 @@
 window.addEventListener("load", iniciar);
 var ocultos;
 var antiguoNombre;
+var idElemento;
+var primerElemento;
 function iniciar(){
     ocultos= document.getElementsByClassName("papeleraOculta");
     
@@ -24,7 +26,7 @@ function deshabilitarEdicion(e){
                 type: "POST",
                 url: url, 
                 dataType: "json", 
-                data: {nuevoNombre: nombre, nombre: antiguoNombre},
+                data: {nuevoNombre: nombre, nombre: antiguoNombre, id: idElemento},
                 success: function(result){
                     var respuesta = result.cambiado;
                     var antiguoNombre = result.nombre;
@@ -32,8 +34,7 @@ function deshabilitarEdicion(e){
                         alert ("Ya existe un elemento con ese nombre.");
                         elemento.innerText = antiguoNombre;
                     }
-                    
-                   
+                     
             }}); 
     });  
     
@@ -42,6 +43,8 @@ function deshabilitarEdicion(e){
 
 function habilitarEdicion(e){
     var elemento = e.target;
+    primerElemento = elemento.previousElementSibling;
+    idElemento = primerElemento.getAttribute("value");
     antiguoNombre = elemento.innerText;
     elemento.setAttribute("contenteditable", "true");
     

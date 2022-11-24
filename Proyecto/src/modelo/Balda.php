@@ -85,5 +85,13 @@ class Balda {
        $bd->exec($consulta);
        
    }
+   
+   public static function obtenerIdEstanteria($bd, $idBalda): int{
+       $consulta= "select idEstanteria from baldas where id= $idBalda";
+       $respuesta = $bd->query($consulta);
+       $registro = $respuesta->fetch(PDO::FETCH_OBJ);
+       $idRecuperado = $registro->idEstanteria;
+       return $idRecuperado;
+   }
 
 }

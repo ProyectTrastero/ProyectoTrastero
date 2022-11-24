@@ -69,8 +69,8 @@
  <input type="hidden" name="numeroEstanteria" value="<?php echo \htmlentities($claveEstanteria??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <input type="hidden" name="nombreEstanteria" value="<?php echo \htmlentities($datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <input type="hidden" name="numeroBalda" value="<?php echo \htmlentities($claveBalda??'', ENT_QUOTES, 'UTF-8', false); ?>">
- <input type="hidden" name="idBalda" value="<?php echo \htmlentities($baldasRecuperadas[$indice]->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <input type="hidden" name="nombreBalda" value="<?php echo \htmlentities($baldasRecuperadas[$indice]->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <input type="hidden" name="idBalda" value="<?php echo \htmlentities($baldasRecuperadas[$indice]->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <span class="papeleraOculta" contenteditable="false"><?php echo \htmlentities($baldasRecuperadas[$indice]->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></span>
  </form>
  </li> 
@@ -81,12 +81,13 @@
  <?php if(($valorCaja->getIdEstanteria()==$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId())&&($valorCaja->getIdBalda()==$baldasRecuperadas[$indice]->getId())): ?>
  <li>
  <form action="" method="POST">
- <input type="hidden" name="idEstanteria" value="<?php echo \htmlentities($datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ 
  <input type="hidden" name="numeroEstanteria" value="<?php echo \htmlentities($claveEstanteria??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <input type="hidden" name="numeroBalda" value="<?php echo \htmlentities($claveBalda??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <input type="hidden" name="nombreBalda" value="<?php echo \htmlentities($baldasRecuperadas[$indice]->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <input type="hidden" name="idBalda" value="<?php echo \htmlentities($baldasRecuperadas[$indice]->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <input type="hidden" name="nombreCaja" value="<?php echo \htmlentities($valorCaja->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <input type="hidden" name="idEstanteria" value="<?php echo \htmlentities($datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <input type="hidden" name="idCaja" value="<?php echo \htmlentities($valorCaja->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <span class="papeleraOculta" contenteditable="false"><?php echo \htmlentities($valorCaja->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></span>
  </form>
@@ -116,11 +117,10 @@
  <?php if(($valorCaja->getIdBalda()=="")&&($valorCaja->getIdEstanteria()=="")): ?>
  <li>
  <form action="" method="POST">
- <fieldset disabled>    
+ 
  <input type="hidden" name="nombreCaja" value="<?php echo \htmlentities($valorCaja->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <input type="hidden" name="idCaja" value="<?php echo \htmlentities($valorCaja->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <span class="papeleraOculta" contenteditable="false"><?php echo \htmlentities($valorCaja->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></span>
- </fieldset>
  </form>
  </li> 
  <?php endif; ?>
