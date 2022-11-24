@@ -92,6 +92,19 @@ if(isset($_POST['añadirEstanteria'])){
     $idEstanteria= Estanteria::obtenerIdPorNombre($bd, $nuevaEstanteria->getNombre(), $datosTrastero['trastero']->getId());
     $nuevaEstanteria->setId($idEstanteria);
     $almacenEstanterias[] = $nuevaEstanteria;
+    $baldas[]= array();
+    $nuevaBalda = new Balda();
+    $estanterias[intval($nombreEstanteria)][]=$baldas;
+    $baldasRecuperadas = $estanterias[intval($nombreEstanteria)];
+    $nombreBalda = intVal(array_key_last($baldasRecuperadas));
+    $nuevaBalda->setNombre("Balda " .($nombreBalda+1));
+    $idEstanteria = Estanteria::obtenerIdPorNombre($bd, $nuevaEstanteria->getNombre(), $nuevoTrastero->getId());
+     $nuevaBalda->setIdEstanteria($idEstanteria);
+    $nuevaBalda->añadirBalda($bd);
+    $idBalda= Balda::obtenerIdPorNombre($bd, $nuevaBalda->getNombre(), $idEstanteria);
+    $nuevaBalda->setId($idBalda);
+    $almacenBaldas[] = $nuevaBalda;
+    $datosTrastero['almacenBaldas']=$almacenBaldas;
     $datosTrastero['estanterias']= $estanterias;
     $datosTrastero['almacenEstanterias']=$almacenEstanterias;
     $_SESSION['datosTrastero']=$datosTrastero;
@@ -195,11 +208,7 @@ if(isset($_POST['añadirEstanteria'])){
     }
     
     $_SESSION['datosTrastero'] = array();
-//    $_SESSION['almacenEstanterias'] = array();
-//    $_SESSION['almacenBaldas'] = array();
-//    $_SESSION['almacenCajas'] = array();
-//    $_SESSION['estanterias'] = array();
-//    
+
     header("Location: acceso.php");
     
 }else if(isset($_POST['guardar'])){
@@ -211,15 +220,10 @@ if(isset($_POST['añadirEstanteria'])){
             $trasteroGuardado = true;
             $datosTrastero['guardado']=$trasteroGuardado;
             $_SESSION['datosTrastero'] = $datosTrastero;
-//            $_SESSION['datosTrastero'] = array();
-//            $_SESSION['almacenBaldas'] = array() ;
-//            $_SESSION['almacenCajas'] = array();
-//            $_SESSION['estanterias'] = array();
-//            $_SESSION['guardado'] = $trasteroGuardado;
-//            
+
             $mensaje = "Su trastero se ha creado correctamente. Pulse volver para volver a la página principal";
             echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
-//            header ("Location: acceso.php");    
+   
         }else{
             $mensaje = "Ya existe un trastero para este usuario con este nombre.";
             echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));

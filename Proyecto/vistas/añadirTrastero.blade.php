@@ -12,22 +12,28 @@
 <div class="container" disabled="true">
     <div>
         <p>{{$mensaje}}</p>
+        @if($datosTrastero['guardado'])
+        <p id="guardadoModificado" style="color:white">true</p>
+        @else
+        <p id="guardadoModificado" style="color:white">false</p>
+        @endif
     </div>
     <div>
         <form action="" method="POST">
-            <fieldset>
+            <div>
                 <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
-                <input type="submit" name="añadirCaja" value="AÑADIR CAJA">
-            </fieldset>
-                <input type="submit" name="volverAcceso" value="VOLVER">
-                @if($datosTrastero['tipo']=="guardar")
+                <input type="submit" name="añadirCaja" value="AÑADIR CAJA"> 
+            </div>
+            <div>
+                 @if($datosTrastero['tipo']=="guardar")
                 <input type="submit" name="guardar" value="GUARDAR">
                 @else
                 <input type="submit" name="modificar" value="MODIFICAR">
                 @endif
-            
+                 <input type="submit" name="volverAcceso" value="VOLVER">
+            </div>
         </form>
     </div>
     

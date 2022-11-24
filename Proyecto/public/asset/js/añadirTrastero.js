@@ -3,14 +3,33 @@ var ocultos;
 var antiguoNombre;
 var idElemento;
 var primerElemento;
+var guardado;
+
 function iniciar(){
+    guardado = document.getElementById("guardadoModificado").innerHTML;
     ocultos= document.getElementsByClassName("papeleraOculta");
-    
-    for(i=0;i<ocultos.length;i++){
+    deshabilitarBotones();
+    if(guardado=="false"){
+        for(i=0;i<ocultos.length;i++){
         ocultos[i].addEventListener("mouseover", añadirPapelera);
         ocultos[i].addEventListener("mouseout", eliminarPapelera);
         ocultos[i].addEventListener("click", habilitarEdicion);
         ocultos[i].addEventListener("blur", deshabilitarEdicion);
+        }
+    }  
+}
+
+function deshabilitarBotones(){
+    if(guardado=="true"){
+        var botones = document.getElementsByTagName("input");
+        for(i=0;i<botones.length;i++){
+            var nombreAtributo=botones[i].getAttribute("value");
+            if(nombreAtributo!="VOLVER"){
+                 botones[i].setAttribute("disabled", "true");
+            }
+           
+           
+        }
     }
 }
 
