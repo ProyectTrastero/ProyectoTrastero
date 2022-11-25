@@ -1,14 +1,36 @@
 window.addEventListener("load", iniciar);
 var ocultos;
 var antiguoNombre;
+var idElemento;
+var primerElemento;
+var guardado;
+
 function iniciar(){
+    var tipo = document.getElementById("guardadoModificado");
+    guardado=tipo.getAttribute("value");
     ocultos= document.getElementsByClassName("papeleraOculta");
-    
-    for(i=0;i<ocultos.length;i++){
+    deshabilitarBotones();
+    if(guardado=="false"){
+        for(i=0;i<ocultos.length;i++){
         ocultos[i].addEventListener("mouseover", añadirPapelera);
         ocultos[i].addEventListener("mouseout", eliminarPapelera);
-        ocultos[i].addEventListener("dblclick", habilitarEdicion);
+        ocultos[i].addEventListener("click", habilitarEdicion);
         ocultos[i].addEventListener("blur", deshabilitarEdicion);
+        }
+    }  
+}
+
+function deshabilitarBotones(){
+    if(guardado=="true"){
+        var botones = document.getElementsByTagName("input");
+        for(i=0;i<botones.length;i++){
+            var nombreAtributo=botones[i].getAttribute("value");
+            if(nombreAtributo!="VOLVER"){
+                 botones[i].setAttribute("disabled", "true");
+            }
+           
+           
+        }
     }
 }
 
@@ -24,16 +46,15 @@ function deshabilitarEdicion(e){
                 type: "POST",
                 url: url, 
                 dataType: "json", 
-                data: {nuevoNombre: nombre, nombre: antiguoNombre},
+                data: {nuevoNombre: nombre, nombre: antiguoNombre, id: idElemento},
                 success: function(result){
                     var respuesta = result.cambiado;
+                    var antiguoNombre = result.nombre;
                     if(!respuesta){
                         alert ("Ya existe un elemento con ese nombre.");
-                    }else{
-                        alert("cambiado correctamente");
+                        elemento.innerText = antiguoNombre;
                     }
-                    
-                   
+                     
             }}); 
     });  
     
@@ -42,6 +63,8 @@ function deshabilitarEdicion(e){
 
 function habilitarEdicion(e){
     var elemento = e.target;
+    primerElemento = elemento.previousElementSibling;
+    idElemento = primerElemento.getAttribute("value");
     antiguoNombre = elemento.innerText;
     elemento.setAttribute("contenteditable", "true");
     
