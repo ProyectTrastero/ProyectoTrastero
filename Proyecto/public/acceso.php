@@ -27,6 +27,55 @@ try {
 
 session_start();
 
+//Esta parte la he añadido yo. Emma
+
+if(!empty($_SESSION['datosTrastero'])){
+    $datosTrastero=$_SESSION['datosTrastero'];
+        $tipo=$datosTrastero['tipo'];
+    if($tipo=="guardar"){
+       
+        $almacenEstanterias = $datosTrastero['almacenEstanterias'];
+        $almacenBaldas =$datosTrastero['almacenBaldas'];
+        $almacenCajas =$datosTrastero['almacenCajas'];
+        $nuevoTrastero =$datosTrastero['trastero'];
+        $trasteroGuardado = $datosTrastero['guardado'];
+            if(!$trasteroGuardado){
+                $nuevoTrastero->eliminar($bd);
+                foreach($almacenEstanterias as $clave=>$valor){
+                    $valor->eliminar($bd);
+                } 
+
+                foreach($almacenBaldas as $clave=>$valor){
+                    $valor->eliminar($bd);
+                } 
+
+                foreach($almacenCajas as $clave=>$valor){
+                    $valor->eliminar($bd);
+                } 
+            }
+        $_SESSION['datosTrastero'] = array();
+    }
+    if($tipo=="modificar"){
+        $datosTrastero=$_SESSION['datosTrastero'];
+        $trasteroGuardado =$datosTrastero['guardado'];
+        $creados=$datosTrastero['creados'];
+        $eliminados = $datosTrastero['eliminados'];
+        if(!$trasteroGuardado){
+            foreach($creados as $clave=>$valor){
+                $valor->eliminar($bd);
+            } 
+
+            foreach($eliminados as $clave=>$valor){
+                $valor->añadir($bd);
+            }
+            $_SESSION['datosTrastero'] = array();
+        }else{
+            $_SESSION['datosTrastero'] = array();
+        } 
+    }
+}
+//Hasta aquí
+
 if (isset($_REQUEST['acceder'])) {
     $usuario = $_SESSION['usuario'];
     $trasteros = $_SESSION['trasteros'];
@@ -39,6 +88,7 @@ if (isset($_REQUEST['acceder'])) {
     die;
       
 }elseif (isset($_REQUEST['modificar'])) { 
+    $_SESSION['idTrastero']=$_POST['id'];
     header("location:../public/modificarTrastero.php"); 
     die;
 

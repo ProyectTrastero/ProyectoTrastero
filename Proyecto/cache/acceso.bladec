@@ -28,7 +28,7 @@
  <div>
  <form method="POST" action="" id='formañadirtratero'>
  <h3>Diseña tu trastero</h3>
- <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Diseñar</span></button>
+ <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Añadir Trastero</span></button>
  </form>
  </div>
  <br/><br/><br/><br/>

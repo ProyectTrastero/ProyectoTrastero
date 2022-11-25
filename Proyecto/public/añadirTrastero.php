@@ -45,6 +45,7 @@ if(empty($_SESSION['datosTrastero'])){
     $mensaje="";
     $indiceNombre = 1;
     $trasteroGuardado = false;
+    $tipo="guardar";
     
     $usuario = $_SESSION['usuario'];
     $idUsuario = $usuario->getId();
@@ -61,18 +62,20 @@ if(empty($_SESSION['datosTrastero'])){
         $indiceNombre++; 
      }
     }
+    
     $datosTrastero['guardado'] = $trasteroGuardado; 
     $datosTrastero['trastero'] = $nuevoTrastero;
     $datosTrastero['almacenEstanterias']=$almacenEstanterias;
     $datosTrastero['almacenBaldas']=$almacenBaldas;
     $datosTrastero['almacenCajas']=$almacenCajas;
     $datosTrastero['estanterias']=$estanterias;
-    $datosTrastero['tipo'] = "guardar";
+    $datosTrastero['tipo'] = $tipo;
     $_SESSION['datosTrastero']=$datosTrastero;
 }else{
     $usuario = $_SESSION['usuario'];
     $idUsuario = $usuario->getId();
     $datosTrastero=$_SESSION['datosTrastero'];
+    $tipo=$datosTrastero['tipo'];
     $estanterias = $datosTrastero['estanterias'];
     $almacenEstanterias = $datosTrastero['almacenEstanterias'];
     $almacenBaldas =$datosTrastero['almacenBaldas'];
@@ -88,11 +91,11 @@ if(isset($_POST['añadirEstanteria'])){
     $nombreEstanteria = intVal(array_key_last($estanterias));
     $nuevaEstanteria->setNombre("Estanteria " .($nombreEstanteria+1));
     $nuevaEstanteria->setIdTrastero($nuevoTrastero->getId());
-    $nuevaEstanteria->añadirEstanteria($bd);
+    $nuevaEstanteria->añadir($bd);
     $idEstanteria= Estanteria::obtenerIdPorNombre($bd, $nuevaEstanteria->getNombre(), $datosTrastero['trastero']->getId());
     $nuevaEstanteria->setId($idEstanteria);
     $almacenEstanterias[] = $nuevaEstanteria;
-    $baldas[]= array();
+    $baldas= array();
     $nuevaBalda = new Balda();
     $estanterias[intval($nombreEstanteria)][]=$baldas;
     $baldasRecuperadas = $estanterias[intval($nombreEstanteria)];
@@ -100,7 +103,7 @@ if(isset($_POST['añadirEstanteria'])){
     $nuevaBalda->setNombre("Balda " .($nombreBalda+1));
     $idEstanteria = Estanteria::obtenerIdPorNombre($bd, $nuevaEstanteria->getNombre(), $nuevoTrastero->getId());
      $nuevaBalda->setIdEstanteria($idEstanteria);
-    $nuevaBalda->añadirBalda($bd);
+    $nuevaBalda->añadir($bd);
     $idBalda= Balda::obtenerIdPorNombre($bd, $nuevaBalda->getNombre(), $idEstanteria);
     $nuevaBalda->setId($idBalda);
     $almacenBaldas[] = $nuevaBalda;
@@ -112,7 +115,7 @@ if(isset($_POST['añadirEstanteria'])){
 }else if(isset($_POST['añadirBalda'])){
     $numeroEstanteria = trim(filter_input(INPUT_POST, 'numeroEstanteria', FILTER_SANITIZE_STRING));
     $nombreEstanteria = trim(filter_input(INPUT_POST, 'nombreEstanteria', FILTER_SANITIZE_STRING));
-    $baldas[]= array();
+    $baldas= array();
     $nuevaBalda = new Balda();
     $estanterias[intval($numeroEstanteria)][]=$baldas;
     $baldasRecuperadas = $estanterias[intval($numeroEstanteria)];
@@ -120,7 +123,7 @@ if(isset($_POST['añadirEstanteria'])){
     $nuevaBalda->setNombre("Balda " .($nombreBalda+1));
     $idEstanteria = Estanteria::obtenerIdPorNombre($bd, $nombreEstanteria, $nuevoTrastero->getId());
     $nuevaBalda->setIdEstanteria($idEstanteria);
-    $nuevaBalda->añadirBalda($bd);
+    $nuevaBalda->añadir($bd);
     $idBalda= Balda::obtenerIdPorNombre($bd, $nuevaBalda->getNombre(), $idEstanteria);
     $nuevaBalda->setId($idBalda);
     $almacenBaldas[] = $nuevaBalda;
@@ -161,7 +164,7 @@ if(isset($_POST['añadirEstanteria'])){
                 $nombreCaja = intVal(array_key_last($almacenCajas));
                 $nuevaCaja->setNombre("Caja " .($nombreCaja+2));
             }
-            $nuevaCaja->añadirCaja($bd);
+            $nuevaCaja->añadir($bd);
             $idCaja=$nuevaCaja->obtenerIdPorNombre($bd, $nuevaCaja->getNombre(), $nuevoTrastero->getId());
             $nuevaCaja->setId($idCaja);
             $almacenCajas[]=$nuevaCaja;
@@ -180,7 +183,7 @@ if(isset($_POST['añadirEstanteria'])){
                 $nombreCaja = intVal(array_key_last($almacenCajas));
                 $nuevaCaja->setNombre("Caja " .($nombreCaja+2));
             }
-            $nuevaCaja->añadirCaja($bd);
+            $nuevaCaja->añadir($bd);
             $idCaja=$nuevaCaja->obtenerIdPorNombre($bd, $nuevaCaja->getNombre(), $nuevoTrastero->getId());
             $nuevaCaja->setId($idCaja);
             $almacenCajas[]= $nuevaCaja;

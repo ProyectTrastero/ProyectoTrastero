@@ -84,7 +84,7 @@ class Caja {
         return $idRecuperado;
    }
    
-   public function añadirCaja($bd){
+   public function añadir($bd){
        if($this->idEstanteria==null){
            $consulta="insert into Cajas (nombre, idTrastero) values('$this->nombre',$this->idTrastero)";
            $bd->exec($consulta);
@@ -99,5 +99,16 @@ class Caja {
        $consulta = "delete from Cajas where id = $this->id";
        $bd->exec($consulta);
    }
+   
+      public static function recuperarCajasPorIdTrastero($bd, $idTrastero): array{
+        $consulta="select * from Cajas where idTrastero = $idTrastero order by id asc";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Caja::class);
+        $cajas=($registro->fetchAll()) ?: null;
+         if($cajas==null){
+            $cajas=array();
+        }
+        return $cajas;
+    }
     
 }

@@ -62,7 +62,7 @@ class Balda {
         $this->idEstanteria = $idEstanteria;
     }
     
-    public function añadirBalda($bd){
+    public function añadir($bd){
         $consulta="insert into Baldas (nombre, idEstanteria) values('$this->nombre', $this->idEstanteria)";
         $bd->exec($consulta);
     }
@@ -93,5 +93,16 @@ class Balda {
        $idRecuperado = $registro->idEstanteria;
        return $idRecuperado;
    }
+   
+      public static function recuperarBaldasPorIdEstanteria($bd, $idEstanteria): array{
+        $consulta="select * from Baldas where idEstanteria = $idEstanteria order by id asc";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Balda::class);
+        $baldas=($registro->fetchAll()) ?: null;
+        if($baldas==null){
+            $baldas=array();
+        }
+        return $baldas;
+    }
 
 }

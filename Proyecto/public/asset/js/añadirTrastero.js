@@ -6,7 +6,8 @@ var primerElemento;
 var guardado;
 
 function iniciar(){
-    guardado = document.getElementById("guardadoModificado").innerHTML;
+    var tipo = document.getElementById("guardadoModificado");
+    guardado=tipo.getAttribute("value");
     ocultos= document.getElementsByClassName("papeleraOculta");
     deshabilitarBotones();
     if(guardado=="false"){

@@ -13,26 +13,29 @@
     <div>
         <p>{{$mensaje}}</p>
         @if($datosTrastero['guardado'])
-        <p id="guardadoModificado" style="color:white">true</p>
+        <span id="guardadoModificado" value="true" ></span>
         @else
-        <p id="guardadoModificado" style="color:white">false</p>
+        <span id="guardadoModificado" value="false" ></span>
         @endif
     </div>
     <div>
         <form action="" method="POST">
             <div>
-                <label for="nombre">NOMBRE:</label>
+                @if($datosTrastero['tipo']=="guardar")
+                 <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
+                @endif
+               
                 <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
                 <input type="submit" name="añadirCaja" value="AÑADIR CAJA"> 
-            </div>
-            <div>
-                 @if($datosTrastero['tipo']=="guardar")
+<!--            </div>
+            <div>-->
+                @if($datosTrastero['tipo']=="guardar")
                 <input type="submit" name="guardar" value="GUARDAR">
                 @else
                 <input type="submit" name="modificar" value="MODIFICAR">
                 @endif
-                 <input type="submit" name="volverAcceso" value="VOLVER">
+                <input type="submit" name="volverAcceso" value="VOLVER">
             </div>
         </form>
     </div>
@@ -128,7 +131,9 @@
             @endforeach   
         </ul>
     </div>
-    
+    <div>
+        
+    </div>
     
 </div>
 

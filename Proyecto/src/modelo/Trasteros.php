@@ -109,8 +109,16 @@ class Trasteros {
         $bd->exec($consulta);
     }
     
-    public function recuperarTrasteroPorNombre($bd, $nombreTrastero): Trasteros{
+    public static function recuperarTrasteroPorNombre($bd, $nombreTrastero): Trasteros{
         $consulta = "select * from Trasteros where nombre='$nombreTrastero'";
+        $registro=$bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Trasteros::class);
+        $trastero = ($registro->fetch()) ?: null;
+        return $trastero;
+    }
+    
+    public static function recuperarTrasteroPorId($bd, $idTrastero): Trasteros{
+        $consulta = "select * from Trasteros where id=$idTrastero";
         $registro=$bd->query($consulta);
         $registro->setFetchMode(PDO::FETCH_CLASS, Trasteros::class);
         $trastero = ($registro->fetch()) ?: null;
@@ -120,14 +128,12 @@ class Trasteros {
     public function eliminar($bd): void{
        $consulta ="delete from Trasteros where id = $this->id";
        $bd->exec($consulta);
-       
    }
    
    public function actualizarNombre($bd, $nuevoNombre){
         $consulta="update Trasteros set nombre = '$nuevoNombre' where id = $this->id";
        $bd->exec($consulta);
    }
-    
     
 }    
 ?>

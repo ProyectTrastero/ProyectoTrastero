@@ -50,7 +50,7 @@ class Estanteria {
         $this->idTrastero = $idTrastero;
     }
     
-    public function añadirEstanteria($bd): void{
+    public function añadir($bd): void{
         $consulta="insert into Estanterias (nombre, idTrastero) values('$this->nombre', $this->idTrastero)";
         $bd->exec($consulta);
             
@@ -74,5 +74,15 @@ class Estanteria {
        $bd->exec($consulta);
    }
    
-  
+   public static function recuperarEstanteriasPorIdTrastero($bd, $idTrastero): array{
+        $consulta="select * from Estanterias where idTrastero = $idTrastero order by id asc";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Estanteria::class);
+        $estanterias=($registro->fetchAll()) ?: null;
+         if($estanterias==null){
+            $estanterias=array();
+        }
+        return $estanterias;
+    }
+ 
 }
