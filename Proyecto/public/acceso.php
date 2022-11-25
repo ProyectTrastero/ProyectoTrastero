@@ -91,7 +91,39 @@ if (isset($_REQUEST['acceder'])) {
     $_SESSION['idTrastero']=$_POST['id'];
     header("location:../public/modificarTrastero.php"); 
     die;
-
+//Esta parte la he añadido yo. Emma   
+}elseif (isset($_REQUEST['eliminar'])){
+    $idTrastero=($_POST['id']);
+    $trastero = \App\Trasteros::recuperarTrasteroPorId($bd, $idTrastero);
+    $trastero->eliminar($bd);
+    $estanterias = App\Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
+    foreach ($estanterias as $estanteria){
+        $idEstanteria=$estanteria->getId();
+        $estanteria->eliminar($bd);
+        $baldas= App\Balda::recuperarBaldasPorIdEstanteria($bd, $idEstanteria);
+        foreach ($baldas as $balda){
+            $balda->eliminar($bd);     
+        } 
+    }
+    $cajas= App\Caja::recuperarCajasPorIdTrastero($bd, $idTrastero);
+    foreach ($cajas as $caja){
+        $caja->eliminar($bd);
+    }
+    
+    $usuario = $_SESSION['usuario'];
+    $idUsuario = intval($usuario->getId());
+    $trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
+    $_SESSION['trasteros'] = $trasteros;
+    echo $blade->run("acceso", compact ('usuario', 'trasteros'));
+    die;
+    //Falta eliminar los productos que no está la clase hecha y supongo que la habrá hecho Marta.
+   
+    
+    
+    
+    
+    
+//Hasta aquí
 /*    
 }elseif (isset($_POST['salir'])) {
 // Destruyo la sesión

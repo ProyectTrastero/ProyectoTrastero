@@ -54,7 +54,7 @@
                     <td  class="col-1">
                         <form method="POST" action="" id='formeliminar'>
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
-                            <button type="submit" name="eliminar" id='modificar'<span>Eliminar</span></button>
+                            <button type="submit" name="eliminar" id='eliminar'<span>Eliminar</span></button>
                         </form>
                     </td>
                 </table>
