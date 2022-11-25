@@ -50,6 +50,12 @@
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
                             <button type="submit" name="modificar" id='modificar'<span>Modificar</span></button>
                         </form>
+                    </td> <br/>
+                    <td  class="col-1">
+                        <form method="POST" action="" id='formeliminar'>
+                            <input type='hidden' name='id' value='{{$valor->getId()}}'>
+                            <button type="submit" name="eliminar" id='modificar'<span>Eliminar</span></button>
+                        </form>
                     </td>
                 </table>
                 @endforeach    
