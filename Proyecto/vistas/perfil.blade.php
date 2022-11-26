@@ -5,6 +5,7 @@
 
 @section('content')
     <div class="container">
+
       @if (@isset($_SESSION['msj']))
         <div class="alert alert-{{$_SESSION['msj-type']}} alert-dismissible fade show" role="alert"">
           {{$_SESSION['msj']}}
@@ -14,101 +15,91 @@
            unset($_SESSION['msj-type']);
            ?>
            
-           <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> x </span>
+           <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
         </div>
       @endif
-      <h1 class="ml-4 mb-5">Perfil {{$datos['nombre']}}</h1>
-        <form method="POST" action="{{$_SERVER["PHP_SELF"]}}">
+
+      <h1 class="text-center mt-5">Perfil {{$usuario->getNombre()}}</h1>
+        <form class="formEditPerfil" method="POST" action="{{$_SERVER["PHP_SELF"]}}">
             
-            <div class="row mb-3">
-                <label for="nombre" class="col-sm-2 col-lg-1 col-form-label form-text">Nombre: </label>
-                <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="nombre" id="nombre" value="{{$datos['nombre']}}">
-                </div>
-                
-            </div>
-            @if(isset($errores) && in_array("nombreInvalido", $errores)) 
-            <div class="row mb-3">
-              <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+            <div class="mb-3 inputsForm">
+              <label for="nombre" class="text-end">Nombre: </label>
+              <input class="form-control" type="text" name="nombre" id="nombre" value="{{$datos['nombre']}}">
+              @if(isset($errores) && in_array("nombreInvalido", $errores)) 
+                <div></div>
+                <div class="textError form-text p-1">
                   Solo se admiten letras y espacios en blanco.
-              </div>
+                </div>
+              @endif
             </div>
-            @endif
             
-            <div class="row mb-3">
-              <label for="apellidos" class="col-sm-2 col-lg-1 col-form-label form-text">Apellidos: </label>
-              <div class="col-10 col-sm-8 col-md-5">
-                  <input class="form-control" type="text" name="apellidos" id="apellidos" value="{{$datos['apellidos']}}">
-              </div>
-              
-            </div>
-            @if(isset($errores) && in_array("apellidoInvalido", $errores)) 
-              <div class="row">
-                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+            
+            <div class="inputsForm mb-3">
+              <label for="apellidos" class="text-end">Apellidos: </label>
+              <input class="form-control" type="text" name="apellidos" id="apellidos" value="{{$datos['apellidos']}}">
+              @if(isset($errores) && in_array("apellidoInvalido", $errores)) 
+                <div></div>
+                <div class="textError form-text p-1">
                     Solo se admiten letras y espacios en blanco.
                 </div>  
-              </div>
-            @endif
-            <div class="row mb-3">
-                <label for="alias" class="col-sm-2 col-lg-1 col-form-label form-text">Alias: </label>
-                <div class="col-10 col-sm-8 col-md-5">
-                    <input class="form-control" type="text" name="alias" id="alias" value="{{$datos['alias']}}">
-                </div>
-                
+              @endif
             </div>
-            @if(isset($errores) && in_array("aliasInvalido", $errores)) 
-              <div class="row">
-                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
-                  Los alias solo pueden contener letras, números, guiones y guiones bajos.
-                </div> 
-              </div> 
-            @endif
-            @if(isset($errores) && in_array("aliasExiste", $errores)) 
-              <div class="row">
-                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Este alias ya existe</div>
-              </div>  
-            @endif
-            <div class="row mb-3">
-              <label for="clave" class="col-sm-2 col-lg-1 col-form-label form-text">Clave: </label>
-              <div class="col-10 col-sm-8 col-md-5">
-                  <input class="form-control" type="text" name="clave" id="clave" value="{{$datos['clave']}}">
-              </div>
-              
+            
+            <div class="inputsForm mb-3">
+                <label for="alias" class="text-end">Alias: </label>
+                <input class="form-control" type="text" name="alias" id="alias" value="{{$datos['alias']}}">
+                @if(isset($errores) && in_array("aliasInvalido", $errores)) 
+                  <div></div>
+                  <div class="textError form-text p-1">
+                    Los alias solo pueden contener letras, números, guiones y guiones bajos.
+                  </div> 
+                @endif
+                @if(isset($errores) && in_array("aliasExiste", $errores)) 
+                  <div></div>
+                  <div class="textError form-text p-1">Este alias ya existe</div>
+                 @endif
             </div>
-            @if(isset($errores) && in_array("claveInvalida", $errores)) 
-              <div class="row">
-                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">
+
+            <div class="inputsForm mb-3">
+              <label for="clave" class="text-end">Clave: </label>
+              <input class="form-control" type="text" name="clave" id="clave" value="{{$datos['clave']}}">
+              @if(isset($errores) && in_array("claveInvalida", $errores)) 
+                <div></div>
+                <div class="textError form-text p-1">
                     Debe contener minimo 8 caracteres, una mayuscula una miniscula y un número. 
                 </div>  
-              </div>
-            @endif
+              @endif
+            </div>
 
-            <div class="row mb-3">
-              <label for="correo" class="col-sm-2 col-lg-1 col-form-label form-text">Correo: </label>
-              <div class="col-10 col-sm-8 col-md-5">
-                  <input class="form-control" type="email" name="correo" id="Correo" value="{{$datos['correo']}}">
-              </div>
+            <div class="inputsForm mb-3">
+              <label for="correo" class="text-end">Correo: </label>
+              <input class="form-control" type="email" name="correo" id="Correo" value="{{$datos['correo']}}">
+              @if(isset($errores) && in_array("correoInvalido", $errores))
+                <div></div> 
+                <div class="textError form-text p-1">
+                  Correo invalido
+                </div>  
+                
+              @endif
+              @if(isset($errores) && in_array("correoExiste", $errores))
+                <div></div> 
+                <div class="textError form-text p-1">
+                  Este correo ya existe
+                </div>  
+                
+              @endif
+              @if(isset($errores) && in_array("camposVacios", $errores)) 
+                <div></div>
+                <div class="textError form-text p-1">
+                  Rellene todos los campos
+                </div>  
+              @endif
               
             </div>
-            @if(isset($errores) && in_array("correoInvalido", $errores)) 
-              <div class="row">
-                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Correo invalido</div>  
-              </div>
-            @endif
-            @if(isset($errores) && in_array("correoExiste", $errores)) 
-              <div class="row">
-                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Este correo ya existe</div>  
-              </div>
-            @endif
-            @if(isset($errores) && in_array("camposVacios", $errores)) 
-              <div class="row">
-                <div class="alert alert-danger form-text p-1 col-11 col-md-8 col-lg-7" role="alert">Rellene todos los campos</div>  
-              </div>
-            @endif
               
-            <div class="row">
-              <button type="submit" class="btn btn-primary col-4 col-lg-3" name="volver" value="volver">Volver</button>
-              <button type="submit" class="btn btn-primary col-4 col-lg-3 ml-2" name="guardar" value="guardar" >Guardar</button>
+            <div class="text-end">
+              <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
+              <button type="submit" class="btn btn-primary " name="guardar">Guardar</button>
             </div>
 
 

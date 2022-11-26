@@ -12,7 +12,7 @@
     <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
     </div>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu dropdown-menu-end ">
       <li><button class="dropdown" type="submit" name="perfilUsuario">Perfil usuario</button></li>
       <li><button class="dropdown" type="submit" name="cerrarSesion">Cerrar sesión</button></li>
     </ul>
