@@ -133,8 +133,8 @@ function validarCambiosPerfil(PDO $bd, array $datos, Usuario $usuario): array
         array_push($errores, 'correoInvalido');
     }
 
-    if (!empty($datos['alias']) && $datos['correo'] != $usuario->getCorreo()) {
-        if (!Usuario::checkExisteAlias($bd, $datos['alias'])) {
+    if (!empty($datos['correo']) && $datos['correo'] != $usuario->getCorreo()) {
+        if (!Usuario::checkExisteCorreo($bd, $datos['correo'])) {
             array_push($errores, "correoExiste");
         }
     }
