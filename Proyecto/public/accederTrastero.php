@@ -56,7 +56,9 @@ if (isset($_POST['volverTodosTrasteros'])){
     }
     $usuario = $_SESSION['usuario'];
     $trasteros = $_SESSION['trasteros'];
-    $miTrastero = $_SESSION['miTrastero'];
+    $id = $_SESSION['id'];
+    $miTrastero = App\Trasteros::recuperarTrasteroPorId($bd, $id) ;
+    $_SESSION['miTrastero']=$miTrastero;
     echo $blade->run("accederTrastero", compact ('usuario', 'miTrastero'));
     die;
     

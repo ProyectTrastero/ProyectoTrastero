@@ -30,8 +30,10 @@ session_start();
 if (isset($_REQUEST['acceder'])) {
     $usuario = $_SESSION['usuario'];
     $trasteros = $_SESSION['trasteros'];
-    $id = intval($_POST['id'])-1;
-    $_SESSION['miTrastero'] = $trasteros[$id];
+    $id = intval($_POST['id']);
+    $_SESSION['id']=$id;
+    
+    //$_SESSION['miTrastero'] = $trasteros[$id];
     header("location:../public/accederTrastero.php"); 
     
 }elseif (isset($_REQUEST['añadirTrastero'])) {  

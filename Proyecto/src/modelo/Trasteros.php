@@ -99,21 +99,12 @@ class Trasteros {
             }
     }
     
-    /*$sql = "select id, nombre from productos order by nombre";
-        $sth = $conProyecto->prepare($sql);
-        try {
-            $sth->execute();
-        } catch (PDOException $ex) {
-            die("Error al recuperar los productos " . $ex->getMessage());
-        }
-
-        $productos = array();
-        while ($producto = $sth->fetch(PDO::FETCH_OBJ)) {
-            $productos[] = $producto;
-        }
-        $sth = null;
-        $conProyecto = null;*/
-    
-    
+    public static function recuperarTrasteroPorId($bd, $idTrastero): Trasteros{
+        $consulta = "select * from Trasteros where id=$idTrastero";
+        $registro=$bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Trasteros::class);
+        $trastero = ($registro->fetch()) ?: null;
+        return $trastero;
+    } 
 }    
 ?>

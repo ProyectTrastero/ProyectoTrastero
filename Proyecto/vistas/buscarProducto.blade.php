@@ -36,7 +36,7 @@
         <form method="POST" action="" name="formEtiquetas">
 
            <!--me falta el  select-->
-            <button type="submit" name="añadirEtiquetas">Añadir Etiqueta</button>
+            <button type="submit" name="añadirEtiquetas">Seleccionar Etiqueta</button>
         </form> 
     </div>
     
@@ -44,7 +44,8 @@
         @if (isset ($etiquetas))
             @if ($etiquetas != "")
                     @foreach ($etiquetas as $valor)
-                    <td class="col-3"> {{$valor->getNombre()  }}</td>
+                    <!--Dentro de un div row-->
+                    <div class="col-3"> {{$valor->getNombre()  }}</div>
                     @endforeach
             @else
                 <div>           
