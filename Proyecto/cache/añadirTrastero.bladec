@@ -112,7 +112,7 @@
  </form>
  </div>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
- </div>
+
  </div>
  <div>
  <ul>
@@ -130,10 +130,14 @@
  </ul>
  </div>
  <div>
- 
+ <input type="submit" name="volverAcceso" value="VOLVER">
+ <input type="submit" name="guardar" value="GUARDAR">
  </div>
+
+ </form>
  
 </div>
 
 <?php $this->stopSection(); ?>
+
 <?php if (isset($_shouldextend[1])) { echo $this->runChild('app'); } ?>

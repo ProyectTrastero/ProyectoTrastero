@@ -4,20 +4,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>@yield('title')</title>
+        <!--<link rel="stylesheet" href="asset/css/style.css" >
         <link rel="stylesheet" href="asset/css/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="asset/css/all.css">
-        <link rel="stylesheet" href="asset/css/style.css" >
-        
+        <link rel="stylesheet" href="asset/css/all.css">-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     </head>
      <body>
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
 			<div class="container-fluid">
-				<a class="navbar-brand">
-					<img src="asset/img/logo.png" alt="" width="80" height="80">
-					Mitrastero.com
-				</a>
-		
-        @yield('navbar')
+                            <a class="navbar-brand">
+				<img src="asset/img/logo.png" alt="" width="80" height="80">
+				Mitrastero.com
+                            </a>
+                            
+                           @yield('navbar')
 			</div>
         </nav>
 <!--        {{-- <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="800px" height="600px" viewBox="0 0 800 600" enable-background="new 0 0 800 600" xml:space="preserve">
