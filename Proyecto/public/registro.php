@@ -55,12 +55,15 @@ if (isset($_POST['registrarse'])) {
     }
 }else if(isset($_POST['volver'])){
     header("location: ../public/index.php");
+
 }
 else{
 
     //por defecto muestra vista registro
     echo $blade->run("registro");
 }
+
+
 
 function validarRegistro(PDO $bd, array $datos): array
 {

@@ -61,7 +61,7 @@ if (isset($_SESSION['usuario'])) {
         //comprobamos si tenemos errores
         if (count($errores) > 0) {
            if(in_array("noModificado", $errores)){
-                
+                //inicializamos variable para mostrar mensaje
                 $_SESSION['msj']="No se ha modificado ningun campo";
                 $_SESSION['msj-type']="info";
             }
