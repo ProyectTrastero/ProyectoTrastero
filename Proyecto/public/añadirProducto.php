@@ -28,6 +28,9 @@ try {
 }
 session_start();
 if(isset($_SESSION['usuario'])){
-    
+    $usuario = $_SESSION['usuario'];
+
+
+    echo $blade->run('añadirProducto',['usuario'=>$usuario]);
 }
- echo $blade->run('añadirProducto');
+ 
