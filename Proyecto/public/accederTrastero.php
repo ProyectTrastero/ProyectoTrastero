@@ -34,7 +34,7 @@ if (isset($_POST['volverTodosTrasteros'])){
     echo "Vemos trastero";
     die;
 }elseif (isset($_POST['añadirProducto'])){
-    echo "Añadimos producto";
+    header("location:../public/añadirProducto.php"); 
     die;
 }elseif (isset($_POST['buscarProducto'])){
     echo "buscamos productoo";

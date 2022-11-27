@@ -31,10 +31,10 @@
                   Solo se admiten letras y espacios en blanco.
                 </div>
               @endif
-            </div>
             
             
-            <div class="inputsForm mb-3">
+            
+            
               <label for="apellidos" class="text-end">Apellidos: </label>
               <input class="form-control" type="text" name="apellidos" id="apellidos" value="{{$datos['apellidos']}}">
               @if(isset($errores) && in_array("apellidoInvalido", $errores)) 
@@ -43,9 +43,9 @@
                     Solo se admiten letras y espacios en blanco.
                 </div>  
               @endif
-            </div>
             
-            <div class="inputsForm mb-3">
+            
+            
                 <label for="alias" class="text-end">Alias: </label>
                 <input class="form-control" type="text" name="alias" id="alias" value="{{$datos['alias']}}">
                 @if(isset($errores) && in_array("aliasInvalido", $errores)) 
@@ -58,9 +58,9 @@
                   <div></div>
                   <div class="textError form-text p-1">Este alias ya existe</div>
                  @endif
-            </div>
+            
 
-            <div class="inputsForm mb-3">
+            
               <label for="clave" class="text-end">Clave: </label>
               <input class="form-control" type="text" name="clave" id="clave" value="{{$datos['clave']}}">
               @if(isset($errores) && in_array("claveInvalida", $errores)) 
@@ -69,9 +69,9 @@
                     Debe contener minimo 8 caracteres, una mayuscula una miniscula y un número. 
                 </div>  
               @endif
-            </div>
+            
 
-            <div class="inputsForm mb-3">
+            
               <label for="correo" class="text-end">Correo: </label>
               <input class="form-control" type="email" name="correo" id="Correo" value="{{$datos['correo']}}">
               @if(isset($errores) && in_array("correoInvalido", $errores))
