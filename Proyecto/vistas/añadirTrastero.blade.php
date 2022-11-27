@@ -12,7 +12,7 @@
 
 <script src="https://kit.fontawesome.com/12104efb99.js" crossorigin="anonymous"></script>
 <script src="asset/js/añadirTrastero.js"></script>
-<div class="container" disabled="true">
+<div class="container">
     <div>
         <p>{{$mensaje}}</p>
         @if($datosTrastero['guardado'])
@@ -25,7 +25,7 @@
         <form action="" method="POST">
             <div>
                 @if($datosTrastero['tipo']=="guardar")
-                 <label for="nombre">NOMBRE:</label>
+                <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 @endif
                

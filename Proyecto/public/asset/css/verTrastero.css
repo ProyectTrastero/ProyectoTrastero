@@ -1,16 +1,8 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : 26-nov-2022, 0:05:01
-    Author     : Emma
-*/
 
 #menu * { list-style:none;}
-#menu li{ line-height:180%;}
-#menu li a{color:#222; text-decoration:none;}
-#menu li a:before{ content:"\025b8"; color:#ddd; margin-right:4px;}
+#menu .li{ line-height:180%;}
+#menu .li span{color:#222; text-decoration:none;}
+#menu .li span:before{ content:"\025b8"; color:#ddd; margin-right:4px;}
 #menu input[name="list"] {
 	position: absolute;
 	left: -1000em;
@@ -18,4 +10,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 #menu label:before{ content:"\025b8"; margin-right:4px;}
 #menu input:checked ~ label:before{ content:"\025be";}
 #menu .interior{display: none;}
-#menu input:checked ~ ul{display:block;}
+#menu input:checked ~ .ul{display:block;}
