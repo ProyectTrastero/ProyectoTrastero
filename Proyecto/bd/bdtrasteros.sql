@@ -7,70 +7,83 @@ use bdtrasteros;
 -- 2.1.1.- Tabla usuarios
 create table if not exists usuarios(
     id int auto_increment primary key,
-    usuario varchar(100) not null,
-    contraseña varchar(100) not null, 
+    alias varchar(100) not null,
     nombre varchar(100) not null,
     apellidos varchar(100) not null,
-    correo varchar(100) unique not null,
-    telefono varchar(9) null
+    clave varchar(100) not null, 
+    correo varchar(100) unique not null
 );
+
 -- 2.1.2 .- Tabla trasteros
 create table if not exists trasteros(
     id int auto_increment primary key,
-    usuario int not null,
-    nombre varchar(100) not null, 
-    num_estanterias int, 
-    num_cajas int,
-    constraint fk_trastero_usuario foreign key(usuario) references usuarios(id) on update cascade on delete cascade 
+    nombre varchar(100) not null,
+    idUsuario int not null,
+    constraint fk_trastero_usuario foreign key(idUsuario) references usuarios(id) on update cascade on delete cascade 
 );
--- 2.1.3.- Tabla productos
-create table if not exists productos(
-    id int auto_increment primary key,
-    trastero int, 
-    nombre varchar(200) not null,
-    descripcion text, 
-    estanteria int, 
-    balda int, 
-    caja int,
-    constraint fk_producto_trastero foreign key(trastero) references trasteros(id) on update cascade on delete cascade,
-    constraint fk_producto_estanteria foreign key(estanteria) references estanterias(id) on update cascade on delete cascade, 
-    constraint fk_producto_balda foreign key(balda) references baldas(id) on update cascade on delete cascade,
-    constraint fk_producto_caja foreign key(caja) references cajas(id) on update cascade on delete cascade
-);
--- 2.1.4 Tabla estanterias
+
+-- 2.1.3.- Tabla estanterias
 create table if not exists estanterias(
     id int auto_increment primary key,
-    numero int,
-    trastero int,
-    num_baldas int, 
-    constraint fk_estanteria_trastero foreign key(trastero) references trasteros(id) on update cascade on delete cascade
+    nombre varchar(100),
+    idTrastero int, 
+    constraint fk_estanteria_trastero foreign key(idTrastero) references trasteros(id) on update cascade on delete cascade
 
 );
--- 2.1.5 Tabla etiquetas
-create table if not exists etiquetas(
-    id int primary key,
-    usuario int not null,
-    nombre varchar(20) not null,
-    producto int(20) not null,
-    constraint fk_etiqueta_producto foreign key(producto) references productos(id) on update cascade on delete cascade,
-    constraint fk_etiqueta_usuario foreign key(usuario) references usuarios(id) on update cascade on delete cascade
-);
--- 2.1.6 Tabla baldas
+
+-- 2.1.4 Tabla baldas
 create table if not exists baldas(
-    id int primary key,
-    numero int not null,
-    estanteria int not null,
-    constraint fk_balda_estanteria foreign key(estanteria) references estanterias(id) on update cascade on delete cascade 
+    id int auto_increment primary key,
+    nombre varchar(100),
+    idEstanteria int not null,
+    constraint fk_balda_estanteria foreign key(idEstanteria) references estanterias(id) on update cascade on delete cascade 
 );
--- 2.1.7 Tabla cajas
+
+-- 2.1.5 Tabla cajas
 create table if not exists cajas(
-    id int primary key,
-    numero varchar(20) not null,
-    trastero int not null,
-    estanteria int,
-    balda int,
-    constraint fk_caja_trastero foreign key(trastero) references trasteros(id) on update cascade on delete cascade,
-    constraint fk_caja_estanteria foreign key(estanteria) references estanterias(id) on update cascade on delete cascade,
-    constraint fk_caja_balda foreign key(balda) references baldas(id) on update cascade on delete cascade 
+    id int auto_increment primary key,
+    nombre varchar(100),
+    idtrastero int not null,
+    idestanteria int,
+    idbalda int,
+    constraint fk_caja_trastero foreign key(idTrastero) references trasteros(id) on update cascade on delete cascade,
+    constraint fk_caja_estanteria foreign key(idEstanteria) references estanterias(id) on update cascade on delete cascade,
+    constraint fk_caja_balda foreign key(idBalda) references baldas(id) on update cascade on delete cascade 
 );
+
+-- 2.1.6 Tabla productos
+create table if not exists productos(
+    id int auto_increment primary key,
+    nombre varchar(200) not null,
+    descripcion text,
+    idTrastero int not null, 
+    idEstanteria int, 
+    idBalda int, 
+    idCaja int,
+    constraint fk_producto_trastero foreign key(idTrastero) references trasteros(id) on update cascade on delete cascade,
+    constraint fk_producto_estanteria foreign key(idEstanteria) references estanterias(id) on update cascade on delete cascade, 
+    constraint fk_producto_balda foreign key(idBalda) references baldas(id) on update cascade on delete cascade,
+    constraint fk_producto_caja foreign key(idCaja) references cajas(id) on update cascade on delete cascade
+);
+
+-- 2.1.7 Tabla etiquetas
+create table if not exists etiquetas(
+    id int auto_increment primary key,
+    nombre varchar(50) not null,
+    idUsuario int not null,
+    constraint fk_etiqueta_usuario foreign key(idUsuario) references usuarios(id) on update cascade on delete cascade
+);
+
+-- 2.1.8 Tabla etiquetasproductos
+create table if not exists etiquetasproductos(
+    id int auto_increment primary key,
+    idetiqueta varchar(50) not null,
+    idProducto int(20) not null,
+    constraint fk_etiquetaproducto_etiqueta foreign key(idProducto) references etiquetas(id) on update cascade on delete cascade,
+    constraint fk_etiquetaproducto_producto foreign key(idProducto) references productos(id) on update cascade on delete cascade
+);
+
+
+
+
 

@@ -13,8 +13,8 @@
         <div>
             <label for="estanteria">Estantería</label>
             <select id="seleccionEstanteria" name="estanteria">
-                @foreach($estanterias as $clave=>$valor)
-                <option>{{$clave+1}}</option>
+                @foreach($datosTrastero['almacenEstanterias'] as $clave=>$valor)
+                <option>{{$datosTrastero['almacenEstanterias'][$clave]->getNombre()}}</option>
                 @endforeach
             </select>
         </div>
