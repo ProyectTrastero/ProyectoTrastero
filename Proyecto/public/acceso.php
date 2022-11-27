@@ -90,8 +90,8 @@ if (isset($_REQUEST['acceder'])) {
 }elseif (isset($_REQUEST['modificar'])) { 
     $_SESSION['idTrastero']=$_POST['id'];
     //Para probar pagina de ver trastero
-//    header("location:../public/verTrastero.php"); 
-    header("location:../public/modificarTrastero.php"); 
+    header("location:../public/verTrastero.php"); 
+//    header("location:../public/modificarTrastero.php"); 
     die;
 //Esta parte la he añadido yo. Emma   
 }elseif (isset($_REQUEST['eliminar'])){

@@ -43,9 +43,9 @@ create table if not exists baldas(
 create table if not exists cajas(
     id int auto_increment primary key,
     nombre varchar(100),
-    idtrastero int not null,
-    idestanteria int,
-    idbalda int,
+    idTrastero int not null,
+    idEstanteria int,
+    idBalda int,
     constraint fk_caja_trastero foreign key(idTrastero) references trasteros(id) on update cascade on delete cascade,
     constraint fk_caja_estanteria foreign key(idEstanteria) references estanterias(id) on update cascade on delete cascade,
     constraint fk_caja_balda foreign key(idBalda) references baldas(id) on update cascade on delete cascade 
@@ -77,7 +77,7 @@ create table if not exists etiquetas(
 -- 2.1.8 Tabla etiquetasproductos
 create table if not exists etiquetasproductos(
     id int auto_increment primary key,
-    idetiqueta varchar(50) not null,
+    idEtiqueta varchar(50) not null,
     idProducto int(20) not null,
     constraint fk_etiquetaproducto_etiqueta foreign key(idProducto) references etiquetas(id) on update cascade on delete cascade,
     constraint fk_etiquetaproducto_producto foreign key(idProducto) references productos(id) on update cascade on delete cascade
