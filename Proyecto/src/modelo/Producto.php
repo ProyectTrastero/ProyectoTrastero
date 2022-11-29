@@ -18,29 +18,44 @@ use \PDO as PDO;
  */
 class Producto {
     private $id;
-    private $trastero;
     private $nombre;
     private $descripcion;
-    private $estanteria;
-    private $balda;
-    private $caja;
+    private $idTrastero;
+    private $idEstanteria;
+    private $idBalda;
+    private $idCaja;
     
-    public function __construct($id, $trastero, $nombre, $descripcion, $estanteria, $balda, $caja) {
+    public function __construct(int $id = null, string $nombre = null, string $descripcion = null, int $idTrastero=null, int $idEstanteria=null, int $idBalda= null, int $idCaja=null) {
+        if (!is_null($id)) {
         $this->id = $id;
-        $this->trastero = $trastero;
+        }
+        if (!is_null($nombre)) {
         $this->nombre = $nombre;
+        }
+        if (!is_null($descripcion)) {
         $this->descripcion = $descripcion;
-        $this->estanteria = $estanteria;
-        $this->balda = $balda;
-        $this->caja = $caja;
+        }
+        if (!is_null($idTrastero)) {
+        $this->idTrastero = $idTrastero;
+        }
+        if (!is_null($idEstanteria)) {
+        $this->idEstanteria = $idEstanteria;
+        }
+        if (!is_null($idBalda)) {
+        $this->idBalda = $idBalda;
+        }
+        if (!is_null($idCaja)) {
+        $this->idCaja = $idCaja;
+        }
     }
+
     
     public function getId() {
         return $this->id;
     }
 
-    public function getTrastero() {
-        return $this->trastero;
+    public function getIdTrastero() {
+        return $this->idTrastero;
     }
 
     public function getNombre() {
@@ -51,24 +66,24 @@ class Producto {
         return $this->descripcion;
     }
 
-    public function getEstanteria() {
-        return $this->estanteria;
+    public function getIdEstanteria() {
+        return $this->idEstanteria;
     }
 
-    public function getBalda() {
-        return $this->balda;
+    public function getIdBalda() {
+        return $this->idBalda;
     }
 
-    public function getCaja() {
-        return $this->caja;
+    public function getIdCaja() {
+        return $this->idCaja;
     }
 
     public function setId($id): void {
         $this->id = $id;
     }
 
-    public function setTrastero($trastero): void {
-        $this->trastero = $trastero;
+    public function setIdTrastero($idTrastero): void {
+        $this->idTrastero = $idTrastero;
     }
 
     public function setNombre($nombre): void {
@@ -79,19 +94,19 @@ class Producto {
         $this->descripcion = $descripcion;
     }
 
-    public function setEstanteria($estanteria): void {
-        $this->estanteria = $estanteria;
+    public function setIdEstanteria($idEstanteria): void {
+        $this->idEstanteria = $idEstanteria;
     }
 
-    public function setBalda($balda): void {
-        $this->balda = $balda;
+    public function setIdBalda($idBalda): void {
+        $this->idBalda = $idBalda;
     }
 
-    public function setCaja($caja): void {
-        $this->caja = $caja;
+    public function setIdCaja($idCaja): void {
+        $this->idCaja = $idCaja;
     }
 
-
+    
      public static function recuperaProductosPorPalabra(PDO $bd, string $palabra){
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $sql = 'select * from productos where nombre LIKE :nombre';

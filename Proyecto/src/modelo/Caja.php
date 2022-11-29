@@ -17,7 +17,7 @@ class Caja {
     private $idBalda;
  
     //Transformamos el alias a string antes de instanciar una estantería.
-    public function __construct(int $id = null, string $nombre = null, int $idTrastero = null, int $idEstanteria = null, int $idBalda = null) {
+    public function __construct(string $id = null, string $nombre = null, string $idTrastero = null, string $idEstanteria = null, string $idBalda = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
@@ -69,6 +69,45 @@ class Caja {
     }
     public function setIdBalda($idBalda): void {
         $this->idBalda = $idBalda;
+    }
+    
+    public function actualizarNombre($bd, $nuevoNombre){
+       $consulta="update Cajas set nombre = '$nuevoNombre' where id = $this->id";
+       $bd->exec($consulta);
+   }
+   
+   public static function obtenerIdPorNombre($bd, $nombre, $idTrastero): int{
+        $consulta=$bd->query("select id from cajas where nombre='$nombre' and idTrastero=$idTrastero");
+        $registro=$consulta->fetch(PDO::FETCH_OBJ);
+        $idRecuperado=$registro->id;
+        return $idRecuperado;
+   }
+   
+   public function añadir($bd){
+       if($this->idEstanteria==null){
+           $consulta="insert into Cajas (nombre, idTrastero) values('$this->nombre',$this->idTrastero)";
+           $bd->exec($consulta);
+       }else{
+           $consulta="insert into Cajas (nombre, idTrastero, idEstanteria, idBalda) values('$this->nombre',$this->idTrastero, $this->idEstanteria, $this->idBalda)";
+           $bd->exec($consulta); 
+       }
+        
+    }
+    
+    public function eliminar($bd): void{
+       $consulta = "delete from Cajas where id = $this->id";
+       $bd->exec($consulta);
+   }
+   
+    public static function recuperarCajasPorIdTrastero($bd, $idTrastero): array{
+        $consulta="select * from Cajas where idTrastero = '$idTrastero' order by id";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Caja::class);
+        $cajas=($registro->fetchAll()) ?: null;
+         if($cajas==null){
+            $cajas=array();
+        }
+        return $cajas;
     }
     
 }

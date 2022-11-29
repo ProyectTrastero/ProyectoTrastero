@@ -75,7 +75,8 @@ class Usuario{
 
     public function setApellidos($apellidos): void {
         $this->apellidos = $apellidos;
-    }
+    }   
+
 
     public function setCorreo($correo):void{
         $this->correo=$correo;

@@ -41,6 +41,7 @@
     </div>
     
     <div>
+        <h4>Buscar por mi etiqueta: </h4> 
         @if (isset ($etiquetas))
             @if ($etiquetas != "")
                     @foreach ($etiquetas as $valor)
@@ -61,6 +62,7 @@
                 <h3>Mis productos</h3>
                 <table class="row">
                     <tr>
+                    <th class="col-3">Seleccionar</th>    
                     <th class="col-3">Producto</th>
                     <th class="col-3">Descripción</th>
                     <th class="col-3">Ubicación</th>
@@ -68,20 +70,41 @@
                     </tr>
                 @foreach ($productos as $valor)    
                 <tr>
+                    <td><input type="checkbox" id="cbox"></td>  
                     <td class="col-3"> {{$valor->getNombre()  }}</td><br/> 
                     <td class="col-3"> {{$valor->getDescripcion()  }}</td><br/> 
-                    <td class="col-3"> Estanteria: {{$valor->getEstanteria()  }}, Balda: {{$valor->getBalda()  }}, Estanteria: {{$valor->getCaja()  }} </td><br/> 
+                    <td class="col-3"> Estanteria: 
+                            @if ($valor->getIdEstanteria() == null)
+                                no asignada
+                            @else
+                                {{$valor->getIdEstanteria()  }}
+                            @endif
+                        , Balda: 
+                            @if ($valor->getIdBalda() == null)
+                                no asignada
+                            @else
+                                {{$valor->getIdBalda()  }}
+                            @endif
+                        , Caja: 
+                            @if ($valor->getIdCaja() == null)
+                                no asignada
+                            @else
+                                {{$valor->getIdCaja()  }} 
+                            @endif
+                            </td><br/> 
                     <td  class="col-3">
                         <form method="POST" action="" id='produModificar'>
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
-                            <button type="submit" name="modificarProducto" id='modificarProducto'<span>Modificar</span></button>
+                            <button type="submit" name="modificarProducto" id="modificarProducto"><span> Modificar</span></button>
                         </form>
                     </td>
                 </tr>
                 @endforeach
                 </table>
                 <br/><br/><br/>
-               
+                <form method="POST" action="" id='formEliminarProducto'>
+                    <button type="submit" name="modificarProducto" id='eleminarProducto'><span>Eliminar Seleccionados</span></button>
+                </form>
             </div>
             @else
             <div>           

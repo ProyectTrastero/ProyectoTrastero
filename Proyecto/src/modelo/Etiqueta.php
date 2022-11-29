@@ -1,10 +1,5 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
 namespace App;
 
 use \PDO as PDO;
@@ -16,14 +11,18 @@ use \PDO as PDO;
 class Etiqueta {
     private $id;
     private $nombre;
-    private $usuario;
-    private  $producto;
+    private $idUsuario;
     
-    public function __construct($id, $nombre, $usuario, $producto) {
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->usuario = $usuario;
-        $this->producto = $producto;
+    public function __construct(int $id = null, string $nombre=null, int $idUsuario= null) {
+        if (!is_null($id)) {
+            $this->id = $id;
+        }
+        if (!is_null($nombre)) {
+            $this->nombre = $nombre;
+        }
+        if (!is_null($idUsuario)) {
+        $this->idUsuario = $idUsuario;
+        }
     }
     
     public function getId() {
@@ -34,12 +33,8 @@ class Etiqueta {
         return $this->nombre;
     }
 
-    public function getUsuario() {
-        return $this->usuario;
-    }
-
-    public function getProducto() {
-        return $this->producto;
+    public function getIdUsuario() {
+        return $this->idUsuario;
     }
 
     public function setId($id): void {
@@ -50,16 +45,12 @@ class Etiqueta {
         $this->nombre = $nombre;
     }
 
-    public function setUsuario($usuario): void {
-        $this->usuario = $usuario;
+    public function setIdUsuario($idUsuario): void {
+        $this->idUsuario = $idUsuario;
     }
 
-    public function setProducto($producto): void {
-        $this->producto = $producto;
-    }
-
-
-    public static function recuperaEtiquetasPorUsuario(PDO $bd, int $idUsuario){
+    
+        public static function recuperaEtiquetasPorUsuario(PDO $bd, int $idUsuario){
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $sql = 'select * from etiquetas where id=:id';
         $sth = $bd->prepare($sql);

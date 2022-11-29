@@ -38,7 +38,7 @@ if (isset($_SESSION['usuario'])) {
     }
 
     if (isset($_POST['guardar'])) {
-        unset($_POST['guardar']);
+        //unset($_POST['guardar']);
         //obtenemos los datos del formulario
         $id = $usuario->getId();
         (isset($_POST['nombre'])) ? $nombre = Validacion::sanearInput(filter_input(INPUT_POST, 'nombre')) : $nombre = "";
@@ -65,7 +65,7 @@ if (isset($_SESSION['usuario'])) {
                 $_SESSION['msj']="No se ha modificado ningun campo";
                 $_SESSION['msj-type']="info";
             }
-            echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos]);
+            echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos, 'usuario'=>$usuario]);
             die;
         } else {
             //si no obtenemos errores actualizamos el $usuario en local
@@ -89,7 +89,7 @@ if (isset($_SESSION['usuario'])) {
         'clave' => $usuario->getClave(),
         'correo' => $usuario->getCorreo()
     );
-    echo $blade->run("perfil", ['datos' => $datos] );
+    echo $blade->run("perfil", ['datos' => $datos, 'usuario'=>$usuario] );
     die;
 }
 
@@ -133,8 +133,8 @@ function validarCambiosPerfil(PDO $bd, array $datos, Usuario $usuario): array
         array_push($errores, 'correoInvalido');
     }
 
-    if (!empty($datos['alias']) && $datos['correo'] != $usuario->getCorreo()) {
-        if (!Usuario::checkExisteAlias($bd, $datos['alias'])) {
+    if (!empty($datos['correo']) && $datos['correo'] != $usuario->getCorreo()) {
+        if (!Usuario::checkExisteCorreo($bd, $datos['correo'])) {
             array_push($errores, "correoExiste");
         }
     }

@@ -12,7 +12,7 @@
     <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
     </div>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu dropdown-menu-end ">
       <li><button class="dropdown" type="submit" name="perfilUsuario">Perfil usuario</button></li>
       <li><button class="dropdown" type="submit" name="cerrarSesion">Cerrar sesión</button></li>
     </ul>
@@ -28,7 +28,7 @@
         <div>
             <form method="POST" action="" id='formañadirtratero'>
             <h3>Diseña tu trastero</h3>
-            <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Añadir nuevo trastero</span></button>
+            <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Añadir Trastero</span></button>
             </form>
         </div>
         <br/><br/><br/><br/>
@@ -49,6 +49,12 @@
                         <form method="POST" action="" id='formmodificar'>
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
                             <button type="submit" name="modificar" id='modificar'<span>Modificar</span></button>
+                        </form>
+                    </td> <br/>
+                    <td  class="col-1">
+                        <form method="POST" action="" id='formeliminar'>
+                            <input type='hidden' name='id' value='{{$valor->getId()}}'>
+                            <button type="submit" name="eliminar" id='eliminar'<span>Eliminar</span></button>
                         </form>
                     </td>
                 </table>

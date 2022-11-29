@@ -31,7 +31,7 @@ class Estanteria {
     }
     
     public function getNombre() {
-        return $this->numero;
+        return $this->nombre;
     }
 
     public function getidTrastero() {
@@ -42,20 +42,47 @@ class Estanteria {
         $this->id = $id;
     }
     
-    public function setNombre($numero): void {
-        $this->numero = $numero;
+    public function setNombre($nombre): void {
+        $this->nombre = $nombre;
     }
 
     public function setIdTrastero($idTrastero): void {
         $this->idTrastero = $idTrastero;
     }
     
-    public function añadirEstanteria($conexion): void{
-        $consulta="insert into Estanterias (nombre, idTrastero) values($this->nombre, $this->idTrastero)";
-            if($conexion->exec($consulta)==1){
-                echo "Estantería añadida correctamente";
-            } else {
-                echo "fallo al añadir estanteria";
-            }
+    public function añadir($bd): void{
+        $consulta="insert into Estanterias (nombre, idTrastero) values('$this->nombre', $this->idTrastero)";
+        $bd->exec($consulta);
+            
    }
+   
+   public static function obtenerIdPorNombre($bd, $nombre, $idTrastero){
+        $consulta=$bd->query("select id from estanterias where nombre='$nombre' and idTrastero=$idTrastero");
+        $registro=$consulta->fetch(PDO::FETCH_OBJ);
+        $idRecuperado=$registro->id;
+        
+        return $idRecuperado;
+   }
+   
+   public function actualizarNombre($bd, $nuevoNombre): void{
+       $consulta="update Estanterias set nombre = '$nuevoNombre' where id = $this->id";
+       $bd->exec($consulta);
+   }
+   
+   public function eliminar($bd): void{
+       $consulta ="delete from Estanterias where id = $this->id";
+       $bd->exec($consulta);
+   }
+   
+   public static function recuperarEstanteriasPorIdTrastero($bd, $idTrastero): array{
+        $consulta="select * from Estanterias where idTrastero = $idTrastero order by id asc";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Estanteria::class);
+        $estanterias=($registro->fetchAll()) ?: null;
+         if($estanterias==null){
+            $estanterias=array();
+        }
+        return $estanterias;
+    }
+ 
 }
