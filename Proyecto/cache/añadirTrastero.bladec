@@ -130,11 +130,8 @@
  </ul>
  </div>
  <div>
- <input type="submit" name="volverAcceso" value="VOLVER">
- <input type="submit" name="guardar" value="GUARDAR">
+ 
  </div>
-
- </form>
  
 </div>
 

@@ -147,6 +147,7 @@ if(isset($_POST['añadirEstanteria'])){
                 $nombreCaja = intVal(array_key_last($almacenCajas));
                 $nuevaCaja->setNombre("Caja " .($nombreCaja+2));
             }
+            
             $nuevaCaja->añadir($bd);
             $idCaja=$nuevaCaja->obtenerIdPorNombre($bd, $nuevaCaja->getNombre(), $nuevoTrastero->getId());
             $nuevaCaja->setId($idCaja);
