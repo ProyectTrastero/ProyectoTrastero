@@ -1,8 +1,7 @@
-
 #menu * { list-style:none;}
-#menu .li{ line-height:180%;}
-#menu .li span{color:#222; text-decoration:none;}
-#menu .li span:before{ content:"\025b8"; color:#ddd; margin-right:4px;}
+#menu li{ line-height:180%;}
+#menu li a{color:#222; text-decoration:none;}
+#menu li a:before{ content:"\025b8"; color:#ddd; margin-right:4px;}
 #menu input[name="list"] {
 	position: absolute;
 	left: -1000em;
@@ -10,4 +9,4 @@
 #menu label:before{ content:"\025b8"; margin-right:4px;}
 #menu input:checked ~ label:before{ content:"\025be";}
 #menu .interior{display: none;}
-#menu input:checked ~ .ul{display:block;}
+#menu input:checked ~ ul{display:block;}

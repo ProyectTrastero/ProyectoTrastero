@@ -18,21 +18,21 @@ use \PDO as PDO;
  */
 class Producto {
     private $id;
-    private $trastero;
+    private $idTrastero;
     private $nombre;
     private $descripcion;
-    private $estanteria;
-    private $balda;
-    private $caja;
+    private $idEstanteria;
+    private $idBalda;
+    private $idCaja;
     
-    public function __construct($id, $trastero, $nombre, $descripcion, $estanteria, $balda, $caja) {
+    public function __construct($id = null, $trastero= null, $nombre = null, $descripcion = null, $estanteria = null, $balda =null, $caja = null) {
         $this->id = $id;
-        $this->trastero = $trastero;
+        $this->idTrastero = $trastero;
         $this->nombre = $nombre;
         $this->descripcion = $descripcion;
-        $this->estanteria = $estanteria;
-        $this->balda = $balda;
-        $this->caja = $caja;
+        $this->idEstanteria = $estanteria;
+        $this->idBalda = $balda;
+        $this->idCaja = $caja;
     }
     
     public function getId() {
@@ -107,6 +107,17 @@ class Producto {
             }else{
             return "";    
             }
+    }
+    
+    public static function recuperarProductosPorIdTrastero($bd, $idTrastero): array{
+        $consulta="select * from Productos where idTrastero = $idTrastero order by id asc";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+        $productos=($registro->fetchAll()) ?: null;
+         if($productos==null){
+            $productos=array();
+        }
+        return $productos;
     }
 
     
