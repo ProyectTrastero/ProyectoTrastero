@@ -62,6 +62,7 @@
  <h3>Mis productos</h3>
  <table class="row">
  <tr>
+ <th class="col-3">Seleccionar</th>    
  <th class="col-3">Producto</th>
  <th class="col-3">Descripción</th>
  <th class="col-3">Ubicación</th>
@@ -70,9 +71,30 @@
  <?php $__currentLoopData = $productos; $this->addLoop($__currentLoopData);$this->getFirstLoop();
  foreach($__currentLoopData as $valor): $loop = $this->incrementLoopIndices();  ?>    
  <tr>
+ <td><input type="checkbox" id="cbox"></td>  
  <td class="col-3"> <?php echo \htmlentities($valor->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></td><br/> 
  <td class="col-3"> <?php echo \htmlentities($valor->getDescripcion()??'', ENT_QUOTES, 'UTF-8', false); ?></td><br/> 
- <td class="col-3"> Estanteria: <?php echo \htmlentities($valor->getEstanteria()??'', ENT_QUOTES, 'UTF-8', false); ?>, Balda: <?php echo \htmlentities($valor->getBalda()??'', ENT_QUOTES, 'UTF-8', false); ?>, Estanteria: <?php echo \htmlentities($valor->getCaja()??'', ENT_QUOTES, 'UTF-8', false); ?> </td><br/> 
+ <td class="col-3"> Estanteria: 
+ <?php if($valor->getIdEstanteria() == null): ?>
+ no asignada
+ <?php else: ?>
+ <?php echo \htmlentities($valor->getIdEstanteria()??'', ENT_QUOTES, 'UTF-8', false); ?>
+
+ <?php endif; ?>
+ , Balda: 
+ <?php if($valor->getIdBalda() == null): ?>
+ no asignada
+ <?php else: ?>
+ <?php echo \htmlentities($valor->getIdBalda()??'', ENT_QUOTES, 'UTF-8', false); ?>
+
+ <?php endif; ?>
+ , Caja: 
+ <?php if($valor->getIdCaja() == null): ?>
+ no asignada
+ <?php else: ?>
+ <?php echo \htmlentities($valor->getIdCaja()??'', ENT_QUOTES, 'UTF-8', false); ?> 
+ <?php endif; ?>
+ </td><br/> 
  <td  class="col-3">
  <form method="POST" action="" id='produModificar'>
  <input type='hidden' name='id' value='<?php echo \htmlentities($valor->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>'>
