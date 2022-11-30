@@ -59,14 +59,11 @@ if (isset($_POST['registrarse'])) {
         echo $blade->run('registro', ['error' => $errores, 'msj'=> $msj]);
 
     }
-}else if(isset($_POST['volver'])){
-    header("location: ../public/index.php");
 
-}
-else{
 }else if(isset($_POST['volver'])){
     header("location: ../public/index.php");
 }
+
 else{
 
     //por defecto muestra vista registro
