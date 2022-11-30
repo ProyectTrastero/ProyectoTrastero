@@ -37,12 +37,29 @@ if (isset($_POST['volverTodosTrasteros'])){
     header("location:../public/añadirProducto.php"); 
     die;
 }elseif (isset($_POST['buscarProducto'])){
-    echo "buscamos productoo";
+    header("location:../public/buscarProducto.php"); 
     die;
 }else{
+    if (isset($_REQUEST['perfilUsuario'])) {
+        header("location: editarPerfil.php");
+        die;
+    }
+    if (isset($_REQUEST['cerrarSesion'])) {
+        // Destruyo la sesión
+        session_unset();
+        session_destroy();
+        setcookie(session_name(), '', 0, '/');
+        // Invoco la vista del formulario de iniciar sesion
+        header('location: index.php');
+        //echo $blade->run("sesion");
+        die;
+    }
     $usuario = $_SESSION['usuario'];
     $trasteros = $_SESSION['trasteros'];
-    $miTrastero = $_SESSION['miTrastero'];
+    $id = $_SESSION['id'];
+    $miTrastero = App\Trasteros::recuperarTrasteroPorId($bd, $id) ;
+    $_SESSION['miTrastero']=$miTrastero;
     echo $blade->run("accederTrastero", compact ('usuario', 'miTrastero'));
     die;
+    
 }

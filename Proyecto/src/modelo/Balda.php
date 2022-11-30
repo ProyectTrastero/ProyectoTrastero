@@ -72,7 +72,7 @@ class Balda {
        $bd->exec($consulta);
    }
    
-   public static function obtenerIdPorNombre($bd, $nombre, $idEstanteria): int{
+   public static function obtenerIdPorNombre($bd, $nombre, $idEstanteria){
         $consulta=$bd->query("select id from baldas where nombre='$nombre' and idEstanteria=$idEstanteria");
         $registro=$consulta->fetch(PDO::FETCH_OBJ);
         $idRecuperado=$registro->id;

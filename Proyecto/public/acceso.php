@@ -79,8 +79,10 @@ if(!empty($_SESSION['datosTrastero'])){
 if (isset($_REQUEST['acceder'])) {
     $usuario = $_SESSION['usuario'];
     $trasteros = $_SESSION['trasteros'];
-    $id = intval($_POST['id'])-1;
-    $_SESSION['miTrastero'] = $trasteros[$id];
+    $id = intval($_POST['id']);
+    $_SESSION['id']=$id;
+    
+    //$_SESSION['miTrastero'] = $trasteros[$id];
     header("location:../public/accederTrastero.php"); 
     
 }elseif (isset($_REQUEST['añadirTrastero'])) {  
@@ -89,6 +91,8 @@ if (isset($_REQUEST['acceder'])) {
       
 }elseif (isset($_REQUEST['modificar'])) { 
     $_SESSION['idTrastero']=$_POST['id'];
+    //Para probar pagina de ver trastero
+//    header("location:../public/verTrastero.php"); 
     header("location:../public/modificarTrastero.php"); 
     die;
 //Esta parte la he añadido yo. Emma   
@@ -147,31 +151,28 @@ if (isset($_REQUEST['acceder'])) {
 */
 ///HASTA AQUI ¡¡NO TOQUES MASSSSSSS¡¡¡¡¡jajajaja 
 }elseif (isset($_SESSION['usuario'])){
-    if (isset($_REQUEST['perfilUsuario'])) {
-        header("location: editarPerfil.php");
-        die;
-    }
+        if (isset($_REQUEST['perfilUsuario'])) {
+            header("location: editarPerfil.php");
+            die;
+        }
 
-    if (isset($_REQUEST['cerrarSesion'])) {
-        // Destruyo la sesión
-        session_unset();
-        session_destroy();
-        setcookie(session_name(), '', 0, '/');
-        // Invoco la vista del formulario de iniciar sesion
-        header('location: index.php');
-        //echo $blade->run("sesion");
-        die;
-    }
-    
-    
+        if (isset($_REQUEST['cerrarSesion'])) {
+            // Destruyo la sesión
+            session_unset();
+            session_destroy();
+            setcookie(session_name(), '', 0, '/');
+            // Invoco la vista del formulario de iniciar sesion
+            header('location: index.php');
+            //echo $blade->run("sesion");
+            die;
+        }
     
     $usuario = $_SESSION['usuario'];
     $idUsuario = intval($usuario->getId());
     $trasteros = App\Trasteros::recuperaTrasteroPorUsuario($bd, $idUsuario);
     $_SESSION['trasteros'] = $trasteros;
-        echo $blade->run("acceso", compact ('usuario', 'trasteros'));
-        die;
-        
+    echo $blade->run("acceso", compact ('usuario', 'trasteros'));
+    die; 
 }
 
 

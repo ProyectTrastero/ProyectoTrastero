@@ -56,7 +56,7 @@ class Estanteria {
             
    }
    
-   public static function obtenerIdPorNombre($bd, $nombre, $idTrastero): int{
+   public static function obtenerIdPorNombre($bd, $nombre, $idTrastero){
         $consulta=$bd->query("select id from estanterias where nombre='$nombre' and idTrastero=$idTrastero");
         $registro=$consulta->fetch(PDO::FETCH_OBJ);
         $idRecuperado=$registro->id;

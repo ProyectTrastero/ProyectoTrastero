@@ -12,12 +12,14 @@
  <div class="alert alert-danger" role="alert">Error Credenciales</div>
  <?php endif; ?> 
  <form method="POST" action="" id='formsesion'>
- <input id="inputAlias" type="text" placeholder="Nombre" name="alias" class="alias">
+ <label>Nombre de usuario: </label><br/>
+ <input id="inputAlias" type="text" placeholder="Nombre" name="alias" class="alias"><br/>
+ <label>Contraseña: </label><br/>
  <input id="inputPassword" type="password" placeholder="Contraseña" name="clave" class="clave">
  <a href="recuperarContraseña.php" class="link"> ¿Has olvidado tu contraseña?</a>
  </br>
  <button type="submit" id="procsesion" name="procsesion"><span> Login </span> </button>
- <br/><br/><br/>
+ <br/><br/>
  
  
  <a>¿Aún no te has regitrado?</a><br/>

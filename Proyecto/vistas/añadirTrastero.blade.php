@@ -2,14 +2,17 @@
 @extends('app')
 
 {{-- Sección aporta el título de la página --}}
+@if($datosTrastero['tipo']=="guardar")
 @section('title', 'Añadir Trastero')
-
+@else
+@section('title', 'Modificar Trastero')
+@endif
 {{-- Sección mensaje --}}
 @section('content')
 
 <script src="https://kit.fontawesome.com/12104efb99.js" crossorigin="anonymous"></script>
 <script src="asset/js/añadirTrastero.js"></script>
-<div class="container" disabled="true">
+<div class="container">
     <div>
         <p>{{$mensaje}}</p>
         @if($datosTrastero['guardado'])
@@ -22,7 +25,7 @@
         <form action="" method="POST">
             <div>
                 @if($datosTrastero['tipo']=="guardar")
-                 <label for="nombre">NOMBRE:</label>
+                <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 @endif
                
@@ -42,74 +45,66 @@
     
     <div class="container">
         <div class="row">
-            @foreach ($datosTrastero['estanterias'] as $claveEstanteria => $baldas)
-            @php
+            @foreach ($datosTrastero['almacenEstanterias'] as $estanteria)
+<!--            @php
                 $indice=0
-            @endphp
+            @endphp-->
             <div class="col-4">
                 <ul>
                     <li>
                         <form action="" method="POST">
-                            <input type="hidden" name="nombreEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()}}">
-                            <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}"> 
-                            <input type="hidden" name="idEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()}}">
-                            <span class="papeleraOculta" contenteditable="false">{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()}}</span>
+                            <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
+                            <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
+                            <span class="papeleraOculta" contenteditable="false">{{$estanteria->getNombre()}}</span>
                         </form>
                     </li>
                 @php
                     $baldasRecuperadas=array()
                 @endphp
-                @foreach ($baldas as $claveBalda =>$valorBalda)  
-                @foreach ($datosTrastero['almacenBaldas'] as $clave=>$balda)
-                    @if($balda->getIdEstanteria()==$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId())
+                 
+                @foreach ($datosTrastero['almacenBaldas'] as $balda)
+                    @if($balda->getIdEstanteria()==$estanteria->getId())
                         @php
-                        $baldasRecuperadas[]= $datosTrastero['almacenBaldas'][$clave]
+                        $baldasRecuperadas[]= $balda;
                         @endphp
                     @endif
                 @endforeach
+                @foreach ($baldasRecuperadas as $balda)
              
                     <ul> 
                         <li>
                             <form action="" method="POST">
-                                <input type="hidden" name="idEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()}}">
-                                <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
-                                <input type="hidden" name="nombreEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()}}">
-                                <input type="hidden" name="numeroBalda" value="{{$claveBalda}}">
-                                <input type="hidden" name="nombreBalda" value="{{$baldasRecuperadas[$indice]->getNombre()}}">
-                                <input type="hidden" name="idBalda" value="{{$baldasRecuperadas[$indice]->getId()}}">
-                                <span class="papeleraOculta" contenteditable="false">{{$baldasRecuperadas[$indice]->getNombre()}}</span>
+                                <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
+                                <input type="hidden" name="idBalda" value="{{$balda->getId()}}">
+                                <span class="papeleraOculta" contenteditable="false">{{$balda->getNombre()}}</span>
                             </form>
                         </li> 
                         <ul>
                          
-                            @foreach($datosTrastero['almacenCajas'] as $claveCaja=>$valorCaja)
-                                @if(($valorCaja->getIdEstanteria()==$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId())&&($valorCaja->getIdBalda()==$baldasRecuperadas[$indice]->getId()))
+                            @foreach($datosTrastero['almacenCajas'] as $caja)
+                                @if(($caja->getIdEstanteria()==$estanteria->getId())&&($caja->getIdBalda()==$balda->getId()))
                                 <li>
                                     <form action="" method="POST">
-                                       
-                                        <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
-                                        <input type="hidden" name="numeroBalda" value="{{$claveBalda}}">
-                                        <input type="hidden" name="nombreBalda" value="{{$baldasRecuperadas[$indice]->getNombre()}}">
-                                        <input type="hidden" name="idBalda" value="{{$baldasRecuperadas[$indice]->getId()}}">
-                                        <input type="hidden" name="nombreCaja" value="{{$valorCaja->getNombre()}}">
-                                        <input type="hidden" name="idEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getId()}}">
-                                        <input type="hidden" name="idCaja" value="{{$valorCaja->getId()}}">
-                                        <span class="papeleraOculta" contenteditable="false">{{$valorCaja->getNombre()}}</span>
+                                        <input type="hidden" name="idBalda" value="{{$balda->getId()}}"> 
+                                        <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
+                                        <input type="hidden" name="idCaja" value="{{$caja->getId()}}">
+                                        <span class="papeleraOculta" contenteditable="false">{{$caja->getNombre()}}</span>
                                     </form>
                                 </li>
                                 @endif
                             @endforeach
-                            @php
+<!--                            @php
                                 $indice++
-                            @endphp
+                            @endphp-->
                         </ul>
                     </ul>
                 @endforeach
                 </ul>
                 <form action="" method="POST">
                     <input type="submit" name="añadirBalda" value="AÑADIR BALDA">
-                    <input type="hidden" name="numeroEstanteria" value="{{$claveEstanteria}}">
-                    <input type="hidden" name="nombreEstanteria" value="{{$datosTrastero['almacenEstanterias'][$claveEstanteria]->getNombre()}}">
+                    <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}"
+                    
+                    <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
                 </form>
             </div>
             @endforeach
@@ -117,14 +112,12 @@
     </div>
     <div>
         <ul>
-            @foreach ($datosTrastero['almacenCajas'] as $claveCaja=>$valorCaja)
-                @if(($valorCaja->getIdBalda()=="")&&($valorCaja->getIdEstanteria()==""))
+            @foreach ($datosTrastero['almacenCajas'] as $caja)
+                @if(($caja->getIdBalda()==null)&&($caja->getIdEstanteria()==null))
                     <li>
                         <form action="" method="POST">
-                         
-                            <input type="hidden" name="nombreCaja" value="{{$valorCaja->getNombre()}}">
-                            <input type="hidden" name="idCaja" value="{{$valorCaja->getId()}}">
-                            <span class="papeleraOculta" contenteditable="false">{{$valorCaja->getNombre()}}</span>
+                            <input type="hidden" name="idCaja" value="{{$caja->getId()}}">
+                            <span class="papeleraOculta" contenteditable="false">{{$caja->getNombre()}}</span>
                         </form>
                     </li> 
                 @endif
