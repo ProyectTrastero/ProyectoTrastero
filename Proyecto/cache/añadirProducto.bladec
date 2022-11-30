@@ -9,7 +9,7 @@
  
 <form action="<?php echo \htmlentities($_SERVER["PHP_SELF"]??'', ENT_QUOTES, 'UTF-8', false); ?>" method="POST">
  <div class="nav-item dropdown">
- <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <div class="nav-link dropdown-toggle " href="#"  data-bs-toggle="dropdown" aria-expanded="false">
  <?php echo \htmlentities($usuario->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?> <i class="fa-solid fa-user fa-2xl"></i>
  </div>
  <ul class="dropdown-menu dropdown-menu-end ">
@@ -20,7 +20,7 @@
 </form>
 <?php $this->stopSection(); ?>
 
-<?php /* Sección mensaje */ ?>
+<?php /* Sección content */ ?>
 <?php $this->startSection('content'); ?>
 
 <div class="container">
@@ -41,7 +41,12 @@
  </div>
  <div>
  <h2>Ubicación</h2>
- <div class="inputForm">
+ <div class="inputsForm">
+ <label for="idEstanteria">Estanteria</label>
+ <select name="estanteria" id="idEstanteria">
+ <option value="1">1</option>
+ <option value="2">2</option>
+ </select>
 
  </div>
  </div>

@@ -55,7 +55,7 @@ if (isset($_POST['registrarse'])) {
         // $_SESSION['msj-type']="success";
         $msj = ['msj'=>'Usuario registrado correctamente',
                 'msjType'=>'success'];
-        //si no hay errores vamos a el index el cual redirige a acceso, no se si mejor deberia ir a acceso desde aca
+        //si no hay errores volvemos a registro y mostramos mensaje
         echo $blade->run('registro', ['error' => $errores, 'msj'=> $msj]);
 
     }

@@ -9,7 +9,7 @@
  
 <form action="{{ $_SERVER["PHP_SELF"] }}" method="POST">
   <div class="nav-item dropdown">
-    <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="nav-link dropdown-toggle " href="#"  data-bs-toggle="dropdown" aria-expanded="false">
       {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
     </div>
     <ul class="dropdown-menu dropdown-menu-end ">
@@ -20,7 +20,7 @@
 </form>
 @endsection
 
-{{-- Sección mensaje --}}
+{{-- Sección content --}}
 @section('content')
 
 <div class="container">
@@ -41,7 +41,12 @@
       </div>
       <div>
         <h2>Ubicación</h2>
-        <div class="inputForm">
+        <div class="inputsForm">
+          <label for="idEstanteria">Estanteria</label>
+          <select name="estanteria" id="idEstanteria">
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
 
         </div>
       </div>
