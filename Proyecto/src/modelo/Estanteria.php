@@ -84,5 +84,13 @@ class Estanteria {
         }
         return $estanterias;
     }
+    
+    public static function obtenerNombrePorId($bd, $id){
+        $consulta=$bd->query("select nombre from estanterias where id=$id");
+        $registro=$consulta->fetch(PDO::FETCH_OBJ);
+        $idRecuperado=$registro->id;
+        
+        return $idRecuperado;
+   }
  
 }

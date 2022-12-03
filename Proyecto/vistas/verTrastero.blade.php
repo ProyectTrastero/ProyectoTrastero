@@ -46,7 +46,11 @@
                                 <li>
                                     <ul>
                                         @foreach ($cajasRecuperadas as $caja)
-                                        <li id ="{{$caja->getId()}}" class="productos">{{$caja->getNombre()}}</li>
+                                      
+                                            
+                                            <li id ="{{$caja->getId()}}" class="productos">{{$caja->getNombre()}}</li>
+                                    
+                                        
                                         @endforeach
                                     </ul>
                                 </li>
@@ -65,40 +69,26 @@
                     @endif
                     @endforeach
                 </div>
-
             </ul>
         </div>
         <div class="col-8">
-            <table style="border: black; width: 100%">
-                <tr border>
-                    <th colspan="1">Fecha de Ingreso</th>
+            <table id="cabecera" style="border: black; width: 100%">
+                <tr  border>
+                    <th colspan="2">Fecha de Ingreso</th>
                     <th colspan="3">Nombre</th>
-                    <th colspan="5">Ubicación</th>
-                    
-                    
+                    <th colspan="3">Ubicación</th>
+                    <th colspan="4">Descripcion</th>
                 </tr>
                 <tr>
-                    <td colspan="2">27/11/2021</td>
-                    <td colspan="3">jersey 5 años</td>
-                    <td colspan="5">Estanteria 1 Balda 2 Caja ropa</td>
                     
-                    
+                    <td colspan="2">27/12/2021</td>
+                    <td colspan="3">prueba</td>
+                    <td colspan="3">111</td>
+                    <td colspan="4">222</td>
+               
                 </tr>
+
               
-                <tr>
-                    <td colspan="2">27/11/2021</td>
-                    <td colspan="3">jersey 5 años</td>
-                    <td colspan="5">Estanteria 1 Balda 2 Caja ropa</td>
-                   
-                    
-                </tr>
-                <tr>
-                    <td colspan="2">27/11/2021</td>
-                    <td colspan="3">camiseta</td>
-                    <td colspan="5">Estanteria 1 Balda 2 Caja ropa</td>
-                   
-                    
-                </tr>
             </table>
 
         </div>
