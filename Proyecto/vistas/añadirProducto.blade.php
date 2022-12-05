@@ -54,17 +54,15 @@
         <div>
           <label for="selectBaldas">Balda</label>
           <select name="balda" id="selectBaldas">
-            <option value="1">1</option>
-            <option value="2">2</option>
+            
           </select>
 
         </div>
 
         <div>
-          <label for="idCaja">Caja</label>
-          <select name="caja" id="idCaja">
-            <option value="1">1</option>
-            <option value="2">2</option>
+          <label for="selectCaja">Caja</label>
+          <select name="caja" id="selectCaja">
+            
           </select>
 
         </div>

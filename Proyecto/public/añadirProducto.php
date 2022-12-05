@@ -34,14 +34,18 @@ if(isset($_SESSION['usuario'])){
     $id = $_SESSION['id'];
     
     if (isset($_REQUEST["idEstanteria"])) {    
-        $estanteriaSelect = $_REQUEST["idEstanteria"];
-        $baldas = Balda::recuperarBaldasPorIdEstanteria($bd,$estanteriaSelect);
-        $baldas2String= array();
-        foreach ($baldas as $balda ) {
-            array_push($baldas2String, json_encode($balda));
-        }
-        echo json_encode($baldas2String);
+        $estanteriaSelected = $_REQUEST["idEstanteria"];
+        $baldas = Balda::getBaldaByIdEstanteria($bd,$estanteriaSelected);
+
+        $daniel = json_encode($baldas);
+        echo json_encode($baldas);
         die;
+    }
+
+    if (isset($_REQUEST['idBalda'])) {
+        $baldaSelected = $_REQUEST['idBalda'];
+        //recuperamos las cajas
+
     }
 
     
