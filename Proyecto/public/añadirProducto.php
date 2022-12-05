@@ -6,8 +6,8 @@ use Dotenv\Dotenv;
 
 use App\{
     BD,
-    Usuario,
-    Validacion
+    Balda,
+    Estanteria
 };
 
 // Inicializa el acceso a las variables de entorno
@@ -26,11 +26,31 @@ try {
     echo $blade->run("cnxbderror", compact('error'));
     die;
 }
+
 session_start();
+
 if(isset($_SESSION['usuario'])){
     $usuario = $_SESSION['usuario'];
+    $id = $_SESSION['id'];
+    
+    if (isset($_REQUEST["idEstanteria"])) {    
+        $estanteriaSelect = $_REQUEST["idEstanteria"];
+        $baldas = Balda::recuperarBaldasPorIdEstanteria($bd,$estanteriaSelect);
+        $baldas2String= array();
+        foreach ($baldas as $balda ) {
+            array_push($baldas2String, json_encode($balda));
+        }
+        echo json_encode($baldas2String);
+        die;
+    }
+
+    
+
+    //recuperamos las estanterias del trastero
+    $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $id);
+    
 
 
-    echo $blade->run('añadirProducto',['usuario'=>$usuario]);
+    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias]);
 }
  

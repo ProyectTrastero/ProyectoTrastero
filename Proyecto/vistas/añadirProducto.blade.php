@@ -41,36 +41,49 @@
       </div>
       <div>
         <h2>Ubicación</h2>
-        <div class="inputsForm">
-          <label for="idEstanteria">Estanteria</label>
-          <select name="estanteria" id="idEstanteria">
+
+        <div>
+          <label for="selectEstanterias">Estanteria</label>
+          <select name="estanteria" id="selectEstanterias">
+            @foreach ($estanterias as $estanteria)
+              <option value="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</option>
+            @endforeach
+          </select>
+
+        </div>
+        <div>
+          <label for="selectBaldas">Balda</label>
+          <select name="balda" id="selectBaldas">
             <option value="1">1</option>
             <option value="2">2</option>
           </select>
 
         </div>
+
+        <div>
+          <label for="idCaja">Caja</label>
+          <select name="caja" id="idCaja">
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+
+        </div>
+
+        <div>
+          <label for="idSinAsignar">Sin asignar</label>
+          <input type="checkbox" name="sinAsignar" id="idSinAsignar">
+
+        </div>
       </div>
     </div>
   
-    <div class="mb-3 inputsForm">
-      <label for="inputAlias" class="form-label text-end">Alias: </label>
-      <input id="inputAlias" type="text" name="alias" placeholder="Alias" class="form-control" value="{{$datos['alias']}}">
-      @if(isset($error) && in_array("usuarioInvalido", $error)) 
-          <div></div>
-          <div class=" form-text textError p-1" >
-              Los alias solo pueden contener letras, números, guiones y guiones bajos.
-          </div>  
-      @endif
-      @if(isset($error) && in_array("aliasExiste", $error)) 
-          <div></div>
-          <div class="textError form-text p-1" >
-              Este alias ya existe
-          </div>  
-      @endif
-  </div>
-  
+    
   </form>
 </div>
 
 @endsection
+
+<script src="asset/js/añadirProducto.js"></script>
+
+
 
