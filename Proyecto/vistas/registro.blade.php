@@ -9,13 +9,24 @@
 {{-- Sección content --}}
 @section('content')
 <div class="container">
+    @if (isset($msj))
+        <div class="alert alert-{{$msj['msjType']}} alert-dismissible fade show" role="alert">
+            {{$msj['msj']}}
+            <?php
+                $msj = null;
+            ?>
+            <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
+        </div>
+        
+    @endif
+
     
     <div class="signUp">
         <h2 class="mb-5 text-center">Registro usuario</h2>
         <form action="{{$_SERVER["PHP_SELF"]}}" method="post">
 
             <div class="mb-3 inputsForm">
-                <label for="inputAlias" class="form-label text-end">Alias: </label>
+                <label for="inputAlias" class="form-label">Alias: </label>
                 <input id="inputAlias" type="text" name="alias" placeholder="Alias" class="form-control" value="{{$datos['alias']}}">
                 @if(isset($error) && in_array("usuarioInvalido", $error)) 
                     <div></div>
@@ -29,10 +40,10 @@
                         Este alias ya existe
                     </div>  
                 @endif
-            </div>
             
-            <div class="mb-3 inputsForm">
-                <label for="inputNombre" class="text-end">Nombre: </label>
+            
+            
+                <label for="inputNombre">Nombre: </label>
                 <input id="inputNombre" type="text" name="nombre" placeholder="Nombre" class="form-control" value="{{$datos['nombre']}}">
                 @if(isset($error) && in_array("nombreInvalido", $error)) 
                     <div></div>
@@ -40,11 +51,11 @@
                         Solo se admiten letras y espacios en blanco.
                     </div>  
                 @endif
-            </div>
+            
            
 
-            <div class="mb-3 inputsForm">
-                <label for="inputApellidos" class="text-end">Apellidos: </label>
+            
+                <label for="inputApellidos">Apellidos: </label>
                 <input id="inputApellidos" type="text" name="apellidos" placeholder="Apellidos" class="form-control" value="{{$datos['apellidos']}}">
                 @if(isset($error) && in_array("apellidoInvalido", $error)) 
                     <div></div>
@@ -52,11 +63,11 @@
                         Debe comenzar por una letra, solo se admiten letras y espacios en blanco.
                     </div>  
                 @endif
-            </div>
+            
             
 
-            <div class="mb-3 inputsForm">
-                <label for="inputCorreo" class="text-end">Correo: </label>
+            
+                <label for="inputCorreo">Correo: </label>
                 <input id="inputCorreo" type="email" name="correo" placeholder="Correo" class="form-control" value="{{$datos['correo']}}">
                 @if(isset($error) && in_array("correoInvalido", $error)) 
                     <div></div>
@@ -70,11 +81,11 @@
                         Este correo ya existe
                     </div>  
                 @endif
-            </div>
+            
             
 
-            <div class="mb-3 inputsForm">
-                <label for="inputPassword" class="text-end">Contraseña: </label>
+            
+                <label for="inputPassword">Contraseña: </label>
                 <input id="inputPassword" type="password" name="clave" placeholder="Contraseña" class="form-control" value="{{$datos['clave']}}">
                 @if(isset($error) && in_array("claveInvalida", $error)) 
                     <div></div>
@@ -82,11 +93,11 @@
                         Debe contener minimo 8 caracteres, una mayuscula una miniscula y un número. 
                     </div>  
                 @endif
-            </div>
+            
             
 
-            <div class="mb-3 inputsForm">
-                <label for="inputPasswordRepeat" class="text-end">Repita la contraseña: </label>
+            
+                <label for="inputPasswordRepeat">Repita la contraseña: </label>
                 <input id="inputPasswordRepeat" type="password" name="claveRepeat" placeholder="Repita la contraseña" class="form-control" value="{{$datos['claveRepeat']}}">
                 @if(isset($error) && in_array("clavesNoIguales", $error)) 
                     <div></div>
