@@ -123,6 +123,17 @@ class Producto {
             return "";    
             }
     }
+    
+    public static function recuperarProductosPorIdTrastero($bd, $idTrastero): array{
+        $consulta="select * from Productos where idTrastero = $idTrastero order by id asc";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+        $productos=($registro->fetchAll()) ?: null;
+         if($productos==null){
+            $productos=array();
+        }
+        return $productos;
+    }
 
     
 }

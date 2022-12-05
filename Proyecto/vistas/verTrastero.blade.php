@@ -7,21 +7,105 @@
 {{-- Sección mensaje --}}
 @section('content')
 <link rel="stylesheet" href="asset/css/verTrastero.css">
-<div class="container">
-    <div class="row">
-        <div class="col-12" id="menu">          
-            <div class="li col-12"><input type="checkbox" name="list" id="nivel1-2" checked=""><label for="nivel1-2">Estanteria 1</label>
-                <div class="interior ul col-6">
-                    <div class="li"><input type="checkbox" name="list" id="nivel2-4"><label for="nivel2-4">Balda 1</label>
-                        <div class="interior ul col-4">
-                            <div><span>Caja 1</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<a href="verTrastero.blade.php"></a>
+<script src="asset/js/mostrarProductos.js"></script>
 
+<div class="container"">
+    
+    <div class="row" >
+        <div class="col-4">
+            <ul id="menu">
+                @foreach($datosTrastero['estanterias'] as $estanteria)
+               <li><input class="productos" type="checkbox" name="list" id="{{$estanteria->getId()}}"><label for="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</label>
+               <ul class="interior">
+                   @php 
+                   $baldasRecuperadas = array()
+                   @endphp
+                   @foreach($datosTrastero['baldas'] as $balda)
+                   @if($balda->getIdEstanteria() == $estanteria->getId())
+                       @php
+                       $baldasRecuperadas[]=$balda
+                       @endphp
+                       @endif
+                   @endforeach
+                   @foreach($baldasRecuperadas as $balda)
+                       @php
+                       $cajasRecuperadas = array()
+                       @endphp
+                       @foreach($datosTrastero['cajas'] as $caja)
+                           @if($caja->getIdBalda()==$balda->getId())
+                           @php
+                           $cajasRecuperadas[]=$caja
+                           @endphp
+                           @endif
+                       @endforeach
+                       @if(empty($cajasRecuperadas))
+                        <li><a class="productos" id="{{$balda->getId()}}" href="#r">{{$balda->getNombre()}}</a></li>
+                       @else
+                        <li><input  class="productos" type="checkbox" name="list" id="{{$balda->getId()}}"><label for="{{$balda->getId()}}">{{$balda->getNombre()}}</label>
+                            <ul class="interior">
+                                <li>
+                                    <ul>
+                                        @foreach ($cajasRecuperadas as $caja)
+                                        <li id ="{{$caja->getId()}}" class="productos">{{$caja->getNombre()}}</li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
+                        @endforeach
+
+                    </ul>
+                </li>
+               @endforeach
+                <div class="row">
+                    @foreach ($datosTrastero['cajas'] as $caja)
+                    @if(is_null($caja->getIdBalda())&&is_null($caja->getIdEstanteria()))
+                    <div class="col-3 productos" id="{{$caja->getId()}}">{{$caja->getNombre()}}</div>
+                    @endif
+                    @endforeach
+                </div>
+
+            </ul>
+        </div>
+        <div class="col-8">
+            <table style="border: black; width: 100%">
+                <tr border>
+                    <th colspan="1">Fecha de Ingreso</th>
+                    <th colspan="3">Nombre</th>
+                    <th colspan="5">Ubicación</th>
+                    
+                    
+                </tr>
+                <tr>
+                    <td colspan="2">27/11/2021</td>
+                    <td colspan="3">jersey 5 años</td>
+                    <td colspan="5">Estanteria 1 Balda 2 Caja ropa</td>
+                    
+                    
+                </tr>
+              
+                <tr>
+                    <td colspan="2">27/11/2021</td>
+                    <td colspan="3">jersey 5 años</td>
+                    <td colspan="5">Estanteria 1 Balda 2 Caja ropa</td>
+                   
+                    
+                </tr>
+                <tr>
+                    <td colspan="2">27/11/2021</td>
+                    <td colspan="3">camiseta</td>
+                    <td colspan="5">Estanteria 1 Balda 2 Caja ropa</td>
+                   
+                    
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+    
+</div>
+
+<a href="accederTrastero.php"><input type="button" value="VOLVER"></a>
 @endsection
