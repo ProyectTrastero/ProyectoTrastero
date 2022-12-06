@@ -10,10 +10,10 @@
 {{-- Sección mensaje --}}
 @section('content')
 
-
 <script src="asset/js/añadirTrastero.js"></script>
+
 <div class="container">
-    <div>
+    <div class="row">
         <p>{{$mensaje}}</p>
         @if($datosTrastero['guardado'])
         <span id="guardadoModificado" value="true" ></span>
@@ -21,7 +21,7 @@
         <span id="guardadoModificado" value="false" ></span>
         @endif
     </div>
-    <div>
+    <div class="row">
         <form action="" method="POST">
             <div>
                 @if($datosTrastero['tipo']=="guardar")
@@ -41,10 +41,9 @@
         </form>
     </div>
     
-    <div class="container">
         <div class="row">
+            @foreach ($datosTrastero['almacenEstanterias'] as $estanteria)
             <div class="col-4">
-                @foreach ($datosTrastero['almacenEstanterias'] as $estanteria)
                 <ul>
                     <li>
                         <form action="" method="POST">
@@ -64,7 +63,6 @@
                     @endphp
                 @endforeach
                 @foreach ($baldasRecuperadas as $balda)
-                
                     <ul> 
                         <li>
                             <form action="" method="POST">
@@ -97,11 +95,11 @@
                     
                     <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
                 </form>
-            
-            @endforeach
+          
             </div>
+            @endforeach
         </div>
-    </div>
+    
     <div>
         <ul>
             @foreach ($datosTrastero['almacenCajas'] as $caja)
@@ -116,10 +114,5 @@
             @endforeach   
         </ul>
     </div>
-    <div>
-        
-    </div>
-    
 </div>
-
 @endsection
