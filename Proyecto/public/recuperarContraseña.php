@@ -37,15 +37,13 @@ function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
 
     //Recipients
     $mail->setFrom('emmamania@hotmail.com', 'MiTrastero.com');
-    $mail->addAddress($correo);     //Add a recipient
+    $mail->addAddress($correo);    
 
 
     //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->isHTML(true);                                 
     $mail->Subject = 'Credenciales de acceso';
-    $mail->Body    = 'Su alias de acceso  a MiTrastero.com es ' . $aliasRecuperado . ' y su contraseña '. $contraseñaRecuperada;
-//    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
+    $mail->Body    = 'Sus credenciales de acceso  a MiTrastero.com son :<br>Usuario: ' . $aliasRecuperado . '<br> Contraseña: '. $contraseñaRecuperada;
     $mail->send();
     echo 'Message has been sent';
     } catch (Exception $e) {
@@ -80,7 +78,6 @@ if(isset($_POST['enviar'])){
         $alias= Usuario::obtenerAlias($bd, $correo);
         enviarCorreo($correo, $contraseña, $alias);
         $mensaje="Se le ha enviado un correo con sus credenciales a la dirección indicada.";
-//        echo $blade->run("recuperarContraseña", compact('mensaje'));
     }else if($correo == ""){
         $mensaje="El campo correo es obligatorio.";
     }else{

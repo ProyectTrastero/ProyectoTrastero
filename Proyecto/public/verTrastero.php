@@ -125,33 +125,22 @@ if(!empty($_REQUEST)){
          $productosRecuperados= Producto::recuperarProductosPorIdCaja($bd, $idSelecionado);
     }
    
-    $datosTrastero['productos']=$productosRecuperados;
-    $_SESSION['datosTrastero']=$datosTrastero;
+//    $datosTrastero['productos']=$productosRecuperados;
+//    $_SESSION['datosTrastero']=$datosTrastero;
     $productos=array();
     foreach ($productosRecuperados as $producto) {
         $productonuevo['fechaingreso']='22/07/22';
-        $nombre=$producto->getNombre();
-        $productonuevo['nombre']=$nombre;
-        $idEstanteria=$producto->getIdEstanteria();
-//        if($idEstanteria!=""){
-//            $estanteria= Estanteria::obtenerNombrePorId($bd, $idEstanteria);
-//            $nombreEstanteria=$estanteria->getNombre();
-//            $productonuevo['nombreEstanteria']=$nombreEstanteria;
-//        }
-        $descripcion=$producto->getDescripcion();
-        $productonuevo['descripcion']=$descripcion;
+        $productonuevo['nombre']=$producto->getNombre();
+        $productonuevo['descripcion']=$producto->getDescripcion();
         
         $productos[]=$productonuevo;
     }
     
-//    $response=[];
-//       
-//        $response['productos']= $productos;
- header('Content-type: application/json');
+    header('Content-type: application/json');
     echo json_encode($productos); 
 
     die;
-
+ 
 }else{
     echo $blade->run('verTrastero', compact('datosTrastero'));
     

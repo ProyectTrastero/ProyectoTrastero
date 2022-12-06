@@ -12,10 +12,11 @@ use \PDO as PDO;
 class Balda {
     private $id;
     private $nombre;
+    private $numero;
     private $idEstanteria;
  
     //Transformamos el alias a string antes de instanciar una estantería.
-    public function __construct(int $id = null, string $numero = null, string $nombre = null, string $idEstanteria = null) {
+    public function __construct(int $id = null, string $nombre = null, int $numero = null, string $idEstanteria = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
@@ -63,7 +64,7 @@ class Balda {
     }
     
     public function añadir($bd){
-        $consulta="insert into Baldas (nombre, idEstanteria) values('$this->nombre', $this->idEstanteria)";
+        $consulta = "insert into Baldas (nombre, numero, idEstanteria) values ('$this->nombre', $this->numero, $this->idEstanteria)";
         $bd->exec($consulta);
     }
     
@@ -95,7 +96,7 @@ class Balda {
    }
    
       public static function recuperarBaldasPorIdEstanteria($bd, $idEstanteria): array{
-        $consulta="select * from Baldas where idEstanteria = $idEstanteria order by id asc";
+        $consulta="select * from Baldas where idEstanteria = $idEstanteria order by numero asc";
         $registro = $bd->query($consulta);
         $registro->setFetchMode(PDO::FETCH_CLASS, Balda::class);
         $baldas=($registro->fetchAll()) ?: null;
@@ -104,5 +105,32 @@ class Balda {
         }
         return $baldas;
     }
+    
+    public static function asignarNumero($bd, $idEstanteria): int{
+       //Asignamos a la variable $numero el primer numero disponible que no exista.
+        $numero=1;
+        $consulta=$bd->query("select numero from baldas where idestanteria = $idEstanteria order by numero asc");
+        while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
+            if($numero==$registro->numero){
+                $numero++;
+            }
+        }
+     return $numero;  
+   }
+   
+   public static function recuperarBaldasPorIdTrastero($bd, $idTrastero): array{
+        $consulta="SELECT * from baldas where idEstanteria in (select id from estanterias where idTrastero = $idTrastero) order by id asc";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Balda::class);
+        $baldas=($registro->fetchAll()) ?: null;
+        if($baldas==null){
+            $baldas=array();
+        }
+        return $baldas;
+    }
+    
+
+    
+   
 
 }

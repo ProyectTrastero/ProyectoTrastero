@@ -17,7 +17,7 @@ function iniciar(){
 }
 
 function mostrarProductos(e){
-    var idSeleccionado = e.target.getAttribute("id");
+    var idSeleccionado = e.target.getAttribute("name");
     $(document).ready(function(){
             url="verTrastero.php";
             $.ajax({
@@ -42,12 +42,18 @@ function mostrarProductos(e){
                     }
                     for(i=0;i<listadoProductos.length;i++){
                         var columna=document.createElement("TR");
-                        var fila=document.createElement("TD");
-                        fila.innerHTML = listadoProductos[i].nombre;
-                       
+                        var fila1=document.createElement("TD");
+                        var fila2=document.createElement("TD");
+                        var fila3=document.createElement("TD");
                         
+                        fila1.innerHTML = "22/01/2022";
+                        fila2.innerHTML = listadoProductos[i].nombre;
+                        fila3.innerHTML = listadoProductos[i].descripcion;
+                    
 //                        elemento.innerHTML=listadoBaldas[i];
-                        columna.appendChild(fila);
+                        columna.appendChild(fila1);
+                        columna.appendChild(fila2);
+                        columna.appendChild(fila3);
                         body.appendChild(columna);
                     }
                    

@@ -61,6 +61,7 @@ if(empty($_SESSION['datosTrastero'])){
      }
     }
     
+//    $datosTrastero['estanterias']=array();
     $datosTrastero['guardado'] = $trasteroGuardado; 
     $datosTrastero['trastero'] = $nuevoTrastero;
     $datosTrastero['almacenEstanterias']=$almacenEstanterias;
@@ -84,53 +85,74 @@ if(empty($_SESSION['datosTrastero'])){
 if(isset($_POST['añadirEstanteria'])){
     $nuevaEstanteria = new Estanteria();
     $idTrastero = $nuevoTrastero->getId();
-    $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
-    if(empty($estanterias)){
-        $nombreEstanteria = intVal(array_key_last($estanterias));
-        $nuevaEstanteria->setNombre("Estanteria " .($nombreEstanteria+1));
+//    $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
+    if(empty($almacenEstanterias)){
+//        $nombreEstanteria = intVal(array_key_last($estanterias));
+        $nuevaEstanteria->setNumero(1);
+        $nuevaEstanteria->setNombre("Estanteria 1");
     }else{
-        $nombreEstanteria = intVal(array_key_last($estanterias));
-        $nuevaEstanteria->setNombre("Estanteria " .($nombreEstanteria+2));
+        $numeroEstanteria = Estanteria::asignarNumero($bd, $idTrastero);
+        $nuevaEstanteria->setNombre("Estanteria " .($numeroEstanteria));
+        $nuevaEstanteria->setNumero($numeroEstanteria);
     }
     
     $nuevaEstanteria->setIdTrastero($nuevoTrastero->getId());
     $nuevaEstanteria->añadir($bd);
     $idEstanteria= Estanteria::obtenerIdPorNombre($bd, $nuevaEstanteria->getNombre(), $nuevoTrastero->getId());
     $nuevaEstanteria->setId($idEstanteria);
-    $almacenEstanterias[] = $nuevaEstanteria;
+//    $estanterias[]=$nuevaEstanteria;
+    $almacenEstanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
+//    $almacenEstanterias[] = $nuevaEstanteria;
     $nuevaBalda = new Balda();
     $baldasRecuperadas = Balda::recuperarBaldasPorIdEstanteria($bd, $idEstanteria);
-    $nombreBalda = intVal(array_key_last($baldasRecuperadas));
-    $nuevaBalda->setNombre("Balda " .($nombreBalda+1));
+    if(empty($baldasRecuperadas)){
+//        $nombreEstanteria = intVal(array_key_last($estanterias));
+        $nuevaBalda->setNumero(1);
+        $nuevaBalda->setNombre("Balda 1");
+    }else{
+        $numeroBalda = Balda::asignarNumero($bd, $idEstanteria);
+        $nuevaBalda->setNombre("Balda " .($numeroBalda));
+        $nuevaBalda->setNumero($numeroBalda);
+    }
     $nuevaBalda->setIdEstanteria($idEstanteria);
     $nuevaBalda->añadir($bd);
-    $idBalda= Balda::obtenerIdPorNombre($bd, $nuevaBalda->getNombre(), $idEstanteria);
-    $nuevaBalda->setId($idBalda);
-    $almacenBaldas[] = $nuevaBalda;
+//    $idBalda= Balda::obtenerIdPorNombre($bd, $nuevaBalda->getNombre(), $idEstanteria);
+//    $nuevaBalda->setId($idBalda);
+    $almacenBaldas = Balda::recuperarBaldasPorIdTrastero($bd, $idTrastero);
     $datosTrastero['almacenBaldas']=$almacenBaldas;
-    $datosTrastero['estanterias']= $estanterias;
+//    $datosTrastero['estanterias']= $estanterias;
     $datosTrastero['almacenEstanterias']=$almacenEstanterias;
     $_SESSION['datosTrastero']=$datosTrastero;
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
 }else if(isset($_POST['añadirBalda'])){
     $idEstanteria = trim(filter_input(INPUT_POST, 'idEstanteria', FILTER_SANITIZE_STRING));
     $nuevaBalda = new Balda();
     $baldasRecuperadas = Balda::recuperarBaldasPorIdEstanteria($bd, $idEstanteria);
-    $nombreBalda = intVal(array_key_last($baldasRecuperadas));
-    $nuevaBalda->setNombre("Balda " .($nombreBalda+2));
+    if(empty($baldasRecuperadas)){
+//        $nombreEstanteria = intVal(array_key_last($estanterias));
+        $nuevaBalda->setNumero(1);
+        $nuevaBalda->setNombre("Balda 1");
+    }else{
+        $numeroBalda = Balda::asignarNumero($bd, $idEstanteria);
+        $nuevaBalda->setNombre("Balda " .($numeroBalda));
+        $nuevaBalda->setNumero($numeroBalda);
+    }
     $nuevaBalda->setIdEstanteria($idEstanteria);
     $nuevaBalda->añadir($bd);
-    $idBalda= Balda::obtenerIdPorNombre($bd, $nuevaBalda->getNombre(), $idEstanteria);
-    $nuevaBalda->setId($idBalda);
-    $almacenBaldas[] = $nuevaBalda;
+//    $idBalda= Balda::obtenerIdPorNombre($bd, $nuevaBalda->getNombre(), $idEstanteria);
+//    $nuevaBalda->setId($idBalda);
+//    $almacenBaldas[] = $nuevaBalda;
+//    $datosTrastero['estanterias']=$estanterias;
+    $almacenBaldas = Balda::recuperarBaldasPorIdTrastero($bd, $nuevoTrastero->getId());
     $datosTrastero['almacenBaldas']=$almacenBaldas;
     $_SESSION['datosTrastero']=$datosTrastero;
-        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
  
 }else if(isset($_POST['añadirCaja'])){
     echo $blade->run('ubicacionCaja', compact('datosTrastero'));
 }else if(isset($_POST['añadirUbicacion'])){
         if(!filter_has_var(INPUT_POST,'sinAsignar')) {
+            $almacenCajas = Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
             $nombreEstanteria = trim(filter_input(INPUT_POST, 'estanteria', FILTER_SANITIZE_STRING));
             $nombreBalda = trim(filter_input(INPUT_POST, 'balda', FILTER_SANITIZE_STRING));
             $idEstanteria = Estanteria::obtenerIdPorNombre($bd, $nombreEstanteria, $nuevoTrastero->getId());
@@ -139,19 +161,15 @@ if(isset($_POST['añadirEstanteria'])){
             $nuevaCaja->setIdEstanteria($idEstanteria);
             $nuevaCaja->setIdBalda($idBalda);
             $nuevaCaja->setIdTrastero($nuevoTrastero->getId());
-            $nombreCaja;
+            $numeroCaja= Caja::asignarNumero($bd, $nuevoTrastero->getId());
             if(empty($almacenCajas)){
-                $nombreCaja = 1;
-                $nuevaCaja->setNombre("Caja ".($nombreCaja));
+                $nuevaCaja->setNombre("Caja 1");
             }else{
-                $nombreCaja = intVal(array_key_last($almacenCajas));
-                $nuevaCaja->setNombre("Caja " .($nombreCaja+2));
+                $nuevaCaja->setNombre("Caja " .($numeroCaja));
             }
-            
+            $nuevaCaja->setNumero($numeroCaja);
             $nuevaCaja->añadir($bd);
-            $idCaja=$nuevaCaja->obtenerIdPorNombre($bd, $nuevaCaja->getNombre(), $nuevoTrastero->getId());
-            $nuevaCaja->setId($idCaja);
-            $almacenCajas[]=$nuevaCaja;
+            $almacenCajas = Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
             $datosTrastero['almacenCajas']=$almacenCajas;
             $_SESSION['datosTrastero']=$datosTrastero;
 
@@ -160,35 +178,36 @@ if(isset($_POST['añadirEstanteria'])){
             $nuevaCaja = new Caja();
             $nuevaCaja->setIdTrastero($nuevoTrastero->getId());
              if(empty($almacenCajas)){
-                $nombreCaja = 1;
-                $nuevaCaja->setNombre("Caja ".($nombreCaja));
+                $numeroCaja = 1;
+                $nuevaCaja->setNombre("Caja ".($numeroCaja));
             }else{
-                $nombreCaja = intVal(array_key_last($almacenCajas));
-                $nuevaCaja->setNombre("Caja " .($nombreCaja+2));
+                $numeroCaja= Caja::asignarNumero($bd, $nuevoTrastero->getId());
+                $nuevaCaja->setNombre("Caja " .($numeroCaja));
             }
+            $nuevaCaja->setNumero($numeroCaja);
             $nuevaCaja->añadir($bd);
-            $idCaja=$nuevaCaja->obtenerIdPorNombre($bd, $nuevaCaja->getNombre(), $nuevoTrastero->getId());
-            $nuevaCaja->setId($idCaja);
-            $almacenCajas[]= $nuevaCaja;
+//            $idCaja=$nuevaCaja->obtenerIdPorNombre($bd, $nuevaCaja->getNombre(), $nuevoTrastero->getId());
+//            $nuevaCaja->setId($idCaja);
+            $almacenCajas= Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
             $datosTrastero['almacenCajas']=$almacenCajas;
             $_SESSION['datosTrastero']=$datosTrastero;
         }
-        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
 }else if(isset($_POST['volver'])){
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+     echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
 }else if(isset($_POST['volverAcceso'])){
     if(!$trasteroGuardado){
         $nuevoTrastero->eliminar($bd);
-        foreach($almacenEstanterias as $clave=>$valor){
-            $valor->eliminar($bd);
+        foreach($almacenEstanterias as $estanteria){
+            $estanteria->eliminar($bd);
         } 
 
-        foreach($almacenBaldas as $clave=>$valor){
-            $valor->eliminar($bd);
+        foreach($almacenBaldas as $balda){
+            $balda->eliminar($bd);
         } 
 
-        foreach($almacenCajas as $clave=>$valor){
-            $valor->eliminar($bd);
+        foreach($almacenCajas as $balda){
+            $balda->eliminar($bd);
         } 
     }
     
@@ -207,15 +226,15 @@ if(isset($_POST['añadirEstanteria'])){
             $_SESSION['datosTrastero'] = $datosTrastero;
 
             $mensaje = "Su trastero se ha creado correctamente. Pulse volver para volver a la página principal";
-            echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+            echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
    
         }else{
             $mensaje = "Ya existe un trastero para este usuario con este nombre.";
-            echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+            echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
         }
     }else{
         $mensaje = "El nombre del trastero no puede estar vacío.";
-        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
     } 
      
 }else if(isset($_POST['eliminarEstanteria'])){
@@ -223,31 +242,28 @@ if(isset($_POST['añadirEstanteria'])){
     
     foreach($almacenEstanterias as $clave=>$valor){
         if($valor->getId()==$idEstanteria){
-            unset($almacenEstanterias[$clave]);
             $valor->eliminar($bd);
         }
     }
     
     foreach($almacenBaldas as $clave=>$valor){
         if($valor->getIdEstanteria()==$idEstanteria){
-            unset($almacenBaldas[$clave]);
              $valor->eliminar($bd);
         }
     }
     
     foreach($almacenCajas as $clave=>$valor){
         if($valor->getIdEstanteria()==$idEstanteria){
-            unset($almacenCajas[$clave]);
             $valor->eliminar($bd);
         }
     }
     
-    $datosTrastero['almacenEstanterias']=$almacenEstanterias;
-    $datosTrastero['almacenBaldas']=$almacenBaldas;
+    $datosTrastero['almacenEstanterias']= Estanteria::recuperarEstanteriasPorIdTrastero($bd, $nuevoTrastero->getId());
+    $datosTrastero['almacenBaldas']= Balda::recuperarBaldasPorIdTrastero($bd, $nuevoTrastero->getId());
     $datosTrastero['almacenCajas']=$almacenCajas;
     $_SESSION['datosTrastero']=$datosTrastero;
     
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
     
 }else if(isset($_POST['eliminarBalda'])){
     $numeroEstanteria = trim(filter_input(INPUT_POST, 'numeroEstanteria', FILTER_SANITIZE_STRING));
@@ -256,24 +272,21 @@ if(isset($_POST['añadirEstanteria'])){
     
     foreach($almacenBaldas as $clave=>$valor){
         if($valor->getId()==$idBalda){
-            unset($almacenBaldas[$clave]);
             $valor->eliminar($bd);
         }
     }
     
     foreach($almacenCajas as $clave=>$valor){
         if($valor->getIdBalda()==$idBalda){
-            unset($almacenCajas[$clave]);
             $valor->eliminar($bd);
         }
     }
     
-    $datosTrastero['almacenEstanterias']=$almacenEstanterias;
-    $datosTrastero['almacenBaldas']=$almacenBaldas;
+    $datosTrastero['almacenBaldas']= Balda::recuperarBaldasPorIdTrastero($bd, $nuevoTrastero->getId());
     $datosTrastero['almacenCajas']=$almacenCajas;
     $_SESSION['datosTrastero']=$datosTrastero;
     
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+     echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
     
 }else if(isset($_POST['eliminarCaja'])){
     $idCaja = trim(filter_input(INPUT_POST, 'idCaja', FILTER_SANITIZE_STRING));
@@ -284,14 +297,14 @@ if(isset($_POST['añadirEstanteria'])){
         }
     }
     
-    $datosTrastero['almacenEstanterias']=$almacenEstanterias;
-    $datosTrastero['almacenBaldas']=$almacenBaldas;
+//    $datosTrastero['almacenEstanterias']=$almacenEstanterias;
+//    $datosTrastero['almacenBaldas']=$almacenBaldas;
     $datosTrastero['almacenCajas']=$almacenCajas;
     $_SESSION['datosTrastero']=$datosTrastero;
     
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
 }else{
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
+    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
 }
 
 

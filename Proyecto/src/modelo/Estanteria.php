@@ -11,15 +11,19 @@ use \PDO as PDO;
 class Estanteria {
     private $id;
     private $nombre;
+    private $numero;
     private $idTrastero;
  
     //Transformamos el alias a string antes de instanciar una estantería.
-    public function __construct(int $id = null, string $nombre = null, int $idTrastero = null) {
+    public function __construct(int $id = null, string $nombre = null, int $numero=null, int $idTrastero = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
         if (!is_null($nombre)) {
             $this->nombre = $nombre;
+        }
+        if (!is_null($numero)) {
+            $this->numero = $numero;
         }
         if (!is_null($idTrastero)) {
             $this->idTrastero = $idTrastero;
@@ -33,6 +37,9 @@ class Estanteria {
     public function getNombre() {
         return $this->nombre;
     }
+     public function getNumero() {
+        return $this->numero;
+    }
 
     public function getidTrastero() {
         return $this->idTrastero;
@@ -45,13 +52,16 @@ class Estanteria {
     public function setNombre($nombre): void {
         $this->nombre = $nombre;
     }
+     public function setNumero($numero): void {
+        $this->numero = $numero;
+    }
 
     public function setIdTrastero($idTrastero): void {
         $this->idTrastero = $idTrastero;
     }
     
     public function añadir($bd): void{
-        $consulta="insert into Estanterias (nombre, idTrastero) values('$this->nombre', $this->idTrastero)";
+        $consulta="insert into Estanterias (nombre, numero, idTrastero) values('$this->nombre', $this->numero, $this->idTrastero)";
         $bd->exec($consulta);
             
    }
@@ -75,7 +85,7 @@ class Estanteria {
    }
    
    public static function recuperarEstanteriasPorIdTrastero($bd, $idTrastero): array{
-        $consulta="select * from Estanterias where idTrastero = $idTrastero order by id asc";
+        $consulta="select * from Estanterias where idTrastero = $idTrastero order by numero asc";
         $registro = $bd->query($consulta);
         $registro->setFetchMode(PDO::FETCH_CLASS, Estanteria::class);
         $estanterias=($registro->fetchAll()) ?: null;
@@ -91,6 +101,18 @@ class Estanteria {
         $idRecuperado=$registro->id;
         
         return $idRecuperado;
+   }
+   
+      public static function asignarNumero($bd, $idTrastero): int{
+       //Asignamos a la variable $numero el primer numero disponible que no exista.
+        $numero=1;
+        $consulta=$bd->query("select numero from estanterias where idTrastero = $idTrastero order by id");
+        while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
+            if($numero==$registro->numero){
+                $numero++;
+            }
+        }
+     return $numero;  
    }
  
 }

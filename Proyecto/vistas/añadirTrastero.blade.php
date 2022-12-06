@@ -10,7 +10,7 @@
 {{-- Sección mensaje --}}
 @section('content')
 
-<script src="https://kit.fontawesome.com/12104efb99.js" crossorigin="anonymous"></script>
+
 <script src="asset/js/añadirTrastero.js"></script>
 <div class="container">
     <div>
@@ -31,12 +31,10 @@
                
                 <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
                 <input type="submit" name="añadirCaja" value="AÑADIR CAJA"> 
-<!--            </div>
-            <div>-->
+            </div>
+            <div>
                 @if($datosTrastero['tipo']=="guardar")
                 <input type="submit" name="guardar" value="GUARDAR">
-                @else
-                <input type="submit" name="modificar" value="MODIFICAR">
                 @endif
                 <input type="submit" name="volverAcceso" value="VOLVER">
             </div>
@@ -45,11 +43,8 @@
     
     <div class="container">
         <div class="row">
-            @foreach ($datosTrastero['almacenEstanterias'] as $estanteria)
-<!--            @php
-                $indice=0
-            @endphp-->
             <div class="col-4">
+                @foreach ($datosTrastero['almacenEstanterias'] as $estanteria)
                 <ul>
                     <li>
                         <form action="" method="POST">
@@ -58,19 +53,18 @@
                             <span class="papeleraOculta" contenteditable="false">{{$estanteria->getNombre()}}</span>
                         </form>
                     </li>
+                  
                 @php
-                    $baldasRecuperadas=array()
+                    $baldasRecuperadas=array();
                 @endphp
                  
                 @foreach ($datosTrastero['almacenBaldas'] as $balda)
-                    @if($balda->getIdEstanteria()==$estanteria->getId())
-                        @php
-                        $baldasRecuperadas[]= $balda;
-                        @endphp
-                    @endif
+                    @php
+                        $baldasRecuperadas= $balda->recuperarBaldasPorIdEstanteria($bd, $estanteria->getId());
+                    @endphp
                 @endforeach
                 @foreach ($baldasRecuperadas as $balda)
-             
+                
                     <ul> 
                         <li>
                             <form action="" method="POST">
@@ -93,9 +87,6 @@
                                 </li>
                                 @endif
                             @endforeach
-<!--                            @php
-                                $indice++
-                            @endphp-->
                         </ul>
                     </ul>
                 @endforeach
@@ -106,8 +97,9 @@
                     
                     <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
                 </form>
-            </div>
+            
             @endforeach
+            </div>
         </div>
     </div>
     <div>
