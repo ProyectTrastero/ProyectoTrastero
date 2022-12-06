@@ -1,10 +1,14 @@
 window.addEventListener("load", iniciar);
-  var idEstanteria="";
+  
 
 
 function iniciar(){
+
+  let daniel = document.getElementById('idSinAsignar');
+  console.log(daniel);
   
-  idEstanteria= document.getElementById('selectEstanterias').value;
+  ////estanterias
+  let idEstanteria= document.getElementById('selectEstanterias').value;
   if(idEstanteria != ""){
     //enviamos el id de la estanteria seleccionada por default
     loadDoc('añadirProducto.php?idEstanteria=' + idEstanteria, setBaldas);
@@ -18,6 +22,7 @@ function iniciar(){
     loadDoc('añadirProducto.php?idBalda=' + baldaSelected, setCajas);
   })
 
+  ///baldas
   let idBalda = document.getElementById('selectBaldas').value;
   if (idBalda != "" ) {
     //enviamos el id de la balda seleccionada por default
@@ -29,6 +34,8 @@ function iniciar(){
     loadDoc('añadirProducto.php?idBalda=' + this.value, setCajas);
   })
 
+  ////sin asignar
+  document.getElementById('idSinAsignar').addEventListener('change', isChecked);
 }
 
 function loadDoc(url,cFunction){
@@ -76,4 +83,17 @@ function setCajas (xhttp){
     cajaElement.innerText = caja.nombre;
     selectCajas.appendChild(cajaElement);
   })
+}
+
+function isChecked (){
+  const checkedSinAsignar = document.getElementById('idSinAsignar');
+  if (checkedSinAsignar.checked) {
+    document.getElementById('selectEstanterias').disabled=true;
+    document.getElementById('selectBaldas').disabled=true;
+    document.getElementById('selectCaja').disabled=true;
+  }else{
+    document.getElementById('selectEstanterias').disabled=false;
+    document.getElementById('selectBaldas').disabled=false;
+    document.getElementById('selectCaja').disabled=false;
+  }
 }

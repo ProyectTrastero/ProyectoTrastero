@@ -24,16 +24,33 @@
 @section('content')
 
 <div class="container">
-  <form action="{{$_SERVER["PHP_SELF"]}}">
+  @if (@isset($msj['msj-content']))
+  <div class="alert alert-{{$msj['msj-type']}} alert-dismissible fade show" role="alert"">
+    {{$msj['msj-content']}}
 
-    <div>
+    <?php $msj=array(); ?>
+
+     <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
+  </div>
+@endif
+
+
+  <form action="{{$_SERVER["PHP_SELF"]}}" method="POST">
+
+    
 
       <div>
         <h1>Producto</h1>
         <div class="inputsForm">
           <label for="nombreProducto">Nombre: </label>
           <input type="text" name="nombreProducto" class="form-control">
-  
+          @if(isset($errores) && in_array("nombreInvalido", $errores)) 
+            <div></div>
+            <div class="textError form-text p-1 text-start">
+              Ingresa un nombre al producto.
+            </div>
+          @endif
+
           <label for="descripcionProducto">Descripción: </label>
           <input type="text" name="descripcionProducto" class="form-control">
         </div>
@@ -53,17 +70,13 @@
         </div>
         <div>
           <label for="selectBaldas">Balda</label>
-          <select name="balda" id="selectBaldas">
-            
-          </select>
+          <select name="balda" id="selectBaldas"></select>
 
         </div>
 
         <div>
           <label for="selectCaja">Caja</label>
-          <select name="caja" id="selectCaja">
-            
-          </select>
+          <select name="caja" id="selectCaja"></select>
 
         </div>
 
@@ -73,7 +86,12 @@
 
         </div>
       </div>
-    </div>
+
+      <div class="text-end">
+        <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
+        <button type="submit" class="btn btn-primary " name="añadir">Añadir</button>
+      </div>
+    
   
     
   </form>

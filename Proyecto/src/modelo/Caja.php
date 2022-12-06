@@ -9,7 +9,7 @@ use \PDO as PDO;
  * @author Emma
  */
 
-class Caja {
+class Caja implements \JsonSerializable {
     private $id;
     private $nombre;
     private $idTrastero;
@@ -33,6 +33,11 @@ class Caja {
         if (!is_null($idBalda)) {
             $this->idBalda = $idBalda;
         }
+    }
+
+    public function jsonSerialize(){
+        $variables = get_object_vars($this);
+        return $variables;
     }
     
     public function getId() {
