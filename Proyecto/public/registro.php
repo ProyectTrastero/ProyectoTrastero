@@ -51,9 +51,15 @@ if (isset($_POST['registrarse'])) {
     if (count($errores) > 0) {
         echo $blade->run('registro', ['error' => $errores,'datos' => $datos]);
     } else {
-        //si no hay errores vamos a el index el cual redirige a acceso, no se si mejor deberia ir a acceso desde aca
-        header("location: ../public/index.php");
+        // $_SESSION['msj']="Usuario registrado correctamente";
+        // $_SESSION['msj-type']="success";
+        $msj = ['msj'=>'Usuario registrado correctamente',
+                'msjType'=>'success'];
+        //si no hay errores volvemos a registro y mostramos mensaje
+        echo $blade->run('registro', ['error' => $errores, 'msj'=> $msj]);
+
     }
+
 }else if(isset($_POST['volver'])){
     header("location: ../public/index.php");
 

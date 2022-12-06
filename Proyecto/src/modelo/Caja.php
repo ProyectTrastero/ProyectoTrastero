@@ -119,6 +119,17 @@ class Caja {
         }
         return $cajas;
     }
+
+    public static function recuperarCajaPorIdBalda($bd, $idBalda): array{
+        $consulta="select * from Cajas where idBalda = '$idBalda' order by id";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_ASSOC);
+        $cajas=($registro->fetchAll()) ?: null;
+         if($cajas==null){
+            $cajas=array();
+        }
+        return $cajas;
+    }
     
      public static function asignarNumero($bd, $idTrastero): int{
        //Asignamos a la variable $numero el primer numero disponible que no exista.

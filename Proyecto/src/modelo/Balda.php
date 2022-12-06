@@ -133,4 +133,15 @@ class Balda {
     
    
 
+    public static function getBaldaByIdEstanteria($bd, $idEstanteria): array{
+        $consulta="select * from Baldas where idEstanteria = $idEstanteria order by id asc";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_ASSOC);
+        $baldas=($registro->fetchAll()) ?: null;
+        if($baldas==null){
+            $baldas=array();
+        }
+        return $baldas;
+    }
+
 }
