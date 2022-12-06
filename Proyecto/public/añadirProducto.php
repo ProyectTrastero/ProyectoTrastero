@@ -7,6 +7,7 @@ use Dotenv\Dotenv;
 use App\{
     BD,
     Balda,
+    Caja,
     Estanteria
 };
 
@@ -34,18 +35,21 @@ if(isset($_SESSION['usuario'])){
     $id = $_SESSION['id'];
     
     if (isset($_REQUEST["idEstanteria"])) {    
+        //recuperamos el id de la estanteria seleccionada
         $estanteriaSelected = $_REQUEST["idEstanteria"];
-        $baldas = Balda::getBaldaByIdEstanteria($bd,$estanteriaSelected);
-
-        $daniel = json_encode($baldas);
+        //$baldas = Balda::getBaldaByIdEstanteria($bd,$estanteriaSelected);
+        $baldas = Balda::recuperarBaldasPorIdEstanteria($bd, $estanteriaSelected);
         echo json_encode($baldas);
         die;
     }
 
     if (isset($_REQUEST['idBalda'])) {
+        //recuperamos el id de la balda seleccionada
         $baldaSelected = $_REQUEST['idBalda'];
         //recuperamos las cajas
-
+        $cajas = Caja::recuperarCajaPorIdBalda($bd,$baldaSelected);
+        echo json_encode($cajas);
+        die;
     }
 
     
