@@ -4,9 +4,6 @@ window.addEventListener("load", iniciar);
 
 function iniciar(){
 
-  let daniel = document.getElementById('idSinAsignar');
-  console.log(daniel);
-  
   ////estanterias
   let idEstanteria= document.getElementById('selectEstanterias').value;
   if(idEstanteria != ""){
@@ -34,9 +31,17 @@ function iniciar(){
     loadDoc('añadirProducto.php?idBalda=' + this.value, setCajas);
   })
 
-  ////sin asignar
-  document.getElementById('idSinAsignar').addEventListener('change', isChecked);
+  ////radio buttons 
+  let radios = document.getElementsByName('ubicacion');
+  for (let i = 0; i < radios.length; i++) {
+    const radio = radios[i];
+    radio.addEventListener('change',(e)=>{
+      showHide(e);
+    })
+  }
+  
 }
+  
 
 function loadDoc(url,cFunction){
     const xhttp = new XMLHttpRequest();
@@ -85,15 +90,18 @@ function setCajas (xhttp){
   })
 }
 
-function isChecked (){
-  const checkedSinAsignar = document.getElementById('idSinAsignar');
-  if (checkedSinAsignar.checked) {
-    document.getElementById('selectEstanterias').disabled=true;
-    document.getElementById('selectBaldas').disabled=true;
-    document.getElementById('selectCaja').disabled=true;
-  }else{
-    document.getElementById('selectEstanterias').disabled=false;
-    document.getElementById('selectBaldas').disabled=false;
-    document.getElementById('selectCaja').disabled=false;
+
+
+function showHide(e){
+  let target = e.target;
+  console.log(target);
+  if(target.id=='radioUbicacionEstanteria'){
+    document.getElementById('idUbicacionEstanteria').classList.toggle('hide');
+    
+  }else if(target.id == 'radioCajasSinAsignar'){
+
+  }else if(target.id == 'radioSinAsignar'){
+
   }
+  
 }

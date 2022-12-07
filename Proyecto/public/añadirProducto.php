@@ -66,7 +66,6 @@ if(isset($_SESSION['usuario'])){
     if(isset($_POST['añadir'])){
         (isset($_POST['nombreProducto'])) ? $nombreProducto = Validacion::sanearInput($_POST['nombreProducto']) : $nombreProducto = '';
         (isset($_POST['descripcionProducto'])) ? $descripcionProducto = Validacion::sanearInput($_POST['descripcionProducto']) : $descripcionProducto = '';
-
         (isset($_POST['estanteria'])) ? $estanteria = intval(Validacion::sanearInput($_POST['estanteria'])) : $estanteria = '';
         (isset($_POST['balda'])) ? $balda = intval(Validacion::sanearInput($_POST['balda'])) : $balda = '';
         (isset($_POST['caja'])) ? $caja = intval(Validacion::sanearInput($_POST['caja'])) : $caja = '';
@@ -86,8 +85,6 @@ if(isset($_SESSION['usuario'])){
             }
         }
         
-        
-
         if ($nombreProducto == '') {
             array_push($errores, 'nombreInvalido');
         }
