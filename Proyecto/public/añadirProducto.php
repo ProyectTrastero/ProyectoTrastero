@@ -39,6 +39,11 @@ if(isset($_SESSION['usuario'])){
     $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
     $errores= array();
     $msj=array();
+
+    if (isset($_REQUEST['getIdTrastero'])) {
+        echo $idTrastero;
+        die;
+    }
     
     if (isset($_REQUEST["idEstanteria"])) {    
         //recuperamos el id de la estanteria seleccionada
@@ -58,6 +63,12 @@ if(isset($_SESSION['usuario'])){
         die;
     }
 
+    if (isset($_REQUEST['getCajasSinAsignar'])) {
+        $cajasSinAsignar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd,$idTrastero);
+        echo json_encode($cajasSinAsignar);
+        die;
+    }
+
     if(isset($_POST['volver'])){
         header('location: accederTrastero.php');
         die;
@@ -69,7 +80,11 @@ if(isset($_SESSION['usuario'])){
         (isset($_POST['estanteria'])) ? $estanteria = intval(Validacion::sanearInput($_POST['estanteria'])) : $estanteria = '';
         (isset($_POST['balda'])) ? $balda = intval(Validacion::sanearInput($_POST['balda'])) : $balda = '';
         (isset($_POST['caja'])) ? $caja = intval(Validacion::sanearInput($_POST['caja'])) : $caja = '';
-        (isset($_POST['sinAsignar'])) ? $sinAsignar = Validacion::sanearInput($_POST['sinAsignar']) : $sinAsignar = '';
+        (isset($_POST['cajasSinAsignar'])) ? $cajaSinAsignar = intval(Validacion::sanearInput($_POST['cajasSinAsignar'])) : $cajaSinAsignar='';
+
+        if($_POST['ubicacion'] == 'ubicacionCajasSinAsignar'){
+            $caja=$cajaSinAsignar;
+        }
 
         $datos=['nombreProducto'=>$nombreProducto,
                 'descripcionProducto'=>$descripcionProducto,
@@ -78,6 +93,7 @@ if(isset($_SESSION['usuario'])){
                 'caja'=>$caja,
                 'idTrastero'=>$idTrastero
                 ];
+        
         //set a null todos los campos vacios
         foreach ($datos as $key => $value) {
             if ($value=='') {

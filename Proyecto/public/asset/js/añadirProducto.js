@@ -1,8 +1,14 @@
 window.addEventListener("load", iniciar);
   
+var idTrastero;
 
 
 function iniciar(){
+
+  ////get idTrastero
+  loadDoc('añadirProducto.php?getIdTrastero',getIdTrastero);
+  
+  
 
   ////estanterias
   let idEstanteria= document.getElementById('selectEstanterias').value;
@@ -31,6 +37,10 @@ function iniciar(){
     loadDoc('añadirProducto.php?idBalda=' + this.value, setCajas);
   })
 
+  ////cajas sin asignar
+  loadDoc('añadirProducto.php?getCajasSinAsignar', setCajasSinAsignar);
+  
+
   ////radio buttons 
   let radios = document.getElementsByName('ubicacion');
   for (let i = 0; i < radios.length; i++) {
@@ -41,13 +51,16 @@ function iniciar(){
   }
   
 }
-  
 
 function loadDoc(url,cFunction){
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function(){cFunction(this);}
     xhttp.open("GET",url,false );
     xhttp.send();
+}
+
+function getIdTrastero (xhttp){
+  idTrastero = xhttp.responseText;
 }
 
 function setBaldas(xhttp){
@@ -90,18 +103,54 @@ function setCajas (xhttp){
   })
 }
 
+function setCajasSinAsignar(xhttp){
+  const selectCajasSinAsignar = document.getElementById('selectCajasSinAsignar');
+  //primero eliminamos los elementos
+  Array.from(selectCajasSinAsignar.childNodes).forEach(optionElement => {
+    optionElement.remove();
+  })
+  //recibimos las cajas sin asignar
+  let cajasSinAsignar = JSON.parse(xhttp.responseText);
+  cajasSinAsignar.forEach(caja => {
+    let cajaElement = document.createElement('option');
+    cajaElement.value = caja.id;
+    cajaElement.innerText = caja.nombre;
+    selectCajasSinAsignar.appendChild(cajaElement);
+  });
+}
 
 
 function showHide(e){
   let target = e.target;
   console.log(target);
   if(target.id=='radioUbicacionEstanteria'){
-    document.getElementById('idUbicacionEstanteria').classList.toggle('hide');
+    document.getElementById('idUbicacionEstanteria').classList.remove('hide');
+    document.getElementById('idUbicacionCajasSinAsignar').classList.add('hide');
+    //habilitamos los select 
+    document.getElementById('selectEstanterias').disabled = false;
+    document.getElementById('selectBaldas').disabled = false;
+    document.getElementById('selectCaja').disabled = false;
+    //tambien desabilitamos los select para que no envien informacion
+    document.getElementById('selectCajasSinAsignar').disabled = true;
     
   }else if(target.id == 'radioCajasSinAsignar'){
-
+    document.getElementById('idUbicacionCajasSinAsignar').classList.remove('hide');
+    document.getElementById('idUbicacionEstanteria').classList.add('hide');
+    //habilitamos los select
+    document.getElementById('selectCajasSinAsignar').disabled = false;
+    //tambien desabilitamos los select para que no envien informacion
+    document.getElementById('selectEstanterias').disabled = true;
+    document.getElementById('selectBaldas').disabled = true;
+    document.getElementById('selectCaja').disabled = true;
+    
   }else if(target.id == 'radioSinAsignar'){
-
+    document.getElementById('idUbicacionCajasSinAsignar').classList.add('hide');
+    document.getElementById('idUbicacionEstanteria').classList.add('hide');
+    //desabilitamos todos los select 
+    document.getElementById('selectEstanterias').disabled = true;
+    document.getElementById('selectBaldas').disabled = true;
+    document.getElementById('selectCaja').disabled = true;
+    document.getElementById('selectCajasSinAsignar').disabled = true;
   }
   
 }
