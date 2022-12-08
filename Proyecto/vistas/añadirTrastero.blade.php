@@ -11,7 +11,7 @@
 @section('content')
 
 <script src="asset/js/añadirTrastero.js"></script>
-
+<script src="asset/js/ubicacionCaja.js"></script>
 <div class="container">
     <div class="row">
         <p>{{$mensaje}}</p>
@@ -30,7 +30,8 @@
                 @endif
                
                 <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
-                <input type="submit" name="añadirCaja" value="AÑADIR CAJA"> 
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">AÑADIR CAJA</button>
+
             </div>
             <div>
                 @if($datosTrastero['tipo']=="guardar")
@@ -114,4 +115,47 @@
         </ul>
     </div>
 </div>
+
+
+<!-- Modal -->
+<form action="" method="POST">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Ubicación: </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"> 
+        <div>{{$mensaje}}</div>
+        <div>
+            <label for="estanteria">Estantería</label>
+            <select id="seleccionEstanteria" name="estanteria">
+                @foreach($datosTrastero['almacenEstanterias'] as $clave=>$valor)
+                <option>{{$datosTrastero['almacenEstanterias'][$clave]->getNombre()}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <label for="balda">Balda</label>
+            <select id="seleccionBalda" name="balda">
+                
+            </select>  
+        </div>
+        <div>
+            <label><input id="sinAsignar" type="checkbox" name="sinAsignar">Sin asignar</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">VOLVER</button>
+        <input class="btn btn-info" type="submit" name="añadirUbicacion" value="Añadir">
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
 @endsection
