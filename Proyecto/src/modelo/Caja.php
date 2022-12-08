@@ -9,7 +9,7 @@ use \PDO as PDO;
  * @author Emma
  */
 
-class Caja {
+class Caja implements \JsonSerializable {
     private $id;
     private $nombre;
     private $numero;
@@ -37,6 +37,11 @@ class Caja {
         if (!is_null($idBalda)) {
             $this->idBalda = $idBalda;
         }
+    }
+
+    public function jsonSerialize(){
+        $variables = get_object_vars($this);
+        return $variables;
     }
     
     public function getId() {
@@ -120,10 +125,23 @@ class Caja {
         return $cajas;
     }
 
-    public static function recuperarCajaPorIdBalda($bd, $idBalda): array{
-        $consulta="select * from Cajas where idBalda = '$idBalda' order by id";
-        $registro = $bd->query($consulta);
-        $registro->setFetchMode(PDO::FETCH_ASSOC);
+    public static function recuperarCajaPorIdBalda(PDO $bd, string $idBalda): array{
+        $consulta="select * from Cajas where idBalda = :idBalda order by id";
+        $registro=$bd->prepare($consulta);
+        $registro->execute(['idBalda'=>$idBalda]);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Caja::class);
+        $cajas=($registro->fetchAll()) ?: null;
+         if($cajas==null){
+            $cajas=array();
+        }
+        return $cajas;
+    }
+
+    public static function recuperarCajasSinAsignarPorIdTrastero(PDO $bd, string $idTrastero):array{
+        $consulta = "select * from cajas where idTrastero = :idTrastero and idEstanteria is null and idBalda is null";
+        $registro = $bd->prepare($consulta);
+        $registro->execute([':idTrastero'=>$idTrastero]);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Caja::class);
         $cajas=($registro->fetchAll()) ?: null;
          if($cajas==null){
             $cajas=array();

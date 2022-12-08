@@ -9,7 +9,7 @@ use \PDO as PDO;
  * @author Emma
  */
 
-class Balda {
+class Balda implements \JsonSerializable {
     private $id;
     private $nombre;
     private $numero;
@@ -29,6 +29,11 @@ class Balda {
         if (!is_null($idEstanteria)) {
             $this->idEstanteria = $idEstanteria;
         }
+    }
+
+    public function jsonSerialize(){
+        $variables = get_object_vars($this);
+        return $variables;
     }
     
     public function getId() {
@@ -132,16 +137,5 @@ class Balda {
 
     
    
-
-    public static function getBaldaByIdEstanteria($bd, $idEstanteria): array{
-        $consulta="select * from Baldas where idEstanteria = $idEstanteria order by id asc";
-        $registro = $bd->query($consulta);
-        $registro->setFetchMode(PDO::FETCH_ASSOC);
-        $baldas=($registro->fetchAll()) ?: null;
-        if($baldas==null){
-            $baldas=array();
-        }
-        return $baldas;
-    }
 
 }

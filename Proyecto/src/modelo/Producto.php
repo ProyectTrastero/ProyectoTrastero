@@ -173,6 +173,23 @@ class Producto {
          $bd->exec($consulta);
     }
   
+    public static function añadirProducto (PDO $bd, array $datos):bool{
+        $query =    "insert into productos (nombre, descripcion,idTrastero,idEstanteria,idBalda,idCaja) 
+                    values (:nombre, :descripcion, :idTrastero, :idEstanteria, :idBalda, :idCaja)";
+        $stmt = $bd->prepare($query);
+        if (!$stmt->execute([':nombre'=>$datos['nombreProducto'], ':descripcion'=>$datos['descripcionProducto'], ':idTrastero'=>$datos['idTrastero'], 
+                            ':idEstanteria'=>$datos['estanteria'], ':idBalda'=>$datos['balda'], ':idCaja'=>$datos['caja']])) {
+            //si falla el insert
+            $stmt = null;
+            return false;
+        }else{
+            //si todo bien
+            $stmt=null;
+            return true;
+        }
+    } 
+
+
     
 }
 
