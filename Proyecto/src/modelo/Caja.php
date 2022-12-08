@@ -12,17 +12,21 @@ use \PDO as PDO;
 class Caja implements \JsonSerializable {
     private $id;
     private $nombre;
+    private $numero;
     private $idTrastero;
     private $idEstanteria;
     private $idBalda;
  
     //Transformamos el alias a string antes de instanciar una estantería.
-    public function __construct(string $id = null, string $nombre = null, string $idTrastero = null, string $idEstanteria = null, string $idBalda = null) {
+    public function __construct(string $id = null, string $nombre = null, int $numero = null, string $idTrastero = null, string $idEstanteria = null, string $idBalda = null) {
         if (!is_null($id)) {
             $this->id = $id;
         }
         if (!is_null($nombre)) {
             $this->nombre = $nombre;
+        }
+        if (!is_null($numero)) {
+            $this->numero = $numero;
         }
         if (!is_null($idTrastero)) {
             $this->idTrastero = $idTrastero;
@@ -47,6 +51,9 @@ class Caja implements \JsonSerializable {
     public function getNombre() {
         return $this->nombre;
     }
+    public function getNumero() {
+        return $this->numero;
+    }
 
     public function getIdTrastero() {
         return $this->idTrastero;
@@ -64,6 +71,9 @@ class Caja implements \JsonSerializable {
     
     public function setNombre($nombre): void {
         $this->nombre = $nombre;
+    }
+    public function setNumero($numero): void {
+        $this->numero = $numero;
     }
 
     public function setIdTrastero($idTrastero): void {
@@ -90,10 +100,10 @@ class Caja implements \JsonSerializable {
    
    public function añadir($bd){
        if($this->idEstanteria==null){
-           $consulta="insert into Cajas (nombre, idTrastero) values('$this->nombre',$this->idTrastero)";
+           $consulta="insert into Cajas (nombre, numero, idTrastero) values('$this->nombre',$this->numero, $this->idTrastero)";
            $bd->exec($consulta);
        }else{
-           $consulta="insert into Cajas (nombre, idTrastero, idEstanteria, idBalda) values('$this->nombre',$this->idTrastero, $this->idEstanteria, $this->idBalda)";
+           $consulta="insert into Cajas (nombre, numero, idTrastero, idEstanteria, idBalda) values('$this->nombre',$this->numero, $this->idTrastero, $this->idEstanteria, $this->idBalda)";
            $bd->exec($consulta); 
        }
         
@@ -138,5 +148,19 @@ class Caja implements \JsonSerializable {
         }
         return $cajas;
     }
+    
+     public static function asignarNumero($bd, $idTrastero): int{
+       //Asignamos a la variable $numero el primer numero disponible que no exista.
+        $numero=1;
+        $consulta=$bd->query("select numero from cajas where idTrastero = $idTrastero order by numero asc");
+        while($registro=$consulta->fetch(PDO::FETCH_OBJ)){
+            if($numero==$registro->numero){
+                $numero++;
+            }
+        }
+     return $numero;  
+   }
+    
+
     
 }

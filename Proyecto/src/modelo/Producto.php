@@ -134,6 +134,41 @@ class Producto {
         }
         return $productos;
     }
+    
+    public static function recuperarProductosPorIdEstanteria($bd, $idEstanteria): array{
+        $consulta="select * from Productos where idEstanteria = $idEstanteria";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+        $productos=($registro->fetchAll()) ?: null;
+        if($productos==null){
+            $productos=array();
+        }
+        return $productos;
+    }
+    
+    public static function recuperarProductosPorIdBalda($bd, $idBalda): array{
+        $consulta="select * from Productos where idBalda = $idBalda";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+        $productos=($registro->fetchAll()) ?: null;
+        if($productos==null){
+            $productos=array();
+        }
+        return $productos;
+    }
+    
+    public static function recuperarProductosPorIdCaja($bd, $idCaja): array{
+        $consulta="select * from Productos where idCaja = $idCaja";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+        $productos=($registro->fetchAll()) ?: null;
+        if($productos==null){
+            $productos=array();
+        }
+        return $productos;
+    }
+    
+    
 
     public static function añadirProducto (PDO $bd, array $datos):bool{
         $query =    "insert into productos (nombre, descripcion,idTrastero,idEstanteria,idBalda,idCaja) 

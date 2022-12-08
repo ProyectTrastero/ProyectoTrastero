@@ -80,7 +80,6 @@ function añadirPapelera(e){
         var atributo2 = document.createAttribute("name");
         var atributo3 = document.createAttribute("style");
         atributo3.value = "color: red; border: white";
-       
         var elementoAnterior=elemento.previousElementSibling;
         var nombre = elementoAnterior.getAttribute("name");
         

@@ -22,24 +22,33 @@ use App\{
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->load();
 
+try {
+    $bd = BD::getConexion();
+} catch (PDOException $error) {
+    echo $blade->run("cnxbderror", compact('error'));
+    die;
+}
+
 session_start();
 
 $datosTrastero = $_SESSION['datosTrastero'];
 $almacenBaldas=$datosTrastero['almacenBaldas'];
 $almacenEstanterias = $datosTrastero['almacenEstanterias'];
 $nombreEstanteria=filter_input(INPUT_POST, 'estanteriaSeleccionada',FILTER_SANITIZE_STRING);
-
-$idEstanteria;
-foreach($almacenEstanterias as $clave=>$valor){
-    if($valor->getNombre()==$nombreEstanteria){
-       $idEstanteria=$valor->getId();
-    }
-}
+//$nombreEstanteria="Estanteria 1";
+$idEstanteria= Estanteria::obtenerIdPorNombre($bd, $nombreEstanteria, $datosTrastero['trastero']->getId());
+$baldas= Balda::recuperarBaldasPorIdEstanteria($bd, $idEstanteria);
+//$idEstanteria;
+//foreach($almacenEstanterias as $clave=>$valor){
+//    if($valor->getNombre()==$nombreEstanteria){
+//       $idEstanteria=$valor->getId();
+//    }
+//}
 $baldasRecuperadas=array();
-foreach ($almacenBaldas as $clave=>$valor){
-    if($valor->getIdEstanteria()==$idEstanteria){
-        $baldasRecuperadas[]=$valor->getNombre();
-    }
+foreach ($baldas as $balda){
+    
+        $baldasRecuperadas[]=$balda->getNombre();
+    
 }
 //$numeroBaldas=count($estanterias[intval($estanteriaSeleccionada)]);
 //$baldas=$estanterias[intVal($estanteriaSeleccionada)-1];

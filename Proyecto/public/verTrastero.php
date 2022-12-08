@@ -17,7 +17,8 @@ use App\{
     Estanteria, 
     Balda,
     Caja,
-    Trasteros
+    Trasteros,
+    Producto
 };
 // Inicializa el acceso a las variables de entorno
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
@@ -65,6 +66,7 @@ session_start();
 //    
 //}
 
+
 $idTrastero = $_SESSION['id'];
 //$miTrastero = Trasteros::recuperarTrasteroPorId($bd, $idTrastero);
 $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
@@ -77,12 +79,69 @@ foreach ($estanterias as $estanteria){
     }
 }
 $cajas= Caja::recuperarCajasPorIdTrastero($bd, $idTrastero);
-$productos = App\Producto:: recuperarProductosPorIdTrastero($bd, $idTrastero);
-$datosTrastero=array();
-$datosTrastero['baldas']=$baldas;
-$datosTrastero['estanterias']=$estanterias;
-$datosTrastero['cajas']=$cajas;
-$datosTrastero['productos']=$productos;
-        
-echo $blade->run('verTrastero', compact('datosTrastero'));
+//$productos = App\Producto:: recuperarProductosPorIdTrastero($bd, $idTrastero);
+//if(isset($_SESSION['datosTrastero'])){
+//   $datosTrastero=$_SESSION['datosTrastero'];
+//}else{
+    $datosTrastero=array();
+    $datosTrastero['productos']=array();
+    $datosTrastero['baldas']=$baldas;
+    $datosTrastero['estanterias']=$estanterias;
+    $datosTrastero['cajas']=$cajas;
+//}
 
+
+
+
+if(!empty($_REQUEST)){
+    $idSelecionado=trim(filter_input(INPUT_POST,'id',FILTER_SANITIZE_STRING));
+    $tipo="";
+    $productosRecuperados;
+    foreach ($estanterias as $estanteria){
+        if($idSelecionado==$estanteria->getId()){
+            $tipo="estanteria";
+        }
+    }
+    
+    foreach ($baldas as $balda){
+        if($idSelecionado==$balda->getId()){
+            $tipo="balda";
+        }
+    }
+    
+    foreach ($cajas as $caja){
+        if($idSelecionado==$caja->getId()){
+            $tipo="caja";
+        }
+    }
+    
+    if($tipo=="estanteria"){
+        $productosRecuperados= Producto::recuperarProductosPorIdEstanteria($bd, $idSelecionado);
+    }
+    if($tipo=="balda"){
+        $productosRecuperados= Producto::recuperarProductosPorIdBalda($bd, $idSelecionado);
+    }
+    if($tipo=="caja"){
+         $productosRecuperados= Producto::recuperarProductosPorIdCaja($bd, $idSelecionado);
+    }
+   
+//    $datosTrastero['productos']=$productosRecuperados;
+//    $_SESSION['datosTrastero']=$datosTrastero;
+    $productos=array();
+    foreach ($productosRecuperados as $producto) {
+        $productonuevo['fechaingreso']='22/07/22';
+        $productonuevo['nombre']=$producto->getNombre();
+        $productonuevo['descripcion']=$producto->getDescripcion();
+        
+        $productos[]=$productonuevo;
+    }
+    
+    header('Content-type: application/json');
+    echo json_encode($productos); 
+
+    die;
+ 
+}else{
+    echo $blade->run('verTrastero', compact('datosTrastero'));
+    
+}
