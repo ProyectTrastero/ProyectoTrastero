@@ -9,10 +9,10 @@
 <link rel="stylesheet" href="asset/css/verTrastero.css">
 <script src="asset/js/mostrarProductos.js"></script>
 
-<div class="container"">
+<div class="container">
  
  <div class="row" >
- <div class="col">
+ <div class="col-5">
  <ul id="menu">
  <?php $__currentLoopData = $datosTrastero['estanterias']; $this->addLoop($__currentLoopData);$this->getFirstLoop();
  foreach($__currentLoopData as $estanteria): $loop = $this->incrementLoopIndices();  ?>
@@ -94,7 +94,7 @@
  </div>
  </ul>
  </div>
- <div class="col">
+ <div class="col-7">
  <table id="cabecera" style="border: black; width: 100%">
  <tr  border>
  <th>Fecha</th>

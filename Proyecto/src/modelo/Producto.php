@@ -168,8 +168,11 @@ class Producto {
         return $productos;
     }
     
-    
-
+    public function actualizarUbicacion($bd){
+        $cosulta="update productos set idEstanteria= $this->idEstanteria, set idBalda=$this->idBalda, set idCaja=$this->idCaja where id=$this->id";
+         $bd->exec($consulta);
+    }
+  
     
 }
 

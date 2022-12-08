@@ -149,30 +149,37 @@ if(isset($_POST['añadirEstanteria'])){
         echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
  
 }else if(isset($_POST['añadirCaja'])){
-    echo $blade->run('ubicacionCaja', compact('datosTrastero'));
+    echo $blade->run('ubicacionCaja', compact('datosTrastero', 'mensaje'));
 }else if(isset($_POST['añadirUbicacion'])){
         if(!filter_has_var(INPUT_POST,'sinAsignar')) {
             $almacenCajas = Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
             $nombreEstanteria = trim(filter_input(INPUT_POST, 'estanteria', FILTER_SANITIZE_STRING));
             $nombreBalda = trim(filter_input(INPUT_POST, 'balda', FILTER_SANITIZE_STRING));
-            $idEstanteria = Estanteria::obtenerIdPorNombre($bd, $nombreEstanteria, $nuevoTrastero->getId());
-            $idBalda = Balda::obtenerIdPorNombre($bd, $nombreBalda, $idEstanteria); 
-            $nuevaCaja = new Caja();           
-            $nuevaCaja->setIdEstanteria($idEstanteria);
-            $nuevaCaja->setIdBalda($idBalda);
-            $nuevaCaja->setIdTrastero($nuevoTrastero->getId());
-            $numeroCaja= Caja::asignarNumero($bd, $nuevoTrastero->getId());
-            if(empty($almacenCajas)){
-                $nuevaCaja->setNombre("Caja 1");
+            if($nombreBalda==""){
+                $mensaje="Es necearia una balda para ubicar la caja en una estanteria. Seleccione otra opción o cree una balda nueva";
+                echo $blade->run('ubicacionCaja', compact('datosTrastero', 'mensaje'));
+                die;
             }else{
-                $nuevaCaja->setNombre("Caja " .($numeroCaja));
-            }
-            $nuevaCaja->setNumero($numeroCaja);
-            $nuevaCaja->añadir($bd);
-            $almacenCajas = Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
-            $datosTrastero['almacenCajas']=$almacenCajas;
-            $_SESSION['datosTrastero']=$datosTrastero;
+                $idEstanteria = Estanteria::obtenerIdPorNombre($bd, $nombreEstanteria, $nuevoTrastero->getId());
+                $idBalda = Balda::obtenerIdPorNombre($bd, $nombreBalda, $idEstanteria); 
+                $nuevaCaja = new Caja();           
+                $nuevaCaja->setIdEstanteria($idEstanteria);
+                $nuevaCaja->setIdBalda($idBalda);
+                $nuevaCaja->setIdTrastero($nuevoTrastero->getId());
+                $numeroCaja= Caja::asignarNumero($bd, $nuevoTrastero->getId());
+                if(empty($almacenCajas)){
+                    $nuevaCaja->setNombre("Caja 1");
+                }else{
+                    $nuevaCaja->setNombre("Caja " .($numeroCaja));
+                }
+                $nuevaCaja->setNumero($numeroCaja);
+                $nuevaCaja->añadir($bd);
+                $almacenCajas = Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
+                $datosTrastero['almacenCajas']=$almacenCajas;
+                $_SESSION['datosTrastero']=$datosTrastero;
 
+            }
+         
         }else{
 //           
             $nuevaCaja = new Caja();

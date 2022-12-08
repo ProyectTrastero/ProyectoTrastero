@@ -16,7 +16,8 @@ use App\{
     Estanteria, 
     Balda,
     Caja,
-    Trasteros
+    Trasteros, 
+    Producto
 };
 // Inicializa el acceso a las variables de entorno
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
@@ -193,32 +194,74 @@ if(isset($_POST['añadirEstanteria'])){
 
 }else if(isset($_POST['eliminarEstanteria'])){
     $idEstanteria=trim(filter_input(INPUT_POST, 'idEstanteria', FILTER_SANITIZE_STRING));
+    $productosRecuperados= \App\Producto::recuperarProductosPorIdEstanteria($bd, $idEstanteria);
+    if(empty($productosRecuperados)){
+        foreach($almacenEstanterias as $estanteria){
+        if($estanteria->getId()==$idEstanteria){
+            $estanteria->eliminar($bd);
+        }
+        }
+
+        foreach($almacenBaldas as $balda){
+            if($balda->getIdEstanteria()==$idEstanteria){
+                 $balda->eliminar($bd);
+            }
+        }
+
+        foreach($almacenCajas as $clave=>$valor){
+            if($valor->getIdEstanteria()==$idEstanteria){
+                $valor->eliminar($bd);
+            }
+        }
+
+        $datosTrastero['almacenEstanterias']= Estanteria::recuperarEstanteriasPorIdTrastero($bd, $nuevoTrastero->getId());
+        $datosTrastero['almacenBaldas']= Balda::recuperarBaldasPorIdTrastero($bd, $nuevoTrastero->getId());
+        $datosTrastero['almacenCajas']=$almacenCajas;
+        $_SESSION['datosTrastero']=$datosTrastero;
+
+        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
     
+    }else{
+        $datosTrastero['recuperados']=$productosRecuperados;
+        $datosTrastero['idEliminar']=$idEstanteria;
+        $_SESSION['datosTrastero']= $datosTrastero;
+        echo $blade->run('confirmacionEliminar');
+    }
+    
+}else if(isset($_POST['aceptar'])){
+    $datosTrastero=$_SESSION['datosTrastero'];
+    $productosRecuperados=$datosTrastero['recuperados'];
+    $idEstanteria=$datosTrastero['idEliminar'];
     foreach($almacenEstanterias as $estanteria){
         if($estanteria->getId()==$idEstanteria){
             $estanteria->eliminar($bd);
         }
-    }
-    
-    foreach($almacenBaldas as $balda){
-        if($balda->getIdEstanteria()==$idEstanteria){
-             $balda->eliminar($bd);
         }
-    }
-    
-    foreach($almacenCajas as $clave=>$valor){
-        if($valor->getIdEstanteria()==$idEstanteria){
-            $valor->eliminar($bd);
+
+        foreach($almacenBaldas as $balda){
+            if($balda->getIdEstanteria()==$idEstanteria){
+                 $balda->eliminar($bd);
+            }
         }
-    }
-    
-    $datosTrastero['almacenEstanterias']= Estanteria::recuperarEstanteriasPorIdTrastero($bd, $nuevoTrastero->getId());
-    $datosTrastero['almacenBaldas']= Balda::recuperarBaldasPorIdTrastero($bd, $nuevoTrastero->getId());
-    $datosTrastero['almacenCajas']=$almacenCajas;
-    $_SESSION['datosTrastero']=$datosTrastero;
-    
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
-    
+
+        foreach($almacenCajas as $clave=>$valor){
+            if($valor->getIdEstanteria()==$idEstanteria){
+                $valor->eliminar($bd);
+            }
+        }
+        
+        foreach ($productosRecuperados as $producto){
+            $producto->setIdEstanteria($idEstanteria);
+            $producto->actualizarUbicacion();
+        }
+
+        $datosTrastero['almacenEstanterias']= Estanteria::recuperarEstanteriasPorIdTrastero($bd, $nuevoTrastero->getId());
+        $datosTrastero['almacenBaldas']= Balda::recuperarBaldasPorIdTrastero($bd, $nuevoTrastero->getId());
+        $datosTrastero['almacenCajas']=$almacenCajas;
+        $_SESSION['datosTrastero']=$datosTrastero;
+        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
+}else if (isset($_POST['cancelar'])){
+     echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
 }else if(isset($_POST['eliminarBalda'])){
     $idBalda = trim(filter_input(INPUT_POST, 'idBalda', FILTER_SANITIZE_STRING));
     
