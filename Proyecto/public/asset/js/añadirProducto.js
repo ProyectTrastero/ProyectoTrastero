@@ -92,6 +92,12 @@ function setCajas (xhttp){
     optionElement.remove();
   })
   console.log(xhttp);
+  //agregamos la opcion por defecto
+  let opcionDefault = document.createElement('option');
+  opcionDefault.value = 0;
+  opcionDefault.innerText='Seleccione una opción';
+  opcionDefault.setAttribute('selected','true');
+  selectCajas.appendChild(opcionDefault);
   //recibimos las cajas
   let cajas = JSON.parse(xhttp.responseText);
   cajas.forEach(caja=>{

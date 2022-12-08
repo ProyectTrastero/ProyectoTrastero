@@ -65,6 +65,12 @@
         <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar">
         <label for="radioSinAsignar">No asignar ubicación</label>
         <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar">
+        @if(isset($errores) && in_array("sinUbicacion", $errores)) 
+            <div></div>
+            <div class="textError form-text p-1 text-start">
+              Selecciona una ubicación.
+            </div>
+          @endif
       </div>
       
       <div id="idUbicacionEstanteria" class="hide">

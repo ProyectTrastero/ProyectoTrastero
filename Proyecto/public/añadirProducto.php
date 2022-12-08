@@ -81,9 +81,20 @@ if(isset($_SESSION['usuario'])){
         (isset($_POST['balda'])) ? $balda = intval(Validacion::sanearInput($_POST['balda'])) : $balda = '';
         (isset($_POST['caja'])) ? $caja = intval(Validacion::sanearInput($_POST['caja'])) : $caja = '';
         (isset($_POST['cajasSinAsignar'])) ? $cajaSinAsignar = intval(Validacion::sanearInput($_POST['cajasSinAsignar'])) : $cajaSinAsignar='';
-
-        if($_POST['ubicacion'] == 'ubicacionCajasSinAsignar'){
+        (isset($_POST['ubicacion'])) ? $ubicacion = $_POST['ubicacion'] : $ubicacion = "";
+        
+        if($ubicacion == 'ubicacionCajasSinAsignar'){
             $caja=$cajaSinAsignar;
+        }
+
+        if($caja==0){
+            $caja ='';
+        }
+
+        if ($nombreProducto == '' ) {
+            array_push($errores, 'nombreInvalido');
+        }if($ubicacion == ''){
+            array_push($errores, 'sinUbicacion');
         }
 
         $datos=['nombreProducto'=>$nombreProducto,
@@ -101,14 +112,13 @@ if(isset($_SESSION['usuario'])){
             }
         }
         
-        if ($nombreProducto == '') {
-            array_push($errores, 'nombreInvalido');
-        }
+        
         if (count($errores)==0) {
             if (Producto::añadirProducto($bd,$datos)) {
                 $msj['msj-content']="Producto añadido con exito";
                 $msj['msj-type']="success";
             }
+        
         }else{
             $msj['msj-content']="Error al añadir el producto";
             $msj['msj-type']="danger";
