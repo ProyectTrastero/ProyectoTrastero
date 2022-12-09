@@ -5,7 +5,8 @@ use eftec\bladeone\BladeOne;
 use Dotenv\Dotenv;
 use App\{
     BD,
-    Usuario
+    Usuario,
+    Producto
 };
 session_start();
 // Inicializa el acceso a las variables de entorno
@@ -93,6 +94,10 @@ if (isset($_REQUEST['acceder'])) {
     $cajas= App\Caja::recuperarCajasPorIdTrastero($bd, $idTrastero);
     foreach ($cajas as $caja){
         $caja->eliminar($bd);
+    }
+    $productos= Producto::recuperarProductosPorIdTrastero($bd, $idTrastero);
+    foreach($productos as $producto){
+        $producto->eliminar($bd);
     }
     
     $usuario = $_SESSION['usuario'];

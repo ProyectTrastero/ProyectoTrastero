@@ -1,10 +1,6 @@
 <?php
 
-
-
 //Create an instance; passing `true` enables exceptions
-
-
 
 /* 
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,6 +17,8 @@ use App\{
     BD,
     Usuario
 };
+
+$enviado=false;
 function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
     $mail = new PHPMailer(true);
     try {
@@ -45,7 +43,9 @@ function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
     $mail->Subject = 'Credenciales de acceso';
     $mail->Body    = 'Sus credenciales de acceso  a MiTrastero.com son :<br>Usuario: ' . $aliasRecuperado . '<br> Contraseña: '. $contraseñaRecuperada;
     $mail->send();
-    echo 'Message has been sent';
+    
+    
+  
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
@@ -69,8 +69,9 @@ try {
 //$mievp = Usuario::
 $existe=false;
 $mensaje="";
+
 $correo;
-if(isset($_POST['enviar'])){
+//if(isset($_POST['enviar'])){
     $correo=trim(filter_input(INPUT_POST, 'correo', FILTER_SANITIZE_STRING));
     $existe = Usuario::existeCorreo($bd, $correo);
     if($existe){
@@ -83,12 +84,18 @@ if(isset($_POST['enviar'])){
     }else{
         $mensaje="La direccion de correo eléctronico no se encuentra en nuestra base de datos.";
     }
-    echo $blade->run("recuperarContraseña", compact('mensaje')); 
+
+    $response=[];
+ 
+    try {
+        $response['mensaje']=$mensaje;  
+    } catch (Exception $ex) {
+        $response['error'] = true;
+    }
     
-}else if(isset($_POST['volver'])){
-    header("Location: index.php");
-}else{
-    echo $blade->run("recuperarContraseña");
-}
+    header('Content-type: application/json');
+    echo json_encode($response);
+    
+    die;  
 
 

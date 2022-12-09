@@ -21,6 +21,11 @@
         <span id="guardadoModificado" value="false" ></span>
         @endif
     </div>
+    @if(!empty($datosTrastero['listadoEliminar']))
+    <input type="hidden" id="mostrarModal" value="si">
+    @else
+    <input type="hidden" id="mostrarModal" value="no">
+    @endif
     <div class="row">
         <form action="" method="POST">
             <div>
@@ -28,10 +33,9 @@
                 <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 @endif
-               
                 <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">AÑADIR CAJA</button>
-
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">AÑADIR CAJA</button>
             </div>
             <div>
                 @if($datosTrastero['tipo']=="guardar")
@@ -117,45 +121,68 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Modal añadir Caja-->
 <form action="" method="POST">
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Ubicación: </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body"> 
-        <div>{{$mensaje}}</div>
-        <div>
-            <label for="estanteria">Estantería</label>
-            <select id="seleccionEstanteria" name="estanteria">
-                @foreach($datosTrastero['almacenEstanterias'] as $clave=>$valor)
-                <option>{{$datosTrastero['almacenEstanterias'][$clave]->getNombre()}}</option>
-                @endforeach
-            </select>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Añadir Ubicación:</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>{{$mensaje}}</div>
+                        <div>
+                            <label for="estanteria">Estantería</label>
+                            <select id="seleccionEstanteria" name="estanteria">
+                                @foreach($datosTrastero['almacenEstanterias'] as $clave=>$valor)
+                                <option>{{$datosTrastero['almacenEstanterias'][$clave]->getNombre()}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="balda">Balda</label>
+                            <select id="seleccionBalda" name="balda">
+
+                            </select>  
+                        </div>
+                        <div>
+                            <label><input id="sinAsignar" type="checkbox" name="sinAsignar">Sin asignar</label>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
+                    <input type="submit" name="añadirUbicacion"  id="botonAñadir" value="AÑADIR">
+                   
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="balda">Balda</label>
-            <select id="seleccionBalda" name="balda">
-                
-            </select>  
-        </div>
-        <div>
-            <label><input id="sinAsignar" type="checkbox" name="sinAsignar">Sin asignar</label>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">VOLVER</button>
-        <input class="btn btn-info" type="submit" name="añadirUbicacion" value="Añadir">
-      </div>
     </div>
-  </div>
-</div>
 </form>
+<!-- Modal confirmar eliminacion-->
+<form action="" method="POST">
+    <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmar selección:</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Los elementos seleccionados contienen productos en su interior</p>
+                    <p>Si los elimina se perderá su ubicación.</p>
+                    <p>¿Desea continuar?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="cancelar" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+                    <button type="submit" name="aceptar" class="btn btn-secondary" data-bs-dismiss="modal">SI</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 
 
 @endsection

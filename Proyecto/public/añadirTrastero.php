@@ -62,6 +62,7 @@ if(empty($_SESSION['datosTrastero'])){
     }
     
 //    $datosTrastero['estanterias']=array();
+    $datosTrastero['listadoEliminar']=array();
     $datosTrastero['guardado'] = $trasteroGuardado; 
     $datosTrastero['trastero'] = $nuevoTrastero;
     $datosTrastero['almacenEstanterias']=$almacenEstanterias;
@@ -70,6 +71,7 @@ if(empty($_SESSION['datosTrastero'])){
     $datosTrastero['tipo'] = $tipo;
     $_SESSION['datosTrastero']=$datosTrastero;
 }else{
+    
     $usuario = $_SESSION['usuario'];
     $idUsuario = $usuario->getId();
     $datosTrastero=$_SESSION['datosTrastero'];
@@ -148,8 +150,6 @@ if(isset($_POST['añadirEstanteria'])){
     $_SESSION['datosTrastero']=$datosTrastero;
         echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
  
-}else if(isset($_POST['añadirCaja'])){
-    echo $blade->run('ubicacionCaja', compact('datosTrastero', 'mensaje'));
 }else if(isset($_POST['añadirUbicacion'])){
         if(!filter_has_var(INPUT_POST,'sinAsignar')) {
             $almacenCajas = Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
@@ -157,7 +157,7 @@ if(isset($_POST['añadirEstanteria'])){
             $nombreBalda = trim(filter_input(INPUT_POST, 'balda', FILTER_SANITIZE_STRING));
             if($nombreBalda==""){
                 $mensaje="Es necearia una balda para ubicar la caja en una estanteria. Seleccione otra opción o cree una balda nueva";
-                echo $blade->run('ubicacionCaja', compact('datosTrastero', 'mensaje'));
+                echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje'));
                 die;
             }else{
                 $idEstanteria = Estanteria::obtenerIdPorNombre($bd, $nombreEstanteria, $nuevoTrastero->getId());

@@ -6,7 +6,7 @@
 
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
- 
+<script src="asset/js/añadirProducto.js"></script>
 <form action="{{ $_SERVER["PHP_SELF"] }}" method="POST">
   <div class="nav-item dropdown">
     <div class="nav-link dropdown-toggle " href="#"  data-bs-toggle="dropdown" aria-expanded="false">
@@ -107,15 +107,13 @@
         <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
         <button type="submit" class="btn btn-primary " name="añadir">Añadir</button>
       </div>
-    
-  
-    
+
   </form>
 </div>
 
 @endsection
 
-<script src="asset/js/añadirProducto.js"></script>
+
 
 
 
