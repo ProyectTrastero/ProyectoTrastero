@@ -66,7 +66,6 @@
         <label for="radioSinAsignar">No asignar ubicación</label>
         <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar">
         @if(isset($errores) && in_array("sinUbicacion", $errores)) 
-            <div></div>
             <div class="textError form-text p-1 text-start">
               Selecciona una ubicación.
             </div>
@@ -92,7 +91,6 @@
         <div>
           <label for="selectCaja">Caja: </label>
           <select name="caja" id="selectCaja"></select>
-
         </div>
 
       </div>
@@ -102,6 +100,16 @@
         <select name="cajasSinAsignar" id="selectCajasSinAsignar"></select>
       </div>
 
+      <h2>Etiquetas</h2>
+      <div>
+        <label for="">Seleccione etiqueta: </label>
+        <select name="etiquetas" id="selectEtiquetas">
+          @foreach ($etiquetas as $etiqueta)
+              <option value="{{$etiqueta->getId()}}">{{$etiqueta->getNombre()}}</option>
+          @endforeach
+        </select>
+        <button type="submit" class="btn btn-secondary" name="añadirEtiqueta">Añadir etiqueta</button>
+      </div>
 
       <div class="text-end">
         <button type="submit" class="btn btn-secondary " name="volver">Volver</button>

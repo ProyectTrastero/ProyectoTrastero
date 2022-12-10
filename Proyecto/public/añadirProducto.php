@@ -9,6 +9,7 @@ use App\{
     Balda,
     Caja,
     Estanteria,
+    Etiqueta,
     Producto,
     Validacion
 };
@@ -37,6 +38,8 @@ if(isset($_SESSION['usuario'])){
     $idTrastero = $_SESSION['miTrastero']->getId();
     //recuperamos las estanterias del trastero
     $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
+    //recuperamos las etiquetas del usuario
+    $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
     $errores= array();
     $msj=array();
 
@@ -69,6 +72,12 @@ if(isset($_SESSION['usuario'])){
         die;
     }
 
+    if(isset($_POST['añadirEtiqueta'])){
+        if(isset($_POST['etiquetas'])){
+            
+        }
+    }
+
     if(isset($_POST['volver'])){
         header('location: accederTrastero.php');
         die;
@@ -83,16 +92,19 @@ if(isset($_SESSION['usuario'])){
         (isset($_POST['cajasSinAsignar'])) ? $cajaSinAsignar = intval(Validacion::sanearInput($_POST['cajasSinAsignar'])) : $cajaSinAsignar='';
         (isset($_POST['ubicacion'])) ? $ubicacion = $_POST['ubicacion'] : $ubicacion = "";
         
+        
         if($ubicacion == 'ubicacionCajasSinAsignar'){
             $caja=$cajaSinAsignar;
         }
-
+        //si no se ha seleccionado una caja en estanterias
         if($caja==0){
             $caja ='';
         }
 
+        //comprobamos si se ha ingresado un nombre 
         if ($nombreProducto == '' ) {
             array_push($errores, 'nombreInvalido');
+        //comprobamos si tenemos una ubicacion
         }if($ubicacion == ''){
             array_push($errores, 'sinUbicacion');
         }
@@ -127,6 +139,6 @@ if(isset($_SESSION['usuario'])){
 
     
 
-    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'errores'=>$errores, 'msj'=>$msj]);
+    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj]);
 }
  
