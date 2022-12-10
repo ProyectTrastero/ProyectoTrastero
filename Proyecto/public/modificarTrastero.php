@@ -144,7 +144,7 @@ if(isset($_POST['añadirEstanteria'])){
             $nombreEstanteria = trim(filter_input(INPUT_POST, 'estanteria', FILTER_SANITIZE_STRING));
             $nombreBalda = trim(filter_input(INPUT_POST, 'balda', FILTER_SANITIZE_STRING));
             if($nombreBalda==""){
-                $mensaje2="Es necearia una balda para ubicar la caja en una estanteria. Seleccione otra opción o cree una balda nueva.";
+                $mensaje2="Es necesaria una balda para ubicar la caja en una estanteria. Seleccione otra opción o cree una balda nueva.";
                 $datosTrastero['mensaje2']=$mensaje2;
                 echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
                 die;
@@ -310,7 +310,7 @@ if(isset($_POST['añadirEstanteria'])){
     }
     
     $datosTrastero['almacenBaldas']= Balda::recuperarBaldasPorIdTrastero($bd, $nuevoTrastero->getId());
-    $datosTrastero['almacenCajas']=$almacenCajas;
+    $datosTrastero['almacenCajas']= Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
     $_SESSION['datosTrastero']=$datosTrastero;
     
      echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
@@ -348,7 +348,7 @@ if(isset($_POST['añadirEstanteria'])){
         }
     }
     
-    $datosTrastero['almacenCajas']=$almacenCajas;
+    $datosTrastero['almacenCajas']= Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
     $_SESSION['datosTrastero']=$datosTrastero;
     
     echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));

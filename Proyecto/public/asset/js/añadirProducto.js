@@ -1,14 +1,15 @@
 window.addEventListener("load", iniciar);
   
 var idTrastero;
-
+var infoModal;
 
 function iniciar(){
 
   ////get idTrastero
   loadDoc('añadirProducto.php?getIdTrastero',getIdTrastero);
-  
-  
+  var modal=document.getElementById("mostrarModal");
+  infoModal=modal.value;
+  habilitarModal();
 
   ////estanterias
   let idEstanteria= document.getElementById('selectEstanterias').value;
@@ -159,4 +160,10 @@ function showHide(e){
     document.getElementById('selectCajasSinAsignar').disabled = true;
   }
   
+}
+
+function habilitarModal(){
+    if(infoModal=="si"){
+       $("#staticBackdrop").modal("show");
+    }
 }

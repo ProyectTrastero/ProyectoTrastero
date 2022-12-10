@@ -50,21 +50,27 @@ class Etiqueta {
     }
 
     
-        public static function recuperaEtiquetasPorUsuario(PDO $bd, int $idUsuario){
-        $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-        $sql = 'select * from etiquetas where id=:id';
-        $sth = $bd->prepare($sql);
-        $sth->execute([":id" => $idUsuario]);
-        $sth->setFetchMode(PDO::FETCH_CLASS, Etiqueta::class);
-        $etiqueta = array();
-            while ($etiqueta = ($sth->fetch()) ?: null){
-                $etiquetas[]=$etiqueta;
-            }
-            if (isset($etiquetas)){
-            return $etiquetas;
-            }else{
-            return "";    
-            }
+    public static function recuperaEtiquetasPorUsuario(PDO $bd, int $idUsuario){
+    $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+    $sql = 'select * from etiquetas where id=:id';
+    $sth = $bd->prepare($sql);
+    $sth->execute([":id" => $idUsuario]);
+    $sth->setFetchMode(PDO::FETCH_CLASS, Etiqueta::class);
+    $etiqueta = array();
+        while ($etiqueta = ($sth->fetch()) ?: null){
+            $etiquetas[]=$etiqueta;
+        }
+        if (isset($etiquetas)){
+        return $etiquetas;
+        }else{
+        return "";    
+        }
+    }
+    
+    public function guardarEtiqueta($bd){
+    $consulta="INSERT INTO `etiquetas` (nombre, idUsuario) VALUES ('$this->nombre', $this->idUsuario);";
+    $bd->exec($consulta);
     }
 
 }
+
