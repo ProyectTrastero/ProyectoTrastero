@@ -41,6 +41,8 @@ if(isset($_SESSION['usuario'])){
     $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
     //recuperamos las etiquetas del usuario
     $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
+    //mensaje modal
+    $mensaje = "";
     $errores= array();
     $msj=array();
 
@@ -73,6 +75,36 @@ if(isset($_SESSION['usuario'])){
         die;
     }
 
+    if (isset($_REQUEST['crearEtiqueta'])){
+        $nombreEtiqueta = Validacion::sanearInput($_REQUEST['crearEtiqueta']);
+        if ($nombreEtiqueta != '') {
+            $etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
+            $etiqueta->guardarEtiqueta($bd);
+            $mensaje='etiqueta añadida';
+        }else{
+            $mensaje='El campo nombre de etiqueta es obligatorio.';
+        }
+        echo $mensaje;
+        die;
+    
+    }
+
+    // if(isset($_POST['crearEtiqueta'])){
+        
+    //     $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
+    //     $idUsuario = $usuario->getId();
+    //     if($nombreEtiqueta==""){
+    //        $mensaje="El campo nombre de etiqueta es obligatorio.";
+    //     }else{
+    //         $etiqueta = new Etiqueta();
+    //         $etiqueta->setNombre($nombreEtiqueta);
+    //         $etiqueta->setIdUsuario($idUsuario);
+    //         $etiqueta->guardarEtiqueta($bd);
+    //         $mensaje = "Etiqueta creada correctamente";
+    //     }
+        
+    // }
+    
     if(isset($_POST['añadirEtiqueta'])){
         if(isset($_POST['etiquetas'])){
             
@@ -93,7 +125,7 @@ if(isset($_SESSION['usuario'])){
         (isset($_POST['cajasSinAsignar'])) ? $cajaSinAsignar = intval(Validacion::sanearInput($_POST['cajasSinAsignar'])) : $cajaSinAsignar='';
         (isset($_POST['ubicacion'])) ? $ubicacion = $_POST['ubicacion'] : $ubicacion = "";
         
-        
+        //si se ha seleccionado una caja sin ubicacion
         if($ubicacion == 'ubicacionCajasSinAsignar'){
             $caja=$cajaSinAsignar;
         }
@@ -136,25 +168,6 @@ if(isset($_SESSION['usuario'])){
             $msj['msj-content']="Error al añadir el producto";
             $msj['msj-type']="danger";
         }
-    }
-    if(isset($_POST['crearEtiqueta'])){
-        
-        $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
-        $idUsuario = $usuario->getId();
-        if($nombreEtiqueta==""){
-           $mensaje="El campo nombre de etiqueta es obligatorio.";
-        }else{
-            $etiqueta = new Etiqueta();
-            $etiqueta->setNombre($nombreEtiqueta);
-            $etiqueta->setIdUsuario($idUsuario);
-            $etiqueta->guardarEtiqueta($bd);
-            $mensaje = "Etiqueta creada correctamente";
-        }
- 
-    }
-    
-    if(isset($_POST['volverModal'])){
-        $mensaje = "";
     }
 
     

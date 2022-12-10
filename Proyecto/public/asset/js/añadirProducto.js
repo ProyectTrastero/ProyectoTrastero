@@ -17,14 +17,7 @@ function iniciar(){
     //enviamos el id de la estanteria seleccionada por default
     loadDoc('añadirProducto.php?idEstanteria=' + idEstanteria, setBaldas);
   }
-  //cuando seleccionamos una estanteria enviamos el id que hemos seleccionado al server
-  document.getElementById('selectEstanterias').addEventListener('change',function(){
-    console.log(this.value);
-    loadDoc('añadirProducto.php?idEstanteria=' + this.value , setBaldas);
-
-    let baldaSelected = document.getElementById('selectBaldas')[ document.getElementById('selectBaldas').selectedIndex].value;
-    loadDoc('añadirProducto.php?idBalda=' + baldaSelected, setCajas);
-  })
+  
 
   ///baldas
   let idBalda = document.getElementById('selectBaldas').value;
@@ -33,16 +26,34 @@ function iniciar(){
     loadDoc('añadirProducto.php?idBalda=' + idBalda, setCajas);
   }
 
+  ////cajas sin asignar
+  loadDoc('añadirProducto.php?getCajasSinAsignar', setCajasSinAsignar);
+  
+  //add events a los elementos
+  addEventToElements();
+  
+  
+}
+
+
+function addEventToElements (){
+  //añadimos event change a selectEstanterias
+  //cuando seleccionamos una estanteria enviamos el id que hemos seleccionado al server
+  document.getElementById('selectEstanterias').addEventListener('change',function(){
+    console.log(this.value);
+    loadDoc('añadirProducto.php?idEstanteria=' + this.value , setBaldas);
+
+    let baldaSelected = document.getElementById('selectBaldas').value;
+    loadDoc('añadirProducto.php?idBalda=' + baldaSelected, setCajas);
+  })
+
+  //añadimos event change a selectBaldas
   document.getElementById('selectBaldas').addEventListener('change',function(){
     console.log(this.value);
     loadDoc('añadirProducto.php?idBalda=' + this.value, setCajas);
   })
 
-  ////cajas sin asignar
-  loadDoc('añadirProducto.php?getCajasSinAsignar', setCajasSinAsignar);
-  
-
-  ////radio buttons 
+  ////añadimos event change a los radio buttons 
   let radios = document.getElementsByName('ubicacion');
   for (let i = 0; i < radios.length; i++) {
     const radio = radios[i];
@@ -50,7 +61,15 @@ function iniciar(){
       showHide(e);
     })
   }
+
+  //añadimos event click a el boton añadir del modal para añadir etiquetas
+  document.getElementById('crearEtiqueta').addEventListener('click',()=>{
+    //recuperamos el nombre de la etiqueta
+    let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
+    loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, añadirEtiqueta )
+  })
   
+
 }
 
 function loadDoc(url,cFunction){
@@ -159,6 +178,11 @@ function showHide(e){
     document.getElementById('selectCaja').disabled = true;
     document.getElementById('selectCajasSinAsignar').disabled = true;
   }
+  
+}
+
+function añadirEtiqueta(xhttp){
+  console.log(xhttp);
   
 }
 

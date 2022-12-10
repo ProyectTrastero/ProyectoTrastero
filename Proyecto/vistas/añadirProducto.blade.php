@@ -142,12 +142,12 @@
                 <div class="modal-body">
                     <p>{{$mensaje}}</p>
                     <label for="nombreEtiqueta">Nombre de la etiqueta: </label>
-                    <input type="text" name="nombreEtiqueta">
+                    <input type="text" name="nombreEtiqueta" id="nombreEtiqueta">
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
+                    <button class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
                     <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                    <button type="submit" class="btn btn-secondary" name="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
+                    <button  class="btn btn-secondary" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
                     <!--<input type="submit" name="crearEtiqueta" value="Crear">-->
                 </div>
             </div>
