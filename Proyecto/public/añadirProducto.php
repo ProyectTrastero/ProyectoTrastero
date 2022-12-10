@@ -11,7 +11,9 @@ use App\{
     Estanteria,
     Etiqueta,
     Producto,
-    Validacion
+    Validacion,
+    Etiqueta,
+    Usuario
 };
 
 // Inicializa el acceso a las variables de entorno
@@ -32,7 +34,7 @@ try {
 }
 
 session_start();
-
+$mensaje="";
 if(isset($_SESSION['usuario'])){
     $usuario = $_SESSION['usuario'];
     $idTrastero = $_SESSION['miTrastero']->getId();
@@ -136,9 +138,28 @@ if(isset($_SESSION['usuario'])){
             $msj['msj-type']="danger";
         }
     }
+    if(isset($_POST['crearEtiqueta'])){
+        
+        $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
+        $idUsuario = $usuario->getId();
+        if($nombreEtiqueta==""){
+           $mensaje="El campo nombre de etiqueta es obligatorio.";
+        }else{
+            $etiqueta = new Etiqueta();
+        $etiqueta->setNombre($nombreEtiqueta);
+        $etiqueta->setIdUsuario($idUsuario);
+        $etiqueta->guardarEtiqueta($bd);
+        $mensaje = "Etiqueta creada correctamente";
+        }
+ 
+    }
+    
+    if(isset($_POST['volverModal'])){
+        $mensaje = "";
+    }
 
     
 
-    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj]);
+    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'errores'=>$errores, 'msj'=>$msj, 'mensaje'=>$mensaje]);
 }
  

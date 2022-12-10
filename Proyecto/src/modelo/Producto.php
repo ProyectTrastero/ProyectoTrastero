@@ -169,8 +169,8 @@ class Producto {
     }
     
     public function actualizarUbicacion($bd){
-        $cosulta="update productos set idEstanteria= $this->idEstanteria, set idBalda=$this->idBalda, set idCaja=$this->idCaja where id=$this->id";
-         $bd->exec($consulta);
+        $consulta="update productos set idEstanteria=NULL, idBalda=NULL, idCaja=NULL where id=$this->id";
+        $bd->exec($consulta);
     }
   
     public static function añadirProducto (PDO $bd, array $datos):bool{
@@ -187,7 +187,12 @@ class Producto {
             $stmt=null;
             return true;
         }
-    } 
+    }
+    
+    public function eliminar($bd){
+        $consulta="delete from productos where id=$this->id";
+        $bd->exec($consulta);
+    }
 
 
     

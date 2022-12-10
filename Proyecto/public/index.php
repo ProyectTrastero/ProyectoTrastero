@@ -25,6 +25,38 @@ try {
     die;
 }
 
+//Esta parte la he añadido yo. Emma
+
+if(!empty($_SESSION['datosTrastero'])){
+    $datosTrastero=$_SESSION['datosTrastero'];
+        $tipo=$datosTrastero['tipo'];
+    if($tipo=="guardar"){
+       
+        $almacenEstanterias = $datosTrastero['almacenEstanterias'];
+        $almacenBaldas =$datosTrastero['almacenBaldas'];
+        $almacenCajas =$datosTrastero['almacenCajas'];
+        $nuevoTrastero =$datosTrastero['trastero'];
+        $trasteroGuardado = $datosTrastero['guardado'];
+            if(!$trasteroGuardado){
+                $nuevoTrastero->eliminar($bd);
+                foreach($almacenEstanterias as $clave=>$valor){
+                    $valor->eliminar($bd);
+                } 
+
+                foreach($almacenBaldas as $clave=>$valor){
+                    $valor->eliminar($bd);
+                } 
+
+                foreach($almacenCajas as $clave=>$valor){
+                    $valor->eliminar($bd);
+                } 
+            }
+        $_SESSION['datosTrastero'] = array();
+    }
+}
+
+//Hasta aquí
+
 if (isset($_POST['procsesion'])) {
     $alias = trim(filter_input(INPUT_POST, 'alias', FILTER_SANITIZE_STRING));
     $clave = trim(filter_input(INPUT_POST, 'clave', FILTER_SANITIZE_STRING));
@@ -48,8 +80,3 @@ if (isset($_POST['procsesion'])) {
     echo $blade->run("sesion");
     die;
 }
-
-  
-  
-
- 

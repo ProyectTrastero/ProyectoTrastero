@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="asset/css/bootstrap.min.css">
         {{-- este es el font awesome para los iconos --}}
         <link rel="stylesheet" href="asset/css/all.css">
-        <link rel="stylesheet" href="asset/css/style.css" >
-       
+        <link rel="stylesheet" href="asset/css/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
         <script src="https://kit.fontawesome.com/12104efb99.js" crossorigin="anonymous"></script>
     </head>
         

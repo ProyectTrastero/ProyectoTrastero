@@ -4,11 +4,17 @@ var antiguoNombre;
 var idElemento;
 var primerElemento;
 var guardado;
-
+var infoModal;
+var infoModal2;
 function iniciar(){
     var tipo = document.getElementById("guardadoModificado");
+    var modal=document.getElementById("mostrarModal");
+    infoModal=modal.value;
+    var modal2=document.getElementById("mostrarModal2");
+    infoModal2=modal2.value;
     guardado=tipo.getAttribute("value");
     ocultos= document.getElementsByClassName("papeleraOculta");
+    habilitarmodal();
     deshabilitarBotones();
     if(guardado=="false"){
         for(i=0;i<ocultos.length;i++){
@@ -18,6 +24,17 @@ function iniciar(){
         ocultos[i].addEventListener("blur", deshabilitarEdicion);
         }
     }  
+}
+
+function habilitarmodal(){
+    if(infoModal=="si"){
+       $("#staticBackdrop1").modal("show");
+    }
+    
+    if(infoModal2=="si"){
+       $("#staticBackdrop").modal("show");
+    }
+   
 }
 
 function deshabilitarBotones(){

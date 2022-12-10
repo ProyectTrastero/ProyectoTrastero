@@ -6,6 +6,7 @@
 
 <?php /* Sección mensaje */ ?>
 <?php $this->startSection('content'); ?>
+
  <div class="container">
  <h2>Iniciar sesion</h2>
  <?php if(isset($error)): ?>
@@ -16,19 +17,51 @@
  <input id="inputAlias" type="text" placeholder="Nombre" name="alias" class="alias"><br/>
  <label>Contraseña: </label><br/>
  <input id="inputPassword" type="password" placeholder="Contraseña" name="clave" class="clave">
- <a href="recuperarContraseña.php" class="link"> ¿Has olvidado tu contraseña?</a>
+ <!-- Button trigger modal -->
+ <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">AÑADIR CAJA</button>-->
+ <a href="#href" id="solicitarContraseña" class="link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" > ¿Has olvidado tu contraseña?</a>
  </br>
  <button type="submit" id="procsesion" name="procsesion"><span> Login </span> </button>
  <br/><br/>
- 
- 
+
+
  <a>¿Aún no te has regitrado?</a><br/>
  <div>   
  <button type="submit" id="registro" name="botonregistro"><span> Registrarse </span></button>
  </div>
  </form>        
 
- </div>                
+ </div>
+ <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+ <script src="asset/js/contraseña.js"></script>
+ <div class="modal-dialog">
+ <div class="modal-content">
+ <div class="modal-header">
+ <h1 class="modal-title fs-5" id="staticBackdropLabel">Recuperar Credenciales:</h1>
+ <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+ </div>
+ <div class="modal-body">
+ <div class="container">
+ <div>
+ <label for="correo">Correo electrónico</label>
+ <input id="correo" type="text" name="correo" placeholder="Correo">
+ </div>
+ <div>
+ <p id="mensaje"></p>
+ </div>
+ <div>
+
+ </div>
+ </div> 
+ </div>
+ <div class="modal-footer">
+ <button type="button" id="volver" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+ <button type="button" id="comprobarContraseña" class="btn btn-primary">Enviar</button>
+ </div>
+ </div>
+ </div>
+ </div>
+
 <?php $this->stopSection(); ?>
 
 <?php if (isset($_shouldextend[1])) { echo $this->runChild('app'); } ?>
