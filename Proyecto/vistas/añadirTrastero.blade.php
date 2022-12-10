@@ -26,6 +26,13 @@
     @else
     <input type="hidden" id="mostrarModal" value="no">
     @endif
+    
+    @if(!empty($datosTrastero['mensaje2']))
+    <input type="hidden" id="mostrarModal2" value="si">
+    @else
+    <input type="hidden" id="mostrarModal2" value="no">
+    @endif
+    
     <div class="row">
         <form action="" method="POST">
             <div>
@@ -131,7 +138,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div>{{$mensaje}}</div>
+                    <div>{{$datosTrastero['mensaje2']}}</div>
                         <div>
                             <label for="estanteria">Estantería</label>
                             <select id="seleccionEstanteria" name="estanteria">
