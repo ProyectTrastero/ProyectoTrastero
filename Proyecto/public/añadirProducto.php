@@ -9,7 +9,6 @@ use App\{
     Balda,
     Caja,
     Estanteria,
-    Etiqueta,
     Producto,
     Validacion,
     Etiqueta,
@@ -146,10 +145,10 @@ if(isset($_SESSION['usuario'])){
            $mensaje="El campo nombre de etiqueta es obligatorio.";
         }else{
             $etiqueta = new Etiqueta();
-        $etiqueta->setNombre($nombreEtiqueta);
-        $etiqueta->setIdUsuario($idUsuario);
-        $etiqueta->guardarEtiqueta($bd);
-        $mensaje = "Etiqueta creada correctamente";
+            $etiqueta->setNombre($nombreEtiqueta);
+            $etiqueta->setIdUsuario($idUsuario);
+            $etiqueta->guardarEtiqueta($bd);
+            $mensaje = "Etiqueta creada correctamente";
         }
  
     }
