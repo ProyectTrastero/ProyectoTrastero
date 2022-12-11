@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,19 +12,38 @@
         <link rel="stylesheet" href="asset/css/bootstrap.min.css">
         {{-- este es el font awesome para los iconos --}}
         <link rel="stylesheet" href="asset/css/all.css">
-        <link rel="stylesheet" href="asset/css/style.css">
+        <link rel="stylesheet" type="text/css" href="asset/css/style.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
         <script src="https://kit.fontawesome.com/12104efb99.js" crossorigin="anonymous"></script>
     </head>
-        
-     <body>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    @if(!empty($_SESSION['usuario']))
+    <body style="background-image: url(asset/img/90576.jpg)">
+    @else
+    <body>
+    @endif
+    
+        <nav class="navbar">
             <div class="container-fluid">
                 <a class="navbar-brand">
                     <img src="asset/img/logo.png" alt="" width="80" height="80">
                     Mitrastero.com
                 </a>
-
+                @if(!empty($_SESSION['usuario']))
+                @php
+                @$usuario=$_SESSION['usuario']
+                @endphp
+                <form action="{{ $_SERVER["PHP_SELF"] }}">
+                  <div class="nav-item dropdown">
+                    <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end ">
+                      <li><button class="dropdown" type="submit" name="perfilUsuario">Perfil usuario</button></li>
+                      <li><button class="dropdown" type="submit" name="cerrarSesion">Cerrar sesión</button></li>
+                    </ul>
+                  </div>
+                </form>
+                @endif
                @yield('navbar')
             </div>
         </nav>
@@ -60,15 +79,16 @@
                         <stop  offset="1" style="stop-color:#DF3D8E"/>
                 </linearGradient>
         <circle fill="url(#SVGID_5_)" cx="435.095" cy="184.986" r="63.504"/>
-        </svg> --}}
-        -->
-
+        </svg> --}}-->
+        
+      
         @yield('content')
-
+        
+    </body>
         <!-- Scripts -->
         <script src="asset/js/bootstrap/bootstrap.min.js"></script>
         <script src="asset/js/jquery/jquery-3.6.0.min.js"></script>
         <script src="asset/js/modal.js"></script>
         
-    </body>
-</html> 
+   
+ 

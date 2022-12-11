@@ -3,12 +3,53 @@
 	padding: 0;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
+        font-family:Comic Sans MS,  cursive;
+       
+      
 }
 
+
 body {
-	font-family: 'Open Sans', sans-serif;
-	background: #e2e2e2;
+	/*font-family: 'Open Sans', sans-serif;*/
+    margin: 0px;
+    padding: 0px;
+    background-color: royalblue;
         
+}
+nav{
+    color: royalblue;
+    margin-top: 0px;
+    padding: 0px;
+}
+
+nav div{
+    margin: 0px;
+    padding: 0px;
+    background-color: royalblue;
+}
+
+.fa-user, .nav-link, .navbar-brand{
+    color: white;
+}
+
+
+
+
+.sesion{
+    margin: 2em auto;
+    padding-top: 1em;
+    background-color: white;
+    width: 270px;
+    height:360px;
+    border:solid;
+    border-width:2px;
+    border-color: #41464b;
+    border-radius: 8px;
+    
+}
+
+input{
+    padding-left: 5px;
 }
 
 .inputsForm{
@@ -16,11 +57,11 @@ body {
     gap: 1em;
     grid-template-columns: max-content auto;
     align-items: center;
-	text-align: right;
+    text-align: right;
 }
 
 .signUp, .formEditPerfil{
-	max-width: 680px;
+    max-width: 680px;
     margin: auto;
     margin-top: 2em;
 }
@@ -50,7 +91,7 @@ nav button:hover{
 	display: none;
 }
 
-/* 
+/*
 
 svg{
         position:fixed;

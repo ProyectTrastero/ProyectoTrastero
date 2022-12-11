@@ -85,7 +85,13 @@ if(empty($_SESSION['datosTrastero'])){
     $mensaje = "";
 }
 
-if(isset($_POST['añadirEstanteria'])){
+ if(isset($_REQUEST['cerrarSesion'])){
+    session_destroy();
+    header("Location: index.php");
+    die;
+}else if(isset($_REQUEST['perfilUsuario'])){
+    header("Location: editarPerfil.php");
+}else if(isset($_POST['añadirEstanteria'])){
     $nuevaEstanteria = new Estanteria();
     $idTrastero = $nuevoTrastero->getId();
 //    $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);

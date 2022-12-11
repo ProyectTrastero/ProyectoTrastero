@@ -7,7 +7,7 @@
 <?php /* Sección mensaje */ ?>
 <?php $this->startSection('content'); ?>
 
- <div class="container">
+ <div class="container sesion">
  <h2>Iniciar sesion</h2>
  <?php if(isset($error)): ?>
  <div class="alert alert-danger" role="alert">Error Credenciales</div>
@@ -16,11 +16,11 @@
  <label>Nombre de usuario: </label><br/>
  <input id="inputAlias" type="text" placeholder="Nombre" name="alias" class="alias"><br/>
  <label>Contraseña: </label><br/>
- <input id="inputPassword" type="password" placeholder="Contraseña" name="clave" class="clave">
+ <input id="inputPassword" type="password" placeholder="Contraseña" name="clave" class="clave"><br>
  <!-- Button trigger modal -->
  <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">AÑADIR CAJA</button>-->
  <a href="#href" id="solicitarContraseña" class="link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" > ¿Has olvidado tu contraseña?</a>
- </br>
+ </br><br>
  <button type="submit" id="procsesion" name="procsesion"><span> Login </span> </button>
  <br/><br/>
 

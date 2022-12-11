@@ -35,6 +35,18 @@ try {
 session_start();
 $mensaje="";
 if(isset($_SESSION['usuario'])){
+    //añadido por Emma para dar funcionalidad al nav
+    if(isset($_REQUEST['cerrarSesion'])){
+        session_destroy();
+        header("Location: index.php");
+        die;
+    }
+    if(isset($_REQUEST['perfilUsuario'])){
+        header("Location: editarPerfil.php");
+    }
+    
+    //Hasta aquí
+    
     $usuario = $_SESSION['usuario'];
     $idTrastero = $_SESSION['miTrastero']->getId();
     //recuperamos las estanterias del trastero
