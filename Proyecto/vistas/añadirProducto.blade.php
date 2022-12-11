@@ -111,7 +111,19 @@
         <select name="cajasSinAsignar" id="selectCajasSinAsignar"></select>
       </div>
 
+      <div>
+        <label for="prueba">prueba: </label>
+        <select name="prueba" id="prueba">
+          <option value="prueba" selected>prueba</option>
+          <option value="prueba">prueba</option>
+          <option value="prueba">prueba</option>
+        </select>
+      </div>
+
       <h2>Etiquetas</h2>
+      <div id="etiquetasProducto">
+
+      </div>
       <div>
         <label for="">Seleccione etiqueta: </label>
         <select name="etiquetas" id="selectEtiquetas">
@@ -119,7 +131,7 @@
               <option value="{{$etiqueta->getId()}}">{{$etiqueta->getNombre()}}</option>
           @endforeach
         </select>
-        <button type="submit" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+        <button type="button" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
       </div>
 
       <div class="text-end">
@@ -131,7 +143,7 @@
 </div>
 
 <!-- Modal crear Etiqueta-->
-<form action="" method="POST">
+{{-- <form action="" method="POST">
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" >
         <div class="modal-dialog">
             <div class="modal-content">
@@ -153,7 +165,7 @@
             </div>
         </div>
     </div>
-</form>
+</form> --}}
 
 @endsection
 

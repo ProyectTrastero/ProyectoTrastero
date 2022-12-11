@@ -7,9 +7,10 @@ function iniciar(){
 
   ////get idTrastero
   loadDoc('añadirProducto.php?getIdTrastero',getIdTrastero);
-  var modal=document.getElementById("mostrarModal");
-  infoModal=modal.value;
-  habilitarModal();
+
+  // var modal=document.getElementById("mostrarModal");
+  // infoModal=modal.value;
+  // habilitarModal();
 
   ////estanterias
   let idEstanteria= document.getElementById('selectEstanterias').value;
@@ -60,22 +61,25 @@ function addEventToElements (){
     radio.addEventListener('click',(e)=>{
       showHide(e);
     })
-
-  ////añadimos event click a btn añadir etiqueta
-  document.getElementById('añadirEtiqueta').addEventListener('click',()=>{
-    let etiquetaSelected = document.getElementById('selectEtiquetas').value;
-    añadirEtiqueta(etiquetaSelected);
-  });
   }
 
-  //añadimos event click a el boton añadir del modal para añadir etiquetas
-  document.getElementById('crearEtiqueta').addEventListener('click',()=>{
-    //recuperamos el nombre de la etiqueta
-    let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
-    loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, añadirEtiqueta )
+  ////añadimos event click a btn añadir etiqueta
+  document.getElementById('añadirEtiqueta').addEventListener('mousedown',function(){
+    
+    let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
+    loadDoc('añadirProducto.php?añadirEtiqueta=' + idEtiquetaSelected, añadirEtiqueta);
   })
+
   
 
+  //añadimos event click a el boton añadir del modal para añadir etiquetas
+  // document.getElementById('crearEtiqueta').addEventListener('click',()=>{
+  //   //recuperamos el nombre de la etiqueta
+  //   let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
+  //   loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, añadirEtiqueta )
+  // })
+
+  
 }
 
 function loadDoc(url,cFunction){
@@ -187,13 +191,21 @@ function showHide(e){
   
 }
 
-function añadirEtiqueta(etiquetaSelected){
-  console.log(etiquetaSelected);
+function añadirEtiqueta(xhttp){
+  let textEtiquetaSelected = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;
+  let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
+  let spanElement = document.createElement('span');
+
+  console.log(xhttp);
+  
+  spanElement.innerText = textEtiquetaSelected;
+  spanElement.id=idEtiquetaSelected;
+  document.getElementById('etiquetasProducto').appendChild(spanElement);
   
 }
 
-function habilitarModal(){
-    if(infoModal=="si"){
-       $("#staticBackdrop").modal("show");
-    }
-}
+// function habilitarModal(){
+//     if(infoModal=="si"){
+//        $("#staticBackdrop").modal("show");
+//     }
+// }

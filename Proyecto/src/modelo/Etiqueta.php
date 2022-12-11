@@ -8,7 +8,7 @@ use \PDO as PDO;
  *
  * @author Nausicaa
  */
-class Etiqueta {
+class Etiqueta implements \JsonSerializable{
     private $id;
     private $nombre;
     private $idUsuario;
@@ -23,6 +23,10 @@ class Etiqueta {
         if (!is_null($idUsuario)) {
         $this->idUsuario = $idUsuario;
         }
+    }
+    public function jsonSerialize(){
+        $variables = get_object_vars($this);
+        return $variables;
     }
     
     public function getId() {
@@ -49,6 +53,9 @@ class Etiqueta {
         $this->idUsuario = $idUsuario;
     }
 
+    
+
+    
     public static function recuperarEstanteriasPorIdTrastero($bd, $idTrastero): array{
         $consulta="select * from Estanterias where idTrastero = $idTrastero order by numero asc";
         $registro = $bd->query($consulta);
@@ -71,6 +78,15 @@ class Etiqueta {
          if($etiqueta==null){
             $etiqueta=array();
         }
+        return $etiqueta;
+    }
+
+    public static function recuperarEtiquetaPorId(PDO $bd, int $idEtiqueta){
+        $sql="select * from etiquetas where id = :idEtiqueta";
+        $stmt = $bd->prepare($sql);
+        $stmt->execute(['idEtiqueta' => $idEtiqueta]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, Etiqueta::class);
+        $etiqueta = ($stmt->fetch()) ?: null;
         return $etiqueta;
     }
     

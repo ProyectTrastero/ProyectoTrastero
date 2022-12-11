@@ -41,17 +41,18 @@ if(isset($_SESSION['usuario'])){
     $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
     //recuperamos las etiquetas del usuario
     $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
-    //mensaje modal
+    
+    static $arrayAñadirEtiquetas = array();
     
     $errores= array();
     $msj=array();
 
-    if (isset($_REQUEST['getIdTrastero'])) {
+    if (isset($_GET['getIdTrastero'])) {
         echo $idTrastero;
         die;
     }
     
-    if (isset($_REQUEST["idEstanteria"])) {    
+    if (isset($_GET["idEstanteria"])) {    
         //recuperamos el id de la estanteria seleccionada
         $estanteriaSelected = $_REQUEST["idEstanteria"];
         //recuperamos las baldas 
@@ -60,7 +61,7 @@ if(isset($_SESSION['usuario'])){
         die;
     }
 
-    if (isset($_REQUEST['idBalda'])) {
+    if (isset($_GET['idBalda'])) {
         //recuperamos el id de la balda seleccionada
         $baldaSelected = $_REQUEST['idBalda'];
         //recuperamos las cajas
@@ -69,13 +70,13 @@ if(isset($_SESSION['usuario'])){
         die;
     }
 
-    if (isset($_REQUEST['getCajasSinAsignar'])) {
+    if (isset($_GET['getCajasSinAsignar'])) {
         $cajasSinAsignar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd,$idTrastero);
         echo json_encode($cajasSinAsignar);
         die;
     }
 
-    if (isset($_REQUEST['crearEtiqueta'])){
+    if (isset($_GET['crearEtiqueta'])){
         $nombreEtiqueta = Validacion::sanearInput($_REQUEST['crearEtiqueta']);
         if ($nombreEtiqueta != '') {
             $etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
@@ -89,6 +90,7 @@ if(isset($_SESSION['usuario'])){
     
     }
 
+    
     // if(isset($_POST['crearEtiqueta'])){
         
     //     $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
@@ -105,9 +107,14 @@ if(isset($_SESSION['usuario'])){
         
     // }
     
-    if(isset($_REQUEST['añadirEtiqueta'])){
-        $añadirEtiqueta = isset($_REQUEST['añadirEtiqueta']);
+    if(isset($_GET['añadirEtiqueta'])){
+        $idEtiqueta = intval($_REQUEST['añadirEtiqueta']);
+        $objectEtiqueta = Etiqueta::recuperarEtiquetaPorId($bd, $idEtiqueta);
+        array_push($arrayAñadirEtiquetas,$objectEtiqueta);
+        $daniel = json_encode($arrayAñadirEtiquetas);
+        echo json_encode($arrayAñadirEtiquetas);
         
+        die;        
     }
 
     if(isset($_POST['volver'])){
