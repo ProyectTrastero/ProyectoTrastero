@@ -42,7 +42,7 @@ if(isset($_SESSION['usuario'])){
     //recuperamos las etiquetas del usuario
     $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
     //mensaje modal
-    $mensaje = "";
+    
     $errores= array();
     $msj=array();
 
@@ -105,10 +105,9 @@ if(isset($_SESSION['usuario'])){
         
     // }
     
-    if(isset($_POST['añadirEtiqueta'])){
-        if(isset($_POST['etiquetas'])){
-            
-        }
+    if(isset($_REQUEST['añadirEtiqueta'])){
+        $añadirEtiqueta = isset($_REQUEST['añadirEtiqueta']);
+        
     }
 
     if(isset($_POST['volver'])){
@@ -172,6 +171,6 @@ if(isset($_SESSION['usuario'])){
 
     
 
-    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'errores'=>$errores, 'msj'=>$msj, 'mensaje'=>$mensaje]);
+    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj, 'mensaje'=>$mensaje]);
 }
  

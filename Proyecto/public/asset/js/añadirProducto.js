@@ -57,9 +57,15 @@ function addEventToElements (){
   let radios = document.getElementsByName('ubicacion');
   for (let i = 0; i < radios.length; i++) {
     const radio = radios[i];
-    radio.addEventListener('change',(e)=>{
+    radio.addEventListener('click',(e)=>{
       showHide(e);
     })
+
+  ////añadimos event click a btn añadir etiqueta
+  document.getElementById('añadirEtiqueta').addEventListener('click',()=>{
+    let etiquetaSelected = document.getElementById('selectEtiquetas').value;
+    añadirEtiqueta(etiquetaSelected);
+  });
   }
 
   //añadimos event click a el boton añadir del modal para añadir etiquetas
@@ -149,7 +155,7 @@ function setCajasSinAsignar(xhttp){
 function showHide(e){
   let target = e.target;
   console.log(target);
-  if(target.id=='radioUbicacionEstanteria'){
+  if(target.id=='radioUbicacionEstanteria' && target.checked == true){
     document.getElementById('idUbicacionEstanteria').classList.remove('hide');
     document.getElementById('idUbicacionCajasSinAsignar').classList.add('hide');
     //habilitamos los select 
@@ -159,7 +165,7 @@ function showHide(e){
     //tambien desabilitamos los select para que no envien informacion
     document.getElementById('selectCajasSinAsignar').disabled = true;
     
-  }else if(target.id == 'radioCajasSinAsignar'){
+  }else if(target.id == 'radioCajasSinAsignar' && target.checked == true){
     document.getElementById('idUbicacionCajasSinAsignar').classList.remove('hide');
     document.getElementById('idUbicacionEstanteria').classList.add('hide');
     //habilitamos los select
@@ -169,7 +175,7 @@ function showHide(e){
     document.getElementById('selectBaldas').disabled = true;
     document.getElementById('selectCaja').disabled = true;
     
-  }else if(target.id == 'radioSinAsignar'){
+  }else if(target.id == 'radioSinAsignar' && target.checked == true){
     document.getElementById('idUbicacionCajasSinAsignar').classList.add('hide');
     document.getElementById('idUbicacionEstanteria').classList.add('hide');
     //desabilitamos todos los select 
@@ -181,8 +187,8 @@ function showHide(e){
   
 }
 
-function añadirEtiqueta(xhttp){
-  console.log(xhttp);
+function añadirEtiqueta(etiquetaSelected){
+  console.log(etiquetaSelected);
   
 }
 

@@ -72,15 +72,15 @@
       <div>
         <label for="radioUbicacionEstanteria">Ubicar en estanteria</label>
         <input class="me-3" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria">
-        <label for="radioCajasSinAsignar">Ubicar en caja sin asignar</label>
+        <label for="radioCajasSinAsignar">Ubicar en caja sin ubicación</label>
         <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar">
         <label for="radioSinAsignar">No asignar ubicación</label>
-        <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar">
+        <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" checked>
         @if(isset($errores) && in_array("sinUbicacion", $errores)) 
-            <div class="textError form-text p-1 text-start">
-              Selecciona una ubicación.
-            </div>
-          @endif
+          <div class="textError form-text p-1 text-start">
+            Selecciona una ubicación.
+          </div>
+        @endif
       </div>
       
       <div id="idUbicacionEstanteria" class="hide">
@@ -119,7 +119,7 @@
               <option value="{{$etiqueta->getId()}}">{{$etiqueta->getNombre()}}</option>
           @endforeach
         </select>
-        <button type="submit" class="btn btn-secondary" name="añadirEtiqueta">Añadir etiqueta</button>
+        <button type="submit" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
       </div>
 
       <div class="text-end">
@@ -140,7 +140,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>{{$mensaje}}</p>
+                   
                     <label for="nombreEtiqueta">Nombre de la etiqueta: </label>
                     <input type="text" name="nombreEtiqueta" id="nombreEtiqueta">
                 </div>
