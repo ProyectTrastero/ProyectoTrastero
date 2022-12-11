@@ -86,6 +86,20 @@ if(empty($_SESSION['datosTrastero'])){
 }
 
  if(isset($_REQUEST['cerrarSesion'])){
+    if(!$trasteroGuardado){
+        $nuevoTrastero->eliminar($bd);
+        foreach($almacenEstanterias as $estanteria){
+            $estanteria->eliminar($bd);
+        } 
+
+        foreach($almacenBaldas as $balda){
+            $balda->eliminar($bd);
+        } 
+
+        foreach($almacenCajas as $balda){
+            $balda->eliminar($bd);
+        } 
+    }
     session_destroy();
     header("Location: index.php");
     die;
