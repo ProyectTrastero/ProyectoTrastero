@@ -39,10 +39,10 @@ function habilitarmodal(){
 
 function deshabilitarBotones(){
     if(guardado=="true"){
-        var botones = document.getElementsByTagName("input");
+        var botones = document.getElementsByTagName("button");
         for(i=0;i<botones.length;i++){
-            var nombreAtributo=botones[i].getAttribute("value");
-            if(nombreAtributo!="VOLVER"){
+            var nombreValue=botones[i].innerHTML;
+            if(nombreValue!="Volver"){
                  botones[i].setAttribute("disabled", "true");
             }
            
