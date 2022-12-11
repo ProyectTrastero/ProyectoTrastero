@@ -24,7 +24,7 @@
 {{-- Sección mensaje --}}
 @section('content')
 
-<div class="container">
+<div>
         <div>
             <form method="POST" action="" id='formañadirtratero'>
             <h3>Diseña tu trastero</h3>
@@ -34,24 +34,24 @@
         <br/><br/><br/><br/>
         
         @if ($trasteros != "")
-        <div>             
+        <div class="container contenido">             
                 <h3>Mis trasteros</h3>
                 @foreach ($trasteros as $valor)    
                 <table class="row">
                     <td class="col-4"> {{$valor->getNombre()  }}</td> <br/>
-                    <td  class="col-1">
+                    <td  class="col-3">
                         <form method="POST" action="" id='formacceder'>
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
                             <button type="submit" name="acceder" id='acceder'><span>Acceder</span></button>
                         </form>
                     </td> <br/>
-                    <td  class="col-1">
+                    <td  class="col-3">
                         <form method="POST" action="" id='formmodificar'>
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
                             <button type="submit" name="modificar" id='modificar'<span>Modificar</span></button>
                         </form>
                     </td> <br/>
-                    <td  class="col-1">
+                    <td  class="col-3">
                         <form method="POST" action="" id='formeliminar'>
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
                             <button type="submit" name="eliminar" id='eliminar'<span>Eliminar</span></button>

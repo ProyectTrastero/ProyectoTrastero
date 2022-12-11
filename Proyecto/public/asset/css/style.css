@@ -1,6 +1,6 @@
 *{
-	margin: 0;
-	padding: 0;
+/*	margin: 0;
+	padding: 0;*/
 /*	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;*/
         font-family:Comic Sans MS,  cursive;
@@ -8,6 +8,28 @@
       
 }
 
+.contenido{
+    background-color: rgb(255, 255, 255, 0.8);
+    display: table;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.estanteria{
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-top:20px;
+    margin-bottom: 20px;
+    border: solid;
+    color:black;
+}
+.estanteria input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.papeleraOculta button{
+    background: rgb(255, 255, 255, 0);
+}
 
 body {
     font-family: 'Open Sans', sans-serif;
@@ -16,7 +38,6 @@ body {
     /*background-color: royalblue;*/
         
 }
-
 
 .navbar{
     color: #6AA3E7;
@@ -47,10 +68,7 @@ body {
     background-size: cover;
 }
 
-.container{
-    
-    background-color: rgb(255, 255, 255, 0.8);
-}
+
 
 .sesion{
     margin: 2em auto;
@@ -61,8 +79,7 @@ body {
     /*border:solid;*/
     border-width:2px;
     /*border-color: #41464b;*/
-    border-radius: 8px;
-    
+    border-radius: 8px; 
 }
 
 input{

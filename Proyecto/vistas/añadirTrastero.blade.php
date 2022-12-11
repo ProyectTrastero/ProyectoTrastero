@@ -12,7 +12,7 @@
 
 <script src="asset/js/añadirTrastero.js"></script>
 <script src="asset/js/ubicacionCaja.js"></script>
-<div class="container">
+<div class="container contenido">
     <div class="row">
         <p>{{$mensaje}}</p>
         @if($datosTrastero['guardado'])
@@ -56,7 +56,7 @@
     <div class="row">
         @foreach ($datosTrastero['almacenEstanterias'] as $estanteria)
         <div class="col-4">
-            <ul>
+            <ul class="estanteria">
                 <li>
                     <form action="" method="POST">
                         <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
@@ -100,13 +100,14 @@
                     </ul>
                 </ul>
             @endforeach
-            </ul>
             <form action="" method="POST">
-                <input type="submit" name="añadirBalda" value="AÑADIR BALDA">
-                <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}"
+                <button type="submit" name="añadirBalda">Añadir Balda</button>
+                <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
 
                 <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
             </form>
+            </ul>
+            
         </div>
         @endforeach
     </div>
