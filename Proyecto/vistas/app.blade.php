@@ -17,12 +17,15 @@
         <script src="https://kit.fontawesome.com/12104efb99.js" crossorigin="anonymous"></script>
     </head>
     @if(!empty($_SESSION['usuario']))
-    <body style="background-image: url(asset/img/90576.jpg)">
+    <body class="ejecutando">
     @else
-    <body>
+    <body class="inicio">
     @endif
-    
+        @if(!empty($_SESSION['usuario']))
         <nav class="navbar">
+        @else
+        <nav>
+        @endif
             <div class="container-fluid">
                 <a class="navbar-brand">
                     <img src="asset/img/logo.png" alt="" width="80" height="80">
@@ -83,7 +86,7 @@
         
       
         @yield('content')
-        
+    <a href="https://es.pngtree.com">Pngtree.com</a>    
     </body>
         <!-- Scripts -->
         <script src="asset/js/bootstrap/bootstrap.min.js"></script>

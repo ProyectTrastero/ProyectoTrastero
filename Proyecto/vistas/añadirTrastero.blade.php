@@ -40,15 +40,15 @@
                 <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 @endif
-                <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
+                <button type="submit" name="añadirEstanteria">Añadir Estanteria</button>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">AÑADIR CAJA</button>
+                <button type="button"data-bs-toggle="modal" data-bs-target="#staticBackdrop">Añadir Caja</button>
             </div>
             <div>
                 @if($datosTrastero['tipo']=="guardar")
-                <input type="submit" name="guardar" value="GUARDAR">
+                <button type="submit" name="guardar">Guardar</button>
                 @endif
-                <input type="submit" name="volverAcceso" value="VOLVER">
+                <button type="submit" name="volverAcceso">Volver</button>
             </div>
         </form>
     </div>

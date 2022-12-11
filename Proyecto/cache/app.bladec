@@ -17,12 +17,15 @@
  <script src="https://kit.fontawesome.com/12104efb99.js" crossorigin="anonymous"></script>
  </head>
  <?php if(!empty($_SESSION['usuario'])): ?>
- <body style="background-image: url(asset/img/90576.jpg)">
+ <body class="ejecutando">
  <?php else: ?>
- <body>
+ <body class="inicio">
  <?php endif; ?>
- 
+ <?php if(!empty($_SESSION['usuario'])): ?>
  <nav class="navbar">
+ <?php else: ?>
+ <nav>
+ <?php endif; ?>
  <div class="container-fluid">
  <a class="navbar-brand">
  <img src="asset/img/logo.png" alt="" width="80" height="80">
@@ -83,7 +86,7 @@
  
  
  <?php echo $this->yieldContent('content'); ?>
- 
+ <a href="https://es.pngtree.com">Pngtree.com</a>    
  </body>
  <!-- Scripts -->
  <script src="asset/js/bootstrap/bootstrap.min.js"></script>
