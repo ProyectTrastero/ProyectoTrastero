@@ -14,7 +14,7 @@
         @endif 
         <form method="POST" action="" id='formsesion'>
             <label>Nombre de usuario: </label><br/>
-                        <input id="inputAlias" type="text" placeholder="Nombre" name="alias" class="alias"><br/>
+            <input id="inputAlias" type="text" placeholder="Nombre" name="alias" class="alias"><br/>
             <label>Contraseña: </label><br/>
             <input id="inputPassword" type="password" placeholder="Contraseña" name="clave" class="clave"><br>
                          <!-- Button trigger modal -->
@@ -25,7 +25,7 @@
                 <br/><br/>
 
 
-                <a>¿Aún no te has regitrado?</a><br/>
+                <a>¿Aún no te has registrado?</a><br/>
                 <div>   
                     <button type="submit" id="registro" name="botonregistro"><span> Registrarse </span></button>
                 </div>
@@ -47,7 +47,7 @@
                             <input id="correo" type="text" name="correo" placeholder="Correo">
                         </div>
                         <div>
-                            <p id="mensaje"></p>
+                            <span class="mensaje" id="mensaje"></span>
                         </div>
                         <div>
 
@@ -55,8 +55,8 @@
                     </div> 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="volver" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-                    <button type="button" id="comprobarContraseña" class="btn btn-primary">Enviar</button>
+                    <button class="volver" type="button" id="volver" data-bs-dismiss="modal">Volver</button>
+                    <button type="button" id="comprobarContraseña">Enviar</button>
                 </div>
             </div>
         </div>

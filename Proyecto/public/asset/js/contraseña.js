@@ -26,6 +26,15 @@ $(document).ready(function(){
                 success: function(result){
                     var mensaje=result.mensaje;
                     elementoCorreo.value="";
+                    if(mensaje=="El campo correo es obligatorio."){
+                        var atributo = document.createAttribute("style");
+                        atributo.value="color: red";
+                        ubicacionMensaje.setAttributeNode(atributo);
+                    }else{
+                        var atributo = document.createAttribute("style");
+                        atributo.value="color: black";
+                        ubicacionMensaje.setAttributeNode(atributo);
+                    }    
                     ubicacionMensaje.innerHTML = mensaje;  
 
             }}); 

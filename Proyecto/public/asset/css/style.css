@@ -3,10 +3,103 @@
 	padding: 0;*/
 /*	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;*/
-        font-family:Comic Sans MS,  cursive;
-       
-      
+        font-family: Times New Roman, initial;
 }
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    /*background-color: royalblue;*/
+        
+}
+
+
+ /*APP Y NAVBAR*/  
+ .navbar{
+    color: #6AA3E7;
+    margin-top: 0px;
+    padding: 0px;
+}
+
+.navbar div{
+    margin: 0px;
+    padding: 5px;
+    background-color: #6AA3E7;
+}
+
+.fa-user, .nav-link, .navbar-brand{
+    color: white;
+}
+ 
+ 
+ 
+/*APP Y NAVBAR*/  
+
+/*SESION*/
+.sesion{
+    margin: 2em auto;
+    padding: 2em;
+    background-color: white;
+    width: 283px;
+    height: auto;
+    border:solid 1px;
+    border-color: grey;
+    border-radius: 8px; 
+}
+
+ .alias, .clave{
+    height: auto;
+    width: 215px;
+}
+
+/*SESION*/
+
+/*BOTONES*/
+.volver{
+    background: linear-gradient(grey, white);
+}
+
+.papeleraOculta button{
+    background: rgb(255, 255, 255, 0);
+}
+
+nav button {
+    width: 100%;
+    /*height: 100%;*/
+    align-content: center;
+    /*padding: 0.5rem;*/
+    background-color: white;
+    color: black;
+    border: none;
+}
+button{
+    padding: 5px 5px 5px 5px;
+    /*background-color: #B6DDF8;*/
+    /*background: linear-gradient(#6AA3E7, violet);*/
+    /*background: linear-gradient(grey, white);*/
+    background: linear-gradient(grey, #B6DDF8);
+    border:solid 0.5px;
+    border-color: grey;
+    border-radius: 8px;
+     
+}
+
+
+nav button{
+    background-color: white; 
+    background: linear-gradient(white, white);
+}
+
+nav button:hover{
+   /*background-color: #B6DDF8;*/
+   background: linear-gradient(#B6DDF8, white);
+}
+
+/*BOTONES*/
+
+
+
 
 .contenido{
     background-color: rgb(255, 255, 255, 0.8);
@@ -27,33 +120,22 @@
     margin-bottom: 10px;
 }
 
-.papeleraOculta button{
-    background: rgb(255, 255, 255, 0);
+
+
+
+
+/*div{
+    border:solid;
+    border-color: black;
+}*/
+
+
+
+.acceso{
+    padding: 20px;
+    margin-left: 50px;
 }
 
-body {
-    font-family: 'Open Sans', sans-serif;
-    margin: 0px;
-    padding: 0px;
-    /*background-color: royalblue;*/
-        
-}
-
-.navbar{
-    color: #6AA3E7;
-    margin-top: 0px;
-    padding: 0px;
-}
-
-.navbar div{
-    margin: 0px;
-    padding: 5px;
-    background-color: #6AA3E7;
-}
-
-.fa-user, .nav-link, .navbar-brand{
-    color: white;
-}
 
 .inicio{
     background-image: url("../img/Geometric-Background-012.jpg"); 
@@ -70,17 +152,7 @@ body {
 
 
 
-.sesion{
-    margin: 2em auto;
-    padding-top: 1em;
-    background-color: white;
-    width: 270px;
-    height:360px;
-    /*border:solid;*/
-    border-width:2px;
-    /*border-color: #41464b;*/
-    border-radius: 8px; 
-}
+
 
 input{
     padding-left: 5px;
@@ -101,44 +173,19 @@ input{
 }
 
 .textError{
-	border-radius: 0.375rem ;
-	color: #842029 !important;
-	background-color: #f8d7da;
-	border: 1px solid #f5c2c7;
+    border-radius: 0.375rem ;
+    color: #842029 !important;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
 	
 }
+/*
+.alert{
+    width: 200px;
+    height: 50px;
+}*/
 
 
-nav button {
-    width: 100%;
-    /*height: 100%;*/
-    align-content: center;
-    /*padding: 0.5rem;*/
-    background-color: white;
-    color: black;
-    border: none;
-}
-button{
-    padding: 5px 5px 5px 5px;
-    /*background-color: #B6DDF8;*/
-    /*background: linear-gradient(#6AA3E7, violet);*/
-    background: linear-gradient(#B6DDF8, white);
-    border:solid 0.5px;
-    border-color: grey;
-    border-radius: 8px;
-     
-}
-
-
-nav button{
-    background-color: white; 
-    background: linear-gradient(white, white);
-}
-
-nav button:hover{
-   /*background-color: #B6DDF8;*/
-   background: linear-gradient(#B6DDF8, white);
-}
 
 .hide{
 	display: none;

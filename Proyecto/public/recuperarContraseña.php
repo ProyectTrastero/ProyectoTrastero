@@ -74,15 +74,16 @@ $correo;
 //if(isset($_POST['enviar'])){
     $correo=trim(filter_input(INPUT_POST, 'correo', FILTER_SANITIZE_STRING));
     $existe = Usuario::existeCorreo($bd, $correo);
+    
     if($existe){
         $contraseña = Usuario::obtenerContraseña($bd, $correo) ;
         $alias= Usuario::obtenerAlias($bd, $correo);
         enviarCorreo($correo, $contraseña, $alias);
-        $mensaje="Se le ha enviado un correo con sus credenciales a la dirección indicada.";
+        $mensaje="Su petición se ha generado correctamente. Si el email es correcto se le enviarán sus credenciales al correo proporcionado.";
     }else if($correo == ""){
         $mensaje="El campo correo es obligatorio.";
     }else{
-        $mensaje="La direccion de correo eléctronico no se encuentra en nuestra base de datos.";
+        $mensaje="Su petición se ha generado correctamente. Si el email es correcto se le enviarán sus credenciales al correo proporcionado.";
     }
 
     $response=[];

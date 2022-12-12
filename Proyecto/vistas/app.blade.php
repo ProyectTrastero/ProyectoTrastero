@@ -26,7 +26,7 @@
         @else
         <nav>
         @endif
-            <div class="container-fluid">
+            <div class="container-fluid" >
                 <a class="navbar-brand">
                     <img src="asset/img/logo.png" alt="" width="80" height="80">
                     Mitrastero.com

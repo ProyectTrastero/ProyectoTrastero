@@ -25,33 +25,33 @@
 @section('content')
 
 <div>
-        <div>
+        <div class="acceso">
             <form method="POST" action="" id='formañadirtratero'>
             <h3>Diseña tu trastero</h3>
             <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Añadir Trastero</span></button>
             </form>
         </div>
-        <br/><br/><br/><br/>
+        
         
         @if ($trasteros != "")
-        <div class="container contenido">             
+        <div class="container contenido acceso">             
                 <h3>Mis trasteros</h3>
                 @foreach ($trasteros as $valor)    
                 <table class="row">
-                    <td class="col-4"> {{$valor->getNombre()  }}</td> <br/>
-                    <td  class="col-3">
+                    <td class="col-6"> {{$valor->getNombre()  }}</td> <br/>
+                    <td  class="col-2">
                         <form method="POST" action="" id='formacceder'>
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
                             <button type="submit" name="acceder" id='acceder'><span>Acceder</span></button>
                         </form>
                     </td> <br/>
-                    <td  class="col-3">
+                    <td  class="col-2">
                         <form method="POST" action="" id='formmodificar'>
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
                             <button type="submit" name="modificar" id='modificar'<span>Modificar</span></button>
                         </form>
                     </td> <br/>
-                    <td  class="col-3">
+                    <td  class="col-2">
                         <form method="POST" action="" id='formeliminar'>
                             <input type='hidden' name='id' value='{{$valor->getId()}}'>
                             <button type="submit" name="eliminar" id='eliminar'<span>Eliminar</span></button>
@@ -63,7 +63,7 @@
                
         </div>
         @else
-            <div>           
+            <div class="acceso">           
             <form method="POST" action="" id='formtrasteros'>
                 <h3>Mis trasteros</h3><!-- comment -->
                 <h2>Usted aun no  tiene trasteros</h2>
