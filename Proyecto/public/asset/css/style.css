@@ -191,6 +191,15 @@ input{
 	display: none;
 }
 
+.etiqueta{
+    display: inline-flex;
+    border: 1px solid black;
+    padding: 0.5em;
+    border-radius: 10px;
+    background-color: wheat;
+    margin-right: 0.3em;
+}
+
 /*
 
 svg{

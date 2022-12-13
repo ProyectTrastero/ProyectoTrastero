@@ -70,7 +70,7 @@ function addEventToElements (){
     loadDoc('añadirProducto.php?añadirEtiqueta=' + idEtiquetaSelected, añadirEtiqueta);
   })
 
-  
+ 
 
   //añadimos event click a el boton añadir del modal para añadir etiquetas
   // document.getElementById('crearEtiqueta').addEventListener('click',()=>{
@@ -192,16 +192,69 @@ function showHide(e){
 }
 
 function añadirEtiqueta(xhttp){
-  let textEtiquetaSelected = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;
-  let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
-  let spanElement = document.createElement('span');
-
   console.log(xhttp);
+  //value del select
+  let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
+  //si no recuperamos el id salimos
+  if(idEtiquetaSelected == "" || idEtiquetaSelected === undefined || idEtiquetaSelected === null){
+    return;
+  }
+  //texto del select 
+  let textEtiquetaSelected = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;
   
+  //verificamos que la etiqueta no este añadida
+  let etiquetasAñadidas = document.getElementById('etiquetasProducto').childNodes;
+  for (let i = 0; i < etiquetasAñadidas.length; i++) {
+    let etiqueta = etiquetasAñadidas[i];
+    if (etiqueta.id == idEtiquetaSelected) {
+      return;
+    }
+  }
+  //creasmos elemento span
+  let spanElement = document.createElement('span');
   spanElement.innerText = textEtiquetaSelected;
   spanElement.id=idEtiquetaSelected;
+  spanElement.classList.add('etiqueta');
+  //añadimos el span etiqueta a el div etiquetas producto
   document.getElementById('etiquetasProducto').appendChild(spanElement);
-  
+  //creamos elemento span que sera la x
+  let spanX = document.createElement('span');
+  spanX.classList.add('btn-close');
+  spanX.classList.add('close-etiqueta');
+  spanX.nodeType='button';
+  spanX.style='margin-left: 0.3em';
+  //añadimos el span x al span etiqueta
+  document.getElementById(idEtiquetaSelected).appendChild(spanX);
+
+  //aladimos event click a los span con la clase close-etiqueta
+  let elementCloseEtiqueta = document.getElementsByClassName('close-etiqueta');
+  for (let i = 0; i < elementCloseEtiqueta.length; i++) {
+    const element = elementCloseEtiqueta[i];
+    element.addEventListener('click',(e)=>{
+      closeEtiqueta(e);
+    })
+  }
+  let stringEtiquetasAñadidas;
+  //enviamos los id de las etiquetas añadidas al server
+  for (let i = 0; i < etiquetasAñadidas.length; i++) {
+    let etiqueta = etiquetasAñadidas[i];
+    stringEtiquetasAñadidas += etiqueta.id + "-";
+  }
+  loadDoc('añadirProducto.php?añadirEtiquetas=' + stringEtiquetasAñadidas, añadirEtiquetaBd);
+
+
+}
+
+
+function closeEtiqueta(e){
+  let target = e.target.parentNode;
+  let divEtiquetas = document.getElementById('etiquetasProducto');
+  for (let i = 0; i < divEtiquetas.childNodes.length; i++) {
+    const element = divEtiquetas.childNodes[i];
+    if (element.id == target.id) {
+      divEtiquetas.removeChild(element);
+    }
+  }
 }
 
 // function habilitarModal(){

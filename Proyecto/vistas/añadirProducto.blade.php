@@ -111,19 +111,10 @@
         <select name="cajasSinAsignar" id="selectCajasSinAsignar"></select>
       </div>
 
-      <div>
-        <label for="prueba">prueba: </label>
-        <select name="prueba" id="prueba">
-          <option value="prueba" selected>prueba</option>
-          <option value="prueba">prueba</option>
-          <option value="prueba">prueba</option>
-        </select>
-      </div>
 
       <h2>Etiquetas</h2>
-      <div id="etiquetasProducto">
+      <div id="etiquetasProducto"></div>
 
-      </div>
       <div>
         <label for="">Seleccione etiqueta: </label>
         <select name="etiquetas" id="selectEtiquetas">
