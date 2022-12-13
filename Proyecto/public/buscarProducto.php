@@ -74,7 +74,6 @@ if (isset($_POST['buscarProducto'])) {
     
     $etiquetas = App\Etiqueta::recuperaEtiquetasPorUsuario($bd, $idUsuario);
     
-    $_SESSION['etiquetas'] = $etiquetas;
 
     
     echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas'));

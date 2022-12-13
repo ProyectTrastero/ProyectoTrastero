@@ -111,6 +111,7 @@ class Producto {
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $sql = 'select * from productos where nombre LIKE :nombre';
         $sth = $bd->prepare($sql);
+        $palabra = "%$palabra%";
         $sth->execute([":nombre" => $palabra]);
         $sth->setFetchMode(PDO::FETCH_CLASS, Producto::class);
         $producto = array();
@@ -122,6 +123,19 @@ class Producto {
             }else{
             return "";    
             }
+    }
+    
+    public static function recuperarProductoPorId($bd, $idProducto): Producto{
+        $aql = "select * from productos where id=$idProducto";
+        $sth=$bd->query($sql);
+        $sth->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+        $productos = ($sth->fetch()) ?: null;
+        return $productos;
+    }
+    
+    public function eliminarProducto($bd): void{
+       $sql ="delete from productos where id = $this->id";
+       $bd->exec($sql);
     }
 
     

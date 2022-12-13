@@ -34,28 +34,25 @@
     <br/>
     <div>     
         <form method="POST" action="" name="formEtiquetas">
-
+            <div>
+                @if (isset ($etiquetas))
+                <label for="etiquetas">Buscar por mis etiqueta: </label><br/>
+                    @if ($etiquetas != "")                    
+                            @foreach ($etiquetas as $valor)
+                            <a class='col-3'>{{$valor->getNombre()  }}</a>
+                            @endforeach
+                    @else
+                        <div>           
+                            <h4>Aun no tiene ninguna etiqueta</h4>    
+                        </div>
+                    @endif
+                @endif
+            </div>
            <!--me falta el  select-->
-            <button type="submit" name="añadirEtiquetas">Seleccionar Etiqueta</button>
+            <br/><button type="submit" name="añadirEtiquetas">Seleccionar Etiqueta</button>
         </form> 
     </div>
-    
-    <div>
-        <h4>Buscar por mi etiqueta: </h4> 
-        @if (isset ($etiquetas))
-            @if ($etiquetas != "")
-                    @foreach ($etiquetas as $valor)
-                    <!--Dentro de un div row-->
-                    <div class="col-3"> {{$valor->getNombre()  }}</div>
-                    @endforeach
-            @else
-                <div>           
-                    <h4>Aun no tiene ninguna etiqueta</h4>    
-                </div>
-            @endif
-        @endif
-    </div>
-    
+
         @if (isset ($productos))
             @if ($productos != "")
             <div>             

@@ -50,7 +50,7 @@ class Etiqueta {
     }
 
     
-        public static function recuperaEtiquetasPorUsuario(PDO $bd, int $idUsuario){
+    public static function recuperaEtiquetasPorUsuario(PDO $bd, int $idUsuario){
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $sql = 'select * from etiquetas where id=:id';
         $sth = $bd->prepare($sql);
@@ -65,6 +65,14 @@ class Etiqueta {
             }else{
             return "";    
             }
+    }
+        
+    public static function recuperarEtiquetaPorId($bd, $idEtiqueta): Etiqueta{
+        $consulta = "select * from Etiquetas where id=$idEtiqueta";
+        $registro=$bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Etiqueta::class);
+        $etiquetaSeleccionada = ($registro->fetch()) ?: null;
+        return $etiquetaSeleccionada;
     }
 
 }
