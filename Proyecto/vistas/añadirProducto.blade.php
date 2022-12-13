@@ -15,7 +15,7 @@
 @endif
     
 
-<form action="{{ $_SERVER["PHP_SELF"] }}" method="POST">
+<!--<form action="{{ $_SERVER["PHP_SELF"] }}" method="POST">
   <div class="nav-item dropdown">
     <div class="nav-link dropdown-toggle " href="#"  data-bs-toggle="dropdown" aria-expanded="false">
       {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
@@ -25,7 +25,7 @@
       <li><button class="dropdown" type="submit" name="cerrarSesion">Cerrar sesión</button></li>
     </ul>
   </div>
-</form>
+</form>-->
 @endsection
 
 {{-- Sección content --}}

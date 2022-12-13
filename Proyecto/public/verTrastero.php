@@ -94,7 +94,14 @@ $cajas= Caja::recuperarCajasPorIdTrastero($bd, $idTrastero);
 
 
 if(!empty($_REQUEST)){
-    $idSelecionado=trim(filter_input(INPUT_POST,'id',FILTER_SANITIZE_STRING));
+    if(isset($_REQUEST['cerrarSesion'])){
+        session_destroy();
+        header("Location: index.php");
+        die;
+    }else if(isset($_REQUEST['perfilUsuario'])){
+        header("Location: editarPerfil.php");
+    }else{
+        $idSelecionado=trim(filter_input(INPUT_POST,'id',FILTER_SANITIZE_STRING));
     $tipo="";
     $productosRecuperados;
     foreach ($estanterias as $estanteria){
@@ -141,6 +148,8 @@ if(!empty($_REQUEST)){
 
     die;
  
+    }
+    
 }else{
     echo $blade->run('verTrastero', compact('datosTrastero'));
     

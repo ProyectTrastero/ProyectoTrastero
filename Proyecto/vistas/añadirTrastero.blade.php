@@ -12,7 +12,7 @@
 
 <script src="asset/js/añadirTrastero.js"></script>
 <script src="asset/js/ubicacionCaja.js"></script>
-<div class="container">
+<div class="container contenido">
     <div class="row">
         <p>{{$mensaje}}</p>
         @if($datosTrastero['guardado'])
@@ -40,15 +40,15 @@
                 <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 @endif
-                <input type="submit" name="añadirEstanteria" value="AÑADIR ESTANTERÍA">
+                <button type="submit" name="añadirEstanteria">Añadir Estanteria</button>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">AÑADIR CAJA</button>
+                <button type="button"data-bs-toggle="modal" data-bs-target="#staticBackdrop">Añadir Caja</button>
             </div>
             <div>
                 @if($datosTrastero['tipo']=="guardar")
-                <input type="submit" name="guardar" value="GUARDAR">
+                <button type="submit" name="guardar">Guardar</button>
                 @endif
-                <input type="submit" name="volverAcceso" value="VOLVER">
+                <button type="submit" name="volverAcceso">Volver</button>
             </div>
         </form>
     </div>
@@ -56,7 +56,7 @@
     <div class="row">
         @foreach ($datosTrastero['almacenEstanterias'] as $estanteria)
         <div class="col-4">
-            <ul>
+            <ul class="estanteria">
                 <li>
                     <form action="" method="POST">
                         <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
@@ -100,13 +100,14 @@
                     </ul>
                 </ul>
             @endforeach
-            </ul>
             <form action="" method="POST">
-                <input type="submit" name="añadirBalda" value="AÑADIR BALDA">
-                <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}"
+                <button type="submit" name="añadirBalda">Añadir Balda</button>
+                <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
 
                 <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
             </form>
+            </ul>
+            
         </div>
         @endforeach
     </div>

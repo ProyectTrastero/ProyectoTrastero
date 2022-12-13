@@ -85,7 +85,27 @@ if(empty($_SESSION['datosTrastero'])){
     $mensaje = "";
 }
 
-if(isset($_POST['añadirEstanteria'])){
+ if(isset($_REQUEST['cerrarSesion'])){
+    if(!$trasteroGuardado){
+        $nuevoTrastero->eliminar($bd);
+        foreach($almacenEstanterias as $estanteria){
+            $estanteria->eliminar($bd);
+        } 
+
+        foreach($almacenBaldas as $balda){
+            $balda->eliminar($bd);
+        } 
+
+        foreach($almacenCajas as $balda){
+            $balda->eliminar($bd);
+        } 
+    }
+    session_destroy();
+    header("Location: index.php");
+    die;
+}else if(isset($_REQUEST['perfilUsuario'])){
+    header("Location: editarPerfil.php");
+}else if(isset($_POST['añadirEstanteria'])){
     $nuevaEstanteria = new Estanteria();
     $idTrastero = $nuevoTrastero->getId();
 //    $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
