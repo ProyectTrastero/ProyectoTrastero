@@ -24,44 +24,49 @@
 {{-- Sección mensaje --}}
 @section('content')
 
-<div>
-        <div class="acceso">
+<div class="container">
+        <div class="cabecera">
             <form method="POST" action="" id='formañadirtratero'>
-            <h3>Diseña tu trastero</h3>
+                <span>Diseña tu trastero: </span>
             <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Añadir Trastero</span></button>
             </form>
         </div>
         
         
         @if ($trasteros != "")
-        <div class="container contenido acceso">             
-                <h3>Mis trasteros</h3>
-                @foreach ($trasteros as $valor)    
+        <!--<div class="container">--> 
+            <div class="acceso">
+                <h3>Mis trasteros</h3> 
+                <br>
                 <table class="row">
-                    <td class="col-6"> {{$valor->getNombre()  }}</td> <br/>
-                    <td  class="col-2">
-                        <form method="POST" action="" id='formacceder'>
-                            <input type='hidden' name='id' value='{{$valor->getId()}}'>
-                            <button type="submit" name="acceder" id='acceder'><span>Acceder</span></button>
-                        </form>
-                    </td> <br/>
-                    <td  class="col-2">
-                        <form method="POST" action="" id='formmodificar'>
-                            <input type='hidden' name='id' value='{{$valor->getId()}}'>
-                            <button type="submit" name="modificar" id='modificar'<span>Modificar</span></button>
-                        </form>
-                    </td> <br/>
-                    <td  class="col-2">
-                        <form method="POST" action="" id='formeliminar'>
-                            <input type='hidden' name='id' value='{{$valor->getId()}}'>
-                            <button type="submit" name="eliminar" id='eliminar'<span>Eliminar</span></button>
-                        </form>
-                    </td>
+                    @foreach ($trasteros as $valor)
+                    <tr>
+                        <td class="col-6 inicial"> {{$valor->getNombre()  }}</td>
+                        <td  class="col-2">
+                            <form method="POST" action="" id='formacceder'>
+                                <input type='hidden' name='id' value='{{$valor->getId()}}'>
+                                <button type="submit" name="acceder" id='acceder'><span>Acceder</span></button>
+                            </form>
+                        </td>
+                        <td  class="col-2">
+                            <form method="POST" action="" id='formmodificar'>
+                                <input type='hidden' name='id' value='{{$valor->getId()}}'>
+                                <button type="submit" name="modificar" id='modificar'<span>Modificar</span></button>
+                            </form>
+                        </td>
+                        <td  class="col-2">
+                            <form method="POST" action="" id='formeliminar'>
+                                <input type='hidden' name='id' value='{{$valor->getId()}}'>
+                                <button type="submit" name="eliminar" id='eliminar'<span>Eliminar</span></button>
+                            </form>
+                        </td>
+                    </tr>
+                    
+                    @endforeach 
                 </table>
-                @endforeach    
-                <br/><br/><br/>
-               
-        </div>
+                   
+            </div>   
+        <!--</div>-->
         @else
             <div class="acceso">           
             <form method="POST" action="" id='formtrasteros'>

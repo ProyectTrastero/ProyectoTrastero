@@ -6,6 +6,19 @@
         font-family: Times New Roman, initial;
 }
 
+/*usados para ver  mas claramente la disposicion de los divs*/
+/*div{
+    border:solid;
+}
+.container{
+    border-color: red;
+}
+table, tr, td{
+    border:solid;
+    color:green;
+} */
+/*usados para ver mas...*/
+
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0px;
@@ -14,8 +27,23 @@ body {
         
 }
 
+/*////////////////////////////////////////////////////*/
+ /*APP Y NAVBAR*/ 
 
- /*APP Y NAVBAR*/  
+.inicio{
+    /*background-color: #6AA3E7;*/
+    background-image: url("../img/Geometric-Background-012.jpg"); 
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+}
+
+.ejecutando{
+    background-image: url("../img/geometric.png"); 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
  .navbar{
     color: #6AA3E7;
     margin-top: 0px;
@@ -35,7 +63,7 @@ body {
  
  
 /*APP Y NAVBAR*/  
-
+/*////////////////////////////////////////////////////*/
 /*SESION*/
 .sesion{
     margin: 2em auto;
@@ -54,7 +82,49 @@ body {
 }
 
 /*SESION*/
+/*////////////////////////////////////////////////////*/
+/*ACCESO*/
+/*
+*/
+.cabecera{
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 20px;
+}
 
+.acceso{
+    height: auto;
+    width: 550px;
+    padding: 30px;
+    margin:0 auto;
+}
+
+table{
+    background: rgb(255, 255, 255, 0.85);
+    border:solid 0.5px;
+    border-radius: 8px;
+    border-color: grey;
+}
+
+td{
+    padding: 15px;
+}
+.inicial{
+    font-weight:bold;
+    font-size: 20px;
+    text-align:center;
+}
+/*
+
+.contenido{
+    background-color: rgb(255, 255, 255, 0.8);
+    display: table;
+    padding-left: 20px;
+    padding-right: 20px;
+}*/
+/*ACCESO*/
+/*////////////////////////////////////////////////////*/
 /*BOTONES*/
 .volver{
     background: linear-gradient(grey, white);
@@ -78,12 +148,15 @@ button{
     /*background-color: #B6DDF8;*/
     /*background: linear-gradient(#6AA3E7, violet);*/
     /*background: linear-gradient(grey, white);*/
-    background: linear-gradient(grey, #B6DDF8);
+    background: linear-gradient(#B6DDF8, rgb(128,128,128,0.4));
     border:solid 0.5px;
     border-color: grey;
     border-radius: 8px;
      
 }
+/*.btnEliminar{
+    background: linear-gradient(#B6DDF8, rgb(234,30,10,0.4));
+}*/
 
 
 nav button{
@@ -101,12 +174,7 @@ nav button:hover{
 
 
 
-.contenido{
-    background-color: rgb(255, 255, 255, 0.8);
-    display: table;
-    padding-left: 20px;
-    padding-right: 20px;
-}
+
 .estanteria{
     padding-bottom: 10px;
     padding-top: 10px;
@@ -131,24 +199,10 @@ nav button:hover{
 
 
 
-.acceso{
-    padding: 20px;
-    margin-left: 50px;
-}
 
 
-.inicio{
-    background-image: url("../img/Geometric-Background-012.jpg"); 
-    background-repeat: no-repeat;
-    background-size: cover;
-   
-}
 
-.ejecutando{
-    background-image: url("../img/geometric.png"); 
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+
 
 
 

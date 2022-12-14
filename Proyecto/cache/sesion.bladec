@@ -26,9 +26,9 @@
 
 
  <a>¿Aún no te has registrado?</a><br/>
- <div>   
+ 
  <button type="submit" id="registro" name="botonregistro"><span> Registrarse </span></button>
- </div>
+ 
  </form>        
 
  </div>
@@ -55,7 +55,7 @@
  </div> 
  </div>
  <div class="modal-footer">
- <button class="volver" type="button" id="volver" data-bs-dismiss="modal">Volver</button>
+ <button type="button" id="volver" data-bs-dismiss="modal">Volver</button>
  <button type="button" id="comprobarContraseña">Enviar</button>
  </div>
  </div>
