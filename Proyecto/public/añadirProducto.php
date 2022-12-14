@@ -142,7 +142,9 @@ if(isset($_SESSION['usuario'])){
         (isset($_POST['caja'])) ? $caja = intval(Validacion::sanearInput($_POST['caja'])) : $caja = '';
         (isset($_POST['cajasSinAsignar'])) ? $cajaSinAsignar = intval(Validacion::sanearInput($_POST['cajasSinAsignar'])) : $cajaSinAsignar='';
         (isset($_POST['ubicacion'])) ? $ubicacion = $_POST['ubicacion'] : $ubicacion = "";
-        
+        (isset($_POST['inputAñadirEtiquetas'])) ? $añadirEtiquetas = Validacion::sanearInput(($_POST['inputAñadirEtiquetas'])) : $añadirEtiquetas = '';
+        //separamos los id de las etiquetas
+        $arrayInputAñadirEtiquetas = preg_split("/\s/",$añadirEtiquetas);
         //si se ha seleccionado una caja sin ubicacion
         if($ubicacion == 'ubicacionCajasSinAsignar'){
             $caja=$cajaSinAsignar;
@@ -168,7 +170,7 @@ if(isset($_SESSION['usuario'])){
                 'idTrastero'=>$idTrastero
                 ];
         
-        //set a null todos los campos vacios
+        //set a null todos los campos vacios para añadir a la base de datos como null
         foreach ($datos as $key => $value) {
             if ($value=='') {
                 $datos[$key]=null;
@@ -177,9 +179,22 @@ if(isset($_SESSION['usuario'])){
         
         
         if (count($errores)==0) {
-            if (Producto::añadirProducto($bd,$datos)) {
+            $idProducto=Producto::añadirProducto($bd,$datos);
+            if ($idProducto != -1) {
                 $msj['msj-content']="Producto añadido con exito";
                 $msj['msj-type']="success";
+                //comprobamos si tenemos etiquetas para añadir al producto
+                foreach ($arrayInputAñadirEtiquetas as $idEtiqueta) {
+                    if($idEtiqueta != ""){
+                        $idEtiqueta=intval($idEtiqueta);
+                        //enlazamos la etiqueta con el producto
+                        //si falla mostramos error
+                        if(!Producto::añadirEtiquetaProducto($bd,$idEtiqueta,$idProducto)){
+                            $msj['msj-content']="Error al añadir el etiqueta";
+                            $msj['msj-type']="danger";
+                        }
+                    }
+                }
             }
         
         }else{

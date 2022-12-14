@@ -86,7 +86,7 @@
       <div id="idUbicacionEstanteria" class="hide">
         <div>
           <label for="selectEstanterias">Estanteria: </label>
-          <select name="estanteria" id="selectEstanterias">
+          <select name="estanteria" id="selectEstanterias" disabled>
             @foreach ($estanterias as $estanteria)
               <option value="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</option>
             @endforeach
@@ -95,24 +95,25 @@
         </div>
         <div>
           <label for="selectBaldas">Balda: </label>
-          <select name="balda" id="selectBaldas"></select>
+          <select name="balda" id="selectBaldas" disabled></select>
 
         </div>
 
         <div>
           <label for="selectCaja">Caja: </label>
-          <select name="caja" id="selectCaja"></select>
+          <select name="caja" id="selectCaja" disabled></select>
         </div>
 
       </div>
 
       <div id="idUbicacionCajasSinAsignar" class="hide">
         <label for="selectCajasSinAsignar">Caja: </label>
-        <select name="cajasSinAsignar" id="selectCajasSinAsignar"></select>
+        <select name="cajasSinAsignar" id="selectCajasSinAsignar" disabled></select>
       </div>
 
 
       <h2>Etiquetas</h2>
+      <div id="inputEtiquetas"></div>
       <div id="etiquetasProducto"></div>
 
       <div>

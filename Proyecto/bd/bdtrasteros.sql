@@ -80,9 +80,9 @@ create table if not exists etiquetas(
 -- 2.1.8 Tabla etiquetasproductos
 create table if not exists etiquetasproductos(
     id int auto_increment primary key,
-    idEtiqueta varchar(50) not null,
-    idProducto int(20) not null,
-    constraint fk_etiquetaproducto_etiqueta foreign key(idProducto) references etiquetas(id) on update cascade on delete cascade,
+    idEtiqueta int not null,
+    idProducto int not null,
+    constraint fk_etiquetaproducto_etiqueta foreign key(idEtiqueta) references etiquetas(id) on update cascade on delete cascade,
     constraint fk_etiquetaproducto_producto foreign key(idProducto) references productos(id) on update cascade on delete cascade
 );
 

@@ -173,7 +173,7 @@ class Producto {
         $bd->exec($consulta);
     }
   
-    public static function añadirProducto (PDO $bd, array $datos):bool{
+    public static function añadirProducto (PDO $bd, array $datos):int{
         $query =    "insert into productos (nombre, descripcion,idTrastero,idEstanteria,idBalda,idCaja) 
                     values (:nombre, :descripcion, :idTrastero, :idEstanteria, :idBalda, :idCaja)";
         $stmt = $bd->prepare($query);
@@ -181,11 +181,13 @@ class Producto {
                             ':idEstanteria'=>$datos['estanteria'], ':idBalda'=>$datos['balda'], ':idCaja'=>$datos['caja']])) {
             //si falla el insert
             $stmt = null;
-            return false;
+            return -1;
         }else{
             //si todo bien
+            //recuperamos el id del producto añadido
+            $id=intval($bd->lastInsertId());
             $stmt=null;
-            return true;
+            return $id;
         }
     }
     
@@ -194,6 +196,17 @@ class Producto {
         $bd->exec($consulta);
     }
 
+    public static function añadirEtiquetaProducto(PDO $bd, int $idEtiqueta, int $idProducto ){
+        $query = "insert into etiquetasproductos (idEtiqueta, idProducto) values (:idEtiqueta, :idProducto)";
+        $stmt =$bd->prepare($query);
+        if(!$stmt->execute([':idEtiqueta'=>$idEtiqueta, ':idProducto'=>$idProducto])){
+            $stmt = null;
+            return false;
+        }else{
+            $stmt = null;
+            return true;
+        }
+    }
 
     
 }

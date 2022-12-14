@@ -226,7 +226,7 @@ function añadirEtiqueta(xhttp){
   //añadimos el span x al span etiqueta
   document.getElementById(idEtiquetaSelected).appendChild(spanX);
 
-  //aladimos event click a los span con la clase close-etiqueta
+  //añadimos event click a los span con la clase close-etiqueta
   let elementCloseEtiqueta = document.getElementsByClassName('close-etiqueta');
   for (let i = 0; i < elementCloseEtiqueta.length; i++) {
     const element = elementCloseEtiqueta[i];
@@ -234,13 +234,28 @@ function añadirEtiqueta(xhttp){
       closeEtiqueta(e);
     })
   }
-  let stringEtiquetasAñadidas;
-  //enviamos los id de las etiquetas añadidas al server
+  
+  
+  //creamos un string con los id de las etiquetas añadidas
+  let stringEtiquetasAñadidas="";
   for (let i = 0; i < etiquetasAñadidas.length; i++) {
     let etiqueta = etiquetasAñadidas[i];
-    stringEtiquetasAñadidas += etiqueta.id + "-";
+    stringEtiquetasAñadidas += etiqueta.id + " ";
   }
-  loadDoc('añadirProducto.php?añadirEtiquetas=' + stringEtiquetasAñadidas, añadirEtiquetaBd);
+  //eliminamos el input si esta creado
+  if(document.getElementById('inputAñadirEtiquetas')){
+    document.getElementById('inputAñadirEtiquetas').remove();
+  }
+  //creamos un input con los id de las etiquetas añadidas
+  let inputAñadirEtiquetas = document.createElement('input');
+  inputAñadirEtiquetas.id='inputAñadirEtiquetas';
+  inputAñadirEtiquetas.nodeType='text';
+  inputAñadirEtiquetas.setAttribute('hidden','true');
+  inputAñadirEtiquetas.name='inputAñadirEtiquetas';
+  inputAñadirEtiquetas.value=stringEtiquetasAñadidas;
+  //element en donde ubicaremos el input
+  let inputEtiquetas= document.getElementById('inputEtiquetas');
+  document.getElementById('inputEtiquetas').appendChild(inputAñadirEtiquetas);
 
 
 }
