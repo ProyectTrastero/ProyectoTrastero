@@ -215,6 +215,8 @@ function añadirEtiqueta(xhttp){
   spanElement.innerText = textEtiquetaSelected;
   spanElement.id=idEtiquetaSelected;
   spanElement.classList.add('etiqueta');
+  spanElement.classList.add('d-inline-flex');
+  spanElement.classList.add('align-items-center');
   //añadimos el span etiqueta a el div etiquetas producto
   document.getElementById('etiquetasProducto').appendChild(spanElement);
   //creamos elemento span que sera la x
@@ -222,7 +224,7 @@ function añadirEtiqueta(xhttp){
   spanX.classList.add('btn-close');
   spanX.classList.add('close-etiqueta');
   spanX.nodeType='button';
-  spanX.style='margin-left: 0.3em';
+  spanX.style='font-size: 0.9em ; margin-left: 0.4em';
   //añadimos el span x al span etiqueta
   document.getElementById(idEtiquetaSelected).appendChild(spanX);
 
