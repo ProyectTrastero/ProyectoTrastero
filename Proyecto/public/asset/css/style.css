@@ -31,8 +31,9 @@ body {
  /*APP Y NAVBAR*/ 
 
 .inicio{
-    /*background-color: #6AA3E7;*/
-    background-image: url("../img/Geometric-Background-012.jpg"); 
+    background-color: #47a2db;
+/*    background-image: url("../img/fondo.png");
+    background-image: url("../img/Geometric-Background-012.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
    
@@ -45,7 +46,7 @@ body {
 }
 
  .navbar{
-    color: #6AA3E7;
+    color: #47a2db;
     margin-top: 0px;
     padding: 0px;
 }
@@ -53,7 +54,7 @@ body {
 .navbar div{
     margin: 0px;
     padding: 5px;
-    background-color: #6AA3E7;
+    background-color: #47a2db;
 }
 
 .fa-user, .nav-link, .navbar-brand{
@@ -125,6 +126,46 @@ td{
 }*/
 /*ACCESO*/
 /*////////////////////////////////////////////////////*/
+/*AÑADIRTRASTERO*/
+#atDiv1{
+    margin: 0 auto;
+   
+}
+
+#atDiv2{
+    margin:15px;
+    padding:30px;
+}
+
+#nombre{
+    margin-right:50px;
+}
+
+.estanteria{
+    padding-bottom: 25px;
+    padding-top: 25px;
+    margin-top:20px;
+    margin-bottom: 20px;
+    background: rgb(255, 255, 255, 0.85);
+    border:solid 0.5px;
+    border-radius: 8px;
+    border-color: grey;
+}
+
+.estanteria>li{
+    margin: 20px;
+    color: blue;
+    
+}
+
+
+
+
+
+
+
+/*AÑADIRTRASTERO*/
+/*////////////////////////////////////////////////////*/
 /*BOTONES*/
 .volver{
     background: linear-gradient(grey, white);
@@ -144,7 +185,7 @@ nav button {
     border: none;
 }
 button{
-    padding: 5px 5px 5px 5px;
+    padding: 10px 10px 10px 10px;;
     /*background-color: #B6DDF8;*/
     /*background: linear-gradient(#6AA3E7, violet);*/
     /*background: linear-gradient(grey, white);*/
@@ -170,42 +211,6 @@ nav button:hover{
 }
 
 /*BOTONES*/
-
-
-
-
-
-.estanteria{
-    padding-bottom: 10px;
-    padding-top: 10px;
-    margin-top:20px;
-    margin-bottom: 20px;
-    border: solid;
-    color:black;
-}
-.estanteria input{
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-
-
-
-
-/*div{
-    border:solid;
-    border-color: black;
-}*/
-
-
-
-
-
-
-
-
-
-
 
 
 input{

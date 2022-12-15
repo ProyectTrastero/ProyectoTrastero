@@ -12,43 +12,42 @@
 
 <script src="asset/js/añadirTrastero.js"></script>
 <script src="asset/js/ubicacionCaja.js"></script>
-<div class="container contenido">
-    <div class="row">
+ <div class="row">
         <p>{{$mensaje}}</p>
         @if($datosTrastero['guardado'])
         <span id="guardadoModificado" value="true" ></span>
         @else
         <span id="guardadoModificado" value="false" ></span>
         @endif
-    </div>
-    @if(!empty($datosTrastero['listadoEliminar']))
-    <input type="hidden" id="mostrarModal" value="si">
-    @else
-    <input type="hidden" id="mostrarModal" value="no">
-    @endif
-    
-    @if(!empty($datosTrastero['mensaje2']))
-    <input type="hidden" id="mostrarModal2" value="si">
-    @else
-    <input type="hidden" id="mostrarModal2" value="no">
-    @endif
-    
-    <div class="row">
+         @if(!empty($datosTrastero['listadoEliminar']))
+        <input type="hidden" id="mostrarModal" value="si">
+        @else
+        <input type="hidden" id="mostrarModal" value="no">
+        @endif
+
+        @if(!empty($datosTrastero['mensaje2']))
+        <input type="hidden" id="mostrarModal2" value="si">
+        @else
+        <input type="hidden" id="mostrarModal2" value="no">
+        @endif
+</div>
+<div class="container">
+    <div class="row" id="atDiv1">
         <form action="" method="POST">
-            <div>
+            <div id="atDiv2">
                 @if($datosTrastero['tipo']=="guardar")
                 <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 @endif
-                <button type="submit" name="añadirEstanteria">Añadir Estanteria</button>
-                <!-- Button trigger modal -->
-                <button type="button"data-bs-toggle="modal" data-bs-target="#staticBackdrop">Añadir Caja</button>
-            </div>
-            <div>
-                @if($datosTrastero['tipo']=="guardar")
                 <button type="submit" name="guardar">Guardar</button>
-                @endif
                 <button type="submit" name="volverAcceso">Volver</button>
+            </div>
+            <div id="atDiv3">
+                <div id="atDiv4">
+                    <button type="submit" name="añadirEstanteria">Añadir Estanteria</button>
+                    <!-- Button trigger modal -->
+                    <button type="button"data-bs-toggle="modal" data-bs-target="#staticBackdrop">Añadir Caja</button>
+                </div>
             </div>
         </form>
     </div>
