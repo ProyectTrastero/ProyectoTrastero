@@ -244,6 +244,7 @@ function añadirEtiqueta(xhttp){
     let etiqueta = etiquetasAñadidas[i];
     stringEtiquetasAñadidas += etiqueta.id + " ";
   }
+  //guardamos la informacion en un input
   //eliminamos el input si esta creado
   if(document.getElementById('inputAñadirEtiquetas')){
     document.getElementById('inputAñadirEtiquetas').remove();
