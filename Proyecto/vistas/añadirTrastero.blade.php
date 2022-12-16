@@ -12,8 +12,7 @@
 
 <script src="asset/js/añadirTrastero.js"></script>
 <script src="asset/js/ubicacionCaja.js"></script>
- <div class="row">
-        <p>{{$mensaje}}</p>
+<div class="row">
         @if($datosTrastero['guardado'])
         <span id="guardadoModificado" value="true" ></span>
         @else
@@ -29,6 +28,12 @@
         <input type="hidden" id="mostrarModal2" value="si">
         @else
         <input type="hidden" id="mostrarModal2" value="no">
+        @endif
+        
+        @if($mensaje!="")
+        <input type="hidden" id="mostrarModal3" value="si">
+        @else
+        <input type="hidden" id="mostrarModal3" value="no">
         @endif
 </div>
 <div class="container">
@@ -100,7 +105,7 @@
                 </ul>
             @endforeach
             <form action="" method="POST">
-                <button type="submit" name="añadirBalda">Añadir Balda</button>
+                <button id="atboton1" type="submit" name="añadirBalda">Añadir Balda</button>
                 <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
 
                 <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
@@ -158,9 +163,9 @@
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="button" data-bs-dismiss="modal">Volver</button>
                     <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                    <input type="submit" name="añadirUbicacion"  id="botonAñadir" value="AÑADIR">
+                    <button type="submit" name="añadirUbicacion"  id="botonAñadir">Añadir</button>
                    
                 </div>
             </div>
@@ -190,6 +195,22 @@
     </div>
 </form>
 
-
+<!-- Modal error nombre-->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Fallo al guardar: </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{$mensaje}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="cancelar" data-bs-dismiss="modal">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection

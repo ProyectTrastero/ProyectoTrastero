@@ -96,7 +96,7 @@ body {
 
 .acceso{
     height: auto;
-    width: 550px;
+    width: 640px;
     padding: 30px;
     margin:0 auto;
 }
@@ -142,6 +142,7 @@ td{
 }
 
 .estanteria{
+    list-style: none;
     padding-bottom: 25px;
     padding-top: 25px;
     margin-top:20px;
@@ -153,9 +154,25 @@ td{
 }
 
 .estanteria>li{
-    margin: 20px;
-    color: blue;
-    
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.estanteria>button {
+    padding: 0px 10px 0px 10px; 
+    margin-left: 0px;
+}
+
+
+#atboton1{
+    margin-top: 20px;
+}
+
+.estanteria>ul{
+    list-style: none;
+}
+.estanteria ul>li{
+    list-style: none;
 }
 
 
@@ -176,6 +193,7 @@ td{
 }
 
 nav button {
+    margin: 0px;
     width: 100%;
     /*height: 100%;*/
     align-content: center;
@@ -185,7 +203,9 @@ nav button {
     border: none;
 }
 button{
-    padding: 10px 10px 10px 10px;;
+    padding: 0px 10px 0px 10px;
+    margin-left: 8px;
+    margin-right: 8px;
     /*background-color: #B6DDF8;*/
     /*background: linear-gradient(#6AA3E7, violet);*/
     /*background: linear-gradient(grey, white);*/
@@ -213,9 +233,9 @@ nav button:hover{
 /*BOTONES*/
 
 
-input{
+/*input{
     padding-left: 5px;
-}
+}*/
 
 .inputsForm{
     display: grid;
