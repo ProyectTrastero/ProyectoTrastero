@@ -31,21 +31,23 @@ body {
  /*APP Y NAVBAR*/ 
 
 .inicio{
-    /*background-color: #6AA3E7;*/
-    background-image: url("../img/Geometric-Background-012.jpg"); 
+    /*background-color: #47a2db;*/
+    background-image: url("../img/imagen5.png"); 
+/*    background-image: url("../img/fondo.png");
+    background-image: url("../img/Geometric-Background-012.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
    
 }
 
 .ejecutando{
-    background-image: url("../img/geometric.png"); 
+    background-image: url("../img/imagenSecundaria.png"); 
     background-repeat: no-repeat;
     background-size: cover;
 }
 
  .navbar{
-    color: #6AA3E7;
+    color: #00a8f3;
     margin-top: 0px;
     padding: 0px;
 }
@@ -53,7 +55,7 @@ body {
 .navbar div{
     margin: 0px;
     padding: 5px;
-    background-color: #6AA3E7;
+    background-color: #00a8f3;
 }
 
 .fa-user, .nav-link, .navbar-brand{
@@ -95,7 +97,7 @@ body {
 
 .acceso{
     height: auto;
-    width: 550px;
+    width: 640px;
     padding: 30px;
     margin:0 auto;
 }
@@ -125,6 +127,63 @@ td{
 }*/
 /*ACCESO*/
 /*////////////////////////////////////////////////////*/
+/*AÑADIRTRASTERO*/
+#atDiv1{
+    margin: 0 auto;
+   
+}
+
+#atDiv2{
+    margin:15px;
+    padding:30px;
+}
+
+#nombre{
+    margin-right:50px;
+}
+
+.estanteria{
+    list-style: none;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    margin-top:20px;
+    margin-bottom: 20px;
+    background: rgb(255, 255, 255, 0.5);
+    border:solid 0.5px;
+    border-radius: 8px;
+    border-color: grey;
+}
+
+.estanteria>li{
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.estanteria>button {
+    padding: 0px 10px 0px 10px; 
+    margin-left: 0px;
+}
+
+
+#atboton1{
+    margin-top: 20px;
+}
+
+.estanteria>ul{
+    list-style: none;
+}
+.estanteria ul>li{
+    list-style: none;
+}
+
+
+
+
+
+
+
+/*AÑADIRTRASTERO*/
+/*////////////////////////////////////////////////////*/
 /*BOTONES*/
 .volver{
     background: linear-gradient(grey, white);
@@ -135,6 +194,7 @@ td{
 }
 
 nav button {
+    margin: 0px;
     width: 100%;
     /*height: 100%;*/
     align-content: center;
@@ -144,11 +204,15 @@ nav button {
     border: none;
 }
 button{
-    padding: 5px 5px 5px 5px;
+    padding: 0px 10px 0px 10px;
+    margin-left: 8px;
+    margin-right: 8px;
     /*background-color: #B6DDF8;*/
     /*background: linear-gradient(#6AA3E7, violet);*/
     /*background: linear-gradient(grey, white);*/
-    background: linear-gradient(#B6DDF8, rgb(128,128,128,0.4));
+    
+    /*background: linear-gradient(#B6DDF8, rgb(128,128,128,0.4));*/
+    background: linear-gradient(#ff7f27, rgb(128,128,128,0.4));
     border:solid 0.5px;
     border-color: grey;
     border-radius: 8px;
@@ -172,45 +236,9 @@ nav button:hover{
 /*BOTONES*/
 
 
-
-
-
-.estanteria{
-    padding-bottom: 10px;
-    padding-top: 10px;
-    margin-top:20px;
-    margin-bottom: 20px;
-    border: solid;
-    color:black;
-}
-.estanteria input{
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-
-
-
-
-/*div{
-    border:solid;
-    border-color: black;
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-input{
+/*input{
     padding-left: 5px;
-}
+}*/
 
 .inputsForm{
     display: grid;

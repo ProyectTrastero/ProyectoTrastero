@@ -28,7 +28,7 @@
         @endif
             <div class="container-fluid" >
                 <a class="navbar-brand">
-                    <img src="asset/img/logo.png" alt="" width="80" height="80">
+                    <img src="asset/img/icono2.PNG" alt="" class="rounded-circle" width="80" height="80">
                     Mitrastero.com
                 </a>
                 @if(!empty($_SESSION['usuario']))
@@ -85,8 +85,7 @@
         </svg> --}}-->
         
       
-        @yield('content')
-    <a href="https://es.pngtree.com">Pngtree.com</a>    
+        @yield('content')   
     </body>
         <!-- Scripts -->
         <script src="asset/js/bootstrap/bootstrap.min.js"></script>

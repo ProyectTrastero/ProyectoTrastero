@@ -94,6 +94,8 @@
                     <th>Fecha</th>
                     <th>Nombre</th>
                     <th>Descripcion</th>
+                    <th>Ubicación</th>
+                    
                 </tr>
             </table>
 
