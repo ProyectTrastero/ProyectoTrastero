@@ -29,15 +29,31 @@ session_start();
 
 if (isset($_POST['buscarProducto'])) {
     $palabra = $_POST ['palabraBuscar'];
-    $productos= App\Producto::recuperaProductosPorPalabra($bd, $palabra);
+    $miTrastero=$_SESSION['miTrastero'];
+    $idTrastero = $miTrastero->getId();
+    $productos= App\Producto::recuperaProductosPorPalabraYTrastero($bd, $palabra, $idTrastero);
+    $_SESSION['productos'] = $productos;
+    $usuario= $_SESSION['usuario'];
+    $idUsuario = $usuario->getId();
+    $idUsuario  = intval($idUsuario); 
+    $etiquetas = App\Etiqueta::recuperaEtiquetasPorUsuario($bd, $idUsuario);
+    echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas'));
+    die; 
+    
+}elseif (isset($_POST['seleccionEtiquetas'])) {  
+    foreach($_POST['IdsEtiquetas'] as $idEtiqueta){
+        $idEtiquetas[]=$idEtiqueta;
+    }
+    $miTrastero=$_SESSION['miTrastero'];
+    $idTrastero = $miTrastero->getId();
+    $productos= App\Producto::buscarProductosPorIdEtiqueta($bd, $idEtiquetas);
     $_SESSION['productos'] = $productos;
     $miTrastero=$_SESSION['miTrastero'];
     $usuario= $_SESSION['usuario'];
-    echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero'));
-    die; 
-    
-}elseif (isset($_POST['añadirEtiquetas'])) {  
-    header("location:../public/añadirEtiqueta.php"); 
+    $idUsuario = $usuario->getId();
+    $idUsuario  = intval($idUsuario); 
+    $etiquetas = App\Etiqueta::recuperaEtiquetasPorUsuario($bd, $idUsuario);
+    echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas'));
     die;
       
 }elseif (isset($_REQUEST['modificarProducto'])) { 
@@ -47,6 +63,12 @@ if (isset($_POST['buscarProducto'])) {
     echo "Borrado";
 }elseif (isset($_POST['volverTrasteros'])) {
     header("location:../public/accederTrastero.php"); 
+    die;
+}elseif (isset($_POST['eliminarProducto'])) {
+    foreach($_POST['IdsProductos'] as $idProducto){
+        App\Producto::eliminarProductoporID($bd, $idProducto);
+    }
+    header("location:../public/buscarProducto.php"); 
     die;
 }else{
     if (isset($_REQUEST['perfilUsuario'])) {
@@ -68,14 +90,10 @@ if (isset($_POST['buscarProducto'])) {
     $usuario = $_SESSION['usuario'];
     $trasteros = $_SESSION['trasteros'];
     $miTrastero = $_SESSION['miTrastero'];
- 
     $idUsuario = $usuario->getId();
-    $idUsuario  = intval($idUsuario);
-    
+    $idUsuario  = intval($idUsuario); 
     $etiquetas = App\Etiqueta::recuperaEtiquetasPorUsuario($bd, $idUsuario);
-    
 
-    
     echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas'));
     die;
 }

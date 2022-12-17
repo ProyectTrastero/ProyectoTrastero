@@ -49,22 +49,34 @@ class Etiqueta {
         $this->idUsuario = $idUsuario;
     }
 
+    public static function recuperarEstanteriasPorIdTrastero($bd, $idTrastero): array{
+        $consulta="select * from Estanterias where idTrastero = $idTrastero order by numero asc";
+        $registro = $bd->query($consulta);
+        $registro->setFetchMode(PDO::FETCH_CLASS, Estanteria::class);
+        $estanterias=($registro->fetchAll()) ?: null;
+        if($estanterias==null){
+            $estanterias=array();
+        }
+        return $estanterias;
+    }
+
     
     public static function recuperaEtiquetasPorUsuario(PDO $bd, int $idUsuario){
-        $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-        $sql = 'select * from etiquetas where id=:id';
-        $sth = $bd->prepare($sql);
-        $sth->execute([":id" => $idUsuario]);
-        $sth->setFetchMode(PDO::FETCH_CLASS, Etiqueta::class);
-        $etiqueta = array();
-            while ($etiqueta = ($sth->fetch()) ?: null){
-                $etiquetas[]=$etiqueta;
-            }
-            if (isset($etiquetas)){
-            return $etiquetas;
-            }else{
-            return "";    
-            }
+    $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+    $sql = 'select * from etiquetas where idUsuario=:id';
+    $sth = $bd->prepare($sql);
+    $sth->execute([":id" => $idUsuario]);
+    $sth->setFetchMode(PDO::FETCH_CLASS, Etiqueta::class);
+    $etiqueta=($sth->fetchAll()) ?: null;
+         if($etiqueta==null){
+            $etiqueta=array();
+        }
+        return $etiqueta;
+    }
+    
+    public function guardarEtiqueta($bd){
+    $consulta="INSERT INTO `etiquetas` (nombre, idUsuario) VALUES ('$this->nombre', $this->idUsuario);";
+    $bd->exec($consulta);
     }
         
     public static function recuperarEtiquetaPorId($bd, $idEtiqueta): Etiqueta{
@@ -76,3 +88,4 @@ class Etiqueta {
     }
 
 }
+
