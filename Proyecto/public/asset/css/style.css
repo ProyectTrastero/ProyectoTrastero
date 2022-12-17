@@ -31,7 +31,8 @@ body {
  /*APP Y NAVBAR*/ 
 
 .inicio{
-    background-color: #47a2db;
+    /*background-color: #47a2db;*/
+    background-image: url("../img/imagen5.png"); 
 /*    background-image: url("../img/fondo.png");
     background-image: url("../img/Geometric-Background-012.jpg"); */
     background-repeat: no-repeat;
@@ -40,13 +41,13 @@ body {
 }
 
 .ejecutando{
-    background-image: url("../img/geometric.png"); 
+    background-image: url("../img/imagenSecundaria.png"); 
     background-repeat: no-repeat;
     background-size: cover;
 }
 
  .navbar{
-    color: #47a2db;
+    color: #00a8f3;
     margin-top: 0px;
     padding: 0px;
 }
@@ -54,7 +55,7 @@ body {
 .navbar div{
     margin: 0px;
     padding: 5px;
-    background-color: #47a2db;
+    background-color: #00a8f3;
 }
 
 .fa-user, .nav-link, .navbar-brand{
@@ -147,7 +148,7 @@ td{
     padding-top: 25px;
     margin-top:20px;
     margin-bottom: 20px;
-    background: rgb(255, 255, 255, 0.85);
+    background: rgb(255, 255, 255, 0.5);
     border:solid 0.5px;
     border-radius: 8px;
     border-color: grey;
@@ -209,7 +210,9 @@ button{
     /*background-color: #B6DDF8;*/
     /*background: linear-gradient(#6AA3E7, violet);*/
     /*background: linear-gradient(grey, white);*/
-    background: linear-gradient(#B6DDF8, rgb(128,128,128,0.4));
+    
+    /*background: linear-gradient(#B6DDF8, rgb(128,128,128,0.4));*/
+    background: linear-gradient(#ff7f27, rgb(128,128,128,0.4));
     border:solid 0.5px;
     border-color: grey;
     border-radius: 8px;
