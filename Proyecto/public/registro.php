@@ -30,6 +30,7 @@ try {
 
 if (isset($_POST['registrarse'])) {
 
+
     
     //recuperamos la informacion
     
@@ -67,7 +68,6 @@ if (isset($_POST['registrarse'])) {
     header("location: ../public/index.php");
 }
 else{
-
     //por defecto muestra vista registro
     echo $blade->run("registro");
 }
@@ -93,12 +93,15 @@ function validarRegistro(PDO $bd, array $datos): array
     if (!Validacion::clavesNoIguales($datos['clave'], $datos['claveRepeat'])) {
         array_push($errores, "clavesNoIguales");
         array_push($errores, "clavesNoIguales");
+        array_push($errores, "clavesNoIguales");
     }
     if (!Validacion::claveInvalida($datos['clave'])) {
         array_push($errores, "claveInvalida");
         array_push($errores, "claveInvalida");
+        array_push($errores, "claveInvalida");
     }
     if (!Validacion::correoInvalido($datos['correo'])) {
+        array_push($errores, "correoInvalido");
         array_push($errores, "correoInvalido");
         array_push($errores, "correoInvalido");
     }

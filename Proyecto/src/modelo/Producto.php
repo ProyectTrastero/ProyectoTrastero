@@ -107,11 +107,12 @@ class Producto {
     }
 
     
-     public static function recuperaProductosPorPalabra(PDO $bd, string $palabra){
+    public static function recuperaProductosPorPalabraYTrastero(PDO $bd, string $palabra, $idTrastero){
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-        $sql = 'select * from productos where nombre LIKE :nombre';
+        $sql = 'select * from productos where (nombre LIKE :nombre) and (idTrastero = :idTrastero)';
         $sth = $bd->prepare($sql);
-        $sth->execute([":nombre" => $palabra]);
+        $palabra = "%$palabra%";
+        $sth->execute([":nombre" => $palabra, ":idTrastero" => $idTrastero]);
         $sth->setFetchMode(PDO::FETCH_CLASS, Producto::class);
         $producto = array();
             while ($producto = ($sth->fetch()) ?: null){
@@ -208,6 +209,30 @@ class Producto {
         }
     }
 
+    public static function eliminarProductoporID($bd, int $idProducto){
+        $consulta="delete from productos where id=$idProducto";
+        $bd->exec($consulta);
+    }
+ 
+    public static function buscarProductosPorIdEtiqueta($bd, array $idEtiquetas){
+        $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+        foreach ($idEtiquetas as $valor) {
+        $consulta = "select * from productos P join etiquetasproductos D on D.idProducto = P.id and D.idEtiqueta = :idEtiqueta";
+        $registro = $bd->prepare($consulta);
+        $registro->execute([":idEtiqueta" => $valor]);
+        }
+        $registro->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+      
+        $producto = array();
+            while ($producto = ($registro->fetch()) ?: null){
+                $productos[]=$producto;
+            }
+            if (isset($productos)){
+            return $productos;
+            }else{
+            return "";    
+            }
+    }
     
 }
 
