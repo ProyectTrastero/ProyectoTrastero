@@ -18,6 +18,7 @@ function iniciar(){
     guardado=tipo.getAttribute("value");
     ocultos= document.getElementsByClassName("papeleraOculta");
     habilitarmodal();
+    habilitarmodal();
     deshabilitarBotones();
     if(guardado=="false"){
         for(i=0;i<ocultos.length;i++){
@@ -47,7 +48,10 @@ function habilitarmodal(){
 function deshabilitarBotones(){
     if(guardado=="true"){
         var botones = document.getElementsByTagName("button");
+        var botones = document.getElementsByTagName("button");
         for(i=0;i<botones.length;i++){
+            var nombreValue=botones[i].innerHTML;
+            if(nombreValue!="Volver"){
             var nombreValue=botones[i].innerHTML;
             if(nombreValue!="Volver"){
                  botones[i].setAttribute("disabled", "true");

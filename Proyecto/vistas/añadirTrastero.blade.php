@@ -42,6 +42,7 @@
             <div id="atDiv2">
                 @if($datosTrastero['tipo']=="guardar")
                 <label for="nombre">NOMBRE:</label>
+                <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 @endif
                 <button type="submit" name="guardar">Guardar</button>
@@ -74,9 +75,51 @@
             @endphp
 
             @foreach ($datosTrastero['almacenBaldas'] as $balda)
+    <div class="row">
+        @foreach ($datosTrastero['almacenEstanterias'] as $estanteria)
+        <div class="col-4">
+            <ul class="estanteria">
+                <li>
+                    <form action="" method="POST">
+                        <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
+                        <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
+                        <span class="papeleraOculta" contenteditable="false">{{$estanteria->getNombre()}}</span>
+                    </form>
+                </li>
+
+            @php
+                $baldasRecuperadas=array();
+            @endphp
+
+            @foreach ($datosTrastero['almacenBaldas'] as $balda)
                 @php
                     $baldasRecuperadas= $balda->recuperarBaldasPorIdEstanteria($bd, $estanteria->getId());
+                    $baldasRecuperadas= $balda->recuperarBaldasPorIdEstanteria($bd, $estanteria->getId());
                 @endphp
+            @endforeach
+            @foreach ($baldasRecuperadas as $balda)
+                <ul> 
+                    <li>
+                        <form action="" method="POST">
+                            <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
+                            <input type="hidden" name="idBalda" value="{{$balda->getId()}}">
+                            <span class="papeleraOculta" contenteditable="false">{{$balda->getNombre()}}</span>
+                        </form>
+                    </li> 
+                    <ul>
+
+                        @foreach($datosTrastero['almacenCajas'] as $caja)
+                            @if(($caja->getIdEstanteria()==$estanteria->getId())&&($caja->getIdBalda()==$balda->getId()))
+                            <li>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="idBalda" value="{{$balda->getId()}}"> 
+                                    <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
+                                    <input type="hidden" name="idCaja" value="{{$caja->getId()}}">
+                                    <span class="papeleraOculta" contenteditable="false">{{$caja->getNombre()}}</span>
+                                </form>
+                            </li>
+                            @endif
+                        @endforeach
             @endforeach
             @foreach ($baldasRecuperadas as $balda)
                 <ul> 
@@ -114,7 +157,9 @@
             
         </div>
         @endforeach
+        @endforeach
     </div>
+
 
     <div>
         <ul>
