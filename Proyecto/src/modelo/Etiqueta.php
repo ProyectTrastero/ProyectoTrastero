@@ -84,7 +84,7 @@ class Etiqueta implements \JsonSerializable{
     public static function recuperarEtiquetaPorId(PDO $bd, int $idEtiqueta){
         $sql="select * from etiquetas where id = :idEtiqueta";
         $stmt = $bd->prepare($sql);
-        $stmt->execute(['idEtiqueta' => $idEtiqueta]);
+        $stmt->execute([':idEtiqueta' => $idEtiqueta]);
         $stmt->setFetchMode(PDO::FETCH_CLASS, Etiqueta::class);
         $etiqueta = ($stmt->fetch()) ?: null;
         return $etiqueta;
@@ -93,6 +93,29 @@ class Etiqueta implements \JsonSerializable{
     public function guardarEtiqueta($bd){
     $consulta="INSERT INTO `etiquetas` (nombre, idUsuario) VALUES ('$this->nombre', $this->idUsuario);";
     $bd->exec($consulta);
+    }
+
+    public function checkExisteNombreEtiqueta(PDO $bd):bool{
+        $sql="select * from etiquetas where nombre = :nombre and idUsuario = :idUsuario";
+        $stmt = $bd->prepare($sql);
+        //si falla la consulta
+        if (!$stmt->execute([':nombre'=>$this->nombre, ':idUsuario'=>$this->idUsuario])) {
+            //cerramos la conexion
+            $stmt = null;
+            //existe
+            return false;
+        }
+        //si mayor que 0, existe
+        if($stmt->rowCount()>0){
+            $stmt=null;
+            return false;
+        }else{
+            //no existe
+            $stmt=null;
+            return true;
+        }
+
+
     }
 
 }

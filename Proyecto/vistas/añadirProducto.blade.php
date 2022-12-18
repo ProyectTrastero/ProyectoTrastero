@@ -8,11 +8,6 @@
 @section('navbar')
 <script src="asset/js/añadirProducto.js"></script>
 
-@if($mensaje!=""))
-<input type="hidden" id="mostrarModal" value="si">
-@else
-<input type="hidden" id="mostrarModal" value="no">
-@endif
     
 
 <!--<form action="{{ $_SERVER["PHP_SELF"] }}" method="POST">
@@ -32,6 +27,9 @@
 @section('content')
 
 <div class="container">
+  {{-- alerts desde js --}}
+  <div  id="alerts"></div>
+  {{-- alerts desde php --}}
   @if (@isset($msj['msj-content']))
   <div class="alert alert-{{$msj['msj-type']}} alert-dismissible fade show" role="alert"">
     {{$msj['msj-content']}}
@@ -66,7 +64,7 @@
       </div>
       <h2>Ubicación</h2>
       <div>
-           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Crear Etiqueta</button>
+           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
       </div>
       
       <div>
@@ -135,12 +133,12 @@
 </div>
 
 <!-- Modal crear Etiqueta-->
-{{-- <form action="" method="POST">
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" >
+<form>
+    <div class="modal fade" id="crearEtiquetaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="false" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear etiqueta</h1>
+                    <h1 class="modal-title fs-5">Crear etiqueta</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -149,15 +147,18 @@
                     <input type="text" name="nombreEtiqueta" id="nombreEtiqueta">
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
+                    <button type="button" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
                     <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                    <button  class="btn btn-secondary" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
+                    <button type="button"  class="btn btn-secondary" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
                     <!--<input type="submit" name="crearEtiqueta" value="Crear">-->
                 </div>
             </div>
         </div>
     </div>
-</form> --}}
+</form>
+
+
+
 
 @endsection
 

@@ -73,12 +73,13 @@ function addEventToElements (){
  
 
   //añadimos event click a el boton añadir del modal para añadir etiquetas
-  // document.getElementById('crearEtiqueta').addEventListener('click',()=>{
-  //   //recuperamos el nombre de la etiqueta
-  //   let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
-  //   loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, añadirEtiqueta )
-  // })
+  document.getElementById('crearEtiqueta').addEventListener('click',()=>{
+    //recuperamos el nombre de la etiqueta
+    let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
+    loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, crearEtiqueta )
+  })
 
+  
   
 }
 
@@ -233,7 +234,8 @@ function añadirEtiqueta(xhttp){
   for (let i = 0; i < elementCloseEtiqueta.length; i++) {
     const element = elementCloseEtiqueta[i];
     element.addEventListener('click',(e)=>{
-      closeEtiqueta(e);
+      //eliminamos elemento padre del span x 
+      e.target.parentNode.remove();
     })
   }
   
@@ -263,20 +265,50 @@ function añadirEtiqueta(xhttp){
 
 }
 
+function crearEtiqueta(xhttp){
+  if(xhttp.statusText=='OK'){
+    //limpiamos el input
+    document.getElementById('nombreEtiqueta').value="";
+    //recuperamos el mensaje
+    let mensaje = JSON.parse(xhttp.responseText);
+    //creamos un div que sera el alert
+    let divElement = document.createElement('div');
+    divElement.classList.add('alert');
+    divElement.classList.add('alert-dismissible');
+    divElement.classList.add('fade');
+    divElement.classList.add('show');
+    divElement.classList.add('alert-' + mensaje['msj-type']);
+    divElement.role='alert';
+    divElement.innerHTML=mensaje['msj-content'];
+    //añadimos el div 
+    document.getElementById('alerts').appendChild(divElement);
+    
+    //creamos span x
+    let spanX = document.createElement('span');
+    spanX.classList.add('btn-close');
+    spanX.setAttribute('data-bs-dismiss','alert');
+    spanX.nodeType='button';
 
-function closeEtiqueta(e){
-  let target = e.target.parentNode;
-  let divEtiquetas = document.getElementById('etiquetasProducto');
-  for (let i = 0; i < divEtiquetas.childNodes.length; i++) {
-    const element = divEtiquetas.childNodes[i];
-    if (element.id == target.id) {
-      divEtiquetas.removeChild(element);
+    //añadimos el span x al div
+    divElement.appendChild(spanX);
+
+    //si etiqueta creada correctamente, recargamos select etiquetas
+    if (mensaje['msj-type']=='success') {
+      loadDoc('añadirProducto.php?getEtiquetas', getEtiquetas);
     }
+    
   }
+  
+  
 }
 
-// function habilitarModal(){
-//     if(infoModal=="si"){
-//        $("#staticBackdrop").modal("show");
-//     }
-// }
+//recibimos las etiquetas del usuario
+function getEtiquetas(){
+  
+  
+
+  
+}
+
+
+

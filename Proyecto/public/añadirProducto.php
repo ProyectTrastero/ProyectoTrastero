@@ -45,7 +45,6 @@ if(isset($_SESSION['usuario'])){
         header("Location: editarPerfil.php");
     }
     
-    //Hasta aquí
     
     $usuario = $_SESSION['usuario'];
     $idTrastero = $_SESSION['miTrastero']->getId();
@@ -90,43 +89,42 @@ if(isset($_SESSION['usuario'])){
 
     if (isset($_GET['crearEtiqueta'])){
         $nombreEtiqueta = Validacion::sanearInput($_REQUEST['crearEtiqueta']);
+        //comprobamos si la etiqueta tiene un nombre
         if ($nombreEtiqueta != '') {
             $etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
-            $etiqueta->guardarEtiqueta($bd);
-            $mensaje='etiqueta añadida';
+            //comprobamos si el nombre de la etiqueta ya existe
+            if (!$etiqueta->checkExisteNombreEtiqueta($bd)) {
+                //el nombre de la etiqueta ya exite
+                $mensaje=['msj-content'=>'Nombre de etiqueta ya existe, elija otro.' , 'msj-type'=>'danger'];
+            }else{
+                //guardamos la etiqueta
+                $etiqueta->guardarEtiqueta($bd);
+                $mensaje=['msj-content'=>'Etiqueta añadida.' , 'msj-type'=>'success'];
+            }
         }else{
-            $mensaje='El campo nombre de etiqueta es obligatorio.';
+            $mensaje=['msj-content'=>'El campo nombre de etiqueta es obligatorio.' , 'msj-type'=>'danger'];
         }
-        echo $mensaje;
+        echo json_encode($mensaje);
         die;
     
     }
 
     
-    // if(isset($_POST['crearEtiqueta'])){
-        
-    //     $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
-    //     $idUsuario = $usuario->getId();
-    //     if($nombreEtiqueta==""){
-    //        $mensaje="El campo nombre de etiqueta es obligatorio.";
-    //     }else{
-    //         $etiqueta = new Etiqueta();
-    //         $etiqueta->setNombre($nombreEtiqueta);
-    //         $etiqueta->setIdUsuario($idUsuario);
-    //         $etiqueta->guardarEtiqueta($bd);
-    //         $mensaje = "Etiqueta creada correctamente";
-    //     }
-        
-    // }
     
     if(isset($_GET['añadirEtiqueta'])){
         $idEtiqueta = intval($_REQUEST['añadirEtiqueta']);
         $objectEtiqueta = Etiqueta::recuperarEtiquetaPorId($bd, $idEtiqueta);
         array_push($arrayAñadirEtiquetas,$objectEtiqueta);
-        $daniel = json_encode($arrayAñadirEtiquetas);
         echo json_encode($arrayAñadirEtiquetas);
         
         die;        
+    }
+
+    if(isset($_GET['getEtiquetas'])){
+        //recuperamos las etiquetas del usuario
+        $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
+        echo json_encode($etiquetas);
+        
     }
 
     if(isset($_POST['volver'])){
@@ -205,6 +203,6 @@ if(isset($_SESSION['usuario'])){
 
     
 
-    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj, 'mensaje'=>$mensaje]);
+    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj]);
 }
  
