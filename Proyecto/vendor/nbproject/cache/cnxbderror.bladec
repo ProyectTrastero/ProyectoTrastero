@@ -1,0 +1,11 @@
+<?php /* Usamos la vista app como plantilla */ ?>
+<?php $_shouldextend[1]=1; ?>
+<?php /* Sección aporta el título de la página */ ?>
+<?php $this->startSection('title', 'Error Conexion BD'); ?>
+<?php /* Sección muestra mensaje de error de conexión a la base de datos */ ?>
+<?php $this->startSection('content'); ?>
+<div class="container justify-content-center">
+ Error de conexión. Inténtelo más tarde
+</div>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('app'); } ?>
