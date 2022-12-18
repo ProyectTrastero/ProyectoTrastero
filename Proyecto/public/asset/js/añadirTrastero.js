@@ -4,11 +4,17 @@ var antiguoNombre;
 var idElemento;
 var primerElemento;
 var guardado;
-
+var infoModal;
+var infoModal2;
 function iniciar(){
     var tipo = document.getElementById("guardadoModificado");
+    var modal=document.getElementById("mostrarModal");
+    infoModal=modal.value;
+    var modal2=document.getElementById("mostrarModal2");
+    infoModal2=modal2.value;
     guardado=tipo.getAttribute("value");
     ocultos= document.getElementsByClassName("papeleraOculta");
+    habilitarmodal();
     deshabilitarBotones();
     if(guardado=="false"){
         for(i=0;i<ocultos.length;i++){
@@ -20,12 +26,23 @@ function iniciar(){
     }  
 }
 
+function habilitarmodal(){
+    if(infoModal=="si"){
+       $("#staticBackdrop1").modal("show");
+    }
+    
+    if(infoModal2=="si"){
+       $("#staticBackdrop").modal("show");
+    }
+   
+}
+
 function deshabilitarBotones(){
     if(guardado=="true"){
-        var botones = document.getElementsByTagName("input");
+        var botones = document.getElementsByTagName("button");
         for(i=0;i<botones.length;i++){
-            var nombreAtributo=botones[i].getAttribute("value");
-            if(nombreAtributo!="VOLVER"){
+            var nombreValue=botones[i].innerHTML;
+            if(nombreValue!="Volver"){
                  botones[i].setAttribute("disabled", "true");
             }
            
@@ -80,7 +97,6 @@ function añadirPapelera(e){
         var atributo2 = document.createAttribute("name");
         var atributo3 = document.createAttribute("style");
         atributo3.value = "color: red; border: white";
-       
         var elementoAnterior=elemento.previousElementSibling;
         var nombre = elementoAnterior.getAttribute("name");
         

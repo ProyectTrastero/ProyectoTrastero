@@ -5,9 +5,10 @@ use eftec\bladeone\BladeOne;
 use Dotenv\Dotenv;
 use App\{
     BD,
-    Usuario
+    Usuario,
+    Producto
 };
-
+session_start();
 // Inicializa el acceso a las variables de entorno
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->load();
@@ -25,7 +26,7 @@ try {
     die;
 }
 
-session_start();
+
 
 //Esta parte la he añadido yo. Emma
 
@@ -55,25 +56,8 @@ if(!empty($_SESSION['datosTrastero'])){
             }
         $_SESSION['datosTrastero'] = array();
     }
-    if($tipo=="modificar"){
-        $datosTrastero=$_SESSION['datosTrastero'];
-        $trasteroGuardado =$datosTrastero['guardado'];
-        $creados=$datosTrastero['creados'];
-        $eliminados = $datosTrastero['eliminados'];
-        if(!$trasteroGuardado){
-            foreach($creados as $clave=>$valor){
-                $valor->eliminar($bd);
-            } 
-
-            foreach($eliminados as $clave=>$valor){
-                $valor->añadir($bd);
-            }
-            $_SESSION['datosTrastero'] = array();
-        }else{
-            $_SESSION['datosTrastero'] = array();
-        } 
-    }
 }
+
 //Hasta aquí
 
 if (isset($_REQUEST['acceder'])) {
@@ -91,8 +75,6 @@ if (isset($_REQUEST['acceder'])) {
       
 }elseif (isset($_REQUEST['modificar'])) { 
     $_SESSION['idTrastero']=$_POST['id'];
-    //Para probar pagina de ver trastero
-//    header("location:../public/verTrastero.php"); 
     header("location:../public/modificarTrastero.php"); 
     die;
 //Esta parte la he añadido yo. Emma   
@@ -112,6 +94,10 @@ if (isset($_REQUEST['acceder'])) {
     $cajas= App\Caja::recuperarCajasPorIdTrastero($bd, $idTrastero);
     foreach ($cajas as $caja){
         $caja->eliminar($bd);
+    }
+    $productos= Producto::recuperarProductosPorIdTrastero($bd, $idTrastero);
+    foreach($productos as $producto){
+        $producto->eliminar($bd);
     }
     
     $usuario = $_SESSION['usuario'];

@@ -6,10 +6,10 @@
 
 {{-- Sección mensaje --}}
 @section('content')
-<script src="asset/js/ubicacionCaja.js"></script>
-<form action="" method="POST">     
+    <form action="" method="POST">     
     <div class="container">
         <div>Seleccione la ubicación de la caja:</div>
+        <div>{{$mensaje}}</div>
         <div>
             <label for="estanteria">Estantería</label>
             <select id="seleccionEstanteria" name="estanteria">

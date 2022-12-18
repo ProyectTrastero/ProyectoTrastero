@@ -25,6 +25,7 @@ try {
     die;
 }
 
+
 if (isset($_POST['procsesion'])) {
     $alias = trim(filter_input(INPUT_POST, 'alias', FILTER_SANITIZE_STRING));
     $clave = trim(filter_input(INPUT_POST, 'clave', FILTER_SANITIZE_STRING));
@@ -48,8 +49,3 @@ if (isset($_POST['procsesion'])) {
     echo $blade->run("sesion");
     die;
 }
-
-  
-  
-
- 

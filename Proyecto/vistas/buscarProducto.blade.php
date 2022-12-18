@@ -24,29 +24,26 @@
 <div  class='container'>
     <div>
         <h3>{{$miTrastero->getNombre()  }}</h3>
-    </div>    
-    <form method="POST" action="" name="formBusqueda">
-        <input type="text" name="palabraBuscar" placeholder="producto">
-        <button type="submit" name="buscarProducto">Buscar por palabra</button>
-    </form>
-    <br/>
-    <div>     
-        @if (isset ($etiquetas))
-            <label for="etiquetas">Mis etiqueta: </label><br/>
-                @if ($etiquetas != "")      
-                    <form action="" method="POST" id='formBuscarProductoporEtiqueta'>
-                        @foreach ($etiquetas as $valor)
-                            <input type="checkbox" name="IdsEtiquetas[]" value="{{$valor->getId()  }}">
-                            <a class='col-3'>{{$valor->getNombre()  }}</a>
-                        @endforeach
-                        <button type="submit" name="seleccionEtiquetas">Buscar por etiquetas seleccionadas</button>
-                    </form>
-                @else
-                    <div>           
-                        <h4>Usted aun no tiene ninguna etiqueta</h4>    
-                    </div>
-                @endif
-        @endif
+    </div>
+    <div>
+        <form method="POST" action="" name="formBusqueda">
+            <input type="text" name="palabraBuscar" placeholder="producto">  
+        <br/>
+            @if (isset ($etiquetas))
+                <label for="etiquetas">Mis etiqueta: </label><br/>
+                    @if ($etiquetas != "")      
+                            @foreach ($etiquetas as $valor)
+                                <input type="checkbox" name="IdsEtiquetas[]" value="{{$valor->getId()  }}">
+                                <a class='col-3'>{{$valor->getNombre()  }}</a>
+                            @endforeach
+                    @else
+                        <div>           
+                            <h4>{{$msj}}Usted aun no tiene ninguna etiqueta</h4>    
+                        </div>
+                    @endif
+            @endif
+            <button type="submit" name="buscarProducto">Buscar producto</button>
+        </form>
     </div>
         @if (isset ($productos))
             @if ($productos != "")
@@ -100,7 +97,7 @@
             </div>
             @else
             <div>           
-                <h2>No existen productos con esos parametros</h2>    
+                <h2>{{$msj}}</h2>    
             </div>
             @endif
         @endif

@@ -32,6 +32,18 @@ session_start();
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
 
+    
+    //añadido por Emma para dar funcionalidad al nav
+    if(isset($_REQUEST['cerrarSesion'])){
+        session_destroy();
+        header("Location: index.php");
+        die;
+    }
+    if(isset($_REQUEST['perfilUsuario'])){
+        header("Location: editarPerfil.php");
+    }
+    
+    //Hasta aquí
     if (isset($_POST['volver'])) {
         header('location: acceso.php');
         die;
@@ -61,7 +73,7 @@ if (isset($_SESSION['usuario'])) {
         //comprobamos si tenemos errores
         if (count($errores) > 0) {
            if(in_array("noModificado", $errores)){
-                
+                //inicializamos variable para mostrar mensaje
                 $_SESSION['msj']="No se ha modificado ningun campo";
                 $_SESSION['msj-type']="info";
             }
