@@ -4,24 +4,7 @@
 {{-- Sección aporta el título de la página --}}
 @section('title', 'Mi trastero Inicio')
 
-{{-- Sección de la barra de navegación con el usuario identificado --}}
-@section('navbar')
-<script src="asset/js/añadirProducto.js"></script>
 
-    
-
-<!--<form action="{{ $_SERVER["PHP_SELF"] }}" method="POST">
-  <div class="nav-item dropdown">
-    <div class="nav-link dropdown-toggle " href="#"  data-bs-toggle="dropdown" aria-expanded="false">
-      {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
-    </div>
-    <ul class="dropdown-menu dropdown-menu-end ">
-      <li><button class="dropdown" type="submit" name="perfilUsuario">Perfil usuario</button></li>
-      <li><button class="dropdown" type="submit" name="cerrarSesion">Cerrar sesión</button></li>
-    </ul>
-  </div>
-</form>-->
-@endsection
 
 {{-- Sección content --}}
 @section('content')
@@ -165,6 +148,10 @@
 @endsection
 
 
-
+@if ($pagina == 'añadirProducto')
+  <script src="asset/js/añadirProducto.js"></script>
+@else
+    
+@endif
 
 

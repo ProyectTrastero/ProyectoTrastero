@@ -11,8 +11,7 @@ use App\{
     Estanteria,
     Producto,
     Validacion,
-    Etiqueta,
-    Usuario
+    Etiqueta
 };
 
 // Inicializa el acceso a las variables de entorno
@@ -33,9 +32,7 @@ try {
 }
 
 session_start();
-$mensaje="";
 if(isset($_SESSION['usuario'])){
-    //añadido por Emma para dar funcionalidad al nav
     if(isset($_REQUEST['cerrarSesion'])){
         session_destroy();
         header("Location: index.php");
@@ -206,6 +203,6 @@ if(isset($_SESSION['usuario'])){
 
     
 
-    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj]);
+    echo $blade->run('añadirModificarProducto',['pagina'=>'añadirProducto','usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj]);
 }
  

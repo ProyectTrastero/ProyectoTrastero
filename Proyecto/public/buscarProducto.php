@@ -57,7 +57,8 @@ if (isset($_POST['buscarProducto'])) {
     die;
       
 }elseif (isset($_REQUEST['modificarProducto'])) { 
-    header("location:../public/modificarProducto.php"); 
+    (isset($_POST['id'])) ? $idProducto = $_POST['id'] : $idProducto = "";
+    header("location:../public/modificarProducto.php?idProducto=$idProducto"); 
     die;
 }elseif (isset($_REQUEST['eleminaSeleccion'])) {
     echo "Borrado";

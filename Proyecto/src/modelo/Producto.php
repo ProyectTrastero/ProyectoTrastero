@@ -106,6 +106,20 @@ class Producto {
         $this->idCaja = $idCaja;
     }
 
+    public static function recuperarProductoPorId (PDO $bd, int $idProducto):mixed{
+        $query =    "select * from productos where id = :idProducto";
+        $stmt = $bd->prepare($query);
+        if (!$stmt->execute([':idProducto'=>$idProducto])) {
+            //si falla el insert
+            $stmt = null;
+            return false;
+        }else{
+            $stmt->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+            $producto = $stmt->fetch();
+            $stmt=null;
+            return $producto;
+        }
+    }
     
     public static function recuperaProductosPorPalabraYTrastero(PDO $bd, string $palabra, $idTrastero){
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
