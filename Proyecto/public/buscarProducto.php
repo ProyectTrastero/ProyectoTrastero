@@ -57,6 +57,7 @@ if (isset($_POST['buscarProducto'])) {
     die;
       
 }elseif (isset($_REQUEST['modificarProducto'])) { 
+    //enviamos el id del producto que vamos a modificar
     (isset($_POST['id'])) ? $idProducto = $_POST['id'] : $idProducto = "";
     header("location:../public/modificarProducto.php?idProducto=$idProducto"); 
     die;
