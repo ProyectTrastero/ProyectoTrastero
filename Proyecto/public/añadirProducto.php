@@ -119,12 +119,13 @@ if(isset($_SESSION['usuario'])){
         
         die;        
     }
-
+    //despues de crear una etiqueta, recuperamos las etiquetas para actualizar el select
     if(isset($_GET['getEtiquetas'])){
         //recuperamos las etiquetas del usuario
-        $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
-        echo json_encode($etiquetas);
+        $etiquetasUpdate = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
+        echo json_encode($etiquetasUpdate);
         
+        die;
     }
 
     if(isset($_POST['volver'])){
@@ -175,9 +176,11 @@ if(isset($_SESSION['usuario'])){
             }
         }
         
-        
+        //si se ha especificado nombre y ubicacion
         if (count($errores)==0) {
+            //añadimos el producto
             $idProducto=Producto::añadirProducto($bd,$datos);
+            //si producto añadido correctamente
             if ($idProducto != -1) {
                 $msj['msj-content']="Producto añadido con exito";
                 $msj['msj-type']="success";
@@ -185,7 +188,7 @@ if(isset($_SESSION['usuario'])){
                 foreach ($arrayInputAñadirEtiquetas as $idEtiqueta) {
                     if($idEtiqueta != ""){
                         $idEtiqueta=intval($idEtiqueta);
-                        //enlazamos la etiqueta con el producto
+                        //añadimos las etiquetas a el producto
                         //si falla mostramos error
                         if(!Producto::añadirEtiquetaProducto($bd,$idEtiqueta,$idProducto)){
                             $msj['msj-content']="Error al añadir el etiqueta";

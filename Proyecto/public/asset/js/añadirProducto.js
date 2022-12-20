@@ -8,10 +8,6 @@ function iniciar(){
   ////get idTrastero
   loadDoc('añadirProducto.php?getIdTrastero',getIdTrastero);
 
-  // var modal=document.getElementById("mostrarModal");
-  // infoModal=modal.value;
-  // habilitarModal();
-
   ////estanterias
   let idEstanteria= document.getElementById('selectEstanterias').value;
   if(idEstanteria != ""){
@@ -41,9 +37,9 @@ function addEventToElements (){
   //añadimos event change a selectEstanterias
   //cuando seleccionamos una estanteria enviamos el id que hemos seleccionado al server
   document.getElementById('selectEstanterias').addEventListener('change',function(){
-    console.log(this.value);
     loadDoc('añadirProducto.php?idEstanteria=' + this.value , setBaldas);
 
+    //enviamos el id de la balda
     let baldaSelected = document.getElementById('selectBaldas').value;
     loadDoc('añadirProducto.php?idBalda=' + baldaSelected, setCajas);
   })
@@ -54,7 +50,7 @@ function addEventToElements (){
     loadDoc('añadirProducto.php?idBalda=' + this.value, setCajas);
   })
 
-  ////añadimos event change a los radio buttons 
+  ////añadimos event click a los radio buttons 
   let radios = document.getElementsByName('ubicacion');
   for (let i = 0; i < radios.length; i++) {
     const radio = radios[i];
@@ -91,18 +87,19 @@ function loadDoc(url,cFunction){
 }
 
 function getIdTrastero (xhttp){
+  //recibimos el id del trastero
   idTrastero = xhttp.responseText;
 }
 
 function setBaldas(xhttp){
+  //select en donde iran las baldas
   const selectBaldas = document.getElementById('selectBaldas');
   //primero eliminamos los elementos
   Array.from(selectBaldas.childNodes).forEach(optionElement =>{
     optionElement.remove();
   })
-  console.log(xhttp);
+
   //recibimos las baldas 
-  
   let baldas = JSON.parse(xhttp.responseText);
   baldas.forEach(balda => {
   //creamos los elementos option 
@@ -117,16 +114,16 @@ function setBaldas(xhttp){
 }
 
 function setCajas (xhttp){
+  //select en donde iran las cajas que tienen ubicacion
   const selectCajas = document.getElementById('selectCaja');
   //primero eliminamos los elementos
   Array.from(selectCajas.childNodes).forEach(optionElement => {
     optionElement.remove();
   })
-  console.log(xhttp);
   //agregamos la opcion por defecto
   let opcionDefault = document.createElement('option');
   opcionDefault.value = 0;
-  opcionDefault.innerText='Seleccione una opción';
+  opcionDefault.innerText='No ubicar en caja';
   opcionDefault.setAttribute('selected','true');
   selectCajas.appendChild(opcionDefault);
   //recibimos las cajas
@@ -193,7 +190,6 @@ function showHide(e){
 }
 
 function añadirEtiqueta(xhttp){
-  console.log(xhttp);
   //value del select
   let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
   //si no recuperamos el id salimos
@@ -218,6 +214,7 @@ function añadirEtiqueta(xhttp){
   spanElement.classList.add('etiqueta');
   spanElement.classList.add('d-inline-flex');
   spanElement.classList.add('align-items-center');
+  spanElement.classList.add('mb-1')
   //añadimos el span etiqueta a el div etiquetas producto
   document.getElementById('etiquetasProducto').appendChild(spanElement);
   //creamos elemento span que sera la x
@@ -273,15 +270,32 @@ function crearEtiqueta(xhttp){
     let mensaje = JSON.parse(xhttp.responseText);
     //creamos un div que sera el alert
     let divElement = document.createElement('div');
+    
+
+    //añadimos clases alert
     divElement.classList.add('alert');
     divElement.classList.add('alert-dismissible');
     divElement.classList.add('fade');
     divElement.classList.add('show');
     divElement.classList.add('alert-' + mensaje['msj-type']);
+
     divElement.role='alert';
     divElement.innerHTML=mensaje['msj-content'];
-    //añadimos el div 
+
+    //eliminamos el span despues de un tiempo establecido
+    //pendiente de mejorar
+    setTimeout(() => {
+      divElement.classList.remove('show');
+    }, 3000);
+    divElement.addEventListener('transitionend',()=>{
+      divElement.remove();
+    })
+    //añadimos tiempo para que desaparesca el alert
+    
+    //añadimos el div alert
     document.getElementById('alerts').appendChild(divElement);
+    document.getElementById('alerts').style.overflowX='hidden';
+    
     
     //creamos span x
     let spanX = document.createElement('span');
@@ -303,9 +317,27 @@ function crearEtiqueta(xhttp){
 }
 
 //recibimos las etiquetas del usuario
-function getEtiquetas(){
+function getEtiquetas(xhttp){
+  //parse json la response
+  let etiquetasToUpdate = JSON.parse(xhttp.responseText);
+  //seleccionamos el select etiquetas
+  let selectEtiquetas = document.getElementById('selectEtiquetas');
+  //eliminamos las etiquetas
+  Array.from(selectEtiquetas.childNodes).forEach(etiqueta=>{
+    //eliminamos las etiquetas
+    etiqueta.remove();
+  })
   
-  
+  //recorremos las etiquetas actualizadas
+  etiquetasToUpdate.forEach(etiqueta=>{
+    //creamos element option
+    let optionElement = document.createElement('option');
+    optionElement.value = etiqueta.id;
+    optionElement.innerText = etiqueta.nombre;
+    //añadimos la etiqueta al select
+    selectEtiquetas.appendChild(optionElement);
+  })
+
 
   
 }

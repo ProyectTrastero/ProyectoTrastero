@@ -267,7 +267,7 @@ nav button:hover{
 
 
 .hide{
-	display: none;
+	display: none !important;
 }
 
 .etiqueta{
@@ -279,6 +279,11 @@ nav button:hover{
     margin-right: 0.3em;
 }
 
+.inputsSelect{
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 0.5em;
+}
 /*
 
 svg{

@@ -43,9 +43,8 @@
 
   <form action="{{$_SERVER["PHP_SELF"]}}" method="POST">
 
-    
-
-      <div>
+    <div class="row mt-3">
+      <section class="col-lg-6">
         <h1>Producto</h1>
         <div class="inputsForm">
           <label for="nombreProducto">Nombre: </label>
@@ -56,33 +55,36 @@
               Ingresa un nombre al producto.
             </div>
           @endif
-
+  
           <label for="descripcionProducto">Descripción: </label>
           <input type="text" name="descripcionProducto" class="form-control">
         </div>
-
-      </div>
-      <h2>Ubicación</h2>
-      <div>
-           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
-      </div>
-      
-      <div>
-        <label for="radioUbicacionEstanteria">Ubicar en estanteria</label>
-        <input class="me-3" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria">
-        <label for="radioCajasSinAsignar">Ubicar en caja sin ubicación</label>
-        <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar">
-        <label for="radioSinAsignar">No asignar ubicación</label>
-        <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" checked>
-        @if(isset($errores) && in_array("sinUbicacion", $errores)) 
-          <div class="textError form-text p-1 text-start">
-            Selecciona una ubicación.
+  
+      </section>
+      <section class="col-lg-6 mt-2">
+        <h2>Ubicación</h2>
+        <div class="d-flex flex-wrap">
+          <div>
+            <label for="radioUbicacionEstanteria">Ubicar en estanteria</label>
+            <input class="me-3" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria">
           </div>
-        @endif
-      </div>
-      
-      <div id="idUbicacionEstanteria" class="hide">
-        <div>
+          <div>
+            <label for="radioCajasSinAsignar">Ubicar en caja sin ubicación</label>
+            <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar">
+          </div>
+          <div>
+            <label for="radioSinAsignar">No asignar ubicación</label>
+            <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" checked>
+          </div>
+
+          @if(isset($errores) && in_array("sinUbicacion", $errores)) 
+            <div class="textError form-text p-1 text-start">
+              Selecciona una ubicación.
+            </div>
+          @endif
+        </div>
+        
+        <div id="idUbicacionEstanteria" class="hide inputsSelect mt-2">
           <label for="selectEstanterias">Estanteria: </label>
           <select name="estanteria" id="selectEstanterias" disabled>
             @foreach ($estanterias as $estanteria)
@@ -90,26 +92,21 @@
             @endforeach
           </select>
 
-        </div>
-        <div>
           <label for="selectBaldas">Balda: </label>
           <select name="balda" id="selectBaldas" disabled></select>
 
-        </div>
-
-        <div>
           <label for="selectCaja">Caja: </label>
           <select name="caja" id="selectCaja" disabled></select>
         </div>
-
-      </div>
-
-      <div id="idUbicacionCajasSinAsignar" class="hide">
-        <label for="selectCajasSinAsignar">Caja: </label>
-        <select name="cajasSinAsignar" id="selectCajasSinAsignar" disabled></select>
-      </div>
-
-
+  
+        <div id="idUbicacionCajasSinAsignar" class="hide inputsSelect mt-2">
+          <label for="selectCajasSinAsignar">Caja: </label>
+          <select name="cajasSinAsignar" id="selectCajasSinAsignar" disabled></select>
+        </div>
+  
+      </section>
+    </div>
+    <section class="containerEtiquetas mt-2">
       <h2>Etiquetas</h2>
       <div id="inputEtiquetas"></div>
       <div id="etiquetasProducto"></div>
@@ -121,13 +118,18 @@
               <option value="{{$etiqueta->getId()}}">{{$etiqueta->getNombre()}}</option>
           @endforeach
         </select>
-        <button type="button" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+        <div class="d-inline-block mt-1">
+          <button type="button" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
+        </div>
+      
       </div>
+    </section>
 
-      <div class="text-end">
-        <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
-        <button type="submit" class="btn btn-primary " name="añadir">Añadir</button>
-      </div>
+    <div class="text-end mt-3">
+      <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
+      <button type="submit" class="btn btn-primary " name="añadir">Añadir</button>
+    </div>
 
   </form>
 </div>
