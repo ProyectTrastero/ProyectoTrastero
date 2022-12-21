@@ -223,6 +223,21 @@ class Producto {
         }
     }
 
+    public static function recuperarEtiquetasPorProductoId(PDO $bd, int $idProducto):mixed{
+        $sql = "select ep.idProducto, ep.idEtiqueta,  e.nombre as 'nombreEtiqueta' from etiquetasproductos ep \n"
+                . "inner join etiquetas e on ep.idEtiqueta = e.id \n"
+                . "where idProducto = :idProducto;";
+        $stmt = $bd->prepare($sql);
+        $stmt->execute([':idProducto'=>$idProducto]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $etiquetasProducto=($stmt->fetchAll()) ?: null;
+        if($etiquetasProducto==null){
+            $etiquetasProducto=false;
+        }
+        return $etiquetasProducto;
+        
+    }
+
     public static function eliminarProductoporID($bd, int $idProducto){
         $consulta="delete from productos where id=$idProducto";
         $bd->exec($consulta);

@@ -53,6 +53,8 @@ if(isset($_SESSION['usuario'])){
 		$idProducto = intval(Validacion::sanearInput($_GET['idProducto']));
 		//recuperamos la informacion del producto
 		$producto = Producto::recuperarProductoPorId($bd,$idProducto);
+		//recupetamos las etiquetas del producto
+		$etiquetasProducto = Producto::recuperarEtiquetasPorProductoId($bd,$idProducto);
 	}
 	echo $blade->run('añadirModificarProducto',['pagina'=>'modificarProducto']);
 }
