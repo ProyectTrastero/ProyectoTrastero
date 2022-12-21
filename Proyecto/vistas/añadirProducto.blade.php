@@ -148,10 +148,7 @@
 @endsection
 
 
-@if ($pagina == 'añadirProducto')
-  <script src="asset/js/añadirProducto.js"></script>
-@else
-    
-@endif
+
+<script src="asset/js/añadirProducto.js"></script>
 
 

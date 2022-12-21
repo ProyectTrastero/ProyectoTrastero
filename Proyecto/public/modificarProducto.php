@@ -34,6 +34,8 @@ try {
 
 session_start();
 if(isset($_SESSION['usuario'])){
+	
+	$miTrastero = $_SESSION['miTrastero'];
 	if(isset($_REQUEST['cerrarSesion'])){
 		session_destroy();
 		header("Location: index.php");
@@ -48,14 +50,16 @@ if(isset($_SESSION['usuario'])){
         die;
 	}
 
-	//recuperamos el id del producto seleccionado
+	//recuperamos el id del producto que vamos a modificar
 	if(isset($_GET['idProducto'])){
 		$idProducto = intval(Validacion::sanearInput($_GET['idProducto']));
 		//recuperamos la informacion del producto
 		$producto = Producto::recuperarProductoPorId($bd,$idProducto);
 		//recupetamos las etiquetas del producto
 		$etiquetasProducto = Producto::recuperarEtiquetasPorProductoId($bd,$idProducto);
+		//comprobamos que el producto pertenece a este trastero
+		if($producto->getIdTrastero() != $miTrastero->getId()) die;
 	}
-	echo $blade->run('añadirModificarProducto',['pagina'=>'modificarProducto']);
+	echo $blade->run('modificarProducto',['producto'=>$producto]);
 }
 

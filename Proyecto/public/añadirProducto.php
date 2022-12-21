@@ -203,6 +203,6 @@ if(isset($_SESSION['usuario'])){
 
     
 
-    echo $blade->run('añadirModificarProducto',['pagina'=>'añadirProducto','usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj]);
+    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj]);
 }
  
