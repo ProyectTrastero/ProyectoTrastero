@@ -10,7 +10,9 @@
  <div class="container sesion">
 
  <div class="container sesion">
- <h2>Iniciar sesion</h2>
+
+ <div class="container sesion">
+ <h2>Iniciar sesión</h2>
  <?php if(isset($error)): ?>
  <div class="alert alert-danger" role="alert">Error Credenciales</div>
  <?php endif; ?> 

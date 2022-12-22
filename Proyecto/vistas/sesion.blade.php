@@ -8,7 +8,7 @@
 @section('content')
 
     <div class="container sesion">
-        <h2>Iniciar sesion</h2>
+        <h2>Iniciar sesión</h2>
         @if (isset($error))
         <div class="alert alert-danger" role="alert">Error Credenciales</div>
         @endif 
