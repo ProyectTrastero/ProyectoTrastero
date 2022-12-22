@@ -8,10 +8,6 @@
 <?php $this->startSection('content'); ?>
 
  <div class="container sesion">
-
- <div class="container sesion">
-
- <div class="container sesion">
  <h2>Iniciar sesión</h2>
  <?php if(isset($error)): ?>
  <div class="alert alert-danger" role="alert">Error Credenciales</div>
@@ -25,13 +21,9 @@
  <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">AÑADIR CAJA</button>-->
  <a href="#href" id="solicitarContraseña" class="link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" > ¿Has olvidado tu contraseña?</a>
  </br><br>
- <input id="inputPassword" type="password" placeholder="Contraseña" name="clave" class="clave"><br>
- <!-- Button trigger modal -->
- <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">AÑADIR CAJA</button>-->
- <a href="#href" id="solicitarContraseña" class="link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" > ¿Has olvidado tu contraseña?</a>
- </br><br>
  <button type="submit" id="procsesion" name="procsesion"><span> Login </span> </button>
  <br/><br/>
+ <p>probando</p>
 
 
  <a>¿Aún no te has registrado?</a><br/>

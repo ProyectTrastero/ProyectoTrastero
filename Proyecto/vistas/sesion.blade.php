@@ -23,6 +23,7 @@
                          </br><br>
                     <button type="submit" id="procsesion" name="procsesion"><span> Login </span> </button>
                 <br/><br/>
+                  <p>probando</p>
 
 
                 <a>¿Aún no te has registrado?</a><br/>

@@ -48,16 +48,11 @@ function habilitarmodal(){
 function deshabilitarBotones(){
     if(guardado=="true"){
         var botones = document.getElementsByTagName("button");
-        var botones = document.getElementsByTagName("button");
         for(i=0;i<botones.length;i++){
             var nombreValue=botones[i].innerHTML;
             if(nombreValue!="Volver"){
-            var nombreValue=botones[i].innerHTML;
-            if(nombreValue!="Volver"){
                  botones[i].setAttribute("disabled", "true");
-            }
-           
-           
+            } 
         }
     }
 }
@@ -134,10 +129,9 @@ function añadirPapelera(e){
 }
 
 function eliminarPapelera(e){
-    var elemento = e.target;
+     var elemento = e.target;
     var papelera=elemento.children[0];
     var retardo=setTimeout(function(){
         elemento.removeChild(papelera);
     }, 1000);  
-
 }

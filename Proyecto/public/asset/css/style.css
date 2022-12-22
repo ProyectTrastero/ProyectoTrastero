@@ -4,11 +4,6 @@
 /*	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;*/
         font-family: Times New Roman, initial;
-/*	margin: 0;
-	padding: 0;*/
-/*	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;*/
-        font-family: Times New Roman, initial;
 }
 
 /*usados para ver  mas claramente la disposicion de los divs
@@ -323,25 +318,17 @@ nav button:hover{
     display: grid;
     gap: 1em;
     grid-template-columns: max-content auto;
-    gap: 1em;
-    grid-template-columns: max-content auto;
     align-items: center;
-    text-align: right;
     text-align: right;
 }
 
 .signUp, .formEditPerfil{
-    max-width: 680px;
     max-width: 680px;
     margin: auto;
     margin-top: 2em;
 }
 
 .textError{
-    border-radius: 0.375rem ;
-    color: #842029 !important;
-    background-color: #f8d7da;
-    border: 1px solid #f5c2c7;
     border-radius: 0.375rem ;
     color: #842029 !important;
     background-color: #f8d7da;

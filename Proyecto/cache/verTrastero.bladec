@@ -9,20 +9,14 @@
 <link rel="stylesheet" href="asset/css/verTrastero.css">
 <script src="asset/js/mostrarProductos.js"></script>
 
-<div class="container">
+<div class="vtContainer">
+ <div id="vtVolver">
+ <a  href="accederTrastero.php"><button name="volver">Volver</button></a>
+ </div>
  
- <div class="row" >
- <div class="col-5">
- <ul id="menu">
- <?php $__currentLoopData = $datosTrastero['estanterias']; $this->addLoop($__currentLoopData);$this->getFirstLoop();
- foreach($__currentLoopData as $estanteria): $loop = $this->incrementLoopIndices();  ?>
- <li>
- <input type="checkbox" name="list" id="<?php echo \htmlentities($estanteria->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>">
- <label for="<?php echo \htmlentities($estanteria->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($estanteria->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></label>
- <i class="productos fa-regular fa-eye" name="<?php echo \htmlentities($estanteria->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>" style="color: blue; border: white"></i>                    
-<script src="asset/js/mostrarProductos.js"></script>
-
-<div class="container">
+ <div id="vtnombre">
+ <span><?php echo \htmlentities($datosTrastero['nombre']??'', ENT_QUOTES, 'UTF-8', false); ?></span>
+ </div>
  
  <div class="row"  >
  <div class="col-3">
