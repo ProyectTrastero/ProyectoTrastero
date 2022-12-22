@@ -9,16 +9,24 @@
 <link rel="stylesheet" href="asset/css/verTrastero.css">
 <script src="asset/js/mostrarProductos.js"></script>
 
-<div class="container">
+<div class="vtContainer">
+    <div id="vtVolver">
+        <a  href="accederTrastero.php"><button name="volver">Volver</button></a>
+    </div>
     
-    <div class="row" >
-        <div class="col-5">
+    <div id="vtnombre">
+        <span>{{$datosTrastero['nombre']}}</span>
+    </div>
+    
+    <div class="row"  >
+        <div class="col-3">
             <ul id="menu">
+                <span><b>Trastero {{$datosTrastero['nombre']}}</b> </span>
                 @foreach($datosTrastero['estanterias'] as $estanteria)
                 <li>
                     <input type="checkbox" name="list" id="{{$estanteria->getId()}}">
                     <label for="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</label>
-                    <i class="productos fa-regular fa-eye" name="{{$estanteria->getId()}}" style="color: blue; border: white"></i>                    
+                    <i id="estanteria{{$estanteria->getId()}}" class="productos fa-regular fa-eye" name="{{$estanteria->getId()}}" style="color: blue; border: white"></i>                    
                     <ul class="interior">
                         @php 
                         $baldasRecuperadas = array()
@@ -44,14 +52,14 @@
                         @if(empty($cajasRecuperadas))
                         <li>
                             <a id="{{$balda->getId()}}" href="#r">{{$balda->getNombre()}}</a>
-                            <i class="productos fa-regular fa-eye" name="{{$balda->getId()}}" style="color: blue; border: white"></i> 
+                            <i id="balda{{$balda->getId()}}"class="productos fa-regular fa-eye" name="{{$balda->getId()}}" style="color: blue; border: white"></i> 
          
                         </li>
                         @else
                         <li>
                             <input type="checkbox" name="list" id="{{$balda->getId()}}">
                             <label for="{{$balda->getId()}}">{{$balda->getNombre()}}</label>
-                            <i class="productos fa-regular fa-eye" name="{{$balda->getId()}}" style="color: blue; border: white"></i> 
+                            <i id="balda{{$balda->getId()}}" class="productos fa-regular fa-eye" name="{{$balda->getId()}}" style="color: blue; border: white"></i> 
                              
                             <ul class="interior">
                                 <li>
@@ -60,7 +68,7 @@
                                        
                                         <li>
                                             <a id ="{{$caja->getId()}}">{{$caja->getNombre()}}</a>
-                                            <i class="productos fa-regular fa-eye" name="{{$caja->getId()}}" style="color: blue; border: white"></i> 
+                                            <i id="caja{{$caja->getId()}}" class="productos fa-regular fa-eye" name="{{$caja->getId()}}" style="color: blue; border: white"></i> 
                                         </li>
                                        
                                         @endforeach
@@ -73,13 +81,14 @@
                     </ul>
                 </li>
                @endforeach
-                <div class="row">
+                <div class="row" id="vtSinUbicar">
+                    <span><b>Sin ubicar:</b> </span>
                     @foreach ($datosTrastero['cajas'] as $caja)
                     @if(is_null($caja->getIdBalda())&&is_null($caja->getIdEstanteria()))
-                    <div class="col-3">
+                    <div class="col-4">
                         <li>
                             <a id ="{{$caja->getId()}}">{{$caja->getNombre()}}</a>
-                            <i class="productos fa-regular fa-eye" name="{{$caja->getId()}}" style="color: blue; border: white"></i> 
+                            <i id="caja{{$caja->getId()}}" class="productos fa-regular fa-eye" name="{{$caja->getId()}}" style="color: blue; border: white"></i> 
                         </li>
                     </div>
                     
@@ -88,14 +97,13 @@
                 </div>
             </ul>
         </div>
-        <div class="col-7">
-            <table id="cabecera" style="border: black; width: 100%">
-                <tr  border>
-                    <th>Fecha</th>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th>Ubicación</th>
-                    
+        <div class="col-9">
+            <table id="vtTable">
+                <tr class="vtTrCabecera">
+                    <th class="vtTdFecha">Fecha</th>
+                    <th class="vtTdNombre">Nombre</th>
+                    <th class="vtTdDescripcion">Descripcion</th>
+                    <th class="vtTdUbicacion">Ubicación</th>    
                 </tr>
             </table>
 
@@ -105,5 +113,5 @@
     
 </div>
 
-<a href="accederTrastero.php"><input type="button" value="VOLVER"></a>
+
 @endsection

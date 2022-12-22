@@ -23,7 +23,6 @@
 
 {{-- Sección mensaje --}}
 @section('content')
-
 <div class="container">
         <div class="cabecera">
             <form method="POST" action="" id='formañadirtratero'>

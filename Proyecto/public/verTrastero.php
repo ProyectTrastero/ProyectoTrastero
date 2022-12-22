@@ -68,7 +68,7 @@ session_start();
 
 
 $idTrastero = $_SESSION['id'];
-//$miTrastero = Trasteros::recuperarTrasteroPorId($bd, $idTrastero);
+$miTrastero = Trasteros::recuperarTrasteroPorId($bd, $idTrastero);
 $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
 $baldas = array();
 foreach ($estanterias as $estanteria){
@@ -84,6 +84,7 @@ $cajas= Caja::recuperarCajasPorIdTrastero($bd, $idTrastero);
 //   $datosTrastero=$_SESSION['datosTrastero'];
 //}else{
     $datosTrastero=array();
+    $datosTrastero['nombre']=$miTrastero->getNombre();
     $datosTrastero['productos']=array();
     $datosTrastero['baldas']=$baldas;
     $datosTrastero['estanterias']=$estanterias;
@@ -102,24 +103,21 @@ if(!empty($_REQUEST)){
         header("Location: editarPerfil.php");
     }else{
         $idSelecionado=trim(filter_input(INPUT_POST,'id',FILTER_SANITIZE_STRING));
+        $tipoElemento = trim(filter_input(INPUT_POST,'tipo',FILTER_SANITIZE_STRING));
     $tipo="";
     $productosRecuperados;
-    foreach ($estanterias as $estanteria){
-        if($idSelecionado==$estanteria->getId()){
-            $tipo="estanteria";
-        }
+    
+    if((strncmp($tipoElemento, "estanteria", 4) === 0)){
+        $tipo="estanteria";
     }
     
-    foreach ($baldas as $balda){
-        if($idSelecionado==$balda->getId()){
-            $tipo="balda";
-        }
+    
+    if((strncmp($tipoElemento, "balda", 4) === 0)){
+        $tipo="balda";
     }
     
-    foreach ($cajas as $caja){
-        if($idSelecionado==$caja->getId()){
-            $tipo="caja";
-        }
+    if((strncmp($tipoElemento, "caja", 4) === 0)){
+        $tipo="caja";
     }
     
     if($tipo=="estanteria"){
@@ -139,6 +137,9 @@ if(!empty($_REQUEST)){
         $productonuevo['fechaingreso']='22/07/22';
         $productonuevo['nombre']=$producto->getNombre();
         $productonuevo['descripcion']=$producto->getDescripcion();
+        $productonuevo['estanteria']=$producto->obtenerNumeroEstanteria($bd);
+        $productonuevo['balda']=$producto->obtenerNumeroBalda($bd);
+        $productonuevo['caja']=$producto->obtenerNumeroCaja($bd);
         
         $productos[]=$productonuevo;
     }

@@ -27,38 +27,33 @@
  </div>    
  <form method="POST" action="" name="formBusqueda">
  <input type="text" name="palabraBuscar" placeholder="producto">
- <button type="submit" name="buscarProducto">Buscar</button>
+ <button type="submit" name="buscarProducto">Buscar por palabra</button>
  </form>
  <br/>
- <br/>
- <br/>
  <div>     
- <form method="POST" action="" name="formEtiquetas">
- <div>
- <h4>Buscar por mi etiqueta: </h4> 
  <?php if(isset ($etiquetas)): ?>
- <label for="etiquetas">Buscar por mis etiqueta: </label><br/>
- <?php if($etiquetas != ""): ?>                    
+ <label for="etiquetas">Mis etiqueta: </label><br/>
+ <?php if($etiquetas != ""): ?>      
+ <form action="" method="POST" id='formBuscarProductoporEtiqueta'>
  <?php $__currentLoopData = $etiquetas; $this->addLoop($__currentLoopData);$this->getFirstLoop();
  foreach($__currentLoopData as $valor): $loop = $this->incrementLoopIndices();  ?>
+ <input type="checkbox" name="IdsEtiquetas[]" value="<?php echo \htmlentities($valor->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>">
  <a class='col-3'><?php echo \htmlentities($valor->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></a>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <button type="submit" name="seleccionEtiquetas">Buscar por etiquetas seleccionadas</button>
+ </form>
  <?php else: ?>
  <div>           
- <h4>Aun no tiene ninguna etiqueta</h4>    
+ <h4>Usted aun no tiene ninguna etiqueta</h4>    
  </div>
  <?php endif; ?>
  <?php endif; ?>
  </div>
- <!--me falta el  select-->
- <br/><button type="submit" name="añadirEtiquetas">Seleccionar Etiqueta</button>
- </form> 
- </div>
-
  <?php if(isset ($productos)): ?>
  <?php if($productos != ""): ?>
  <div>             
  <h3>Mis productos</h3>
+ <form action="" method="POST" id='formEliminarProducto'>
  <table class="row">
  <tr>
  <th class="col-3">Seleccionar</th>    
@@ -70,7 +65,7 @@
  <?php $__currentLoopData = $productos; $this->addLoop($__currentLoopData);$this->getFirstLoop();
  foreach($__currentLoopData as $valor): $loop = $this->incrementLoopIndices();  ?>    
  <tr>
- <td><input type="checkbox" id="cbox"></td>  
+ <td><input type="checkbox" name="IdsProductos[]" value="<?php echo \htmlentities($valor->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>"></td>  
  <td class="col-3"> <?php echo \htmlentities($valor->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></td><br/> 
  <td class="col-3"> <?php echo \htmlentities($valor->getDescripcion()??'', ENT_QUOTES, 'UTF-8', false); ?></td><br/> 
  <td class="col-3"> Estanteria: 
@@ -97,24 +92,22 @@
  <td  class="col-3">
  <form method="POST" action="" id='produModificar'>
  <input type='hidden' name='id' value='<?php echo \htmlentities($valor->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>'>
- <button type="submit" name="modificarProducto" id="modificarProducto"><span> Modificar</span></button>
+ <button type="submit" name="modificarProducto" id="modificarProducto"><span> Modificar Producto</span></button>
  </form>
  </td>
  </tr>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
- </table>
- <br/><br/><br/>
- <form method="POST" action="" id='formEliminarProducto'>
- <button type="submit" name="modificarProducto" id='eleminarProducto'><span>Eliminar Seleccionados</span></button>
+ </table><br/>
+ <button type="submit" name="eliminarProducto" id='eleminarProducto'><span>Eliminar Seleccionados</span></button>
  </form>
+ <br/><br/><br/>
  </div>
  <?php else: ?>
  <div>           
- <h2>No existen productos con esa busqueda</h2>    
+ <h2>No existen productos con esos parametros</h2>    
  </div>
  <?php endif; ?>
  <?php endif; ?>
- 
 <div class="container">
  <form method="POST" action="" name="formVolver">
  <button class ="volver" name="volverTrasteros">Volver</button>

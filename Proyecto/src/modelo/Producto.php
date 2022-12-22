@@ -234,5 +234,44 @@ class Producto {
             }
     }
     
+    public function obtenerNumeroEstanteria($bd){
+        if($this->idEstanteria==null){
+            $numero="Sin asignar";
+            
+        }else{
+            $consulta="select numero from estanterias where id = $this->idEstanteria";
+            $registro= $bd->query($consulta);
+            $reg= $registro->fetch(PDO::FETCH_OBJ);
+            $numero=$reg->numero;
+        }
+        return $numero;
+    }
+    
+    public function obtenerNumeroBalda($bd){
+        if($this->idBalda==null){
+            $numero="Sin asignar";
+            
+        }else{
+            $consulta="select numero from baldas where id = $this->idBalda";
+            $registro= $bd->query($consulta);
+            $reg= $registro->fetch(PDO::FETCH_OBJ);
+            $numero=$reg->numero;
+        }
+        return $numero;
+    }
+    
+    public function obtenerNumeroCaja($bd){
+        if($this->idCaja==null){
+            $numero="Sin asignar";
+            
+        }else{
+            $consulta="select numero from cajas where id = $this->idCaja";
+            $registro= $bd->query($consulta);
+            $reg= $registro->fetch(PDO::FETCH_OBJ);
+            $numero=$reg->numero;
+        }
+        
+        return $numero;
+    }
 }
 

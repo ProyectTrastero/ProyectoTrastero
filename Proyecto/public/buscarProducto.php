@@ -40,10 +40,11 @@ if (isset($_POST['buscarProducto'])) {
     echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas'));
     die; 
     
-}elseif (isset($_POST['seleccionEtiquetas'])) {  
-    foreach($_POST['IdsEtiquetas'] as $idEtiqueta){
+}elseif (isset($_POST['seleccionEtiquetas'])) { 
+    
+        foreach($_POST['IdsEtiquetas'] as $idEtiqueta){
         $idEtiquetas[]=$idEtiqueta;
-    }
+        }
     $miTrastero=$_SESSION['miTrastero'];
     $idTrastero = $miTrastero->getId();
     $productos= App\Producto::buscarProductosPorIdEtiqueta($bd, $idEtiquetas);
@@ -55,6 +56,8 @@ if (isset($_POST['buscarProducto'])) {
     $etiquetas = App\Etiqueta::recuperaEtiquetasPorUsuario($bd, $idUsuario);
     echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas'));
     die;
+    
+    
       
 }elseif (isset($_REQUEST['modificarProducto'])) { 
     header("location:../public/modificarProducto.php"); 
