@@ -26,9 +26,9 @@
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/verTrastero.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/css/style.css</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/ubicacionCaja.js</file>
-            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/añadirEtiqueta.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/modificarTrastero.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/css/all.css</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/bootstrap/bootstrap.bundle.js</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vendor/composer/ClassLoader.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/composer.lock</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/añadirProducto.blade.php</file>
@@ -39,6 +39,7 @@
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/accederTrastero.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/buscarProducto.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/añadirProducto.js</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/registro.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/confirmacionEliminar.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/añadirTrastero.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/bootstrap/bootstrap.js</file>
@@ -48,16 +49,13 @@
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/cnxbderror.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/añadirProducto.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/verTrastero.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/css/bootstrap.min.css.map</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/mostrarProductos.js</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/bd/bdtrasteros.sql</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/jquery/jquery-3.6.0.min.js</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/composer.json</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/editarPerfil.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/acceso.php</file>
-            <file>file:/C:/xampp/htdocs/ProyectoTrastero_1/src/modelo/Etiqueta.php</file>
-            <file>file:/C:/xampp/htdocs/ProyectoTrastero_1/public/buscarProducto.php</file>
-            <file>file:/C:/xampp/htdocs/ProyectoTrastero_1/vistas/buscarProducto.blade.php</file>
-            <file>file:/C:/xampp/htdocs/ProyectoTrastero_1/src/modelo/Producto.php</file>
         </group>
     </open-files>
 </project-private>

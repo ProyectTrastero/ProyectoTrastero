@@ -19,7 +19,7 @@
     </ul>
   </div>
 </form>-->
-</form>-->
+
 @endsection
 
 
