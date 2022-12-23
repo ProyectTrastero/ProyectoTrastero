@@ -49,15 +49,21 @@
         <div class="d-flex flex-wrap">
           <div>
             <label for="radioUbicacionEstanteria">Ubicar en estanteria</label>
-            <input class="me-3" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria">
+            <input class="me-3" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria" @if (!is_null($estanterias))
+                checked
+            @endif>
           </div>
           <div>
             <label for="radioCajasSinAsignar">Ubicar en caja sin ubicación</label>
-            <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar">
+            <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar" @if (is_null($estanterias) && !is_null($cajas))
+                checked
+            @endif>
           </div>
           <div>
             <label for="radioSinAsignar">No asignar ubicación</label>
-            <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" checked>
+            <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" @if (is_null($estanterias) && is_null($cajas))
+                checked
+            @endif>
           </div>
 
           @if(isset($errores) && in_array("sinUbicacion", $errores)) 
@@ -71,20 +77,32 @@
           <label for="selectEstanterias">Estanteria: </label>
           <select name="estanteria" id="selectEstanterias" disabled>
             @foreach ($estanterias as $estanteria)
-              <option value="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</option>
+              <option value="{{$estanteria->getId()}}" @if ($estanteria->getId() == $producto->getIdEstanteria()) selected @endif>{{$estanteria->getNombre()}}</option>
             @endforeach
           </select>
 
           <label for="selectBaldas">Balda: </label>
-          <select name="balda" id="selectBaldas" disabled></select>
+          <select name="balda" id="selectBaldas" disabled>
+            @foreach ($baldas as $balda)
+              <option value="{{$balda->getId()}}" @if ($balda->getId() == $producto->getIdBalda()) selected @endif>{{$balda->getNombre()}}</option>
+            @endforeach
+          </select>
 
           <label for="selectCaja">Caja: </label>
-          <select name="caja" id="selectCaja" disabled></select>
+          <select name="caja" id="selectCaja" disabled>
+            @foreach ($cajas as $caja)
+              <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
+            @endforeach
+          </select>
         </div>
   
         <div id="idUbicacionCajasSinAsignar" class="hide inputsSelect mt-2">
           <label for="selectCajasSinAsignar">Caja: </label>
-          <select name="cajasSinAsignar" id="selectCajasSinAsignar" disabled></select>
+          <select name="cajasSinAsignar" id="selectCajasSinAsignar" disabled>
+            @foreach ($cajasSinUbicar as $caja)
+              <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
+            @endforeach
+          </select>
         </div>
   
       </section>
@@ -92,13 +110,20 @@
     <section class="containerEtiquetas mt-2">
       <h2>Etiquetas</h2>
       <div id="inputEtiquetas"></div>
-      <div id="etiquetasProducto"></div>
+      <div id="etiquetasProducto">
+        @foreach ($etiquetasProducto as $etiquetaProducto)
+            <span class="etiqueta d-inline-flex align-items-center mb-1"> 
+              {{$etiquetaProducto['nombreEtiqueta']}} 
+              <span class="btn-close close-etiqueta" type="button"></span>
+            </span>
+        @endforeach
+      </div>
 
       <div>
         <label for="">Seleccione etiqueta: </label>
         <select name="etiquetas" id="selectEtiquetas">
-          @foreach ($etiquetas as $etiqueta)
-              <option value="{{$etiqueta->getId()}}">{{$etiqueta->getNombre()}}</option>
+          @foreach ($etiquetasUsuario as $etiquetaUsuario)
+              <option value="{{$etiquetaUsuario->getId()}}">{{$etiquetaUsuario->getNombre()}}</option>
           @endforeach
         </select>
         <div class="d-inline-block mt-1">
@@ -149,6 +174,6 @@
 
 
 
-<script ></script>
+<script src="asset/js/modificarProducto.js"> </script>
 
 

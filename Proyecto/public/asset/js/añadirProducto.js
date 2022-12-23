@@ -156,7 +156,6 @@ function setCajasSinAsignar(xhttp){
 
 function showHide(e){
   let target = e.target;
-  console.log(target);
   if(target.id=='radioUbicacionEstanteria' && target.checked == true){
     document.getElementById('idUbicacionEstanteria').classList.remove('hide');
     document.getElementById('idUbicacionCajasSinAsignar').classList.add('hide');
@@ -222,7 +221,7 @@ function añadirEtiqueta(xhttp){
   spanX.classList.add('btn-close');
   spanX.classList.add('close-etiqueta');
   spanX.nodeType='button';
-  spanX.style='font-size: 0.9em ; margin-left: 0.4em';
+  //spanX.style='font-size: 0.9em ; margin-left: 0.4em';
   //añadimos el span x al span etiqueta
   document.getElementById(idEtiquetaSelected).appendChild(spanX);
 

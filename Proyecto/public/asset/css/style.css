@@ -279,6 +279,11 @@ nav button:hover{
     margin-right: 0.3em;
 }
 
+.close-etiqueta{
+    font-size: 0.9em;
+    margin-left: 0.4em;
+}
+
 .inputsSelect{
     display: grid;
     grid-template-columns: max-content max-content;
