@@ -8,13 +8,6 @@
 @section('navbar')
 <script src="asset/js/añadirProducto.js"></script>
 
-@if($mensaje!=""))
-<input type="hidden" id="mostrarModal" value="si">
-@else
-<input type="hidden" id="mostrarModal" value="no">
-@endif
-    
-
 <!--<form action="{{ $_SERVER["PHP_SELF"] }}" method="POST">
   <div class="nav-item dropdown">
     <div class="nav-link dropdown-toggle " href="#"  data-bs-toggle="dropdown" aria-expanded="false">
@@ -30,7 +23,11 @@
 
 {{-- Sección content --}}
 @section('content')
-
+@if($mensaje!=""))
+<input type="hidden" id="mostrarModal" value="si">
+@else
+<input type="hidden" id="mostrarModal" value="no">
+@endif
 <div class="container">
   @if (@isset($msj['msj-content']))
   <div class="alert alert-{{$msj['msj-type']}} alert-dismissible fade show" role="alert"">

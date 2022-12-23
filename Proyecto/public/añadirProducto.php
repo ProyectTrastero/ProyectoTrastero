@@ -108,15 +108,18 @@ if(isset($_SESSION['usuario'])){
          $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
          $idUsuario = $usuario->getId();
          if($nombreEtiqueta==""){
-            $mensaje="El campo nombre de etiqueta es obligatorio.";
+            $mensaje="El campo nombre de etiqueta es obligatorio.";   
          }else{
-             $etiqueta = new Etiqueta();
-             $etiqueta->setNombre($nombreEtiqueta);
-             $etiqueta->setIdUsuario($idUsuario);
-             $etiqueta->guardarEtiqueta($bd);
-             $mensaje = "Etiqueta creada correctamente";
-         }
-        
+             if(Etiqueta::existeEtiqueta($bd, $nombreEtiqueta, $idUsuario)){
+                 $mensaje="Ya tiene una etiqueta con ese nombre";
+             }else{
+                 $etiqueta = new Etiqueta();
+                 $etiqueta->setNombre($nombreEtiqueta);
+                 $etiqueta->setIdUsuario($idUsuario);
+                 $etiqueta->guardarEtiqueta($bd);
+                 $mensaje = "Etiqueta creada correctamente";
+             }  
+         }  
      }
     
     if(isset($_GET['añadirEtiqueta'])){
