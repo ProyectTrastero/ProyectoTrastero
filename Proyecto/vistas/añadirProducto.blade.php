@@ -69,7 +69,7 @@
         
         <div id="idUbicacionEstanteria" class="hide inputsSelect mt-2">
           <label for="selectEstanterias">Estanteria: </label>
-          <select name="estanteria" id="selectEstanterias" disabled>
+          <select name="estanteria" id="selectEstanterias">
             @foreach ($estanterias as $estanteria)
               <option value="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</option>
             @endforeach
@@ -78,8 +78,11 @@
           <label for="selectBaldas">Balda: </label>
           <select name="balda" id="selectBaldas" disabled></select>
 
+        </div>
+
+        <div>
           <label for="selectCaja">Caja: </label>
-          <select name="caja" id="selectCaja" disabled></select>
+          <select name="caja" id="selectCaja"></select>
         </div>
   
         <div id="idUbicacionCajasSinAsignar" class="hide inputsSelect mt-2">
@@ -91,9 +94,6 @@
     </div>
     <section class="containerEtiquetas mt-2">
       <h2>Etiquetas</h2>
-      <div id="inputEtiquetas"></div>
-      <div id="etiquetasProducto"></div>
-
       <div>
         <label for="">Seleccione etiqueta: </label>
         <select name="etiquetas" id="selectEtiquetas">
@@ -127,9 +127,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                   
+                    <p>{{$mensaje}}</p>
                     <label for="nombreEtiqueta">Nombre de la etiqueta: </label>
-                    <input type="text" name="nombreEtiqueta" id="nombreEtiqueta">
+                    <input type="text" name="nombreEtiqueta">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>

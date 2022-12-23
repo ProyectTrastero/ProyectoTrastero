@@ -6,23 +6,32 @@
         font-family: Times New Roman, initial;
 }
 
-/*usados para ver  mas claramente la disposicion de los divs*/
-/*div{
+/*usados para ver  mas claramente la disposicion de los divs
+div{
     border:solid;
 }
+
+
+
 .container{
     border-color: red;
 }
-table, tr, td{
+table, tr, td,ul{
     border:solid;
     color:green;
 } */
-/*usados para ver mas...*/
 
+/*usados para ver mas...*/
+/*.navegador{
+    padding: 30px;
+    color:white;
+    display: inline-flex;
+}*/
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0px;
     padding: 0px;
+    
     /*background-color: royalblue;*/
         
 }
@@ -36,14 +45,14 @@ body {
 /*    background-image: url("../img/fondo.png");
     background-image: url("../img/Geometric-Background-012.jpg"); */
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover
    
 }
 
 .ejecutando{
     background-image: url("../img/imagenSecundaria.png"); 
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-repeat: repeat-y;
+    background-size: 1350px;
 }
 
  .navbar{
@@ -54,6 +63,7 @@ body {
 
 .navbar div{
     margin: 0px;
+    margin-bottom: 20px;
     padding: 5px;
     background-color: #00a8f3;
 }
@@ -61,6 +71,7 @@ body {
 .fa-user, .nav-link, .navbar-brand{
     color: white;
 }
+
  
  
  
@@ -148,7 +159,8 @@ td{
     padding-top: 25px;
     margin-top:20px;
     margin-bottom: 20px;
-    background: rgb(255, 255, 255, 0.5);
+    background: linear-gradient(rgb(0, 168, 243, 0.8), rgb(255, 255, 255, 0.8));
+    /*background: rgb(0, 168, 243, 0.8);*/
     border:solid 0.5px;
     border-radius: 8px;
     border-color: grey;
@@ -176,13 +188,78 @@ td{
     list-style: none;
 }
 
-
-
-
-
-
-
 /*AÑADIRTRASTERO*/
+/*////////////////////////////////////////////////////*/
+/*VERTRASTERO*/
+#menu{
+    padding: 15px;
+    border:solid 0.5px;
+    border-radius: 8px;
+    border-color: grey;
+    background: linear-gradient(rgb(0, 168, 243, 0.8), rgb(255, 255, 255, 0.8));
+}
+#vtVolver{
+    margin-top: 30px;
+    text-align: right;
+    padding-right: 235px;
+}
+
+#vtnombre{
+    font-size: 32px;
+    padding-bottom: 30px;
+    margin: 0 auto;
+    height: auto;
+    width: 150px;
+    font-weight: 600;
+    
+   
+}
+#vtSinUbicar{
+    padding-top: 15px;
+}
+
+.vtContainer{
+    width: 1500px;
+    margin-right: 5%;
+    margin-left: 5%;
+   
+}
+#vtTable{
+    /*width: 100%;*/
+    /*table-layout: fixed;*/
+    font-size: 15px;
+    border-radius: 8px;
+    border-color: grey;
+}
+
+.vtTrCabecera{
+    background: rgb(0, 168, 243, 0.5);
+    text-align: center;
+
+} 
+
+.vtTr{
+    background: linear-gradient(rgb(0, 168, 243, 0.2), rgb(255, 255, 255, 0.2));
+    text-align: left;
+}
+
+.vtTr:hover{
+    background: rgb(0, 168, 243, 0.5);
+
+}
+.vtTdFecha{
+    width: 115px;
+}
+.vtTdNombre{
+    width: 120px;
+}
+.vtTdDescripcion{
+    width: 320px;
+}
+.vtTdUbicacion{
+    width: 320px;
+}
+/*VERTRASTERO*/
 /*////////////////////////////////////////////////////*/
 /*BOTONES*/
 /*.volver{
@@ -211,10 +288,10 @@ button{
     margin-right: 8px;
     /*background-color: #B6DDF8;*/
     /*background: linear-gradient(#6AA3E7, violet);*/
-    /*background: linear-gradient(grey, white);*/
+    background: linear-gradient(#ff7f27, white);
     
     /*background: linear-gradient(#B6DDF8, rgb(128,128,128,0.4));*/
-    background: linear-gradient(#ff7f27, rgb(128,128,128,0.4));
+    /*background: linear-gradient(#ff7f27, rgb(255,255,255,0.4));*/
     border:solid 0.5px;
     border-color: grey;
     border-radius: 8px;

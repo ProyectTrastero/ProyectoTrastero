@@ -243,12 +243,12 @@ class Producto {
         $bd->exec($consulta);
     }
  
-    public static function buscarProductosPorIdEtiqueta($bd, array $idEtiquetas){
+    public static function buscarProductosPorIdEtiquetaYTrastero($bd, array $idEtiquetas, $idTrastero){
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         foreach ($idEtiquetas as $valor) {
-        $consulta = "select * from productos P join etiquetasproductos D on D.idProducto = P.id and D.idEtiqueta = :idEtiqueta";
+        $consulta = "select * from productos P join etiquetasproductos D on (D.idProducto = P.id) and (D.idEtiqueta = :idEtiqueta) and (P.idTrastero = :idTrastero)";
         $registro = $bd->prepare($consulta);
-        $registro->execute([":idEtiqueta" => $valor]);
+        $registro->execute([":idEtiqueta" => $valor, ":idTrastero" => $idTrastero]);
         }
         $registro->setFetchMode(PDO::FETCH_CLASS, Producto::class);
       
@@ -263,5 +263,64 @@ class Producto {
             }
     }
     
+    public static function comprobarProductosPorIdEtiqueta($bd, array $idEtiquetas, $idsProductos){
+        $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+        foreach ($idEtiquetas as $valor) {
+        $consulta = "select * from productos P join etiquetasproductos D on D.idProducto = P.id and D.idEtiqueta = :idEtiqueta and P.id = :idProducto";
+        $registro = $bd->prepare($consulta);
+        $registro->execute([":idEtiqueta" => $valor, "idProducto" => $idsProductos]);
+        }
+        $registro->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+      
+        $producto = array();
+            while ($producto = ($registro->fetch()) ?: null){
+                $productos[]=$producto;
+            }
+            if (isset($productos)){
+            return $productos;
+            }else{
+            return "";    
+            }
+    }
+    
+    public function obtenerNumeroEstanteria($bd){
+        if($this->idEstanteria==null){
+            $numero="Sin asignar";
+            
+        }else{
+            $consulta="select numero from estanterias where id = $this->idEstanteria";
+            $registro= $bd->query($consulta);
+            $reg= $registro->fetch(PDO::FETCH_OBJ);
+            $numero=$reg->numero;
+        }
+        return $numero;
+    }
+    
+    public function obtenerNumeroBalda($bd){
+        if($this->idBalda==null){
+            $numero="Sin asignar";
+            
+        }else{
+            $consulta="select numero from baldas where id = $this->idBalda";
+            $registro= $bd->query($consulta);
+            $reg= $registro->fetch(PDO::FETCH_OBJ);
+            $numero=$reg->numero;
+        }
+        return $numero;
+    }
+    
+    public function obtenerNumeroCaja($bd){
+        if($this->idCaja==null){
+            $numero="Sin asignar";
+            
+        }else{
+            $consulta="select numero from cajas where id = $this->idCaja";
+            $registro= $bd->query($consulta);
+            $reg= $registro->fetch(PDO::FETCH_OBJ);
+            $numero=$reg->numero;
+        }
+        
+        return $numero;
+    }
 }
 

@@ -24,6 +24,7 @@
             
             <div class="mb-3 inputsForm">
               <label for="nombre">Nombre: </label>
+              <label for="nombre">Nombre: </label>
               <input class="form-control" type="text" name="nombre" id="nombre" value="{{$datos['nombre']}}">
               @if(isset($errores) && in_array("nombreInvalido", $errores)) 
                 <div></div>
@@ -35,6 +36,9 @@
             
             
             
+            
+            
+              <label for="apellidos">Apellidos: </label>
               <label for="apellidos">Apellidos: </label>
               <input class="form-control" type="text" name="apellidos" id="apellidos" value="{{$datos['apellidos']}}">
               @if(isset($errores) && in_array("apellidoInvalido", $errores)) 
@@ -46,6 +50,9 @@
             
             
             
+            
+            
+                <label for="alias">Alias: </label>
                 <label for="alias">Alias: </label>
                 <input class="form-control" type="text" name="alias" id="alias" value="{{$datos['alias']}}">
                 @if(isset($errores) && in_array("aliasInvalido", $errores)) 
@@ -62,6 +69,10 @@
 
             
               <label for="clave">Clave: </label>
+            
+
+            
+              <label for="clave">Clave: </label>
               <input class="form-control" type="text" name="clave" id="clave" value="{{$datos['clave']}}">
               @if(isset($errores) && in_array("claveInvalida", $errores)) 
                 <div></div>
@@ -69,6 +80,10 @@
                     Debe contener minimo 8 caracteres, una mayuscula una miniscula y un número. 
                 </div>  
               @endif
+            
+
+            
+              <label for="correo">Correo: </label>
             
 
             

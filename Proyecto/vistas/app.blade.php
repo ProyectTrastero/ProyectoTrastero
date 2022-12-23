@@ -29,12 +29,18 @@
             <div class="container-fluid" >
                 <a class="navbar-brand">
                     <img src="asset/img/icono2.PNG" alt="" class="rounded-circle" width="80" height="80">
-                    Mitrastero.com
+                    VirtualBoxRoom
                 </a>
                 @if(!empty($_SESSION['usuario']))
                 @php
                 @$usuario=$_SESSION['usuario']
                 @endphp
+<!--                <div class="navegador">
+                    <div>Inicio</div>
+                    <div>Mis Trasteros</div>
+                    <div>TrasteroEmma</div>
+                </div>-->
+                
                 <form action="{{ $_SERVER["PHP_SELF"] }}">
                   <div class="nav-item dropdown">
                     <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

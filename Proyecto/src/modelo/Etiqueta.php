@@ -91,8 +91,8 @@ class Etiqueta implements \JsonSerializable{
     }
     
     public function guardarEtiqueta($bd){
-    $consulta="INSERT INTO `etiquetas` (nombre, idUsuario) VALUES ('$this->nombre', $this->idUsuario);";
-    $bd->exec($consulta);
+        $consulta="INSERT INTO `etiquetas` (nombre, idUsuario) VALUES ('$this->nombre', $this->idUsuario);";
+        $bd->exec($consulta);
     }
 
     public function checkExisteNombreEtiqueta(PDO $bd):bool{

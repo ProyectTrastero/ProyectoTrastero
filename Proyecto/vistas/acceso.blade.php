@@ -8,6 +8,7 @@
 @section('navbar')
  
 <!--<form action="{{ $_SERVER["PHP_SELF"] }}">
+<!--<form action="{{ $_SERVER["PHP_SELF"] }}">
   <div class="nav-item dropdown">
     <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
@@ -18,12 +19,12 @@
     </ul>
   </div>
 </form>-->
+
 @endsection
 
 
 {{-- Sección mensaje --}}
 @section('content')
-
 <div class="container">
         <div class="cabecera">
             <form method="POST" action="" id='formañadirtratero'>
@@ -31,6 +32,7 @@
             <button type="submit" name="añadirTrastero" id="añadirTrastero"><span>Añadir Trastero</span></button>
             </form>
         </div>
+        
         
         
         @if ($trasteros != "")
@@ -68,6 +70,7 @@
             </div>   
         <!--</div>-->
         @else
+            <div class="acceso">           
             <div class="acceso">           
             <form method="POST" action="" id='formtrasteros'>
                 <h3>Mis trasteros</h3><!-- comment -->

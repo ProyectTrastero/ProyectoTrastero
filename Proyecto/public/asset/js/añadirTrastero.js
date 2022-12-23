@@ -18,6 +18,7 @@ function iniciar(){
     guardado=tipo.getAttribute("value");
     ocultos= document.getElementsByClassName("papeleraOculta");
     habilitarmodal();
+    habilitarmodal();
     deshabilitarBotones();
     if(guardado=="false"){
         for(i=0;i<ocultos.length;i++){
@@ -51,9 +52,7 @@ function deshabilitarBotones(){
             var nombreValue=botones[i].innerHTML;
             if(nombreValue!="Volver"){
                  botones[i].setAttribute("disabled", "true");
-            }
-           
-           
+            } 
         }
     }
 }
@@ -130,10 +129,9 @@ function añadirPapelera(e){
 }
 
 function eliminarPapelera(e){
-    var elemento = e.target;
+     var elemento = e.target;
     var papelera=elemento.children[0];
     var retardo=setTimeout(function(){
         elemento.removeChild(papelera);
     }, 1000);  
-
 }
