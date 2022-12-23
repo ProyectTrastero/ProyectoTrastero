@@ -285,7 +285,7 @@ function crearEtiqueta(xhttp){
     //pendiente de mejorar
     setTimeout(() => {
       divElement.classList.remove('show');
-    }, 3000);
+    }, 5000);
     divElement.addEventListener('transitionend',()=>{
       divElement.remove();
     })

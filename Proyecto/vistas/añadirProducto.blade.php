@@ -95,6 +95,8 @@
     <section class="containerEtiquetas mt-2">
       <h2>Etiquetas</h2>
       <div>
+        <div id="inputEtiquetas"></div>
+        <div id="etiquetasProducto"></div>
         <label for="">Seleccione etiqueta: </label>
         <select name="etiquetas" id="selectEtiquetas">
           @foreach ($etiquetas as $etiqueta)
@@ -129,7 +131,7 @@
                 <div class="modal-body">
                     <p>{{$mensaje}}</p>
                     <label for="nombreEtiqueta">Nombre de la etiqueta: </label>
-                    <input type="text" name="nombreEtiqueta">
+                    <input type="text" name="nombreEtiqueta" id="nombreEtiqueta">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
