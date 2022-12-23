@@ -87,6 +87,7 @@ if (isset($_SESSION['usuario'])) {
 			$cajasSinUbicar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd, $miTrastero->getId());
 		}
 	}
+	$prueba = "";
 	// $daniel = $_POST['getCajasSinAsignar'];
 
 	echo $blade->run('modificarProducto', [	'producto' => $producto, 
