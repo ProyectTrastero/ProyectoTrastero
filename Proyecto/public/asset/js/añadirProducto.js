@@ -8,9 +8,9 @@ function iniciar(){
   ////get idTrastero
   loadDoc('añadirProducto.php?getIdTrastero',getIdTrastero);
 
-  // var modal=document.getElementById("mostrarModal");
-  // infoModal=modal.value;
-  // habilitarModal();
+   var modal=document.getElementById("mostrarModal");
+   infoModal=modal.value;
+   habilitarModal();
 
   ////estanterias
   let idEstanteria= document.getElementById('selectEstanterias').value;
@@ -275,8 +275,8 @@ function closeEtiqueta(e){
   }
 }
 
-// function habilitarModal(){
-//     if(infoModal=="si"){
-//        $("#staticBackdrop").modal("show");
-//     }
-// }
+ function habilitarModal(){
+     if(infoModal=="si"){
+        $("#staticBackdrop").modal("show");
+     }
+ }

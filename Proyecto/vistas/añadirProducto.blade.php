@@ -72,21 +72,21 @@
       <div>
         <label for="radioUbicacionEstanteria">Ubicar en estanteria</label>
         <input class="me-3" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria">
-        <label for="radioCajasSinAsignar">Ubicar en caja sin ubicación</label>
+        <label for="radioCajasSinAsignar">Ubicar en caja sin asignar</label>
         <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar">
         <label for="radioSinAsignar">No asignar ubicación</label>
-        <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" checked>
+        <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar">
         @if(isset($errores) && in_array("sinUbicacion", $errores)) 
-          <div class="textError form-text p-1 text-start">
-            Selecciona una ubicación.
-          </div>
-        @endif
+            <div class="textError form-text p-1 text-start">
+              Selecciona una ubicación.
+            </div>
+          @endif
       </div>
       
       <div id="idUbicacionEstanteria" class="hide">
         <div>
           <label for="selectEstanterias">Estanteria: </label>
-          <select name="estanteria" id="selectEstanterias" disabled>
+          <select name="estanteria" id="selectEstanterias">
             @foreach ($estanterias as $estanteria)
               <option value="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</option>
             @endforeach
@@ -95,27 +95,23 @@
         </div>
         <div>
           <label for="selectBaldas">Balda: </label>
-          <select name="balda" id="selectBaldas" disabled></select>
+          <select name="balda" id="selectBaldas"></select>
 
         </div>
 
         <div>
           <label for="selectCaja">Caja: </label>
-          <select name="caja" id="selectCaja" disabled></select>
+          <select name="caja" id="selectCaja"></select>
         </div>
 
       </div>
 
       <div id="idUbicacionCajasSinAsignar" class="hide">
         <label for="selectCajasSinAsignar">Caja: </label>
-        <select name="cajasSinAsignar" id="selectCajasSinAsignar" disabled></select>
+        <select name="cajasSinAsignar" id="selectCajasSinAsignar"></select>
       </div>
 
-
       <h2>Etiquetas</h2>
-      <div id="inputEtiquetas"></div>
-      <div id="etiquetasProducto"></div>
-
       <div>
         <label for="">Seleccione etiqueta: </label>
         <select name="etiquetas" id="selectEtiquetas">
@@ -123,7 +119,7 @@
               <option value="{{$etiqueta->getId()}}">{{$etiqueta->getNombre()}}</option>
           @endforeach
         </select>
-        <button type="button" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+        <button type="submit" class="btn btn-secondary" name="añadirEtiqueta">Añadir etiqueta</button>
       </div>
 
       <div class="text-end">
@@ -135,7 +131,7 @@
 </div>
 
 <!-- Modal crear Etiqueta-->
-{{-- <form action="" method="POST">
+<form action="" method="POST">
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" >
         <div class="modal-dialog">
             <div class="modal-content">
@@ -144,20 +140,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                   
+                    <p>{{$mensaje}}</p>
                     <label for="nombreEtiqueta">Nombre de la etiqueta: </label>
-                    <input type="text" name="nombreEtiqueta" id="nombreEtiqueta">
+                    <input type="text" name="nombreEtiqueta">
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
-                    <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                    <button  class="btn btn-secondary" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
-                    <!--<input type="submit" name="crearEtiqueta" value="Crear">-->
+                    <button type="submit" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
+                    <button type="submit" class="btn btn-secondary" name="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
+                   
                 </div>
             </div>
         </div>
     </div>
-</form> --}}
+</form>
 
 @endsection
 

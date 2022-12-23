@@ -88,36 +88,36 @@ if(isset($_SESSION['usuario'])){
         die;
     }
 
-    if (isset($_GET['crearEtiqueta'])){
-        $nombreEtiqueta = Validacion::sanearInput($_REQUEST['crearEtiqueta']);
-        if ($nombreEtiqueta != '') {
-            $etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
-            $etiqueta->guardarEtiqueta($bd);
-            $mensaje='etiqueta añadida';
-        }else{
-            $mensaje='El campo nombre de etiqueta es obligatorio.';
-        }
-        echo $mensaje;
-        die;
-    
-    }
+//    if (isset($_GET['crearEtiqueta'])){
+//        $nombreEtiqueta = Validacion::sanearInput($_REQUEST['crearEtiqueta']);
+//        if ($nombreEtiqueta != '') {
+//            $etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
+//            $etiqueta->guardarEtiqueta($bd);
+//            $mensaje='etiqueta añadida';
+//        }else{
+//            $mensaje='El campo nombre de etiqueta es obligatorio.';
+//        }
+//        echo $mensaje;
+//        die;
+//    
+//    }
 
     
-    // if(isset($_POST['crearEtiqueta'])){
+     if(isset($_POST['crearEtiqueta'])){
         
-    //     $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
-    //     $idUsuario = $usuario->getId();
-    //     if($nombreEtiqueta==""){
-    //        $mensaje="El campo nombre de etiqueta es obligatorio.";
-    //     }else{
-    //         $etiqueta = new Etiqueta();
-    //         $etiqueta->setNombre($nombreEtiqueta);
-    //         $etiqueta->setIdUsuario($idUsuario);
-    //         $etiqueta->guardarEtiqueta($bd);
-    //         $mensaje = "Etiqueta creada correctamente";
-    //     }
+         $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
+         $idUsuario = $usuario->getId();
+         if($nombreEtiqueta==""){
+            $mensaje="El campo nombre de etiqueta es obligatorio.";
+         }else{
+             $etiqueta = new Etiqueta();
+             $etiqueta->setNombre($nombreEtiqueta);
+             $etiqueta->setIdUsuario($idUsuario);
+             $etiqueta->guardarEtiqueta($bd);
+             $mensaje = "Etiqueta creada correctamente";
+         }
         
-    // }
+     }
     
     if(isset($_GET['añadirEtiqueta'])){
         $idEtiqueta = intval($_REQUEST['añadirEtiqueta']);
