@@ -87,7 +87,16 @@ if (isset($_SESSION['usuario'])) {
 			$cajasSinUbicar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd, $miTrastero->getId());
 		}
 	}
-	$prueba = "";
+	//recibimos los datos del cliente cliente
+	if(!is_null($data = json_decode(file_get_contents('php://input'),true))){
+		if (array_key_exists('getCajasSinUbicar',$data)) {
+			$cajasSinUbicar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd, $miTrastero->getId());
+			echo json_encode($cajasSinUbicar);
+			die;
+		}
+	}
+	
+
 	// $daniel = $_POST['getCajasSinAsignar'];
 
 	echo $blade->run('modificarProducto', [	'producto' => $producto, 

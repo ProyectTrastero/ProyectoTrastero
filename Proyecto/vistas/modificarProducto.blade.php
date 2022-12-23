@@ -96,9 +96,9 @@
           </select>
         </div>
   
-        <div id="idUbicacionCajasSinAsignar" class="hide inputsSelect mt-2">
-          <label for="selectCajasSinAsignar">Caja: </label>
-          <select name="cajasSinAsignar" id="selectCajasSinAsignar" disabled>
+        <div id="idUbicacionCajasSinUbicar" class="hide inputsSelect mt-2">
+          <label for="selectCajasSinUbicar">Caja: </label>
+          <select name="cajasSinAsignar" id="selectCajasSinUbicar" disabled>
             @foreach ($cajasSinUbicar as $caja)
               <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
             @endforeach
