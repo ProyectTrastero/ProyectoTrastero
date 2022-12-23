@@ -48,7 +48,7 @@ if(isset($_SESSION['usuario'])){
     //recuperamos las estanterias del trastero
     $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
     //recuperamos las etiquetas del usuario
-    $etiquetas = Etiqueta::recuperarEtiquetasPorUsuario($bd,$usuario->getId());
+    $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
     
     static $arrayAñadirEtiquetas = array();
     
@@ -119,7 +119,7 @@ if(isset($_SESSION['usuario'])){
     //despues de crear una etiqueta, recuperamos las etiquetas para actualizar el select
     if(isset($_GET['getEtiquetas'])){
         //recuperamos las etiquetas del usuario
-        $etiquetasUpdate = Etiqueta::recuperarEtiquetasPorUsuario($bd,$usuario->getId());
+        $etiquetasUpdate = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
         echo json_encode($etiquetasUpdate);
         
         die;

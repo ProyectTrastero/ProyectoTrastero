@@ -223,7 +223,7 @@ class Producto {
         }
     }
 
-    public static function recuperarEtiquetasPorProductoId(PDO $bd, int $idProducto):mixed{
+    public static function recuperarEtiquetasPorProductoId(PDO $bd, int $idProducto):array{
         $sql = "select ep.idProducto, ep.idEtiqueta,  e.nombre as 'nombreEtiqueta' from etiquetasproductos ep \n"
                 . "inner join etiquetas e on ep.idEtiqueta = e.id \n"
                 . "where idProducto = :idProducto;";
@@ -232,7 +232,7 @@ class Producto {
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $etiquetasProducto=($stmt->fetchAll()) ?: null;
         if($etiquetasProducto==null){
-            $etiquetasProducto=false;
+            $etiquetasProducto=array();
         }
         return $etiquetasProducto;
         

@@ -67,7 +67,7 @@ if (isset($_SESSION['usuario'])) {
 		//recupetamos las etiquetas del producto
 		$etiquetasProducto = Producto::recuperarEtiquetasPorProductoId($bd, $idProducto);
 		//recuperamos las etiquetas del usuario
-		$etiquetasUsuario = Etiqueta::recuperarEtiquetasPorUsuario($bd, $usuario->getId());
+		$etiquetasUsuario = Etiqueta::recuperaEtiquetasPorUsuario($bd, $usuario->getId());
 
 
 		//si tenemos el producto en una estanteria
@@ -87,7 +87,7 @@ if (isset($_SESSION['usuario'])) {
 			$cajasSinUbicar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd, $miTrastero->getId());
 		}
 	}
-	$daniel = $_POST['getCajasSinAsignar'];
+	// $daniel = $_POST['getCajasSinAsignar'];
 
 	echo $blade->run('modificarProducto', [	'producto' => $producto, 
 											'estanterias' => $estanterias, 

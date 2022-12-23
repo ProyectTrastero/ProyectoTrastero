@@ -68,7 +68,7 @@ class Etiqueta implements \JsonSerializable{
     }
 
     
-    public static function recuperarEtiquetasPorUsuario(PDO $bd, int $idUsuario){
+    public static function recuperaEtiquetasPorUsuario(PDO $bd, int $idUsuario){
     $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
     $sql = 'select * from etiquetas where idUsuario=:id';
     $sth = $bd->prepare($sql);

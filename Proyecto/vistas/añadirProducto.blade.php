@@ -78,12 +78,11 @@
           <label for="selectBaldas">Balda: </label>
           <select name="balda" id="selectBaldas" disabled></select>
 
-        </div>
-
-        <div>
           <label for="selectCaja">Caja: </label>
           <select name="caja" id="selectCaja"></select>
         </div>
+
+        
   
         <div id="idUbicacionCajasSinAsignar" class="hide inputsSelect mt-2">
           <label for="selectCajasSinAsignar">Caja: </label>
