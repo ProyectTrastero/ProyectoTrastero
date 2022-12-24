@@ -87,13 +87,81 @@ if (isset($_SESSION['usuario'])) {
 			$cajasSinUbicar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd, $miTrastero->getId());
 		}
 	}
-	//recibimos los datos del cliente cliente
+
+	//recibimos los datos del cliente 
 	if(!is_null($data = json_decode(file_get_contents('php://input'),true))){
+
+		//peticion para devolver cajas sin asignar
 		if (array_key_exists('getCajasSinUbicar',$data)) {
 			$cajasSinUbicar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd, $miTrastero->getId());
 			echo json_encode($cajasSinUbicar);
 			die;
 		}
+		//peticion para devolver estanterias
+		if(array_key_exists('getEstanteriasBaldasCajas',$data)){
+
+			//obtenemos las estanterias del trastero
+			$estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $miTrastero->getId());
+
+			//saneamos el idEstanteria
+			(isset($data['idEstanteriaSelected'])) ? $idEstanteriaSelected = Validacion::sanearInput($data['idEstanteriaSelected']) : $idEstanteriaSelected = "";
+			//si tenemos id estanteria selected buscamos las baldas de la estanteria selected
+			if($idEstanteriaSelected != ''){
+				$baldas = Balda::recuperarBaldasPorIdEstanteria($bd,intval($idEstanteriaSelected));
+			}else{
+			//si no tenemos id estanteria selected buscamos las baldas de la primera estanteria
+				$baldas = Balda::recuperarBaldasPorIdEstanteria($bd,$estanterias[0]->getId());
+			}
+
+			//saneamos el idbalda
+			(isset($data['idBaldaSelected'])) ? $idBaldaSelected = Validacion::sanearInput($data['idBaldaSelected']) : $idBaldaSelected = "";
+			//si tenemos el id balda selected buscamos las cajas de la balda selected
+			if($idBaldaSelected != ''){
+				$cajas = Caja::recuperarCajaPorIdBalda($bd,intval($idBaldaSelected));
+			}else{
+				//si no tenemos el id de la balda selected buscamos las cajas de la primera balda
+				$cajas = caja::recuperarCajaPorIdBalda($bd,$baldas[0]->getId());
+			}
+
+			//saneamos el idCaja
+			(isset($data['idCajaSelected'])) ? $idCajaSelected = Validacion::sanearInput(($data['idCajaSelected'])) : $idCajaSelected = "";
+
+			//array con los id de la ubicacion del producto
+			$productoSelected = array('idEstanteriaSelected'=>$idEstanteriaSelected, 'idBaldaSelected'=>$idBaldaSelected, 'idCajaSelected'=>$idCajaSelected);
+
+			//guardamos en un array los datos
+			$arrResponse = array('estanterias'=>$estanterias,'baldas'=>$baldas,'cajas'=>$cajas, 'productoSelected'=>$productoSelected);
+			echo json_encode($arrResponse);
+			die;
+		}
+		//peticion para devolver baldas y cajas de una estanteria selecionada
+		if(array_key_exists('getBaldasCajas',$data)){
+			//saneamos el id de la estanteria seleccionada
+			(isset($data['idEstanteriaSelected'])) ? $idEstanteriaSelected = Validacion::sanearInput($data['idEstanteriaSelected']) : $idEstanteriaSelected = "";
+
+			//recuperamos las baldas 
+			$baldas = Balda::recuperarBaldasPorIdEstanteria($bd, intval($idEstanteriaSelected));
+			//recuperamos las cajas de la primera balda
+			$cajas = Caja::recuperarCajaPorIdBalda($bd, $baldas[0]->getId());
+
+			//formamos array con la respuesta
+			$arrResponse = array('baldas'=>$baldas, 'cajas'=>$cajas);
+			echo json_encode($arrResponse);
+			die;
+		}
+		//peticion para devolver cajas de una balda seleccionada
+		if(array_key_exists('getCajas',$data)){
+			//saneamos el id de la balda seleccionada
+			(isset($data['idBaldaSelected'])) ? $idBaldaSelected = Validacion::sanearInput($data['idBaldaSelected']) : $idBaldaSelected = "";
+			
+			//si no tenemos id no hacemos la consulta
+			if($idBaldaSelected == '') die;
+			//recuperamos las cajas
+			$cajas = Caja::recuperarCajaPorIdBalda($bd,$idBaldaSelected);
+			echo json_encode($cajas);
+			die;
+		}
+
 	}
 	
 
