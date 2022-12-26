@@ -98,7 +98,7 @@
   
         <div id="idUbicacionCajasSinUbicar" class="hide inputsSelect mt-2">
           <label for="selectCajasSinUbicar">Caja: </label>
-          <select name="cajasSinAsignar" id="selectCajasSinUbicar" disabled>
+          <select name="cajasSinUbicar" id="selectCajasSinUbicar" disabled>
             @foreach ($cajasSinUbicar as $caja)
               <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
             @endforeach
@@ -136,7 +136,7 @@
 
     <div class="text-end mt-3">
       <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
-      <button type="button" class="btn btn-primary " name="modificarProducto" id="modificarProducto">Modificar</button>
+      <button type="button" class="btn btn-primary " name="modificarProducto" id="modificarProducto" value="{{$producto->getId()}}">Modificar</button>
     </div>
 
   </form>

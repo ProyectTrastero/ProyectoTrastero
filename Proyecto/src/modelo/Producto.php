@@ -205,6 +205,27 @@ class Producto {
             return $id;
         }
     }
+
+    public function modificarProducto (PDO $bd){
+        $sql = "update productos set nombre = :nombre, descripcion = :descripcion, idTrastero = :idTrastero, 
+                idEstanteria = :idEstanteria, idBalda = :idBalda, idCaja = :idCaja
+                where id = :id";
+        $stmt = $bd->prepare($sql);
+        if (!$stmt->execute([   ':nombre'=>$this->getNombre(), 
+                                ':descripcion'=> $this->getDescripcion(),   
+                                ':idTrastero'=>$this->getIdTrastero(), 
+                                ':idEstanteria'=>$this->getIdEstanteria(),
+                                ':idBalda'=>$this->getIdBalda(),
+                                ':idCaja' => $this->getIdCaja()])){
+            //si falla el update
+            $stmt = null;
+            return false;                            
+        }else{
+            $stmt=null;
+            return true;
+        }
+
+    }
     
     public function eliminar($bd){
         $consulta="delete from productos where id=$this->id";

@@ -188,7 +188,7 @@ if(isset($_SESSION['usuario'])){
                         //añadimos las etiquetas a el producto
                         //si falla mostramos error
                         if(!Producto::añadirEtiquetaProducto($bd,$idEtiqueta,$idProducto)){
-                            $msj['msj-content']="Error al añadir el etiqueta";
+                            $msj['msj-content']="Error al añadir la etiqueta al producto";
                             $msj['msj-type']="danger";
                         }
                     }

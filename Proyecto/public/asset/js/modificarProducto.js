@@ -38,8 +38,10 @@ function addEventToElements() {
 	document.getElementById('modificarProducto').addEventListener('click',modificarProducto);
 
 	document.getElementById('formProducto').addEventListener('submit',(e)=>{
-		e.preventDefault();//previene el envio del formulario por defecto
-		modificarProducto();
+		if(e.submitter.name == 'modificarProducto'){
+			e.preventDefault();//previene el envio del formulario por defecto
+			modificarProducto();
+		}
 	})
 
 }
@@ -424,7 +426,7 @@ function modificarProducto(){
 	//obtenemos los datos del formulario como un objeto formData
 	const formData = new FormData(formProducto);
 	//convertimos los datos del formulario en un objeto json
-	const data = {modificarProducto:''}
+	const data = {modificarProducto : document.getElementById('modificarProducto').value}
 	formData.forEach((value,key)=>{
 		data[key] = value;
 	});
