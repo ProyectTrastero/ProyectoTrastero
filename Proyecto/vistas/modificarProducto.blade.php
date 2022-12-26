@@ -24,7 +24,7 @@
 @endif
 
 
-  <form action="{{$_SERVER["PHP_SELF"]}}" method="POST">
+  <form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formProducto">
 
     <div class="row mt-3">
       <section class="col-lg-6">
@@ -112,7 +112,7 @@
       <div id="inputEtiquetas"></div>
       <div id="etiquetasProducto">
         @foreach ($etiquetasProducto as $etiquetaProducto)
-            <span class="etiqueta d-inline-flex align-items-center mb-1"> 
+            <span class="etiqueta d-inline-flex align-items-center mb-1" id="{{$etiquetaProducto['idEtiqueta']}}"> 
               {{$etiquetaProducto['nombreEtiqueta']}} 
               <span class="btn-close close-etiqueta" type="button"></span>
             </span>
@@ -136,7 +136,7 @@
 
     <div class="text-end mt-3">
       <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
-      <button type="submit" class="btn btn-primary " name="añadir">Añadir</button>
+      <button type="button" class="btn btn-primary " name="modificarProducto" id="modificarProducto">Modificar</button>
     </div>
 
   </form>

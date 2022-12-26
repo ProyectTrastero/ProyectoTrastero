@@ -88,7 +88,7 @@ if (isset($_SESSION['usuario'])) {
 		}
 	}
 
-	//recibimos los datos del cliente 
+	//recibimos las peticiones del cliente 
 	if(!is_null($data = json_decode(file_get_contents('php://input'),true))){
 
 		//peticion para devolver cajas sin asignar
@@ -162,10 +162,46 @@ if (isset($_SESSION['usuario'])) {
 			die;
 		}
 
+		//peticion para crear etiqueta
+		if(array_key_exists('crearEtiqueta',$data)){
+			//saneamos el nombre de la etiqueta
+			(isset($data['nombreEtiqueta'])) ? $nombreEtiqueta =Validacion::sanearInput($data['nombreEtiqueta']) : $nombreEtiqueta = "";
+			if($nombreEtiqueta != ''){
+				//creamos objeto etiqueta
+				$etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
+				//comprobamos si el nombre de la etiqueta ya existe
+				if (!$etiqueta->checkExisteNombreEtiqueta($bd)) {
+					//el nombre de la etiqueta ya exite
+					$mensaje=['msj-content'=>'Nombre de etiqueta ya existe, elija otro.' , 'msj-type'=>'danger'];
+				}else{
+					//guardamos la etiqueta
+					$etiqueta->guardarEtiqueta($bd);
+					$mensaje=['msj-content'=>'Etiqueta añadida.' , 'msj-type'=>'success'];
+				}
+			}else{
+				//si nombre de etiqueta vacio
+				$mensaje=['msj-content'=>'El campo nombre de etiqueta es obligatorio.' , 'msj-type'=>'danger'];
+			}
+			echo json_encode($mensaje);
+			die;
+		}
+
+		//peticion para obtener las etiquetas del usuario
+		if(array_key_exists('getEtiquetas',$data)){
+			$etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
+			echo json_encode($etiquetas);
+			die;
+		}
+
+		//peticion para modificar el producto 
+		if(array_key_exists('modificarProducto',$data)){
+			$formData= $data['formProducto'];
+			echo 'daniel';
+			die;
+		}
+
 	}
 	
-
-	// $daniel = $_POST['getCajasSinAsignar'];
 
 	echo $blade->run('modificarProducto', [	'producto' => $producto, 
 											'estanterias' => $estanterias, 

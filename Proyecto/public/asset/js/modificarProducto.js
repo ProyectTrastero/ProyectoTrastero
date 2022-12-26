@@ -2,7 +2,8 @@ window.addEventListener('load', iniciar);
 
 function iniciar() {
 	checkSelectRadio();
-
+	//creamos input en el que guardamos los id de las etiquetas que vamos a asignar al producto
+	crearInputEtiquetasAñadidas();
 	//add events a los elementos
 	addEventToElements();
 }
@@ -17,9 +18,29 @@ function addEventToElements() {
 		});
 	}
 
-	document.getElementById('selectEstanterias').addEventListener('change',getBaldasCajas);
+	//añadimos event click a los span con la clase close-etiqueta
+	let elementsCloseEtiquetas = Array.from(document.getElementsByClassName('close-etiqueta'));
+	elementsCloseEtiquetas.forEach(elementClose=>{
+		elementClose.addEventListener('click',(e)=>{
+			//eliminamos el elemento padre del span close
+			e.target.parentNode.remove();
+		})
+	})
+
+	document.getElementById('selectEstanterias').addEventListener('change', getBaldasCajas);
 
 	document.getElementById('selectBaldas').addEventListener('change', getCajas);
+
+	document.getElementById('crearEtiqueta').addEventListener('click', crearEtiqueta);
+
+	document.getElementById('añadirEtiqueta').addEventListener('click',añadirEtiqueta);
+
+	document.getElementById('modificarProducto').addEventListener('click',modificarProducto);
+
+	document.getElementById('formProducto').addEventListener('submit',(e)=>{
+		e.preventDefault();//previene el envio del formulario por defecto
+		modificarProducto();
+	})
 
 }
 
@@ -109,7 +130,10 @@ async function postData(url = '', data = {}) {
 	// Default options are marked with *
 	const response = await fetch(url, {
 		method: 'POST',
-		body: JSON.stringify(data) // datos que vamos a enviar
+		body: JSON.stringify(data), // datos que vamos a enviar
+		headers:{
+			'Content-Type': 'application/json'
+		  }
 	});
 	return response.json(); // datos que recibimos
 }
@@ -121,12 +145,13 @@ function getCajasSinUbicacion() {
 		optionElement.remove();
 	})
 	//hacemos la pericion al servidor
-	postData('modificarProducto.php', { getCajasSinUbicar: '',
-										
-									})
+	postData('modificarProducto.php', {
+		getCajasSinUbicar: '',
+
+	})
 		//recibimos los datos
 		.then(data => {
-			data.forEach(caja=>{
+			data.forEach(caja => {
 				let cajaElement = document.createElement('option');
 				cajaElement.value = caja.id;
 				cajaElement.innerText = caja.nombre;
@@ -140,39 +165,40 @@ function getCajasSinUbicacion() {
 
 }
 
-function getEstanteriasBaldasCajas(){
+function getEstanteriasBaldasCajas() {
 	idEstanteriaSelected = document.getElementById('selectEstanterias').value;
 	idBaldaSelected = document.getElementById('selectBaldas').value;
 	idCajaSelected = document.getElementById('selectCaja').value;
 	//borramos los elementos del select estanterias, baldas y cajas
-	Array.from(selectEstanterias.childNodes).forEach(optionElement =>{
+	Array.from(selectEstanterias.childNodes).forEach(optionElement => {
 		optionElement.remove();
 	})
-	Array.from(selectBaldas.childNodes).forEach(optionElement =>{
+	Array.from(selectBaldas.childNodes).forEach(optionElement => {
 		optionElement.remove();
 	})
-	Array.from(selectCaja.childNodes).forEach(optionElement =>{
+	Array.from(selectCaja.childNodes).forEach(optionElement => {
 		optionElement.remove();
 	})
 	//hacemos la peticion al servidor y enviamos los datos
-	postData('modificarProducto.php',{	getEstanteriasBaldasCajas: '',
-										idEstanteriaSelected : idEstanteriaSelected,
-										idBaldaSelected : idBaldaSelected,
-										idCajaSelected : idCajaSelected,
-									})
+	postData('modificarProducto.php', {
+		getEstanteriasBaldasCajas: '',
+		idEstanteriaSelected: idEstanteriaSelected,
+		idBaldaSelected: idBaldaSelected,
+		idCajaSelected: idCajaSelected,
+	})
 		//recibimos los datos del servidor
-		.then(data=>{
+		.then(data => {
 			//creamos los option elemetos del select estanterias
-			data.estanterias.forEach(estanteria=>{
+			data.estanterias.forEach(estanteria => {
 				let estanteriaElement = document.createElement('option');
 				estanteriaElement.value = estanteria.id;
 				estanteriaElement.innerText = estanteria.nombre;
-				if (estanteria.id == data.productoSelected.idEstanteriaSelected)  estanteriaElement.selected = true;
+				if (estanteria.id == data.productoSelected.idEstanteriaSelected) estanteriaElement.selected = true;
 				selectEstanterias.appendChild(estanteriaElement);
 			});
 			//creamos option element del select baldas
-			data.baldas.forEach(balda =>{
-				let baldaElement =document.createElement('option');
+			data.baldas.forEach(balda => {
+				let baldaElement = document.createElement('option');
 				baldaElement.value = balda.id;
 				baldaElement.innerText = balda.nombre;
 				if (balda.id == data.productoSelected.idBaldaSelected) baldaElement.selected = true;
@@ -191,57 +217,219 @@ function getEstanteriasBaldasCajas(){
 		.catch(error => console.error('Error:', error));
 }
 
-function getBaldasCajas(){
+function getBaldasCajas() {
 	//recuperamos id de la estanteria seleccionada
 	idEstanteriaSelected = selectEstanterias.value;
 	//eliminamos los option element baldas y los option element cajas
-	Array.from(selectBaldas).forEach(optionElement=>{
+	Array.from(selectBaldas).forEach(optionElement => {
 		optionElement.remove();
 	});
-	Array.from(selectCaja).forEach(optionElement=>{
+	Array.from(selectCaja).forEach(optionElement => {
 		optionElement.remove();
 	})
 	//hacemos la peticion al servidor
-	postData('modificarProducto.php',{ 	getBaldasCajas : '',
-										idEstanteriaSelected  : idEstanteriaSelected
-									})
-	//recibimos los datos
-	.then(data=>{
-		data.baldas.forEach(balda=>{
-			let baldaElement = document.createElement('option');
-			baldaElement.value = balda.id;
-			baldaElement.innerText = balda.nombre;
-			selectBaldas.appendChild(baldaElement);
-		})
-		data.cajas.forEach(caja=>{
-			let cajaElement = document.createElement('option');
-			cajaElement.value = caja.id;
-			cajaElement.innerText = caja.nombre;
-			selectCaja.appendChild(cajaElement);
-		})
+	postData('modificarProducto.php', {
+		getBaldasCajas: '',
+		idEstanteriaSelected: idEstanteriaSelected
 	})
-	.catch(error => console.error('Error:',error));
+		//recibimos los datos
+		.then(data => {
+			data.baldas.forEach(balda => {
+				let baldaElement = document.createElement('option');
+				baldaElement.value = balda.id;
+				baldaElement.innerText = balda.nombre;
+				selectBaldas.appendChild(baldaElement);
+			})
+			data.cajas.forEach(caja => {
+				let cajaElement = document.createElement('option');
+				cajaElement.value = caja.id;
+				cajaElement.innerText = caja.nombre;
+				selectCaja.appendChild(cajaElement);
+			})
+		})
+		.catch(error => console.error('Error:', error));
 
 }
 
-function getCajas(){
+function getCajas() {
 	//recuperamos id de la balda selecionada
 	idBaldaSelected = selectBaldas.value;
 	//eliminamos los option element cajas
-	Array.from(selectCaja).forEach(optionElement=>{
+	Array.from(selectCaja).forEach(optionElement => {
 		optionElement.remove();
 	})
 	//hacemos la pericion al servidor
-	postData('modificarProducto.php',	{getCajas : '',
-										idBaldaSelected : idBaldaSelected
-									})
-	.then(data=>{
-		data.forEach(caja=>{
-			let cajaElement = document.createElement('option');
-			cajaElement.value = caja.id;
-			cajaElement.innerHTML = caja.nombre;
-			selectCaja.appendChild(cajaElement);
-		})
+	postData('modificarProducto.php', {
+		getCajas: '',
+		idBaldaSelected: idBaldaSelected
 	})
-	.catch(error=> console.error('Error:',error));
+		.then(data => {
+			data.forEach(caja => {
+				let cajaElement = document.createElement('option');
+				cajaElement.value = caja.id;
+				cajaElement.innerHTML = caja.nombre;
+				selectCaja.appendChild(cajaElement);
+			})
+		})
+		.catch(error => console.error('Error:', error));
+}
+
+function crearEtiqueta() {
+	//recuperamos el nombre de la etiqueta
+	nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
+	//limpiamos el input
+	document.getElementById('nombreEtiqueta').value = "";
+	//hacemos peticion al servidor
+	postData('modificarProducto.php', {
+		crearEtiqueta: '',
+		nombreEtiqueta: nombreEtiqueta,
+	})
+		.then(data => {
+			//creamos element div que sera el alert
+			divElement = document.createElement('div');
+			//añadimos clases
+			divElement.classList.add('alert');
+			divElement.classList.add('alert-dismissible');
+			divElement.classList.add('fade');
+			divElement.classList.add('show');
+			divElement.classList.add('alert-' + data['msj-type']);
+			divElement.role = 'alert';
+			divElement.innerHTML = data['msj-content'];
+
+			//eliminamos el alert despues de un tiempo establecido
+			//pendiente de mejorar
+			setTimeout(() => {
+				divElement.classList.remove('show');
+			}, 5000);
+			divElement.addEventListener('transitionend', () => {
+				divElement.remove();
+			})
+
+			//añadimos el div alert
+			document.getElementById('alerts').appendChild(divElement);
+			document.getElementById('alerts').style.overflowX = 'hidden';
+
+			//si etiqueta creada correctamente, recargamos select etiquetas
+			if (data['msj-type'] == 'success') {
+				getEtiquetas();
+			}
+		})
+}
+
+//recibimos las etiquetas del usuario
+function getEtiquetas() {
+	//eliminamos los option elment del select etiquetas
+	Array.from(selectEtiquetas.childNodes).forEach(etiqueta => {
+		//eliminamos las etiquetas
+		etiqueta.remove();
+	})
+	//hacemos peticion al servidor para obtener las etiquetas
+	postData('modificarProducto.php', { getEtiquetas: '' })
+		.then(data => {
+			data.forEach(etiqueta=>{
+				//creamos element option
+				let optionElement = document.createElement('option');
+				optionElement.value = etiqueta.id;
+				optionElement.innerText = etiqueta.nombre;
+				//añadimos la etiqueta al select
+				selectEtiquetas.appendChild(optionElement);
+
+			})
+		})
+
+}
+
+function añadirEtiqueta(){
+	//recuperamos el value del select 
+	let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
+	//si no recuperamos el id salimos
+	if(idEtiquetaSelected == "" || idEtiquetaSelected === undefined || idEtiquetaSelected === null){
+		return;
+	}
+	//recuperamos el nombre de la etiqueta
+	let nombreEtiquetaSelected = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;
+
+	//verificamos que la etiqueta no este añadida
+	let etiquetasAñadidas = document.getElementById('etiquetasProducto').childNodes;
+	
+	for (let i = 0; i < etiquetasAñadidas.length; i++) {
+		const etiqueta = etiquetasAñadidas[i];
+		if(etiqueta.localName == 'span'){
+			if(etiqueta.id == idEtiquetaSelected) {
+				return;
+			}
+		}
+	}
+	
+	//creamos element span que sera la etiqueta
+	let spanElement= document.createElement('span');
+	spanElement.innerText = nombreEtiquetaSelected;
+	spanElement.id = idEtiquetaSelected;
+	spanElement.classList.add('etiqueta');
+	spanElement.classList.add('d-inline-flex');
+	spanElement.classList.add('align-items-center');
+	spanElement.classList.add('mb-1')
+	//añadimos el span etiqueta a el div etiquetas producto
+	document.getElementById('etiquetasProducto').appendChild(spanElement);
+	//creamos elemento span que sera la x
+	let spanX = document.createElement('span');
+	spanX.classList.add('btn-close');
+	spanX.classList.add('close-etiqueta');
+	spanX.nodeType='button';
+	//añadimos el span x al span etiqueta
+	document.getElementById(idEtiquetaSelected).appendChild(spanX);
+
+	//añadimos event click al span x para eliminar la etiqueta
+	spanX.addEventListener('click',(e)=>{
+		e.target.parentNode.remove();
+	})
+	crearInputEtiquetasAñadidas();
+}
+
+function crearInputEtiquetasAñadidas(){
+	//recuperamos las etiquetas añadidas
+	let etiquetasAñadidas = document.getElementById('etiquetasProducto').childNodes;
+	//creamos un string con los id de las etiquetas añadidas
+	let stringEtiquetasAñadidas="";
+	for (let i = 0; i < etiquetasAñadidas.length; i++) {
+	  let etiqueta = etiquetasAñadidas[i];
+	  if(etiqueta.localName == 'span'){
+	  	stringEtiquetasAñadidas += etiqueta.id + " ";
+	  }
+	}
+	//para eliminar el espacio del final
+	stringEtiquetasAñadidas = stringEtiquetasAñadidas.trim();
+	//guardamos la informacion en un input
+	//eliminamos el input si esta creado
+	if(document.getElementById('inputAñadirEtiquetas')){
+	  document.getElementById('inputAñadirEtiquetas').remove();
+	}
+	//creamos un input con los id de las etiquetas añadidas
+	let inputAñadirEtiquetas = document.createElement('input');
+	inputAñadirEtiquetas.id='inputAñadirEtiquetas';
+	inputAñadirEtiquetas.nodeType='text';
+	inputAñadirEtiquetas.setAttribute('hidden','true');
+	inputAñadirEtiquetas.name='inputAñadirEtiquetas';
+	inputAñadirEtiquetas.value=stringEtiquetasAñadidas;
+	//element en donde ubicaremos el input
+	let inputEtiquetas= document.getElementById('inputEtiquetas');
+	document.getElementById('inputEtiquetas').appendChild(inputAñadirEtiquetas);
+
+	console.log(document.getElementById('inputAñadirEtiquetas').value);
+}
+
+
+function modificarProducto(){
+	const formProducto = document.getElementById('formProducto');
+	//obtenemos los datos del formulario como un objeto formData
+	const formData = new FormData(formProducto);
+	//convertimos los datos del formulario en un objeto json
+	const data = {modificarProducto:''}
+	formData.forEach((value,key)=>{
+		data[key] = value;
+	});
+	postData('modificarProducto.php', data)
+	.then(data=>{
+
+	})
 }
