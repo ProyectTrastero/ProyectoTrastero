@@ -12,16 +12,7 @@
 <div class="container">
   {{-- alerts desde js --}}
   <div  id="alerts"></div>
-  {{-- alerts desde php --}}
-  @if (@isset($msj['msj-content']))
-  <div class="alert alert-{{$msj['msj-type']}} alert-dismissible fade show" role="alert"">
-    {{$msj['msj-content']}}
-
-    <?php $msj=array(); ?>
-
-     <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
-  </div>
-@endif
+  
 
 
   <form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formProducto">
@@ -32,12 +23,9 @@
         <div class="inputsForm">
           <label for="nombreProducto">Nombre: </label>
           <input type="text" name="nombreProducto" class="form-control" value="@isset($producto) {{$producto->getNombre()}} @endisset">
-          @if(isset($errores) && in_array("nombreInvalido", $errores)) 
-            <div></div>
-            <div class="textError form-text p-1 text-start">
-              Ingresa un nombre al producto.
-            </div>
-          @endif
+          <div></div>
+          <div id="nombreInvalido"> </div>
+          
   
           <label for="descripcionProducto">Descripción: </label>
           <input type="text" name="descripcionProducto" class="form-control" value="@isset($producto) {{$producto->getDescripcion()}} @endisset">
@@ -90,6 +78,7 @@
 
           <label for="selectCaja">Caja: </label>
           <select name="caja" id="selectCaja" disabled>
+            <option value="0">No ubicar en caja</option>
             @foreach ($cajas as $caja)
               <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
             @endforeach
@@ -102,6 +91,7 @@
             @foreach ($cajasSinUbicar as $caja)
               <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
             @endforeach
+           
           </select>
         </div>
   

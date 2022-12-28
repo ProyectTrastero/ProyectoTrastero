@@ -76,15 +76,14 @@ if (isset($_SESSION['usuario'])) {
 			$estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $miTrastero->getId());
 			//recuperamos las baldas de la estanteria en la que tenemos el producto
 			$baldas = Balda::recuperarBaldasPorIdEstanteria($bd, $producto->getIdEstanteria());
-			//comprobamos si el producto esta dentro de una caja
-			if (!is_null($producto->getIdCaja())) {
-				//recuperamos las cajas de la estanteria en la que tenemos el producto
-				$cajas = Caja::recuperarCajaPorIdBalda($bd, $producto->getIdBalda());
-			}
+			//recuperamos las cajas de la estanteria en la que tenemos el producto
+			$cajas = Caja::recuperarCajaPorIdBalda($bd, $producto->getIdBalda());
+			
 		}
 		//si tenemos el producto en una caja sin ubicar
 		elseif (is_null($producto->getIdEstanteria()) && !is_null($producto->getIdCaja())) {
 			$cajasSinUbicar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd, $miTrastero->getId());
+			
 		}
 	}
 
@@ -99,10 +98,15 @@ if (isset($_SESSION['usuario'])) {
 		}
 		//peticion para devolver estanterias
 		if(array_key_exists('getEstanteriasBaldasCajas',$data)){
-
+			
 			//obtenemos las estanterias del trastero
 			$estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $miTrastero->getId());
-
+			//si no tenemos estanterias
+			if (count($estanterias) == 0 ){
+				$arrResponse = array('estanterias'=>$estanterias=array(),'baldas'=>$baldas = array(),'cajas'=>$cajas = array(), 'productoSelected'=>$productoSelected =array());
+				echo json_encode($arrResponse);
+				die;
+			}
 			//saneamos el idEstanteria
 			(isset($data['idEstanteriaSelected'])) ? $idEstanteriaSelected = Validacion::sanearInput($data['idEstanteriaSelected']) : $idEstanteriaSelected = "";
 			//si tenemos id estanteria selected buscamos las baldas de la estanteria selected
@@ -176,7 +180,7 @@ if (isset($_SESSION['usuario'])) {
 				}else{
 					//guardamos la etiqueta
 					$etiqueta->guardarEtiqueta($bd);
-					$mensaje=['msj-content'=>'Etiqueta añadida.' , 'msj-type'=>'success'];
+					$mensaje=['msj-content'=>'Etiqueta creada.' , 'msj-type'=>'success'];
 				}
 			}else{
 				//si nombre de etiqueta vacio
@@ -209,11 +213,27 @@ if (isset($_SESSION['usuario'])) {
 			(isset($data['inputAñadirEtiquetas'])) ? $inputAñadirEtiquetas = Validacion::sanearInput($data['inputAñadirEtiquetas']) : $inputAñadirEtiquetas = null;
 
 			 //separamos los id de las etiquetas y los guardamos en un array
-			 $arrayInputAñadirEtiquetas = preg_split("/\s/",$añadirEtiquetas);
+			 $arrayInputAñadirEtiquetas = preg_split("/\s/",$inputAñadirEtiquetas);
 
-			 //si se ha seleccionado una caja sin ubicacion
+			 //si ubicacion en caja sin ubicacion
 			 if($ubicacion == 'ubicacionCajasSinAsignar'){
-				$caja=$cajaSinAsignar;
+				if($cajasSinUbicar == 0){
+					$mensaje['msj-content']="Ubicacion invalida";
+					$mensaje['msj-type']="danger";
+					echo json_encode($mensaje);
+					die;
+				}
+				$caja=$cajasSinUbicar;
+			}
+
+			//si ubicacion en estanteria
+			if($ubicacion == 'ubicacionEstanteria'){
+				if($estanteria==0 && $balda==0){
+					$mensaje['msj-content']="Ubicacion invalida";
+					$mensaje['msj-type']="danger";
+					echo json_encode($mensaje);
+					die;
+				}
 			}
 			
  			//si no se ha seleccionado una caja en estanterias
@@ -223,13 +243,16 @@ if (isset($_SESSION['usuario'])) {
 
 			//comprobamos si se ha ingresado un nombre 
 			if ($nombreProducto == '' ) {
-				array_push($errores, 'nombreInvalido');
+				$errores['nombreInvalido']='true';
+				
 			//comprobamos si tenemos una ubicacion
 			}if($ubicacion == ''){
-				array_push($errores, 'sinUbicacion');
+				$errores['sinUbicacion'] = 'true';
+	
 			}
 			
 			$objProductoUpdate = new Producto();
+			$objProductoUpdate->setId(intval($idProducto));
 			$objProductoUpdate->setNombre(($nombreProducto != '') ? $nombreProducto : null);
 			$objProductoUpdate->setDescripcion(($descripcionProducto != '') ? $descripcionProducto : null);
 			$objProductoUpdate->setIdEstanteria($estanteria);
@@ -237,39 +260,52 @@ if (isset($_SESSION['usuario'])) {
 			$objProductoUpdate->setIdCaja($caja);
 			$objProductoUpdate->setIdTrastero($miTrastero->getId());
 
-			// $datos=['nombreProducto'=>$nombreProducto,
-			// 		'descripcionProducto'=>$descripcionProducto,
-			// 		'estanteria'=>$estanteria,
-			// 		'balda'=>$balda,
-			// 		'caja'=>$caja,
-			// 		'idTrastero'=>$miTrastero->getId()
-			// 		];
-
-			// //set a null todos los campos vacios para añadir a la base de datos como null
-			// foreach ($datos as $key => $value) {
-			// 	if ($value=='') {
-			// 		$datos[$key]=null;
-			// 	}
-			// }
-
 			//si se ha especificado nombre y ubicacion
 			if (count($errores)==0) {
 				//si producto modificado correctamente
 				if ($objProductoUpdate->modificarProducto($bd)) {
 					$mensaje['msj-content']="Producto modificado con exito";
 					$mensaje['msj-type']="success";
-					//comprobamos si tenemos etiquetas para añadir al producto
-					foreach ($arrayInputAñadirEtiquetas as $idEtiqueta) {
-						if($idEtiqueta != ""){
-							$idEtiqueta=intval($idEtiqueta);
-							//añadimos las etiquetas a el producto
-							//si falla mostramos error
-							if(!Producto::añadirEtiquetaProducto($bd,$idEtiqueta,$idProducto)){
-								$mensaje['msj-content']="Error al añadir la etiqueta al producto";
-								$mensaje['msj-type']="danger";
+					//recuperamos las etiquetas que tiene el producto
+					$etiquetasProducto= Producto::recuperarEtiquetasPorProductoId($bd,$idProducto);
+
+					//comprobamos las etiquetas a añadir
+					$existe = false;
+					//recorremos las etiquetas del formulario
+					foreach ($arrayInputAñadirEtiquetas as $valueArrayInput) {
+						if($valueArrayInput == '') continue;
+						//recorremos las etiquetas que ya tiene el producto
+						foreach($etiquetasProducto as $etiquetaProducto){
+							//si la etiqueta del formulario coincide con una que ya tiene el producto
+							if($valueArrayInput==$etiquetaProducto['idEtiqueta']){
+								$existe= true;
 							}
 						}
+						//si no existe, añadimos la etiqueta
+						if(!$existe){
+							Producto::añadirEtiquetaProducto($bd,$valueArrayInput,$idProducto);
+						}	
+						$existe=false;
 					}
+
+					//comprobamos las etiquetas a eliminar
+					$existe=false;
+					//recorremos las etiquetas del producto
+					foreach($etiquetasProducto as $etiquetaProducto){
+						//recorremos las etiquetas del formulario
+						foreach($arrayInputAñadirEtiquetas as $valueArrayInput){
+							if($etiquetaProducto['idEtiqueta'] == $valueArrayInput){
+								$existe=true;
+							}
+						}
+						// si la etiqueta del producto no esta en las etiquetas del formulario
+						if(!$existe){
+							//eliminamos la etiqueta
+							Producto::eliminarEtiquetaProducto($bd,$etiquetaProducto['id']);
+						}
+						$existe=false;
+					}
+
 				}else {
 					$mensaje['msj-content']="Error al modificar el producto";
 					$mensaje['msj-type']="danger";

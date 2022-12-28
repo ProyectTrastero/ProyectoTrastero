@@ -24,6 +24,7 @@ function addEventToElements() {
 		elementClose.addEventListener('click',(e)=>{
 			//eliminamos el elemento padre del span close
 			e.target.parentNode.remove();
+			crearInputEtiquetasAñadidas();
 		})
 	})
 
@@ -153,14 +154,21 @@ function getCajasSinUbicacion() {
 	})
 		//recibimos los datos
 		.then(data => {
-			data.forEach(caja => {
+			if(data.length==0){
 				let cajaElement = document.createElement('option');
-				cajaElement.value = caja.id;
-				cajaElement.innerText = caja.nombre;
-				if (idCajaSelected == caja.id) cajaElement.selected = true;
+				cajaElement.value=0;
+				cajaElement.innerText='No hay cajas';
 				selectCajasSinUbicar.appendChild(cajaElement);
+			}else{
+				data.forEach(caja => {
+					let cajaElement = document.createElement('option');
+					cajaElement.value = caja.id;
+					cajaElement.innerText = caja.nombre;
+					if (idCajaSelected == caja.id) cajaElement.selected = true;
+					selectCajasSinUbicar.appendChild(cajaElement);
 
-			})
+				})
+			}
 		})
 		//controlamos los errores
 		.catch(error => console.error('Error:', error));
@@ -169,7 +177,7 @@ function getCajasSinUbicacion() {
 
 function getEstanteriasBaldasCajas() {
 	idEstanteriaSelected = document.getElementById('selectEstanterias').value;
-	idBaldaSelected = document.getElementById('selectBaldas').value;
+	idBaldaSelected = document.getElementById('selectBaldas').value ;
 	idCajaSelected = document.getElementById('selectCaja').value;
 	//borramos los elementos del select estanterias, baldas y cajas
 	Array.from(selectEstanterias.childNodes).forEach(optionElement => {
@@ -190,30 +198,84 @@ function getEstanteriasBaldasCajas() {
 	})
 		//recibimos los datos del servidor
 		.then(data => {
-			//creamos los option elemetos del select estanterias
-			data.estanterias.forEach(estanteria => {
-				let estanteriaElement = document.createElement('option');
-				estanteriaElement.value = estanteria.id;
-				estanteriaElement.innerText = estanteria.nombre;
-				if (estanteria.id == data.productoSelected.idEstanteriaSelected) estanteriaElement.selected = true;
-				selectEstanterias.appendChild(estanteriaElement);
-			});
-			//creamos option element del select baldas
-			data.baldas.forEach(balda => {
-				let baldaElement = document.createElement('option');
-				baldaElement.value = balda.id;
-				baldaElement.innerText = balda.nombre;
-				if (balda.id == data.productoSelected.idBaldaSelected) baldaElement.selected = true;
-				selectBaldas.appendChild(baldaElement);
-			});
-			//creamos los option element del select cajas
-			data.cajas.forEach(caja => {
-				let cajaElement = document.createElement('option');
-				cajaElement.value = caja.id;
-				cajaElement.innerText = caja.nombre;
-				if (caja.id == data.productoSelected.idCajaSelected) cajaElement.selected = true;
-				selectCaja.appendChild(cajaElement);
-			})
+			//si la ubicacion es invalida
+			if(data['msj-content']=='Ubicacion invalida'){
+				//creamos un div que sera el alert
+				let divElement= document.createElement('div');
+
+				//añadimos clases al div
+				divElement.classList.add('alert');
+				divElement.classList.add('alert-dismissible');
+				divElement.classList.add('fade');
+				divElement.classList.add('show');
+				divElement.classList.add('alert-' + data['msj-type']);
+
+				divElement.role='alert';
+				divElement.innerHTML=data['msj-content'];
+
+				//eliminamos el alert despues de 5 seg
+				setTimeout(()=>{
+					divElement.remove();
+				},5000);
+
+				//añadimos el div alert
+				document.getElementById('alerts').appendChild(divElement);
+
+			}else{
+				//si no tenemos estanterias
+				if(data.estanterias.length == 0){
+					let estanteriaElement = document.createElement('option');
+					estanteriaElement.value = 0;
+					estanteriaElement.innerText = 'No hay estanterias';
+					selectEstanterias.appendChild(estanteriaElement);
+				}else{
+					//creamos los option elemetos del select estanterias
+					data.estanterias.forEach(estanteria => {
+						let estanteriaElement = document.createElement('option');
+						estanteriaElement.value = estanteria.id;
+						estanteriaElement.innerText = estanteria.nombre;
+						if (estanteria.id == data.productoSelected.idEstanteriaSelected) estanteriaElement.selected = true;
+						selectEstanterias.appendChild(estanteriaElement);
+					});
+				}
+				//si no tenemos baldas
+				if(data.baldas.length == 0 ){
+					let baldaElement = document.createElement('option');
+					baldaElement.value = 0;
+					baldaElement.innerText = 'No hay baldas';
+					selectBaldas.appendChild(baldaElement);
+				}else{
+					//creamos option element del select baldas
+					data.baldas.forEach(balda => {
+						let baldaElement = document.createElement('option');
+						baldaElement.value = balda.id;
+						baldaElement.innerText = balda.nombre;
+						if (balda.id == data.productoSelected.idBaldaSelected) baldaElement.selected = true;
+						selectBaldas.appendChild(baldaElement);
+					});
+				}
+				if(data.cajas.length == 0){
+					let cajaElement = document.createElement('option');
+					cajaElement.value = 0;
+					cajaElement.innerText = 'No hay cajas';
+					selectCaja.appendChild(cajaElement);
+				}else{
+					//creamos option por default
+					let cajaElement = document.createElement('option');
+					cajaElement.value = 0;
+					cajaElement.innerText = 'No ubicar en caja';
+					selectCaja.appendChild(cajaElement);
+					//creamos los option element del select cajas
+					data.cajas.forEach(caja => {
+						let cajaElement = document.createElement('option');
+						cajaElement.value = caja.id;
+						cajaElement.innerText = caja.nombre;
+						if (caja.id == data.productoSelected.idCajaSelected) cajaElement.selected = true;
+						selectCaja.appendChild(cajaElement);
+					})
+				}
+
+			}
 		})
 		//controlamos los errores
 		.catch(error => console.error('Error:', error));
@@ -242,6 +304,12 @@ function getBaldasCajas() {
 				baldaElement.innerText = balda.nombre;
 				selectBaldas.appendChild(baldaElement);
 			})
+			//creamos option por default
+			let cajaElement = document.createElement('option');
+			cajaElement.value = 0;
+			cajaElement.innerText = 'No ubicar en caja';
+			selectCaja.appendChild(cajaElement);
+			//creamos option element del select caja
 			data.cajas.forEach(caja => {
 				let cajaElement = document.createElement('option');
 				cajaElement.value = caja.id;
@@ -266,6 +334,12 @@ function getCajas() {
 		idBaldaSelected: idBaldaSelected
 	})
 		.then(data => {
+			//creamos option por default
+			let cajaElement = document.createElement('option');
+			cajaElement.value = 0;
+			cajaElement.innerText = 'No ubicar en caja';
+			selectCaja.appendChild(cajaElement);
+			//creamos option element del select caja
 			data.forEach(caja => {
 				let cajaElement = document.createElement('option');
 				cajaElement.value = caja.id;
@@ -383,6 +457,7 @@ function añadirEtiqueta(){
 
 	//añadimos event click al span x para eliminar la etiqueta
 	spanX.addEventListener('click',(e)=>{
+		crearInputEtiquetasAñadidas();
 		e.target.parentNode.remove();
 	})
 	crearInputEtiquetasAñadidas();
@@ -433,5 +508,48 @@ function modificarProducto(){
 	postData('modificarProducto.php', data)
 	.then(data=>{
 
+		//eliminamos el mensaje de error
+		if(document.getElementById('nombreInvalido').firstChild != null)
+		document.getElementById('nombreInvalido').firstChild.remove();
+
+		//si nombre invalido
+		if(data.nombreInvalido =='true'){
+			//div para mostrar error
+			let divElement = document.createElement('div');
+			divElement.classList.add('textError');
+			divElement.classList.add('form-text');
+			divElement.classList.add('p-1');
+			divElement.classList.add('text-start');
+
+			divElement.innerText= 'Ingresa un nombre al producto.';
+			
+			document.getElementById('nombreInvalido').appendChild(divElement);
+
+
+		}else{
+
+			//creamos un div que sera el alert
+			let divElement= document.createElement('div');
+
+			//añadimos clases al div
+			divElement.classList.add('alert');
+			divElement.classList.add('alert-dismissible');
+			divElement.classList.add('fade');
+			divElement.classList.add('show');
+			divElement.classList.add('alert-' + data['msj-type']);
+
+			divElement.role='alert';
+			divElement.innerHTML=data['msj-content'];
+
+			//eliminamos el alert despues de 5 seg
+			setTimeout(()=>{
+				divElement.remove();
+			},5000);
+
+			//añadimos el div alert
+			document.getElementById('alerts').appendChild(divElement);
+		}
 	})
+
+	
 }
