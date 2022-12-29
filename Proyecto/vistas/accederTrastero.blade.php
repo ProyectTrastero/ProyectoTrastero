@@ -24,12 +24,12 @@
 {{-- Sección mensaje --}}
 @section('content')
 
-<div class="container">
+<div class="opciones">
             <form method="POST" action="">
-                <h3>{{$miTrastero->getNombre()}}</h3>
-                <button name="verTrastero" id="verTrastero"><span>Ver trastero</span></button>
-                <button name="añadirProducto" id="añadirProducto"><span>Añadir Producto</span></button>
-                <button name="buscarProducto" id="buscarProducto"><span>Buscar Producto</span></button>
+                <h3 class="inicial titulo">Opciones para el {{$miTrastero->getNombre()}}</h3>
+                <button class="col-3" name="verTrastero" id="verTrastero"><span>Ver trastero</span></button>
+                <button class="col-3" name="añadirProducto" id="añadirProducto"><span>Añadir Producto</span></button>
+                <button class="col-3" name="buscarProducto" id="buscarProducto"><span>Buscar Producto</span></button>
             <br/><br/><br/> 
                 <button class ="volver" name="volverTodosTrasteros">Volver</button>
             </form>

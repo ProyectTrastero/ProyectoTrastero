@@ -18,6 +18,7 @@ use \PDO as PDO;
  */
 class Producto {
     private $id;
+    //private $fecha;
     private $nombre;
     private $descripcion;
     private $idTrastero;
@@ -29,6 +30,9 @@ class Producto {
         if (!is_null($id)) {
         $this->id = $id;
         }
+        /*if (!is_null($fecha)) {
+        $this->nombre = $fecha;
+        }*/
         if (!is_null($nombre)) {
         $this->nombre = $nombre;
         }
@@ -49,6 +53,12 @@ class Producto {
         }
     }
 
+    /*public function getFecha() {
+        return $this->fecha;
+    }
+    public function setFecha($fecha): void {
+        $this->fecha = $fecha;
+    }*/
     
     public function getId() {
         return $this->id;
@@ -239,8 +249,8 @@ class Producto {
     }
 
     public static function eliminarProductoporID($bd, int $idProducto){
-        $consulta="delete from productos where id=$idProducto";
-        $bd->exec($consulta);
+            $consulta="delete from productos where id=$idProducto";
+            $bd->exec($consulta);
     }
  
     public static function buscarProductosPorIdEtiquetaYTrastero($bd, array $idEtiquetas, $idTrastero){

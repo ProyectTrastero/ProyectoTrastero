@@ -6,32 +6,10 @@
         font-family: Times New Roman, initial;
 }
 
-/*usados para ver  mas claramente la disposicion de los divs
-div{
-    border:solid;
-}
-
-
-
-.container{
-    border-color: red;
-}
-table, tr, td,ul{
-    border:solid;
-    color:green;
-} */
-
-/*usados para ver mas...*/
-/*.navegador{
-    padding: 30px;
-    color:white;
-    display: inline-flex;
-}*/
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0px;
     padding: 0px;
-    
     /*background-color: royalblue;*/
         
 }
@@ -365,6 +343,29 @@ nav button:hover{
     display: grid;
     grid-template-columns: max-content max-content;
     gap: 0.5em;
+}
+
+
+/*PAGINA BUSCAR PRODUCTO*/
+.opciones{
+    margin: 50px 100px 50px 100px;
+    padding: 2em;
+    background-color: white;
+    border:solid 1px;
+    border-color: grey;
+    border-radius: 8px; 
+}
+
+.volver{
+    padding: 0px 10px 0px 10px;
+    background: linear-gradient(#B6DDF8, white);
+    border:solid 0.5px;
+    border-color: grey;
+    border-radius: 8px;
+}
+
+.titulo{
+    text-transform: uppercase;
 }
 /*
 

@@ -20,24 +20,12 @@
         
     @endif
 
-    @if (isset($msj))
-        <div class="alert alert-{{$msj['msjType']}} alert-dismissible fade show" role="alert">
-            {{$msj['msj']}}
-            <?php
-                $msj = null;
-            ?>
-            <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
-        </div>
-        
-    @endif
-
     
     <div class="signUp">
         <h2 class="mb-5 text-center">Registro usuario</h2>
         <form action="{{$_SERVER["PHP_SELF"]}}" method="post">
 
             <div class="mb-3 inputsForm">
-                <label for="inputAlias" class="form-label">Alias: </label>
                 <label for="inputAlias" class="form-label">Alias: </label>
                 <input id="inputAlias" type="text" name="alias" placeholder="Alias" class="form-control" value="{{$datos['alias']}}">
                 @if(isset($error) && in_array("usuarioInvalido", $error)) 
@@ -55,9 +43,6 @@
             
             
             
-            
-            
-                <label for="inputNombre">Nombre: </label>
                 <label for="inputNombre">Nombre: </label>
                 <input id="inputNombre" type="text" name="nombre" placeholder="Nombre" class="form-control" value="{{$datos['nombre']}}">
                 @if(isset($error) && in_array("nombreInvalido", $error)) 
@@ -71,11 +56,6 @@
 
             
                 <label for="inputApellidos">Apellidos: </label>
-            
-           
-
-            
-                <label for="inputApellidos">Apellidos: </label>
                 <input id="inputApellidos" type="text" name="apellidos" placeholder="Apellidos" class="form-control" value="{{$datos['apellidos']}}">
                 @if(isset($error) && in_array("apellidoInvalido", $error)) 
                     <div></div>
@@ -84,10 +64,6 @@
                     </div>  
                 @endif
             
-            
-
-            
-                <label for="inputCorreo">Correo: </label>
             
 
             
@@ -110,10 +86,6 @@
 
             
                 <label for="inputPassword">Contraseña: </label>
-            
-
-            
-                <label for="inputPassword">Contraseña: </label>
                 <input id="inputPassword" type="password" name="clave" placeholder="Contraseña" class="form-control" value="{{$datos['clave']}}">
                 @if(isset($error) && in_array("claveInvalida", $error)) 
                     <div></div>
@@ -122,10 +94,6 @@
                     </div>  
                 @endif
             
-            
-
-            
-                <label for="inputPasswordRepeat">Repita la contraseña: </label>
             
 
             
