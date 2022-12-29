@@ -8,7 +8,7 @@
 <?php $this->startSection('content'); ?>
 
  <div class="container sesion">
- <h2>Iniciar sesion</h2>
+ <h2>Iniciar sesión</h2>
  <?php if(isset($error)): ?>
  <div class="alert alert-danger" role="alert">Error Credenciales</div>
  <?php endif; ?> 
@@ -23,12 +23,13 @@
  </br><br>
  <button type="submit" id="procsesion" name="procsesion"><span> Login </span> </button>
  <br/><br/>
+ <p>probando</p>
 
 
  <a>¿Aún no te has registrado?</a><br/>
- <div>   
+ 
  <button type="submit" id="registro" name="botonregistro"><span> Registrarse </span></button>
- </div>
+ 
  </form>        
 
  </div>
@@ -55,7 +56,7 @@
  </div> 
  </div>
  <div class="modal-footer">
- <button class="volver" type="button" id="volver" data-bs-dismiss="modal">Volver</button>
+ <button type="button" id="volver" data-bs-dismiss="modal">Volver</button>
  <button type="button" id="comprobarContraseña">Enviar</button>
  </div>
  </div>

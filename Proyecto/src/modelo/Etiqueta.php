@@ -8,7 +8,7 @@ use \PDO as PDO;
  *
  * @author Nausicaa
  */
-class Etiqueta {
+class Etiqueta implements \JsonSerializable{
     private $id;
     private $nombre;
     private $idUsuario;
@@ -23,6 +23,10 @@ class Etiqueta {
         if (!is_null($idUsuario)) {
         $this->idUsuario = $idUsuario;
         }
+    }
+    public function jsonSerialize(){
+        $variables = get_object_vars($this);
+        return $variables;
     }
     
     public function getId() {
@@ -49,12 +53,15 @@ class Etiqueta {
         $this->idUsuario = $idUsuario;
     }
 
+    
+
+    
     public static function recuperarEstanteriasPorIdTrastero($bd, $idTrastero): array{
         $consulta="select * from Estanterias where idTrastero = $idTrastero order by numero asc";
         $registro = $bd->query($consulta);
         $registro->setFetchMode(PDO::FETCH_CLASS, Estanteria::class);
         $estanterias=($registro->fetchAll()) ?: null;
-        if($estanterias==null){
+         if($estanterias==null){
             $estanterias=array();
         }
         return $estanterias;
@@ -73,19 +80,45 @@ class Etiqueta {
         }
         return $etiqueta;
     }
+
+    public static function recuperarEtiquetaPorId(PDO $bd, int $idEtiqueta){
+        $sql="select * from etiquetas where id = :idEtiqueta";
+        $stmt = $bd->prepare($sql);
+        $stmt->execute([':idEtiqueta' => $idEtiqueta]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, Etiqueta::class);
+        $etiqueta = ($stmt->fetch()) ?: null;
+        return $etiqueta;
+    }
     
     public function guardarEtiqueta($bd){
-    $consulta="INSERT INTO `etiquetas` (nombre, idUsuario) VALUES ('$this->nombre', $this->idUsuario);";
-    $bd->exec($consulta);
+        $consulta="INSERT INTO `etiquetas` (nombre, idUsuario) VALUES ('$this->nombre', $this->idUsuario);";
+        $bd->exec($consulta);
     }
-        
-    public static function recuperarEtiquetaPorId($bd, $idEtiqueta): Etiqueta{
-        $consulta = "select * from Etiquetas where id=$idEtiqueta";
-        $registro=$bd->query($consulta);
-        $registro->setFetchMode(PDO::FETCH_CLASS, Etiqueta::class);
-        $etiquetaSeleccionada = ($registro->fetch()) ?: null;
-        return $etiquetaSeleccionada;
+
+    public function checkExisteNombreEtiqueta(PDO $bd):bool{
+        $sql="select * from etiquetas where nombre = :nombre and idUsuario = :idUsuario";
+        $stmt = $bd->prepare($sql);
+        //si falla la consulta
+        if (!$stmt->execute([':nombre'=>$this->nombre, ':idUsuario'=>$this->idUsuario])) {
+            //cerramos la conexion
+            $stmt = null;
+            //existe
+            return false;
+        }
+        //si mayor que 0, existe
+        if($stmt->rowCount()>0){
+            $stmt=null;
+            return false;
+        }else{
+            //no existe
+            $stmt=null;
+            return true;
+        }
+
+
     }
 
 }
+
+
 

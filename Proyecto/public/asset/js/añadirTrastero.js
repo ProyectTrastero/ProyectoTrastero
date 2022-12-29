@@ -6,14 +6,18 @@ var primerElemento;
 var guardado;
 var infoModal;
 var infoModal2;
+var infoModal3;
 function iniciar(){
     var tipo = document.getElementById("guardadoModificado");
     var modal=document.getElementById("mostrarModal");
     infoModal=modal.value;
     var modal2=document.getElementById("mostrarModal2");
     infoModal2=modal2.value;
+    var modal3=document.getElementById("mostrarModal3");
+    infoModal3=modal3.value;
     guardado=tipo.getAttribute("value");
     ocultos= document.getElementsByClassName("papeleraOculta");
+    habilitarmodal();
     habilitarmodal();
     deshabilitarBotones();
     if(guardado=="false"){
@@ -34,6 +38,10 @@ function habilitarmodal(){
     if(infoModal2=="si"){
        $("#staticBackdrop").modal("show");
     }
+    if(infoModal3=="si"){
+       $("#staticBackdrop2").modal("show");
+    }
+    
    
 }
 
@@ -44,9 +52,7 @@ function deshabilitarBotones(){
             var nombreValue=botones[i].innerHTML;
             if(nombreValue!="Volver"){
                  botones[i].setAttribute("disabled", "true");
-            }
-           
-           
+            } 
         }
     }
 }
@@ -123,10 +129,9 @@ function añadirPapelera(e){
 }
 
 function eliminarPapelera(e){
-    var elemento = e.target;
+     var elemento = e.target;
     var papelera=elemento.children[0];
     var retardo=setTimeout(function(){
         elemento.removeChild(papelera);
     }, 1000);  
-
 }

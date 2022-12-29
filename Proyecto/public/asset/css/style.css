@@ -6,36 +6,77 @@
         font-family: Times New Roman, initial;
 }
 
+/*usados para ver  mas claramente la disposicion de los divs
+div{
+    border:solid;
+}
+
+
+
+.container{
+    border-color: red;
+}
+table, tr, td,ul{
+    border:solid;
+    color:green;
+} */
+
+/*usados para ver mas...*/
+/*.navegador{
+    padding: 30px;
+    color:white;
+    display: inline-flex;
+}*/
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0px;
     padding: 0px;
+    
     /*background-color: royalblue;*/
         
 }
 
+/*////////////////////////////////////////////////////*/
+ /*APP Y NAVBAR*/ 
 
- /*APP Y NAVBAR*/  
+.inicio{
+    /*background-color: #47a2db;*/
+    background-image: url("../img/imagen5.png"); 
+/*    background-image: url("../img/fondo.png");
+    background-image: url("../img/Geometric-Background-012.jpg"); */
+    background-repeat: no-repeat;
+    background-size: cover
+   
+}
+
+.ejecutando{
+    background-image: url("../img/imagenSecundaria.png"); 
+    background-repeat: repeat-y;
+    background-size: 1350px;
+}
+
  .navbar{
-    color: #6AA3E7;
+    color: #00a8f3;
     margin-top: 0px;
     padding: 0px;
 }
 
 .navbar div{
     margin: 0px;
+    margin-bottom: 20px;
     padding: 5px;
-    background-color: #6AA3E7;
+    background-color: #00a8f3;
 }
 
 .fa-user, .nav-link, .navbar-brand{
     color: white;
 }
+
  
  
  
 /*APP Y NAVBAR*/  
-
+/*////////////////////////////////////////////////////*/
 /*SESION*/
 .sesion{
     margin: 2em auto;
@@ -54,18 +95,186 @@ body {
 }
 
 /*SESION*/
-
-/*BOTONES*/
-.volver{
-    background: linear-gradient(grey, white);
+/*////////////////////////////////////////////////////*/
+/*ACCESO*/
+/*
+*/
+.cabecera{
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 20px;
 }
+
+.acceso{
+    height: auto;
+    width: 640px;
+    padding: 30px;
+    margin:0 auto;
+}
+
+table{
+    background: rgb(255, 255, 255, 0.85);
+    border:solid 0.5px;
+    border-radius: 8px;
+    border-color: grey;
+}
+
+td{
+    padding: 15px;
+}
+.inicial{
+    font-weight:bold;
+    font-size: 20px;
+    text-align:center;
+}
+/*
+
+.contenido{
+    background-color: rgb(255, 255, 255, 0.8);
+    display: table;
+    padding-left: 20px;
+    padding-right: 20px;
+}*/
+/*ACCESO*/
+/*////////////////////////////////////////////////////*/
+/*AÑADIRTRASTERO*/
+#atDiv1{
+    margin: 0 auto;
+   
+}
+
+#atDiv2{
+    margin:15px;
+    padding:30px;
+}
+
+#nombre{
+    margin-right:50px;
+}
+
+.estanteria{
+    list-style: none;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    margin-top:20px;
+    margin-bottom: 20px;
+    background: linear-gradient(rgb(0, 168, 243, 0.8), rgb(255, 255, 255, 0.8));
+    /*background: rgb(0, 168, 243, 0.8);*/
+    border:solid 0.5px;
+    border-radius: 8px;
+    border-color: grey;
+}
+
+.estanteria>li{
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.estanteria>button {
+    padding: 0px 10px 0px 10px; 
+    margin-left: 0px;
+}
+
+
+#atboton1{
+    margin-top: 20px;
+}
+
+.estanteria>ul{
+    list-style: none;
+}
+.estanteria ul>li{
+    list-style: none;
+}
+
+/*AÑADIRTRASTERO*/
+/*////////////////////////////////////////////////////*/
+/*VERTRASTERO*/
+#menu{
+    padding: 15px;
+    border:solid 0.5px;
+    border-radius: 8px;
+    border-color: grey;
+    background: linear-gradient(rgb(0, 168, 243, 0.8), rgb(255, 255, 255, 0.8));
+}
+#vtVolver{
+    margin-top: 30px;
+    text-align: right;
+    padding-right: 235px;
+}
+
+#vtnombre{
+    font-size: 32px;
+    padding-bottom: 30px;
+    margin: 0 auto;
+    height: auto;
+    width: 150px;
+    font-weight: 600;
+    
+   
+}
+#vtSinUbicar{
+    padding-top: 15px;
+}
+
+.vtContainer{
+    width: 1500px;
+    margin-right: 5%;
+    margin-left: 5%;
+   
+}
+#vtTable{
+    /*width: 100%;*/
+    /*table-layout: fixed;*/
+    font-size: 15px;
+    border-radius: 8px;
+    border-color: grey;
+}
+
+.vtTrCabecera{
+    background: rgb(0, 168, 243, 0.5);
+    text-align: center;
+
+} 
+
+.vtTr{
+    background: linear-gradient(rgb(0, 168, 243, 0.2), rgb(255, 255, 255, 0.2));
+    text-align: left;
+}
+
+.vtTr:hover{
+    background: rgb(0, 168, 243, 0.5);
+
+}
+.vtTdFecha{
+    width: 115px;
+}
+.vtTdNombre{
+    width: 120px;
+}
+.vtTdDescripcion{
+    width: 320px;
+}
+.vtTdUbicacion{
+    width: 320px;
+}
+/*VERTRASTERO*/
+/*////////////////////////////////////////////////////*/
+/*BOTONES*/
+/*.volver{
+    background: linear-gradient(grey, white);
+}*/
 
 .papeleraOculta button{
     background: rgb(255, 255, 255, 0);
 }
 
 nav button {
+    margin: 0px;
     width: 100%;
+    background-color: white; 
+    background: linear-gradient(white, white);
     /*height: 100%;*/
     align-content: center;
     /*padding: 0.5rem;*/
@@ -74,89 +283,36 @@ nav button {
     border: none;
 }
 button{
-    padding: 5px 5px 5px 5px;
+    padding: 0px 10px 0px 10px;
+    margin-left: 8px;
+    margin-right: 8px;
     /*background-color: #B6DDF8;*/
     /*background: linear-gradient(#6AA3E7, violet);*/
-    /*background: linear-gradient(grey, white);*/
-    background: linear-gradient(grey, #B6DDF8);
+    background: linear-gradient(#ff7f27, white);
+    
+    /*background: linear-gradient(#B6DDF8, rgb(128,128,128,0.4));*/
+    /*background: linear-gradient(#ff7f27, rgb(255,255,255,0.4));*/
     border:solid 0.5px;
     border-color: grey;
     border-radius: 8px;
      
 }
+/*.btnEliminar{
+    background: linear-gradient(#B6DDF8, rgb(234,30,10,0.4));
+}*/
 
-
-nav button{
-    background-color: white; 
-    background: linear-gradient(white, white);
-}
 
 nav button:hover{
    /*background-color: #B6DDF8;*/
-   background: linear-gradient(#B6DDF8, white);
+   background: linear-gradient(#ff7f27, white);
 }
 
 /*BOTONES*/
 
 
-
-
-.contenido{
-    background-color: rgb(255, 255, 255, 0.8);
-    display: table;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-.estanteria{
-    padding-bottom: 10px;
-    padding-top: 10px;
-    margin-top:20px;
-    margin-bottom: 20px;
-    border: solid;
-    color:black;
-}
-.estanteria input{
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-
-
-
-
-/*div{
-    border:solid;
-    border-color: black;
-}*/
-
-
-
-.acceso{
-    padding: 20px;
-    margin-left: 50px;
-}
-
-
-.inicio{
-    background-image: url("../img/Geometric-Background-012.jpg"); 
-    background-repeat: no-repeat;
-    background-size: cover;
-   
-}
-
-.ejecutando{
-    background-image: url("../img/geometric.png"); 
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-
-
-
-
-input{
+/*input{
     padding-left: 5px;
-}
+}*/
 
 .inputsForm{
     display: grid;
@@ -188,9 +344,49 @@ input{
 
 
 .hide{
-	display: none;
+	display: none !important;
 }
 
+.etiqueta{
+    display: inline-flex;
+    border: 1px solid black;
+    padding: 0.5em;
+    border-radius: 10px;
+    background-color: wheat;
+    margin-right: 0.3em;
+}
+
+.close-etiqueta{
+    font-size: 0.9em;
+    margin-left: 0.4em;
+}
+
+.inputsSelect{
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 0.5em;
+}
+
+.opciones{
+    margin: 50px 100px 50px 100px;
+    padding: 2em;
+    background-color: white;
+    border:solid 1px;
+    border-color: grey;
+    border-radius: 8px; 
+}
+
+.volver{
+    padding: 0px 10px 0px 10px;
+    background: linear-gradient(#B6DDF8, white);
+    border:solid 0.5px;
+    border-color: grey;
+    border-radius: 8px;
+}
+
+.titulo{
+    text-transform: uppercase;
+}
 /*
 
 svg{

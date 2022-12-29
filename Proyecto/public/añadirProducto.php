@@ -11,8 +11,7 @@ use App\{
     Estanteria,
     Producto,
     Validacion,
-    Etiqueta,
-    Usuario
+    Etiqueta
 };
 
 // Inicializa el acceso a las variables de entorno
@@ -33,9 +32,7 @@ try {
 }
 
 session_start();
-$mensaje="";
 if(isset($_SESSION['usuario'])){
-    //añadido por Emma para dar funcionalidad al nav
     if(isset($_REQUEST['cerrarSesion'])){
         session_destroy();
         header("Location: index.php");
@@ -45,7 +42,6 @@ if(isset($_SESSION['usuario'])){
         header("Location: editarPerfil.php");
     }
     
-    //Hasta aquí
     
     $usuario = $_SESSION['usuario'];
     $idTrastero = $_SESSION['miTrastero']->getId();
@@ -53,15 +49,18 @@ if(isset($_SESSION['usuario'])){
     $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
     //recuperamos las etiquetas del usuario
     $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
+    
+    static $arrayAñadirEtiquetas = array();
+    
     $errores= array();
     $msj=array();
 
-    if (isset($_REQUEST['getIdTrastero'])) {
+    if (isset($_GET['getIdTrastero'])) {
         echo $idTrastero;
         die;
     }
     
-    if (isset($_REQUEST["idEstanteria"])) {    
+    if (isset($_GET["idEstanteria"])) {    
         //recuperamos el id de la estanteria seleccionada
         $estanteriaSelected = $_REQUEST["idEstanteria"];
         //recuperamos las baldas 
@@ -70,7 +69,7 @@ if(isset($_SESSION['usuario'])){
         die;
     }
 
-    if (isset($_REQUEST['idBalda'])) {
+    if (isset($_GET['idBalda'])) {
         //recuperamos el id de la balda seleccionada
         $baldaSelected = $_REQUEST['idBalda'];
         //recuperamos las cajas
@@ -79,16 +78,51 @@ if(isset($_SESSION['usuario'])){
         die;
     }
 
-    if (isset($_REQUEST['getCajasSinAsignar'])) {
+    if (isset($_GET['getCajasSinAsignar'])) {
         $cajasSinAsignar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd,$idTrastero);
         echo json_encode($cajasSinAsignar);
         die;
     }
 
-    if(isset($_POST['añadirEtiqueta'])){
-        if(isset($_POST['etiquetas'])){
-            
+    if (isset($_GET['crearEtiqueta'])){
+        $nombreEtiqueta = Validacion::sanearInput($_REQUEST['crearEtiqueta']);
+        //comprobamos si la etiqueta tiene un nombre
+        if ($nombreEtiqueta != '') {
+            $etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
+            //comprobamos si el nombre de la etiqueta ya existe
+            if (!$etiqueta->checkExisteNombreEtiqueta($bd)) {
+                //el nombre de la etiqueta ya exite
+                $mensaje=['msj-content'=>'Nombre de etiqueta ya existe, elija otro.' , 'msj-type'=>'danger'];
+            }else{
+                //guardamos la etiqueta
+                $etiqueta->guardarEtiqueta($bd);
+                $mensaje=['msj-content'=>'Etiqueta añadida.' , 'msj-type'=>'success'];
+            }
+        }else{
+            $mensaje=['msj-content'=>'El campo nombre de etiqueta es obligatorio.' , 'msj-type'=>'danger'];
         }
+        echo json_encode($mensaje);
+        die;
+    
+    }
+
+    
+    
+    if(isset($_GET['añadirEtiqueta'])){
+        $idEtiqueta = intval($_REQUEST['añadirEtiqueta']);
+        $objectEtiqueta = Etiqueta::recuperarEtiquetaPorId($bd, $idEtiqueta);
+        array_push($arrayAñadirEtiquetas,$objectEtiqueta);
+        echo json_encode($arrayAñadirEtiquetas);
+        
+        die;        
+    }
+    //despues de crear una etiqueta, recuperamos las etiquetas para actualizar el select
+    if(isset($_GET['getEtiquetas'])){
+        //recuperamos las etiquetas del usuario
+        $etiquetasUpdate = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
+        echo json_encode($etiquetasUpdate);
+        
+        die;
     }
 
     if(isset($_POST['volver'])){
@@ -104,8 +138,10 @@ if(isset($_SESSION['usuario'])){
         (isset($_POST['caja'])) ? $caja = intval(Validacion::sanearInput($_POST['caja'])) : $caja = '';
         (isset($_POST['cajasSinAsignar'])) ? $cajaSinAsignar = intval(Validacion::sanearInput($_POST['cajasSinAsignar'])) : $cajaSinAsignar='';
         (isset($_POST['ubicacion'])) ? $ubicacion = $_POST['ubicacion'] : $ubicacion = "";
-        
-        
+        (isset($_POST['inputAñadirEtiquetas'])) ? $añadirEtiquetas = Validacion::sanearInput(($_POST['inputAñadirEtiquetas'])) : $añadirEtiquetas = '';
+        //separamos los id de las etiquetas
+        $arrayInputAñadirEtiquetas = preg_split("/\s/",$añadirEtiquetas);
+        //si se ha seleccionado una caja sin ubicacion
         if($ubicacion == 'ubicacionCajasSinAsignar'){
             $caja=$cajaSinAsignar;
         }
@@ -130,18 +166,33 @@ if(isset($_SESSION['usuario'])){
                 'idTrastero'=>$idTrastero
                 ];
         
-        //set a null todos los campos vacios
+        //set a null todos los campos vacios para añadir a la base de datos como null
         foreach ($datos as $key => $value) {
             if ($value=='') {
                 $datos[$key]=null;
             }
         }
         
-        
+        //si se ha especificado nombre y ubicacion
         if (count($errores)==0) {
-            if (Producto::añadirProducto($bd,$datos)) {
+            //añadimos el producto
+            $idProducto=Producto::añadirProducto($bd,$datos);
+            //si producto añadido correctamente
+            if ($idProducto != -1) {
                 $msj['msj-content']="Producto añadido con exito";
                 $msj['msj-type']="success";
+                //comprobamos si tenemos etiquetas para añadir al producto
+                foreach ($arrayInputAñadirEtiquetas as $idEtiqueta) {
+                    if($idEtiqueta != ""){
+                        $idEtiqueta=intval($idEtiqueta);
+                        //añadimos las etiquetas a el producto
+                        //si falla mostramos error
+                        if(!Producto::añadirEtiquetaProducto($bd,$idEtiqueta,$idProducto)){
+                            $msj['msj-content']="Error al añadir el etiqueta";
+                            $msj['msj-type']="danger";
+                        }
+                    }
+                }
             }
         
         }else{
@@ -149,28 +200,9 @@ if(isset($_SESSION['usuario'])){
             $msj['msj-type']="danger";
         }
     }
-    if(isset($_POST['crearEtiqueta'])){
-        
-        $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
-        $idUsuario = $usuario->getId();
-        if($nombreEtiqueta==""){
-           $mensaje="El campo nombre de etiqueta es obligatorio.";
-        }else{
-            $etiqueta = new Etiqueta();
-            $etiqueta->setNombre($nombreEtiqueta);
-            $etiqueta->setIdUsuario($idUsuario);
-            $etiqueta->guardarEtiqueta($bd);
-            $mensaje = "Etiqueta creada correctamente";
-        }
- 
-    }
-    
-    if(isset($_POST['volverModal'])){
-        $mensaje = "";
-    }
 
     
 
-    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'errores'=>$errores, 'msj'=>$msj, 'mensaje'=>$mensaje]);
+    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj]);
 }
  
