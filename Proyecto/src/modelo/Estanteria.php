@@ -8,7 +8,7 @@ use \PDO as PDO;
  *
  * @author Emma
  */
-class Estanteria {
+class Estanteria implements \JsonSerializable {
     private $id;
     private $nombre;
     private $numero;
@@ -28,6 +28,11 @@ class Estanteria {
         if (!is_null($idTrastero)) {
             $this->idTrastero = $idTrastero;
         }
+    }
+
+    public function jsonSerialize(){
+        $variables = get_object_vars($this);
+        return $variables;
     }
     
     public function getId() {

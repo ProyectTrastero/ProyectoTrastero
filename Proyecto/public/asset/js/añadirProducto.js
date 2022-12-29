@@ -270,7 +270,6 @@ function crearEtiqueta(xhttp){
     //creamos un div que sera el alert
     let divElement = document.createElement('div');
     
-
     //añadimos clases alert
     divElement.classList.add('alert');
     divElement.classList.add('alert-dismissible');

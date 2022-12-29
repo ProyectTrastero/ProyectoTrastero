@@ -12,19 +12,10 @@
 <div class="container">
   {{-- alerts desde js --}}
   <div  id="alerts"></div>
-  {{-- alerts desde php --}}
-  @if (@isset($msj['msj-content']))
-  <div class="alert alert-{{$msj['msj-type']}} alert-dismissible fade show" role="alert"">
-    {{$msj['msj-content']}}
-
-    <?php $msj=array(); ?>
-
-     <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
-  </div>
-@endif
+  
 
 
-  <form action="{{$_SERVER["PHP_SELF"]}}" method="POST">
+  <form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formProducto">
 
     <div class="row mt-3">
       <section class="col-lg-6">
@@ -32,12 +23,9 @@
         <div class="inputsForm">
           <label for="nombreProducto">Nombre: </label>
           <input type="text" name="nombreProducto" class="form-control" value="@isset($producto) {{$producto->getNombre()}} @endisset">
-          @if(isset($errores) && in_array("nombreInvalido", $errores)) 
-            <div></div>
-            <div class="textError form-text p-1 text-start">
-              Ingresa un nombre al producto.
-            </div>
-          @endif
+          <div></div>
+          <div id="nombreInvalido"> </div>
+          
   
           <label for="descripcionProducto">Descripción: </label>
           <input type="text" name="descripcionProducto" class="form-control" value="@isset($producto) {{$producto->getDescripcion()}} @endisset">
@@ -90,18 +78,20 @@
 
           <label for="selectCaja">Caja: </label>
           <select name="caja" id="selectCaja" disabled>
+            <option value="0">No ubicar en caja</option>
             @foreach ($cajas as $caja)
               <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
             @endforeach
           </select>
         </div>
   
-        <div id="idUbicacionCajasSinAsignar" class="hide inputsSelect mt-2">
-          <label for="selectCajasSinAsignar">Caja: </label>
-          <select name="cajasSinAsignar" id="selectCajasSinAsignar" disabled>
+        <div id="idUbicacionCajasSinUbicar" class="hide inputsSelect mt-2">
+          <label for="selectCajasSinUbicar">Caja: </label>
+          <select name="cajasSinUbicar" id="selectCajasSinUbicar" disabled>
             @foreach ($cajasSinUbicar as $caja)
               <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
             @endforeach
+           
           </select>
         </div>
   
@@ -112,7 +102,7 @@
       <div id="inputEtiquetas"></div>
       <div id="etiquetasProducto">
         @foreach ($etiquetasProducto as $etiquetaProducto)
-            <span class="etiqueta d-inline-flex align-items-center mb-1"> 
+            <span class="etiqueta d-inline-flex align-items-center mb-1" id="{{$etiquetaProducto['idEtiqueta']}}"> 
               {{$etiquetaProducto['nombreEtiqueta']}} 
               <span class="btn-close close-etiqueta" type="button"></span>
             </span>
@@ -136,7 +126,7 @@
 
     <div class="text-end mt-3">
       <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
-      <button type="submit" class="btn btn-primary " name="añadir">Añadir</button>
+      <button type="button" class="btn btn-primary " name="modificarProducto" id="modificarProducto" value="{{$producto->getId()}}">Modificar</button>
     </div>
 
   </form>

@@ -215,13 +215,35 @@ class Producto {
             return $id;
         }
     }
+
+    public function modificarProducto (PDO $bd){
+        $sql = "update productos set nombre = :nombre, descripcion = :descripcion, idTrastero = :idTrastero, 
+                idEstanteria = :idEstanteria, idBalda = :idBalda, idCaja = :idCaja
+                where id = :id";
+        $stmt = $bd->prepare($sql);
+        if (!$stmt->execute([   ':nombre'=>$this->getNombre(), 
+                                ':descripcion'=> $this->getDescripcion(),   
+                                ':idTrastero'=>$this->getIdTrastero(), 
+                                ':idEstanteria'=>$this->getIdEstanteria(),
+                                ':idBalda'=>$this->getIdBalda(),
+                                ':idCaja' => $this->getIdCaja(),
+                                ':id'=>$this->getId()])){
+            //si falla el update
+            $stmt = null;
+            return false;                            
+        }else{
+            $stmt=null;
+            return true;
+        }
+
+    }
     
     public function eliminar($bd){
         $consulta="delete from productos where id=$this->id";
         $bd->exec($consulta);
     }
 
-    public static function añadirEtiquetaProducto(PDO $bd, int $idEtiqueta, int $idProducto ){
+    public static function añadirEtiquetaProducto(PDO $bd, int $idEtiqueta, int $idProducto ):bool{
         $query = "insert into etiquetasproductos (idEtiqueta, idProducto) values (:idEtiqueta, :idProducto)";
         $stmt =$bd->prepare($query);
         if(!$stmt->execute([':idEtiqueta'=>$idEtiqueta, ':idProducto'=>$idProducto])){
@@ -233,8 +255,20 @@ class Producto {
         }
     }
 
+    public static function eliminarEtiquetaProducto(PDO $bd, int $idEtiquetaProducto):bool{
+        $sql='delete from etiquetasproductos where id = :id';
+        $stmt = $bd->prepare($sql);
+        if(!$stmt->execute([':id'=>$idEtiquetaProducto])){
+            $stmt = null;
+            return false;
+        }else{
+            $stmt = null;
+            return true;
+        }
+    }
+
     public static function recuperarEtiquetasPorProductoId(PDO $bd, int $idProducto):array{
-        $sql = "select ep.idProducto, ep.idEtiqueta,  e.nombre as 'nombreEtiqueta' from etiquetasproductos ep \n"
+        $sql = "select ep.id, ep.idProducto, ep.idEtiqueta,  e.nombre as 'nombreEtiqueta' from etiquetasproductos ep \n"
                 . "inner join etiquetas e on ep.idEtiqueta = e.id \n"
                 . "where idProducto = :idProducto;";
         $stmt = $bd->prepare($sql);
