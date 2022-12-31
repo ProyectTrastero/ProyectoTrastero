@@ -119,12 +119,10 @@ td{
 /*AÑADIRTRASTERO*/
 #atDiv1{
     margin: 0 auto;
-    border: solid;
    
 }
 
 #atDiv2{
-    border: solid;
     margin: 0 auto;
     padding:30px;
 }
