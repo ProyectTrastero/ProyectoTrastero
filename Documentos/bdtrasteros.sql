@@ -26,6 +26,7 @@ create table if not exists trasteros(
 create table if not exists estanterias(
     id int auto_increment primary key,
     nombre varchar(100),
+    numero int not null,
     idTrastero int, 
     constraint fk_estanteria_trastero foreign key(idTrastero) references trasteros(id) on update cascade on delete cascade
 
@@ -35,6 +36,7 @@ create table if not exists estanterias(
 create table if not exists baldas(
     id int auto_increment primary key,
     nombre varchar(100),
+    numero int not null,
     idEstanteria int not null,
     constraint fk_balda_estanteria foreign key(idEstanteria) references estanterias(id) on update cascade on delete cascade 
 );
@@ -43,9 +45,10 @@ create table if not exists baldas(
 create table if not exists cajas(
     id int auto_increment primary key,
     nombre varchar(100),
-    idtrastero int not null,
-    idestanteria int,
-    idbalda int,
+    numero int not null,
+    idTrastero int not null,
+    idEstanteria int,
+    idBalda int,
     constraint fk_caja_trastero foreign key(idTrastero) references trasteros(id) on update cascade on delete cascade,
     constraint fk_caja_estanteria foreign key(idEstanteria) references estanterias(id) on update cascade on delete cascade,
     constraint fk_caja_balda foreign key(idBalda) references baldas(id) on update cascade on delete cascade 
@@ -56,6 +59,7 @@ create table if not exists productos(
     id int auto_increment primary key,
     nombre varchar(200) not null,
     descripcion text,
+    fechaIngreso date not null,
     idTrastero int not null, 
     idEstanteria int, 
     idBalda int, 
@@ -77,12 +81,8 @@ create table if not exists etiquetas(
 -- 2.1.8 Tabla etiquetasproductos
 create table if not exists etiquetasproductos(
     id int auto_increment primary key,
-    idetiqueta varchar(50) not null,
-    idProducto int(20) not null,
-    constraint fk_etiquetaproducto_etiqueta foreign key(idProducto) references etiquetas(id) on update cascade on delete cascade,
+    idEtiqueta int not null,
+    idProducto int not null,
     constraint fk_etiquetaproducto_producto foreign key(idProducto) references productos(id) on update cascade on delete cascade
 );
-
-
-
 

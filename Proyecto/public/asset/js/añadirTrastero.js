@@ -22,8 +22,12 @@ function iniciar(){
     deshabilitarBotones();
     if(guardado=="false"){
         for(i=0;i<ocultos.length;i++){
-        ocultos[i].addEventListener("mouseover", añadirPapelera);
-        ocultos[i].addEventListener("mouseout", eliminarPapelera);
+            var clase = ocultos[i].getAttribute("class");
+            if(clase!="papeleraOculta primerabalda"){
+                ocultos[i].addEventListener("mouseover", añadirPapelera);
+                ocultos[i].addEventListener("mouseout", eliminarPapelera);
+            }
+        
         ocultos[i].addEventListener("click", habilitarEdicion);
         ocultos[i].addEventListener("blur", deshabilitarEdicion);
         }

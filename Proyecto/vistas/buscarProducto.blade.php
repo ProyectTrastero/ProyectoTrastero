@@ -21,38 +21,51 @@
 
 {{-- Sección mensaje --}}
 @section('content')
-<div  class='container'>
-    <div>
-        <h3>{{$miTrastero->getNombre()  }}</h3>
-    </div>
-    <div>
+
+    @if ($msj1 != "")  
+        <div class="alert alert-{{$msj1_tipo}} alert-dismissible fade show" role="alert"">
+            {{$msj1}}
+            <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
+        </div>
+    @endif
+
+
+<div  class='opciones'>
+ 
+        <h3 class="inicial titulo">{{$miTrastero->getNombre()  }}</h3>
+
         <form method="POST" action="" name="formBusqueda">
-            <input type="text" name="palabraBuscar" placeholder="producto">  
-        <br/>
+            <label>Buscar por palabra: </label>
+            &emsp;<input type="text" name="palabraBuscar" placeholder="Producto"><br/>
             @if (isset ($etiquetas))
-                <label for="etiquetas">Mis etiqueta: </label><br/>
+                <label for="etiquetas">Buscar por mis etiqueta: </label><br/>
                     @if ($etiquetas != "")      
                             @foreach ($etiquetas as $valor)
+                            <div class='etiqueta'>    
                                 <input type="checkbox" name="IdsEtiquetas[]" value="{{$valor->getId()  }}">
-                                <a class='col-3'>{{$valor->getNombre()  }}</a>
-                            @endforeach
-                    @else
-                        <div>           
-                            <h4>{{$msj}}Usted aun no tiene ninguna etiqueta</h4>    
-                        </div>
+                                &ensp; {{$valor->getNombre()  }}
+                            </div>
+                            @endforeach   
                     @endif
             @endif
+            <div>
+            <br/>
             <button type="submit" name="buscarProducto">Buscar producto</button>
-        </form>
-    </div>
+            <button class ="volver" name="volverTrasteros">Volver</button>
+            
+            </div>
+        </form><br/>
+       
         @if (isset ($productos))
             @if ($productos != "")
-            <div>             
-                <h3>Mis productos</h3>
+                       
+                <h3>Resultado</h3>
+ 
                 <form action="" method="POST" id='formEliminarProducto'>
                     <table class="row">
                         <tr>
-                        <th class="col-3">Seleccionar</th>    
+                        <th class="col-3">Seleccionar</th>
+                        
                         <th class="col-3">Producto</th>
                         <th class="col-3">Descripción</th>
                         <th class="col-3">Ubicación</th>
@@ -61,8 +74,9 @@
                     @foreach ($productos as $valor)    
                     <tr>
                         <td><input type="checkbox" name="IdsProductos[]" value="{{$valor->getId()  }}"></td>  
-                        <td class="col-3"> {{$valor->getNombre()  }}</td><br/> 
-                        <td class="col-3"> {{$valor->getDescripcion()  }}</td><br/> 
+                      
+                        <td class="col-3"> {{$valor->getNombre()  }}</td> 
+                        <td class="col-3"> {{$valor->getDescripcion()  }}</td>
                         <td class="col-3"> Estanteria: 
                                 @if ($valor->getIdEstanteria() == null)
                                     no asignada
@@ -81,30 +95,20 @@
                                 @else
                                     {{$valor->getIdCaja()  }} 
                                 @endif
-                                </td><br/> 
+                                </td>
                         <td  class="col-3">
                             <form method="POST" action="" id='produModificar'>
                                 <input type='hidden' name='id' value='{{$valor->getId()}}'>
-                                <button type="submit" name="modificarProducto" id="modificarProducto"><span> Modificar Producto</span></button>
+                                <button type="submit" name="modificarProducto" id="modificarProducto">Modificar Producto</button>
                             </form>
                         </td>
                     </tr>
                     @endforeach
-                    </table><br/>
-                    <button type="submit" name="eliminarProducto" id='eleminarProducto'><span>Eliminar Seleccionados</span></button>
+                    </table>
+                    <br/><button type="submit" name="eliminarProducto" id='eleminarProducto'>Eliminar Seleccionados</button>
                 </form>
-                <br/><br/><br/>
-            </div>
-            @else
-            <div>           
-                <h2>{{$msj}}</h2>    
-            </div>
             @endif
         @endif
-<div class="container">
-    <form method="POST" action="" name="formVolver">
-        <button class ="volver" name="volverTrasteros">Volver</button>
-    </form>
 </div>
 @endsection
 

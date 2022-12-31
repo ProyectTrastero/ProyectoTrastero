@@ -18,22 +18,30 @@ use \PDO as PDO;
  */
 class Producto {
     private $id;
+    //private $fecha;
     private $nombre;
     private $descripcion;
+    private $fechaIngreso;
     private $idTrastero;
     private $idEstanteria;
     private $idBalda;
     private $idCaja;
     
-    public function __construct(int $id = null, string $nombre = null, string $descripcion = null, int $idTrastero=null, int $idEstanteria=null, int $idBalda= null, int $idCaja=null) {
+    public function __construct(int $id = null, string $nombre = null, string $descripcion = null, string $fechaIngreso = null, int $idTrastero=null, int $idEstanteria=null, int $idBalda= null, int $idCaja=null) {
         if (!is_null($id)) {
         $this->id = $id;
         }
+        /*if (!is_null($fecha)) {
+        $this->nombre = $fecha;
+        }*/
         if (!is_null($nombre)) {
         $this->nombre = $nombre;
         }
         if (!is_null($descripcion)) {
         $this->descripcion = $descripcion;
+        }
+        if (!is_null($fechaIngreso)) {
+        $this->fechaIngreso = $fechaIngreso;
         }
         if (!is_null($idTrastero)) {
         $this->idTrastero = $idTrastero;
@@ -49,6 +57,12 @@ class Producto {
         }
     }
 
+    /*public function getFecha() {
+        return $this->fecha;
+    }
+    public function setFecha($fecha): void {
+        $this->fecha = $fecha;
+    }*/
     
     public function getId() {
         return $this->id;
@@ -64,6 +78,10 @@ class Producto {
 
     public function getDescripcion() {
         return $this->descripcion;
+    }
+    
+    public function getFechaIngreso() {
+        return $this->fechaIngreso;
     }
 
     public function getIdEstanteria() {
@@ -93,6 +111,10 @@ class Producto {
     public function setDescripcion($descripcion): void {
         $this->descripcion = $descripcion;
     }
+    
+    public function setFechaIngreso($fechaIngreso): void {
+        $this->fechaIngreso = $fechaIngreso;
+    }
 
     public function setIdEstanteria($idEstanteria): void {
         $this->idEstanteria = $idEstanteria;
@@ -106,6 +128,20 @@ class Producto {
         $this->idCaja = $idCaja;
     }
 
+    public static function recuperarProductoPorId (PDO $bd, int $idProducto){
+        $query =    "select * from productos where id = :idProducto";
+        $stmt = $bd->prepare($query);
+        if (!$stmt->execute([':idProducto'=>$idProducto])) {
+            //si falla el insert
+            $stmt = null;
+            return false;
+        }else{
+            $stmt->setFetchMode(PDO::FETCH_CLASS, Producto::class);
+            $producto = $stmt->fetch();
+            $stmt=null;
+            return $producto;
+        }
+    }
     
     public static function recuperaProductosPorPalabraYTrastero(PDO $bd, string $palabra, $idTrastero){
         $bd->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
@@ -175,10 +211,10 @@ class Producto {
     }
   
     public static function añadirProducto (PDO $bd, array $datos):int{
-        $query =    "insert into productos (nombre, descripcion,idTrastero,idEstanteria,idBalda,idCaja) 
-                    values (:nombre, :descripcion, :idTrastero, :idEstanteria, :idBalda, :idCaja)";
+        $query =    "insert into productos (nombre, descripcion, fechaIngreso,idTrastero,idEstanteria,idBalda,idCaja) 
+                    values (:nombre, :descripcion,:fechaIngreso, :idTrastero, :idEstanteria, :idBalda, :idCaja)";
         $stmt = $bd->prepare($query);
-        if (!$stmt->execute([':nombre'=>$datos['nombreProducto'], ':descripcion'=>$datos['descripcionProducto'], ':idTrastero'=>$datos['idTrastero'], 
+        if (!$stmt->execute([':nombre'=>$datos['nombreProducto'], ':descripcion'=>$datos['descripcionProducto'],':fechaIngreso'=>$datos['fechaIngreso'], ':idTrastero'=>$datos['idTrastero'], 
                             ':idEstanteria'=>$datos['estanteria'], ':idBalda'=>$datos['balda'], ':idCaja'=>$datos['caja']])) {
             //si falla el insert
             $stmt = null;
@@ -191,13 +227,35 @@ class Producto {
             return $id;
         }
     }
+
+    public function modificarProducto (PDO $bd){
+        $sql = "update productos set nombre = :nombre, descripcion = :descripcion, idTrastero = :idTrastero, 
+                idEstanteria = :idEstanteria, idBalda = :idBalda, idCaja = :idCaja
+                where id = :id";
+        $stmt = $bd->prepare($sql);
+        if (!$stmt->execute([   ':nombre'=>$this->getNombre(), 
+                                ':descripcion'=> $this->getDescripcion(),   
+                                ':idTrastero'=>$this->getIdTrastero(), 
+                                ':idEstanteria'=>$this->getIdEstanteria(),
+                                ':idBalda'=>$this->getIdBalda(),
+                                ':idCaja' => $this->getIdCaja(),
+                                ':id'=>$this->getId()])){
+            //si falla el update
+            $stmt = null;
+            return false;                            
+        }else{
+            $stmt=null;
+            return true;
+        }
+
+    }
     
     public function eliminar($bd){
         $consulta="delete from productos where id=$this->id";
         $bd->exec($consulta);
     }
 
-    public static function añadirEtiquetaProducto(PDO $bd, int $idEtiqueta, int $idProducto ){
+    public static function añadirEtiquetaProducto(PDO $bd, int $idEtiqueta, int $idProducto ):bool{
         $query = "insert into etiquetasproductos (idEtiqueta, idProducto) values (:idEtiqueta, :idProducto)";
         $stmt =$bd->prepare($query);
         if(!$stmt->execute([':idEtiqueta'=>$idEtiqueta, ':idProducto'=>$idProducto])){
@@ -209,9 +267,36 @@ class Producto {
         }
     }
 
+    public static function eliminarEtiquetaProducto(PDO $bd, int $idEtiquetaProducto):bool{
+        $sql='delete from etiquetasproductos where id = :id';
+        $stmt = $bd->prepare($sql);
+        if(!$stmt->execute([':id'=>$idEtiquetaProducto])){
+            $stmt = null;
+            return false;
+        }else{
+            $stmt = null;
+            return true;
+        }
+    }
+
+    public static function recuperarEtiquetasPorProductoId(PDO $bd, int $idProducto):array{
+        $sql = "select ep.id, ep.idProducto, ep.idEtiqueta,  e.nombre as 'nombreEtiqueta' from etiquetasproductos ep \n"
+                . "inner join etiquetas e on ep.idEtiqueta = e.id \n"
+                . "where idProducto = :idProducto;";
+        $stmt = $bd->prepare($sql);
+        $stmt->execute([':idProducto'=>$idProducto]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $etiquetasProducto=($stmt->fetchAll()) ?: null;
+        if($etiquetasProducto==null){
+            $etiquetasProducto=array();
+        }
+        return $etiquetasProducto;
+        
+    }
+
     public static function eliminarProductoporID($bd, int $idProducto){
-        $consulta="delete from productos where id=$idProducto";
-        $bd->exec($consulta);
+            $consulta="delete from productos where id=$idProducto";
+            $bd->exec($consulta);
     }
  
     public static function buscarProductosPorIdEtiquetaYTrastero($bd, array $idEtiquetas, $idTrastero){
@@ -293,5 +378,11 @@ class Producto {
         
         return $numero;
     }
+    
+    public static function obtenerFechaIngreso(){
+        $fecha=getDate();
+        $formatoFecha=$fecha['year']."-".$fecha['mon']."-".$fecha['mday'];
+        return $formatoFecha;
+}
 }
 

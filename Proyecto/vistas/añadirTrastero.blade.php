@@ -43,9 +43,9 @@
                 @if($datosTrastero['tipo']=="guardar")
                 <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
-                @endif
                 <button type="submit" name="guardar">Guardar</button>
-                <button type="submit" name="volverAcceso">Volver</button>
+                @endif
+                <button class="volver" type="submit" name="volverAcceso">Volver</button>
             </div>
             <div id="atDiv3">
                 <div id="atDiv4">
@@ -84,7 +84,11 @@
                         <form action="" method="POST">
                             <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
                             <input type="hidden" name="idBalda" value="{{$balda->getId()}}">
-                            <span class="papeleraOculta" contenteditable="false">{{$balda->getNombre()}}</span>
+                            @if(count($baldasRecuperadas)==1)
+                            <span class="papeleraOculta primerabalda"  contenteditable="false">{{$balda->getNombre()}}</span>
+                            @else
+                            <span class="papeleraOculta"  contenteditable="false">{{$balda->getNombre()}}</span>
+                            @endif
                         </form>
                     </li> 
                     <ul>

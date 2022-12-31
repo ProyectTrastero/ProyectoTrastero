@@ -6,32 +6,10 @@
         font-family: Times New Roman, initial;
 }
 
-/*usados para ver  mas claramente la disposicion de los divs
-div{
-    border:solid;
-}
-
-
-
-.container{
-    border-color: red;
-}
-table, tr, td,ul{
-    border:solid;
-    color:green;
-} */
-
-/*usados para ver mas...*/
-/*.navegador{
-    padding: 30px;
-    color:white;
-    display: inline-flex;
-}*/
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0px;
     padding: 0px;
-    
     /*background-color: royalblue;*/
         
 }
@@ -141,11 +119,13 @@ td{
 /*AÑADIRTRASTERO*/
 #atDiv1{
     margin: 0 auto;
+    border: solid;
    
 }
 
 #atDiv2{
-    margin:15px;
+    border: solid;
+    margin: 0 auto;
     padding:30px;
 }
 
@@ -159,8 +139,9 @@ td{
     padding-top: 25px;
     margin-top:20px;
     margin-bottom: 20px;
-    background: linear-gradient(rgb(0, 168, 243, 0.8), rgb(255, 255, 255, 0.8));
-    /*background: rgb(0, 168, 243, 0.8);*/
+    /*background: linear-gradient(rgb(255, 255, 255, 0.9),rgb(0, 168, 243, 0.8));*/
+    background: linear-gradient(#addf13,rgb(255, 255, 255, 0.8));
+    /*background: rgb(255, 255, 255, 0.9);*/
     border:solid 0.5px;
     border-radius: 8px;
     border-color: grey;
@@ -344,7 +325,7 @@ nav button:hover{
 
 
 .hide{
-	display: none;
+	display: none !important;
 }
 
 .etiqueta{
@@ -356,6 +337,40 @@ nav button:hover{
     margin-right: 0.3em;
 }
 
+.close-etiqueta{
+    font-size: 0.9em;
+    margin-left: 0.4em;
+}
+
+.inputsSelect{
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 0.5em;
+}
+
+
+/*PAGINA BUSCAR PRODUCTO*/
+.opciones{
+    margin: 50px 100px 50px 100px;
+    padding: 2em;
+    background-color: white;
+    border:solid 1px;
+    border-color: grey;
+    border-radius: 8px; 
+}
+
+.volver{
+    padding: 0px 10px 0px 10px;
+    margin-left:85%;
+    background: linear-gradient(#B6DDF8, white);
+    border:solid 0.5px;
+    border-color: grey;
+    border-radius: 8px;
+}
+
+.titulo{
+    text-transform: uppercase;
+}
 /*
 
 svg{

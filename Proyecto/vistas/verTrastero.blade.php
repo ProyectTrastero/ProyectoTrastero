@@ -11,7 +11,7 @@
 
 <div class="vtContainer">
     <div id="vtVolver">
-        <a  href="accederTrastero.php"><button name="volver">Volver</button></a>
+        <a href="accederTrastero.php"><button class="volver" name="volver">Volver</button></a>
     </div>
     
     <div id="vtnombre">
@@ -21,7 +21,8 @@
     <div class="row"  >
         <div class="col-3">
             <ul id="menu">
-                <span><b>Trastero {{$datosTrastero['nombre']}}</b> </span>
+                <span ><b>Trastero {{$datosTrastero['nombre']}}</b> </span>
+                <i id="trastero{{$datosTrastero['nombre']}}" class="productos fa-regular fa-eye" name="{{$datosTrastero['nombre']}}" style="color: blue; border: white"></i>
                 @foreach($datosTrastero['estanterias'] as $estanteria)
                 <li>
                     <input type="checkbox" name="list" id="{{$estanteria->getId()}}">

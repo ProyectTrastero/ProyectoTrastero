@@ -107,6 +107,10 @@ if(!empty($_REQUEST)){
     $tipo="";
     $productosRecuperados;
     
+    if((strncmp($tipoElemento, "trastero", 4) === 0)){
+        $tipo="trastero";
+    }
+    
     if((strncmp($tipoElemento, "estanteria", 4) === 0)){
         $tipo="estanteria";
     }
@@ -118,6 +122,10 @@ if(!empty($_REQUEST)){
     
     if((strncmp($tipoElemento, "caja", 4) === 0)){
         $tipo="caja";
+    }
+    
+    if($tipo=="trastero"){
+        $productosRecuperados= Producto::recuperarProductosPorIdTrastero($bd, $idTrastero);
     }
     
     if($tipo=="estanteria"){
@@ -134,7 +142,7 @@ if(!empty($_REQUEST)){
 //    $_SESSION['datosTrastero']=$datosTrastero;
     $productos=array();
     foreach ($productosRecuperados as $producto) {
-        $productonuevo['fechaingreso']='22/07/22';
+        $productonuevo['fechaingreso']=$producto->getFechaIngreso();
         $productonuevo['nombre']=$producto->getNombre();
         $productonuevo['descripcion']=$producto->getDescripcion();
         $productonuevo['estanteria']=$producto->obtenerNumeroEstanteria($bd);

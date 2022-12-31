@@ -11,8 +11,7 @@ use App\{
     Estanteria,
     Producto,
     Validacion,
-    Etiqueta,
-    Usuario
+    Etiqueta
 };
 
 // Inicializa el acceso a las variables de entorno
@@ -33,9 +32,7 @@ try {
 }
 
 session_start();
-$mensaje="";
 if(isset($_SESSION['usuario'])){
-    //añadido por Emma para dar funcionalidad al nav
     if(isset($_REQUEST['cerrarSesion'])){
         session_destroy();
         header("Location: index.php");
@@ -45,7 +42,6 @@ if(isset($_SESSION['usuario'])){
         header("Location: editarPerfil.php");
     }
     
-    //Hasta aquí
     
     $usuario = $_SESSION['usuario'];
     $idTrastero = $_SESSION['miTrastero']->getId();
@@ -88,48 +84,45 @@ if(isset($_SESSION['usuario'])){
         die;
     }
 
-//    if (isset($_GET['crearEtiqueta'])){
-//        $nombreEtiqueta = Validacion::sanearInput($_REQUEST['crearEtiqueta']);
-//        if ($nombreEtiqueta != '') {
-//            $etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
-//            $etiqueta->guardarEtiqueta($bd);
-//            $mensaje='etiqueta añadida';
-//        }else{
-//            $mensaje='El campo nombre de etiqueta es obligatorio.';
-//        }
-//        echo $mensaje;
-//        die;
-//    
-//    }
+    if (isset($_GET['crearEtiqueta'])){
+        $nombreEtiqueta = Validacion::sanearInput($_REQUEST['crearEtiqueta']);
+        //comprobamos si la etiqueta tiene un nombre
+        if ($nombreEtiqueta != '') {
+            $etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
+            //comprobamos si el nombre de la etiqueta ya existe
+            if (!$etiqueta->checkExisteNombreEtiqueta($bd)) {
+                //el nombre de la etiqueta ya exite
+                $mensaje=['msj-content'=>'Nombre de etiqueta ya existe, elija otro.' , 'msj-type'=>'danger'];
+            }else{
+                //guardamos la etiqueta
+                $etiqueta->guardarEtiqueta($bd);
+                $mensaje=['msj-content'=>'Etiqueta añadida.' , 'msj-type'=>'success'];
+            }
+        }else{
+            $mensaje=['msj-content'=>'El campo nombre de etiqueta es obligatorio.' , 'msj-type'=>'danger'];
+        }
+        echo json_encode($mensaje);
+        die;
+    
+    }
 
     
-     if(isset($_POST['crearEtiqueta'])){
-        
-         $nombreEtiqueta = trim(filter_input(INPUT_POST, 'nombreEtiqueta', FILTER_SANITIZE_STRING));
-         $idUsuario = $usuario->getId();
-         if($nombreEtiqueta==""){
-            $mensaje="El campo nombre de etiqueta es obligatorio.";   
-         }else{
-             if(Etiqueta::existeEtiqueta($bd, $nombreEtiqueta, $idUsuario)){
-                 $mensaje="Ya tiene una etiqueta con ese nombre";
-             }else{
-                 $etiqueta = new Etiqueta();
-                 $etiqueta->setNombre($nombreEtiqueta);
-                 $etiqueta->setIdUsuario($idUsuario);
-                 $etiqueta->guardarEtiqueta($bd);
-                 $mensaje = "Etiqueta creada correctamente";
-             }  
-         }  
-     }
     
     if(isset($_GET['añadirEtiqueta'])){
         $idEtiqueta = intval($_REQUEST['añadirEtiqueta']);
         $objectEtiqueta = Etiqueta::recuperarEtiquetaPorId($bd, $idEtiqueta);
         array_push($arrayAñadirEtiquetas,$objectEtiqueta);
-        $daniel = json_encode($arrayAñadirEtiquetas);
         echo json_encode($arrayAñadirEtiquetas);
         
         die;        
+    }
+    //despues de crear una etiqueta, recuperamos las etiquetas para actualizar el select
+    if(isset($_GET['getEtiquetas'])){
+        //recuperamos las etiquetas del usuario
+        $etiquetasUpdate = Etiqueta::recuperaEtiquetasPorUsuario($bd,$usuario->getId());
+        echo json_encode($etiquetasUpdate);
+        
+        die;
     }
 
     if(isset($_POST['volver'])){
@@ -164,9 +157,16 @@ if(isset($_SESSION['usuario'])){
         }if($ubicacion == ''){
             array_push($errores, 'sinUbicacion');
         }
+        //AÑADIDO EMMA
+        
+        $fechaIngreso= Producto::obtenerFechaIngreso();
+               
+        
+        //HASTA QUI
 
         $datos=['nombreProducto'=>$nombreProducto,
                 'descripcionProducto'=>$descripcionProducto,
+                'fechaIngreso'=>$fechaIngreso,
                 'estanteria'=>$estanteria,
                 'balda'=>$balda,
                 'caja'=>$caja,
@@ -180,9 +180,11 @@ if(isset($_SESSION['usuario'])){
             }
         }
         
-        
+        //si se ha especificado nombre y ubicacion
         if (count($errores)==0) {
+            //añadimos el producto
             $idProducto=Producto::añadirProducto($bd,$datos);
+            //si producto añadido correctamente
             if ($idProducto != -1) {
                 $msj['msj-content']="Producto añadido con exito";
                 $msj['msj-type']="success";
@@ -190,10 +192,10 @@ if(isset($_SESSION['usuario'])){
                 foreach ($arrayInputAñadirEtiquetas as $idEtiqueta) {
                     if($idEtiqueta != ""){
                         $idEtiqueta=intval($idEtiqueta);
-                        //enlazamos la etiqueta con el producto
+                        //añadimos las etiquetas a el producto
                         //si falla mostramos error
                         if(!Producto::añadirEtiquetaProducto($bd,$idEtiqueta,$idProducto)){
-                            $msj['msj-content']="Error al añadir el etiqueta";
+                            $msj['msj-content']="Error al añadir la etiqueta al producto";
                             $msj['msj-type']="danger";
                         }
                     }
@@ -208,6 +210,6 @@ if(isset($_SESSION['usuario'])){
 
     
 
-    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj, 'mensaje'=>$mensaje]);
+    echo $blade->run('añadirProducto',['usuario'=>$usuario, 'estanterias'=>$estanterias, 'etiquetas'=>$etiquetas, 'errores'=>$errores, 'msj'=>$msj]);
 }
  

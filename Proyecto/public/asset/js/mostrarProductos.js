@@ -55,7 +55,7 @@ function mostrarProductos(e){
                         
                         fila.setAttribute("class", "vtTr")    
                         
-                        columna1.innerHTML = "22/01/2022";
+                        columna1.innerHTML = listadoProductos[i].fechaingreso;
                         columna2.innerHTML = listadoProductos[i].nombre;
                         columna3.innerHTML = listadoProductos[i].descripcion;
                         var numEstanteria=listadoProductos[i].estanteria;
