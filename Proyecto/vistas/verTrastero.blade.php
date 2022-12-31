@@ -21,13 +21,13 @@
     <div class="row"  >
         <div class="col-3">
             <ul id="menu">
-                <span ><b>Trastero {{$datosTrastero['nombre']}}</b> </span>
-                <i id="trastero{{$datosTrastero['nombre']}}" class="productos fa-regular fa-eye" name="{{$datosTrastero['nombre']}}" style="color: blue; border: white"></i>
+                <span class="ocultos titulo">Trastero {{$datosTrastero['nombre']}}</span>
+                <i id="trastero{{$datosTrastero['nombre']}}" class="productos  fa-regular fa-eye" name="{{$datosTrastero['nombre']}}" style="color: rgb(255,255,255,0); border: white"></i>
                 @foreach($datosTrastero['estanterias'] as $estanteria)
                 <li>
                     <input type="checkbox" name="list" id="{{$estanteria->getId()}}">
-                    <label for="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</label>
-                    <i id="estanteria{{$estanteria->getId()}}" class="productos fa-regular fa-eye" name="{{$estanteria->getId()}}" style="color: blue; border: white"></i>                    
+                    <label class="ocultos" for="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</label>
+                    <i id="estanteria{{$estanteria->getId()}}" class="productos  fa-regular fa-eye" name="{{$estanteria->getId()}}" style="color: rgb(255,255,255,0); border: white"></i>                    
                     <ul class="interior">
                         @php 
                         $baldasRecuperadas = array()
@@ -52,15 +52,15 @@
                             @endforeach
                         @if(empty($cajasRecuperadas))
                         <li>
-                            <a id="{{$balda->getId()}}" href="#r">{{$balda->getNombre()}}</a>
-                            <i id="balda{{$balda->getId()}}"class="productos fa-regular fa-eye" name="{{$balda->getId()}}" style="color: blue; border: white"></i> 
+                            <a class="ocultos" id="{{$balda->getId()}}" href="#r">{{$balda->getNombre()}}</a>
+                            <i id="balda{{$balda->getId()}}"class="productos  fa-regular fa-eye" name="{{$balda->getId()}}" style="color: rgb(255,255,255,0); border: white"></i> 
          
                         </li>
                         @else
                         <li>
                             <input type="checkbox" name="list" id="{{$balda->getId()}}">
-                            <label for="{{$balda->getId()}}">{{$balda->getNombre()}}</label>
-                            <i id="balda{{$balda->getId()}}" class="productos fa-regular fa-eye" name="{{$balda->getId()}}" style="color: blue; border: white"></i> 
+                            <label class="ocultos" for="{{$balda->getId()}}">{{$balda->getNombre()}}</label>
+                            <i id="balda{{$balda->getId()}}" class="productos  fa-regular fa-eye" name="{{$balda->getId()}}"  style="color: rgb(255,255,255,0); border: white"></i> 
                              
                             <ul class="interior">
                                 <li>
@@ -68,8 +68,8 @@
                                         @foreach ($cajasRecuperadas as $caja)
                                        
                                         <li>
-                                            <a id ="{{$caja->getId()}}">{{$caja->getNombre()}}</a>
-                                            <i id="caja{{$caja->getId()}}" class="productos fa-regular fa-eye" name="{{$caja->getId()}}" style="color: blue; border: white"></i> 
+                                            <a class ="ocultos" id ="{{$caja->getId()}}">{{$caja->getNombre()}}</a>
+                                            <i id="caja{{$caja->getId()}}" class="productos  fa-regular fa-eye" name="{{$caja->getId()}}"  style="color: rgb(255,255,255,0); border: white"></i> 
                                         </li>
                                        
                                         @endforeach
@@ -89,7 +89,7 @@
                     <div class="col-4">
                         <li>
                             <a id ="{{$caja->getId()}}">{{$caja->getNombre()}}</a>
-                            <i id="caja{{$caja->getId()}}" class="productos fa-regular fa-eye" name="{{$caja->getId()}}" style="color: blue; border: white"></i> 
+                            <i id="caja{{$caja->getId()}}" class="productos fa-regular fa-eye" name="{{$caja->getId()}}"  style="color: rgb(255,255,255,0); border: white"></i> 
                         </li>
                     </div>
                     
