@@ -168,8 +168,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bs-dismiss="modal">Volver</button>
-                    <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                    <button type="submit" name="añadirUbicacion"  id="botonAñadir">Añadir</button>
+                    <button type="submit" name="añadirCaja"  id="botonAñadir">Añadir</button>
                    
                 </div>
             </div>

@@ -18,7 +18,7 @@
  <span><?php echo \htmlentities($datosTrastero['nombre']??'', ENT_QUOTES, 'UTF-8', false); ?></span>
  </div>
  
- <div class="row"  >
+ <div class="row">
  <div class="col-3">
  <ul id="menu">
  <span class="ocultos titulo">Trastero <?php echo \htmlentities($datosTrastero['nombre']??'', ENT_QUOTES, 'UTF-8', false); ?></span>
@@ -94,7 +94,7 @@
  <?php if(is_null($caja->getIdBalda())&&is_null($caja->getIdEstanteria())): ?>
  <div class="col-4">
  <li>
- <a id ="<?php echo \htmlentities($caja->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($caja->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></a>
+ <a class="ocultos" id ="<?php echo \htmlentities($caja->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($caja->getNombre()??'', ENT_QUOTES, 'UTF-8', false); ?></a>
  <i id="caja<?php echo \htmlentities($caja->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>" class="productos fa-regular fa-eye" name="<?php echo \htmlentities($caja->getId()??'', ENT_QUOTES, 'UTF-8', false); ?>"  style="color: rgb(255,255,255,0); border: white"></i> 
  </li>
  </div>

@@ -18,7 +18,7 @@
         <span>{{$datosTrastero['nombre']}}</span>
     </div>
     
-    <div class="row"  >
+    <div class="row">
         <div class="col-3">
             <ul id="menu">
                 <span class="ocultos titulo">Trastero {{$datosTrastero['nombre']}}</span>
@@ -88,7 +88,7 @@
                     @if(is_null($caja->getIdBalda())&&is_null($caja->getIdEstanteria()))
                     <div class="col-4">
                         <li>
-                            <a id ="{{$caja->getId()}}">{{$caja->getNombre()}}</a>
+                            <a class="ocultos" id ="{{$caja->getId()}}">{{$caja->getNombre()}}</a>
                             <i id="caja{{$caja->getId()}}" class="productos fa-regular fa-eye" name="{{$caja->getId()}}"  style="color: rgb(255,255,255,0); border: white"></i> 
                         </li>
                     </div>

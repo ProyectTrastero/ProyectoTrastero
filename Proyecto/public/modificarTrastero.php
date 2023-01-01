@@ -145,7 +145,7 @@ if(empty($_SESSION['datosTrastero'])){
     $_SESSION['datosTrastero']=$datosTrastero;
         echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
  
-}else if(isset($_POST['añadirUbicacion'])){
+}else if(isset($_POST['añadirCaja'])){
         if(!filter_has_var(INPUT_POST,'sinAsignar')) {
             $nombreEstanteria = trim(filter_input(INPUT_POST, 'estanteria', FILTER_SANITIZE_STRING));
             $nombreBalda = trim(filter_input(INPUT_POST, 'balda', FILTER_SANITIZE_STRING));
