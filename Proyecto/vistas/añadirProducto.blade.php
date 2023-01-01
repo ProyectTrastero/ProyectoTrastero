@@ -14,12 +14,11 @@
   <div  id="alerts"></div>
   {{-- alerts desde php --}}
   @if (@isset($msj['msj-content']))
-  <div class="alert alert-{{$msj['msj-type']}} alert-dismissible fade show" role="alert"">
+  <div id="alertsPhp" class="alert alert-{{$msj['msj-type']}} alert-dismissible fade show" role="alert"">
     {{$msj['msj-content']}}
 
     <?php $msj=array(); ?>
 
-     <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
   </div>
 @endif
 
@@ -69,7 +68,7 @@
         
         <div id="idUbicacionEstanteria" class="hide inputsSelect mt-2">
           <label for="selectEstanterias">Estanteria: </label>
-          <select name="estanteria" id="selectEstanterias">
+          <select name="estanteria" id="selectEstanterias" disabled>
             @foreach ($estanterias as $estanteria)
               <option value="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</option>
             @endforeach
@@ -79,7 +78,7 @@
           <select name="balda" id="selectBaldas" disabled></select>
 
           <label for="selectCaja">Caja: </label>
-          <select name="caja" id="selectCaja"></select>
+          <select name="caja" id="selectCaja" disabled></select>
         </div>
 
         
@@ -112,7 +111,7 @@
 
     <div class="text-end mt-3">
       <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
-      <button type="submit" class="btn btn-primary " name="añadir">Añadir</button>
+      <button type="submit" class="btn btn-primary "  name="añadir" id="añadirProducto">Añadir</button>
     </div>
 
   </form>

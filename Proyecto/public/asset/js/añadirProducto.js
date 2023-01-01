@@ -4,7 +4,15 @@ var idTrastero;
 var infoModal;
 
 function iniciar(){
-
+  // comprobamos si tenemos un alert
+  if(document.getElementById('alertsPhp')){
+    // eliminamos los alerts en un tiempo establecido
+    setTimeout(()=>{
+      document.getElementById('alertsPhp').remove();
+    },5000);
+  }
+  
+  
   ////get idTrastero
   loadDoc('añadirProducto.php?getIdTrastero',getIdTrastero);
 
@@ -14,8 +22,6 @@ function iniciar(){
     //enviamos el id de la estanteria seleccionada por default
     loadDoc('añadirProducto.php?idEstanteria=' + idEstanteria, setBaldas);
   }
-  
-
   ///baldas
   let idBalda = document.getElementById('selectBaldas').value;
   if (idBalda != "" ) {
@@ -154,6 +160,8 @@ function setCajasSinAsignar(xhttp){
 }
 
 
+
+
 function showHide(e){
   let target = e.target;
   if(target.id=='radioUbicacionEstanteria' && target.checked == true){
@@ -283,26 +291,12 @@ function crearEtiqueta(xhttp){
     //eliminamos el span despues de un tiempo establecido
     //pendiente de mejorar
     setTimeout(() => {
-      divElement.classList.remove('show');
-    }, 5000);
-    divElement.addEventListener('transitionend',()=>{
       divElement.remove();
-    })
-    //añadimos tiempo para que desaparesca el alert
+    }, 5000);
     
     //añadimos el div alert
     document.getElementById('alerts').appendChild(divElement);
-    document.getElementById('alerts').style.overflowX='hidden';
     
-    
-    //creamos span x
-    let spanX = document.createElement('span');
-    spanX.classList.add('btn-close');
-    spanX.setAttribute('data-bs-dismiss','alert');
-    spanX.nodeType='button';
-
-    //añadimos el span x al div
-    divElement.appendChild(spanX);
 
     //si etiqueta creada correctamente, recargamos select etiquetas
     if (mensaje['msj-type']=='success') {
