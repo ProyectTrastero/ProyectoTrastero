@@ -5,7 +5,8 @@ use eftec\bladeone\BladeOne;
 use Dotenv\Dotenv;
 use App\{
     BD,
-    Usuario
+    Usuario,
+    Trasteros
 };
 
 // Inicializa el acceso a las variables de entorno
@@ -49,15 +50,14 @@ if (isset($_POST['volverTodosTrasteros'])){
         session_unset();
         session_destroy();
         setcookie(session_name(), '', 0, '/');
-        // Invoco la vista del formulario de iniciar sesion
+        //Redirigimos al formulario de iniciar sesion
         header('location: index.php');
-        //echo $blade->run("sesion");
         die;
     }
     $usuario = $_SESSION['usuario'];
     $trasteros = $_SESSION['trasteros'];
     $id = $_SESSION['id'];
-    $miTrastero = App\Trasteros::recuperarTrasteroPorId($bd, $id) ;
+    $miTrastero = Trasteros::recuperarTrasteroPorId($bd, $id) ;
     $_SESSION['miTrastero']=$miTrastero;
     echo $blade->run("accederTrastero", compact ('usuario', 'miTrastero'));
     die;
