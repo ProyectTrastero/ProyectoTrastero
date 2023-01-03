@@ -2,10 +2,6 @@
 
 //Create an instance; passing `true` enables exceptions
 
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
 require "../vendor/autoload.php";
 
 use eftec\bladeone\BladeOne;
@@ -98,6 +94,20 @@ $correo;
 
     $response=[];
     //Respuesta AJAX
+    try {
+        $response['mensaje']=$mensaje;  
+    } catch (Exception $ex) {
+        $response['error'] = true;
+    }
+    
+    header('Content-type: application/json');
+    echo json_encode($response);
+    
+    die;  
+
+
+    $response=[];
+ 
     try {
         $response['mensaje']=$mensaje;  
     } catch (Exception $ex) {
