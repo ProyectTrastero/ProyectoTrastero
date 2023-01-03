@@ -19,6 +19,7 @@ use App\{
 };
 
 $enviado=false;
+//Función que envía un correo electrónico usando el protocolo SMTP de Outlook
 function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
     $mail = new PHPMailer(true);
     try {
@@ -79,20 +80,24 @@ $correo;
     $correo=trim(filter_input(INPUT_POST, 'correo', FILTER_SANITIZE_STRING));
     $existe = Usuario::existeCorreo($bd, $correo);
     
-    
+    //Si existe el correo se genera mensaje de petición realizada correctamente.
+    //Por cuestiones de seguridad solo se proporciona información de que la petición se ha generado correctamente.
     if($existe){
         $contraseña = Usuario::obtenerContraseña($bd, $correo) ;
         $alias= Usuario::obtenerAlias($bd, $correo);
         enviarCorreo($correo, $contraseña, $alias);
         $mensaje="Su petición se ha generado correctamente. Si el email es correcto se le enviarán sus credenciales al correo proporcionado.";
+    //Si el correo está vacío se genera mensaje de campo obligatorio.
     }else if($correo == ""){
         $mensaje="El campo correo es obligatorio.";
+    //Si no existe el correo se envía también mensaje de que la petición se ha realizado con éxito. Aunque en este caso no haya envío de correo 
+    //ya que el email facilitado no se encuentra en la bbdd.
     }else{
         $mensaje="Su petición se ha generado correctamente. Si el email es correcto se le enviarán sus credenciales al correo proporcionado.";
     }
 
     $response=[];
- 
+    //Respuesta AJAX
     try {
         $response['mensaje']=$mensaje;  
     } catch (Exception $ex) {

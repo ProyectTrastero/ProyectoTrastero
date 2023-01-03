@@ -7,11 +7,12 @@ window.addEventListener("load", iniciar);
 var elementos;
 var ocultos;
 
-
+//Función que se carga tras cargar la página.
 function iniciar(){
     elementos = document.getElementsByClassName("productos");
     ocultos= document.getElementsByClassName("ocultos");
     for(i=0;i<ocultos.length;i++){
+        //A cada elemento le añadimos los eventos correspondientes.
         ocultos[i].addEventListener("mouseover", añadirOjo);
         ocultos[i].addEventListener("mouseout", eliminarOjo);
     }  
@@ -21,6 +22,9 @@ function iniciar(){
  
 }
 
+//Crea la tabla donde se muestran los productos. 
+//Obtenemos el id seleccionado y por ajax hacemos una peticíon a verTrastero.php
+//que nos responde con el listado de productos de esa ubicación.
 function mostrarProductos(e){
     var idSeleccionado = e.target.getAttribute("name");
     var tipo = e.target.getAttribute("id");
@@ -46,20 +50,21 @@ function mostrarProductos(e){
                            
                         }while(filas.length>1)
                     }
+                    //Por cada elemento creamos una fila en la tabla
                     for(i=0;i<listadoProductos.length;i++){
                         var fila=document.createElement("tr");
                         var columna1=document.createElement("td");
                         var columna2=document.createElement("td");
                         var columna3=document.createElement("td");
                         var columna4=document.createElement("td");
-                        
+                        //Le añadimos los atributos correspondientes.
                         columna1.setAttribute("class", "vtTdFecha");
                         columna2.setAttribute("class", "vtTdNombre");
                         columna3.setAttribute("class", "vtTdDescripcion");
                         columna4.setAttribute("class", "vtTdUbicacion");
                         
                         fila.setAttribute("class", "vtTr")    
-                        
+                        //Escribimos cada celda con cada uno de los campos del producto recuperado.
                         columna1.innerHTML = listadoProductos[i].fechaingreso;
                         columna2.innerHTML = listadoProductos[i].nombre;
                         columna3.innerHTML = listadoProductos[i].descripcion;
@@ -68,11 +73,12 @@ function mostrarProductos(e){
                         var numCaja = listadoProductos[i].caja;
                         
                         columna4.innerHTML = "Estanteria "+ numEstanteria+" - Balda "+numBalda+" - Caja "+numCaja;
-//                        elemento.innerHTML=listadoBaldas[i];
+                        //Añadimos a cada fila las celdas creadas
                         fila.appendChild(columna1);
                         fila.appendChild(columna2);
                         fila.appendChild(columna3);
                         fila.appendChild(columna4);
+                        //Añadimos toda la tabla creada.
                         body.appendChild(fila);
                     }
                    
@@ -80,6 +86,7 @@ function mostrarProductos(e){
     }); 
 }
 
+//Función que añade color al elemento para ser visible.
 function añadirOjo(e){
         var oculto = e.target;
         var elemento= oculto.nextElementSibling;
@@ -94,7 +101,7 @@ function añadirOjo(e){
 //    }
 
 }
-
+//Hace transparente el elemento para que no se vea
 function eliminarOjo(e){
     var oculto = e.target;
     var elemento= oculto.nextElementSibling;

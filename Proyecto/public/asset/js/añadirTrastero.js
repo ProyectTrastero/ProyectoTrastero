@@ -7,6 +7,8 @@ var guardado;
 var infoModal;
 var infoModal2;
 var infoModal3;
+
+//Inicializa las variables tras haber cargado la página.
 function iniciar(){
     var tipo = document.getElementById("guardadoModificado");
     var modal=document.getElementById("mostrarModal");
@@ -33,7 +35,7 @@ function iniciar(){
         }
     }  
 }
-
+//Si el valor de la variable recogida tiene como valor "si" visualia el modal que le corresponde. 
 function habilitarmodal(){
     if(infoModal=="si"){
        $("#staticBackdrop1").modal("show");
@@ -48,7 +50,7 @@ function habilitarmodal(){
     
    
 }
-
+//Tras presionar botón guardar desabilita todos los botones exceptuando el de volver.
 function deshabilitarBotones(){
     if(guardado=="true"){
         var botones = document.getElementsByTagName("button");
@@ -61,6 +63,7 @@ function deshabilitarBotones(){
     }
 }
 
+//Desabilita la edición hasta nuevo click y hace una petición ajax con el nombre actual del elemento.
 function deshabilitarEdicion(e){
     var elemento = e.target;
     elemento.setAttribute("contenteditable", "false");
@@ -77,6 +80,7 @@ function deshabilitarEdicion(e){
                 success: function(result){
                     var respuesta = result.cambiado;
                     var antiguoNombre = result.nombre;
+                    //Si la respuesta a la peticíón es false se recupera el antiguo nombre y se avisa con un alert.
                     if(!respuesta){
                         alert ("Ya existe un elemento con ese nombre.");
                         elemento.innerText = antiguoNombre;
@@ -88,6 +92,7 @@ function deshabilitarEdicion(e){
     
 }
 
+//Habilita la edición del nombre de cada elemento.
 function habilitarEdicion(e){
     var elemento = e.target;
     primerElemento = elemento.previousElementSibling;
@@ -98,7 +103,7 @@ function habilitarEdicion(e){
     
 }
     
-    
+//Añade la papelera para poder eliminar el elemento seleccionado.   
 function añadirPapelera(e){
         var elemento = e.target;
         var papelera= document.createElement("button");
@@ -132,6 +137,7 @@ function añadirPapelera(e){
 
 }
 
+//Tras un retardo elimina la papelera creada con anterioridad.
 function eliminarPapelera(e){
      var elemento = e.target;
     var papelera=elemento.children[0];
