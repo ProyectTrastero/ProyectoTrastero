@@ -14,7 +14,7 @@ function addEventToElements() {
 	for (let i = 0; i < radios.length; i++) {
 		const radio = radios[i];
 		radio.addEventListener('click', (e) => {
-			cambiarUbicacion(e);
+			cambiarUbicacion(e.target.id);
 		});
 	}
 
@@ -38,12 +38,6 @@ function addEventToElements() {
 
 	document.getElementById('modificarProducto').addEventListener('click',modificarProducto);
 
-	document.getElementById('formProducto').addEventListener('submit',(e)=>{
-		if(e.submitter.name == 'modificarProducto'){
-			e.preventDefault();//previene el envio del formulario por defecto
-			modificarProducto();
-		}
-	})
 
 }
 
@@ -58,6 +52,13 @@ function checkSelectRadio() {
 		}
 	}
 
+	//escondemos y mostramos partes del front
+	cambiarUbicacion(idRadio);
+}
+
+function cambiarUbicacion(idRadio) {
+	
+
 	if (idRadio == 'radioUbicacionEstanteria') {
 		document.getElementById('idUbicacionEstanteria').classList.remove('hide');
 		document.getElementById('idUbicacionCajasSinUbicar').classList.add('hide');
@@ -67,6 +68,7 @@ function checkSelectRadio() {
 		document.getElementById('selectCaja').disabled = false;
 		//tambien desabilitamos los select para que no envien informacion
 		document.getElementById('selectCajasSinUbicar').disabled = true;
+		
 
 	} else if (idRadio == 'radioCajasSinAsignar') {
 		document.getElementById('idUbicacionCajasSinUbicar').classList.remove('hide');
@@ -77,46 +79,9 @@ function checkSelectRadio() {
 		document.getElementById('selectEstanterias').disabled = true;
 		document.getElementById('selectBaldas').disabled = true;
 		document.getElementById('selectCaja').disabled = true;
+		
 
 	} else if (idRadio == 'radioSinAsignar') {
-		document.getElementById('idUbicacionCajasSinUbicar').classList.add('hide');
-		document.getElementById('idUbicacionEstanteria').classList.add('hide');
-		//desabilitamos todos los select 
-		document.getElementById('selectEstanterias').disabled = true;
-		document.getElementById('selectBaldas').disabled = true;
-		document.getElementById('selectCaja').disabled = true;
-		document.getElementById('selectCajasSinUbicar').disabled = true;
-	}
-}
-
-function cambiarUbicacion(e) {
-	let target = e.target;
-
-	if (target.id == 'radioUbicacionEstanteria') {
-		document.getElementById('idUbicacionEstanteria').classList.remove('hide');
-		document.getElementById('idUbicacionCajasSinUbicar').classList.add('hide');
-		//habilitamos los select 
-		document.getElementById('selectEstanterias').disabled = false;
-		document.getElementById('selectBaldas').disabled = false;
-		document.getElementById('selectCaja').disabled = false;
-		//tambien desabilitamos los select para que no envien informacion
-		document.getElementById('selectCajasSinUbicar').disabled = true;
-		//hacemos peticion al servidor para rellenar los select
-		getEstanteriasBaldasCajas();
-
-	} else if (target.id == 'radioCajasSinAsignar') {
-		document.getElementById('idUbicacionCajasSinUbicar').classList.remove('hide');
-		document.getElementById('idUbicacionEstanteria').classList.add('hide');
-		//habilitamos los select
-		document.getElementById('selectCajasSinUbicar').disabled = false;
-		//tambien desabilitamos los select para que no envien informacion
-		document.getElementById('selectEstanterias').disabled = true;
-		document.getElementById('selectBaldas').disabled = true;
-		document.getElementById('selectCaja').disabled = true;
-		//hacemos peticion al servidor para rellenar los select
-		getCajasSinUbicacion();
-
-	} else if (target.id == 'radioSinAsignar') {
 		document.getElementById('idUbicacionCajasSinUbicar').classList.add('hide');
 		document.getElementById('idUbicacionEstanteria').classList.add('hide');
 		//desabilitamos todos los select 
@@ -390,6 +355,7 @@ function crearEtiqueta() {
 				getEtiquetas();
 			}
 		})
+		.catch(error => console.error('Error:', error));
 }
 
 //recibimos las etiquetas del usuario
@@ -412,7 +378,7 @@ function getEtiquetas() {
 
 			})
 		})
-
+		.catch(error => console.error('Error:', error));
 }
 
 function añadirEtiqueta(){
@@ -457,8 +423,8 @@ function añadirEtiqueta(){
 
 	//añadimos event click al span x para eliminar la etiqueta
 	spanX.addEventListener('click',(e)=>{
-		crearInputEtiquetasAñadidas();
 		e.target.parentNode.remove();
+		crearInputEtiquetasAñadidas();
 	})
 	crearInputEtiquetasAñadidas();
 }
@@ -492,7 +458,6 @@ function crearInputEtiquetasAñadidas(){
 	let inputEtiquetas= document.getElementById('inputEtiquetas');
 	document.getElementById('inputEtiquetas').appendChild(inputAñadirEtiquetas);
 
-	console.log(document.getElementById('inputAñadirEtiquetas').value);
 }
 
 
@@ -500,15 +465,16 @@ function modificarProducto(){
 	const formProducto = document.getElementById('formProducto');
 	//obtenemos los datos del formulario como un objeto formData
 	const formData = new FormData(formProducto);
-	//convertimos los datos del formulario en un objeto json
+	//enviamos el id del producto que estamos modificando
 	const data = {modificarProducto : document.getElementById('modificarProducto').value}
+	//convertimos los datos del formulario en un objeto json
 	formData.forEach((value,key)=>{
 		data[key] = value;
 	});
 	postData('modificarProducto.php', data)
 	.then(data=>{
 
-		//eliminamos el mensaje de error
+		//eliminamos el mensaje de error si existe
 		if(document.getElementById('nombreInvalido').firstChild != null)
 		document.getElementById('nombreInvalido').firstChild.remove();
 
@@ -550,6 +516,6 @@ function modificarProducto(){
 			document.getElementById('alerts').appendChild(divElement);
 		}
 	})
-
+	.catch(error => console.error('Error:', error));
 	
 }

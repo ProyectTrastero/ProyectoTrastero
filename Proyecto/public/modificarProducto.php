@@ -34,14 +34,6 @@ try {
 
 session_start();
 if (isset($_SESSION['usuario'])) {
-	$miTrastero = $_SESSION['miTrastero'];
-	$usuario = $_SESSION['usuario'];
-	$estanterias = null;
-	$baldas = null;
-	$cajas = null;
-	$cajasSinUbicar=null;
-
-
 	if (isset($_REQUEST['cerrarSesion'])) {
 		session_destroy();
 		header("Location: index.php");
@@ -56,6 +48,13 @@ if (isset($_SESSION['usuario'])) {
 		die;
 	}
 
+	$miTrastero = $_SESSION['miTrastero'];
+	$usuario = $_SESSION['usuario'];
+	
+	
+
+
+
 	//recuperamos el id del producto que vamos a modificar
 	if (isset($_GET['idProducto'])) {
 
@@ -64,27 +63,42 @@ if (isset($_SESSION['usuario'])) {
 		$producto = Producto::recuperarProductoPorId($bd, $idProducto);
 		//comprobamos que el producto pertenece a este trastero
 		if ($producto->getIdTrastero() != $miTrastero->getId()) die;
-		//recupetamos las etiquetas del producto
+		//recuperamos las etiquetas del producto
 		$etiquetasProducto = Producto::recuperarEtiquetasPorProductoId($bd, $idProducto);
 		//recuperamos las etiquetas del usuario
 		$etiquetasUsuario = Etiqueta::recuperaEtiquetasPorUsuario($bd, $usuario->getId());
 
+		//recuperamos las estanterias del trastero
+		$estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $miTrastero->getId());
 
-		//si tenemos el producto en una estanteria
-		if (!is_null($producto->getIdEstanteria())) {
-			//recuperamos las estanterias del trastero
-			$estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $miTrastero->getId());
-			//recuperamos las baldas de la estanteria en la que tenemos el producto
-			$baldas = Balda::recuperarBaldasPorIdEstanteria($bd, $producto->getIdEstanteria());
-			//recuperamos las cajas de la estanteria en la que tenemos el producto
-			$cajas = Caja::recuperarCajaPorIdBalda($bd, $producto->getIdBalda());
-			
+		//comprobamos si tenemos estanterias
+		if(count($estanterias) > 0 ){
+			//si el producto tiene idEstanteria
+			if(!is_null($producto->getIdEstanteria())){
+				//recuperamos las baldas de la estanteria del producto
+				$baldas = Balda::recuperarBaldasPorIdEstanteria($bd,$producto->getIdEstanteria());
+			}else{
+				//recuperamos las baldas de la primera estanteria
+				$baldas = Balda::recuperarBaldasPorIdEstanteria($bd,$estanterias[0]->getId());
+			}
+
+			//comprobamos si el producto tiene idBalda
+			if(!is_null($producto->getIdBalda())){
+				//recuperamos las cajas de la balda del producto
+				$cajas = Caja::recuperarCajaPorIdBalda($bd,$producto->getIdBalda());
+			}else{
+				//recuperamos las cajas de la primera balda
+				$cajas = Caja::recuperarCajaPorIdBalda($bd,$baldas[0]->getId());
+			}
+		}else{
+			$baldas = array();
+			$cajas = array();
 		}
-		//si tenemos el producto en una caja sin ubicar
-		elseif (is_null($producto->getIdEstanteria()) && !is_null($producto->getIdCaja())) {
-			$cajasSinUbicar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd, $miTrastero->getId());
+
+		//recuperamos las cajas sin ubicar
+		$cajasSinUbicar = Caja::recuperarCajasSinUbicarPorIdTrastero($bd, $miTrastero->getId());
 			
-		}
+		
 	}
 
 	//recibimos las peticiones del cliente 
@@ -92,7 +106,7 @@ if (isset($_SESSION['usuario'])) {
 
 		//peticion para devolver cajas sin asignar
 		if (array_key_exists('getCajasSinUbicar',$data)) {
-			$cajasSinUbicar = Caja::recuperarCajasSinAsignarPorIdTrastero($bd, $miTrastero->getId());
+			$cajasSinUbicar = Caja::recuperarCajasSinUbicarPorIdTrastero($bd, $miTrastero->getId());
 			echo json_encode($cajasSinUbicar);
 			die;
 		}
@@ -215,8 +229,8 @@ if (isset($_SESSION['usuario'])) {
 			 //separamos los id de las etiquetas y los guardamos en un array
 			 $arrayInputAñadirEtiquetas = preg_split("/\s/",$inputAñadirEtiquetas);
 
-			 //si ubicacion en caja sin ubicacion
-			 if($ubicacion == 'ubicacionCajasSinAsignar'){
+			//si ubicacion en caja sin ubicacion
+			if($ubicacion == 'ubicacionCajasSinAsignar'){
 				if($cajasSinUbicar == 0){
 					$mensaje['msj-content']="Ubicacion invalida";
 					$mensaje['msj-type']="danger";
