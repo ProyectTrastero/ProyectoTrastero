@@ -37,19 +37,19 @@
         <div class="d-flex flex-wrap">
           <div>
             <label for="radioUbicacionEstanteria">Ubicar en estanteria</label>
-            <input class="me-3" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria" @if (!is_null($estanterias))
+            <input class="me-3" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria" @if (!is_null($producto->getIdEstanteria()))
                 checked
             @endif>
           </div>
           <div>
             <label for="radioCajasSinAsignar">Ubicar en caja sin ubicación</label>
-            <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar" @if (is_null($estanterias) && !is_null($cajasSinUbicar))
+            <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar" @if (is_null($producto->getIdEstanteria()) && !is_null($producto->getIdCaja()))
                 checked
             @endif>
           </div>
           <div>
             <label for="radioSinAsignar">No asignar ubicación</label>
-            <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" @if (is_null($estanterias) && is_null($cajasSinUbicar))
+            <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" @if (is_null($producto->getIdEstanteria()) && is_null($producto->getIdCaja()))
                 checked
             @endif>
           </div>
