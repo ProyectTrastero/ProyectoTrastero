@@ -30,11 +30,11 @@ function addEventToElements() {
     loadDoc('añadirProducto.php?idBalda=' + this.value, setCajas);
   })
 
-  ////añadimos event click a los radio buttons 
+  ////añadimos event change a los radio buttons 
   let radios = document.getElementsByName('ubicacion');
   for (let i = 0; i < radios.length; i++) {
     const radio = radios[i];
-    radio.addEventListener('click', (e) => {
+    radio.addEventListener('change', (e) => {
       showHide(e);
     })
   }
@@ -400,6 +400,14 @@ function añadirProducto() {
           element.remove();
         })
 
+        //ubicacion por defecto
+        document.getElementById('idUbicacionCajasSinUbicar').classList.add('hide');
+        document.getElementById('idUbicacionEstanteria').classList.add('hide');
+        //desabilitamos todos los select 
+        document.getElementById('selectEstanterias').disabled = true;
+        document.getElementById('selectBaldas').disabled = true;
+        document.getElementById('selectCaja').disabled = true;
+        document.getElementById('selectCajasSinUbicar').disabled = true;
       }
     })
     .catch(error => console.error('Error:', error));
