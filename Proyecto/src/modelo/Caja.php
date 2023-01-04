@@ -137,7 +137,7 @@ class Caja implements \JsonSerializable {
         return $cajas;
     }
 
-    public static function recuperarCajasSinAsignarPorIdTrastero(PDO $bd, string $idTrastero):array{
+    public static function recuperarCajasSinUbicarPorIdTrastero(PDO $bd, string $idTrastero):array{
         $consulta = "select * from cajas where idTrastero = :idTrastero and idEstanteria is null and idBalda is null";
         $registro = $bd->prepare($consulta);
         $registro->execute([':idTrastero'=>$idTrastero]);

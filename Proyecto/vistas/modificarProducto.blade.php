@@ -10,7 +10,7 @@
 @section('content')
 
 <div class="container">
-  {{-- alerts desde js --}}
+  {{-- alerts --}}
   <div  id="alerts"></div>
   
 
@@ -54,16 +54,14 @@
             @endif>
           </div>
 
-          @if(isset($errores) && in_array("sinUbicacion", $errores)) 
-            <div class="textError form-text p-1 text-start">
-              Selecciona una ubicación.
-            </div>
-          @endif
         </div>
         
         <div id="idUbicacionEstanteria" class="hide inputsSelect mt-2">
           <label for="selectEstanterias">Estanteria: </label>
           <select name="estanteria" id="selectEstanterias" disabled>
+            @if (count($estanterias)==0)
+              <option value="0">No hay estanterias</option>
+            @endif
             @foreach ($estanterias as $estanteria)
               <option value="{{$estanteria->getId()}}" @if ($estanteria->getId() == $producto->getIdEstanteria()) selected @endif>{{$estanteria->getNombre()}}</option>
             @endforeach
@@ -71,6 +69,9 @@
 
           <label for="selectBaldas">Balda: </label>
           <select name="balda" id="selectBaldas" disabled>
+            @if (count($baldas)==0)
+              <option value="0">No hay baldas</option>
+            @endif
             @foreach ($baldas as $balda)
               <option value="{{$balda->getId()}}" @if ($balda->getId() == $producto->getIdBalda()) selected @endif>{{$balda->getNombre()}}</option>
             @endforeach
@@ -78,16 +79,25 @@
 
           <label for="selectCaja">Caja: </label>
           <select name="caja" id="selectCaja" disabled>
-            <option value="0">No ubicar en caja</option>
-            @foreach ($cajas as $caja)
+            @if (count($cajas)==0)
+                <option value="0">No hay cajas</option>
+            @else
+              <option value="0">No ubicar en caja</option>
+              @foreach ($cajas as $caja)
               <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
-            @endforeach
+              @endforeach
+
+            @endif
+            
           </select>
         </div>
   
         <div id="idUbicacionCajasSinUbicar" class="hide inputsSelect mt-2">
           <label for="selectCajasSinUbicar">Caja: </label>
           <select name="cajasSinUbicar" id="selectCajasSinUbicar" disabled>
+            @if (count($cajasSinUbicar)==0)
+              <option value="0">No hay cajas</option>
+            @endif
             @foreach ($cajasSinUbicar as $caja)
               <option value="{{$caja->getId()}}" @if ($caja->getId() == $producto->getIdCaja()) selected @endif>{{$caja->getNombre()}}</option>
             @endforeach

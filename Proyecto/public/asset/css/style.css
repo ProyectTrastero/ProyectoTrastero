@@ -318,11 +318,12 @@ nav button:hover{
     border: 1px solid #f5c2c7;
 	
 }
-/*
-.alert{
-    width: 200px;
-    height: 50px;
-}*/
+
+.deleteAlert{
+    translate: 100vw;
+    transition: translate 2s;
+    
+}
 
 
 
