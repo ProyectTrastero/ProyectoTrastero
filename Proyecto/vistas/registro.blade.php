@@ -25,89 +25,107 @@
         <h2 class="mb-5 text-center">Registro usuario</h2>
         <form action="{{$_SERVER["PHP_SELF"]}}" method="post">
 
-            <div class="mb-3 inputsForm">
-                <label for="inputAlias" class="form-label">Alias: </label>
-                <input id="inputAlias" type="text" name="alias" placeholder="Alias" class="form-control" value="{{$datos['alias']}}">
-                @if(isset($error) && in_array("usuarioInvalido", $error)) 
-                    <div></div>
-                    <div class=" form-text textError p-1" >
-                        Los alias solo pueden contener letras, números, guiones y guiones bajos.
+            <div class="form-floating mb-3">
+                <input id="inputAlias" type="text" name="alias" placeholder="Alias" 
+                class="form-control @if(in_array('usuarioInvalido', $error) || in_array('aliasExiste',$error) ) is-invalid  @endif
+                                    @if (!in_array('usuarioInvalido', $error) && !in_array('aliasExiste',$error) && $submited == true ) is-valid @endif" 
+                 value="{{$datos['alias']}}" required>
+                <label for="inputAlias" class="form-label">Alias</label>
+                @if(in_array("usuarioInvalido", $error)) 
+                    <div id="invalidAlias" class=" form-text p-1 invalid-feedback">
+                        Escribe un alias, solo pueden contener letras, números, guiones y guiones bajos.
                     </div>  
                 @endif
-                @if(isset($error) && in_array("aliasExiste", $error)) 
-                    <div></div>
-                    <div class="textError form-text p-1" >
+                @if(in_array("aliasExiste", $error)) 
+                    <div class="form-text p-1 invalid-feedback" >
                         Este alias ya existe
                     </div>  
                 @endif
+                
+                
+            </div>
             
-            
-            
-                <label for="inputNombre">Nombre: </label>
-                <input id="inputNombre" type="text" name="nombre" placeholder="Nombre" class="form-control" value="{{$datos['nombre']}}">
-                @if(isset($error) && in_array("nombreInvalido", $error)) 
-                    <div></div>
-                    <div class="textError form-text p-1" role="alert">
-                        Solo se admiten letras y espacios en blanco.
+            <div class="form-floating mb-3">
+                <input id="inputNombre" type="text" name="nombre" placeholder="Nombre" 
+                class="form-control @if(in_array('nombreInvalido', $error)) is-invalid  @endif
+                                    @if (!in_array('nombreInvalido', $error) && $submited == true ) is-valid @endif"
+                value="{{$datos['nombre']}}" required>
+                <label for="inputNombre">Nombre</label>
+                @if(in_array("nombreInvalido", $error)) 
+                    
+                    <div class="invalid-feedback form-text p-1" role="alert">
+                        Escribe un nombre, solo se admiten letras y espacios en blanco.
                     </div>  
                 @endif
-            
+            </div>
            
 
-            
-                <label for="inputApellidos">Apellidos: </label>
-                <input id="inputApellidos" type="text" name="apellidos" placeholder="Apellidos" class="form-control" value="{{$datos['apellidos']}}">
-                @if(isset($error) && in_array("apellidoInvalido", $error)) 
-                    <div></div>
-                    <div class="textError form-text p-1" role="alert">
+            <div class="form-floating mb-3">
+                <input id="inputApellidos" type="text" name="apellidos" placeholder="Apellidos" 
+                class="form-control @if(in_array('apellidoInvalido', $error)) is-invalid  @endif
+                                    @if (!in_array('apellidoInvalido', $error) && $submited == true ) is-valid @endif" 
+                value="{{$datos['apellidos']}}" required>
+                <label for="inputApellidos">Apellidos</label>
+                @if(in_array("apellidoInvalido", $error)) 
+                    
+                    <div class="invalid-feedback form-text p-1" role="alert">
                         Debe comenzar por una letra, solo se admiten letras y espacios en blanco.
                     </div>  
                 @endif
-            
+            </div>
             
 
-            
-                <label for="inputCorreo">Correo: </label>
-                <input id="inputCorreo" type="email" name="correo" placeholder="Correo" class="form-control" value="{{$datos['correo']}}">
-                @if(isset($error) && in_array("correoInvalido", $error)) 
-                    <div></div>
-                    <div class="textError form-text p-1" role="alert">
+            <div class="form-floating mb-3">
+                <input id="inputCorreo" type="email" name="correo" placeholder="Correo" 
+                class="form-control @if(in_array('correoInvalido', $error) || in_array('correoExiste',$error) ) is-invalid  @endif
+                                    @if (!in_array('correoInvalido', $error) && !in_array('correoExiste',$error) && $submited == true ) is-valid @endif"
+                value="{{$datos['correo']}}" required>
+                <label for="inputCorreo">Correo</label>
+                @if(in_array("correoInvalido", $error)) 
+                    
+                    <div class="invalid-feedback form-text p-1" role="alert">
                         Correo invalido
                     </div>  
                 @endif
-                @if(isset($error) && in_array("correoExiste", $error)) 
-                    <div></div>
-                    <div class="textError form-text p-1" role="alert">
+                @if(in_array("correoExiste", $error)) 
+                    
+                    <div class="invalid-feedback form-text p-1" role="alert">
                         Este correo ya existe
                     </div>  
                 @endif
-            
+            </div>
             
 
-            
-                <label for="inputPassword">Contraseña: </label>
-                <input id="inputPassword" type="password" name="clave" placeholder="Contraseña" class="form-control" value="{{$datos['clave']}}">
-                @if(isset($error) && in_array("claveInvalida", $error)) 
-                    <div></div>
-                    <div class="textError form-text p-1">
+            <div class="form-floating mb-3">
+                <input id="inputPassword" type="password" name="clave" placeholder="Contraseña" 
+                class="form-control @if(in_array('claveInvalida', $error)) is-invalid  @endif
+                                    @if (!in_array('claveInvalida', $error) && $submited == true ) is-valid @endif"
+                value="{{$datos['clave']}}" required>
+                <label for="inputPassword">Contraseña</label>
+                @if(in_array("claveInvalida", $error)) 
+                    
+                    <div class="invalid-feedback form-text p-1">
                         Debe contener minimo 8 caracteres, una mayuscula una miniscula y un número. 
                     </div>  
                 @endif
-            
+            </div>
             
 
-            
-                <label for="inputPasswordRepeat">Repita la contraseña: </label>
-                <input id="inputPasswordRepeat" type="password" name="claveRepeat" placeholder="Repita la contraseña" class="form-control" value="{{$datos['claveRepeat']}}">
-                @if(isset($error) && in_array("clavesNoIguales", $error)) 
-                    <div></div>
-                    <div class="textError form-text p-1" role="alert">
+            <div class="form-floating mb-3">
+                <input id="inputPasswordRepeat" type="password" name="claveRepeat" placeholder="Repita la contraseña" 
+                class="form-control @if(in_array('clavesNoIguales', $error) || in_array('camposVacios',$error) ) is-invalid  @endif
+                                    @if (!in_array('clavesNoIguales', $error) && !in_array('camposVacios',$error) && $submited == true ) is-valid @endif"
+                value="{{$datos['claveRepeat']}}" required>
+                <label for="inputPasswordRepeat">Repita la contraseña</label>
+                @if(in_array("clavesNoIguales", $error)) 
+                    
+                    <div class="invalid-feedback form-text p-1" role="alert">
                         Las contraseñas no coinciden
                     </div>  
                 @endif
-                @if(isset($error) && in_array("camposVacios", $error)) 
-                    <div></div>
-                    <div class="textError form-text p-1" role="alert">
+                @if(in_array("camposVacios", $error)) 
+                    
+                    <div class="invalid-feedback form-text p-1" role="alert">
                         Rellene todos los campos
                     </div>  
                 @endif
@@ -117,7 +135,7 @@
            
 
             <div class="text-end">
-                <button type="submit" name="volver" class="btn btn-secondary" value="volver">Volver</button>
+                <a class="btn btn-secondary" href="index.php" role="button">Volver</a>
                 <button type="submit" name="registrarse" class="btn btn-primary" value="registrarse">Registrarse</button>
             </div>
 

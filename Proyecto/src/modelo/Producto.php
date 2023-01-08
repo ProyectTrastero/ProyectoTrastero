@@ -256,16 +256,18 @@ class Producto {
     }
 
     public static function añadirEtiquetaProducto(PDO $bd, int $idEtiqueta, int $idProducto ):bool{
-        $query = "insert into etiquetasproductos (idEtiqueta, idProducto) values (:idEtiqueta, :idProducto)";
-        $stmt =$bd->prepare($query);
-        if(!$stmt->execute([':idEtiqueta'=>$idEtiqueta, ':idProducto'=>$idProducto])){
-            $stmt = null;
-            return false;
-        }else{
-            $stmt = null;
-            return true;
+        try {
+         $query = "insert into etiquetasproductos (idEtiqueta, idProducto) values (:idEtiqueta, :idProducto)";
+         $stmt =$bd->prepare($query);
+         $stmt->execute([':idEtiqueta'=>$idEtiqueta, ':idProducto'=>$idProducto]);
+         $stmt = null;
+         return true;
+         
+         } catch (\PDOException $e ) {
+         $stmt = null;
+         return false;
         }
-    }
+     }
 
     public static function eliminarEtiquetaProducto(PDO $bd, int $idEtiquetaProducto):bool{
         $sql='delete from etiquetasproductos where id = :id';

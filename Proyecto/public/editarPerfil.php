@@ -41,13 +41,9 @@ if (isset($_SESSION['usuario'])) {
     }
     if(isset($_REQUEST['perfilUsuario'])){
         header("Location: editarPerfil.php");
-    }
-    
-    //Hasta aquí
-    if (isset($_POST['volver'])) {
-        header('location: acceso.php');
         die;
     }
+    
 
     if (isset($_POST['guardar'])) {
         //unset($_POST['guardar']);
@@ -76,8 +72,10 @@ if (isset($_SESSION['usuario'])) {
                 //inicializamos variable para mostrar mensaje
                 $_SESSION['msj']="No se ha modificado ningun campo";
                 $_SESSION['msj-type']="info";
+                echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos, 'usuario'=>$usuario, 'submited'=>false]);
+                die;
             }
-            echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos, 'usuario'=>$usuario]);
+            echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos, 'usuario'=>$usuario, 'submited'=>true]);
             die;
         } else {
             //si no obtenemos errores actualizamos el $usuario en local
@@ -101,7 +99,7 @@ if (isset($_SESSION['usuario'])) {
         'clave' => $usuario->getClave(),
         'correo' => $usuario->getCorreo()
     );
-    echo $blade->run("perfil", ['datos' => $datos, 'usuario'=>$usuario] );
+    echo $blade->run("perfil", ['datos' => $datos, 'usuario'=>$usuario,'errores'=>array(), 'submited'=>false] );
     die;
 }
 

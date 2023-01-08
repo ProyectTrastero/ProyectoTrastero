@@ -144,9 +144,33 @@ if (isset($_SESSION['usuario'])) {
 
         die;
     }
+    //peticion para eliminar etiqueta
+    if(isset($_GET['idEliminarEtiqueta'])){
+        //recibimos el id de la etiqueta
+        $idEliminarEtiqueta = $_GET['idEliminarEtiqueta'];
+        //creamos objeto etiqueta
+        $etiqueta = new Etiqueta();
+        $etiqueta->setId($idEliminarEtiqueta);
+        //eliminamos etiqueta
+        if( $etiqueta->eliminarEtiqueta($bd)){
+            //si etiqueta eliminada
+            $mensaje['msj-content']='Etiqueta eliminada';
+            $mensaje['msj-type'] = 'success';
+        }else{
+            //error al eliminar etiqueta
+            $mensaje['msj-content']='Error al eliminar la etiqueta';
+            $mensaje['msj-type'] = 'danger';
+        }
+        
+        echo json_encode($mensaje);
+        die;
+    }
 
-    //recibimos las peticiones del cliente 
+
+    //recibimos las peticiones post del cliente en formato json
     if (!is_null($data = json_decode(file_get_contents('php://input'), true))) {
+        
+
         //peticion para añadir producto
         if (array_key_exists('añadirProducto', $data)) {
             (isset($data['nombreProducto'])) ? $nombreProducto = Validacion::sanearInput($data['nombreProducto']) : $nombreProducto = '';

@@ -97,7 +97,39 @@ if (isset($_SESSION['usuario'])) {
 
 		//recuperamos las cajas sin ubicar
 		$cajasSinUbicar = Caja::recuperarCajasSinUbicarPorIdTrastero($bd, $miTrastero->getId());
+		
+		echo $blade->run('modificarProducto', [
+			'producto' => $producto,
+			'estanterias' => $estanterias,
+			'baldas' => $baldas,
+			'cajas' => $cajas,
+			'cajasSinUbicar' => $cajasSinUbicar,
+			'etiquetasProducto' => $etiquetasProducto,
+			'etiquetasUsuario' => $etiquetasUsuario
+		]);
 	}
+
+	//peticion para eliminar etiqueta
+    if(isset($_GET['idEliminarEtiqueta'])){
+        //recibimos el id de la etiqueta
+        $idEliminarEtiqueta = $_GET['idEliminarEtiqueta'];
+        //creamos objeto etiqueta
+        $etiqueta = new Etiqueta();
+        $etiqueta->setId($idEliminarEtiqueta);
+        //eliminamos etiqueta
+        if( $etiqueta->eliminarEtiqueta($bd)){
+            //si etiqueta eliminada
+            $mensaje['msj-content']='Etiqueta eliminada';
+            $mensaje['msj-type'] = 'success';
+        }else{
+            //error al eliminar etiqueta
+            $mensaje['msj-content']='Error al eliminar la etiqueta';
+            $mensaje['msj-type'] = 'danger';
+        }
+        
+        echo json_encode($mensaje);
+        die;
+    }
 
 	//recibimos las peticiones del cliente 
 	if (!is_null($data = json_decode(file_get_contents('php://input'), true))) {
@@ -326,14 +358,4 @@ if (isset($_SESSION['usuario'])) {
 		}
 	}
 
-
-	echo $blade->run('modificarProducto', [
-		'producto' => $producto,
-		'estanterias' => $estanterias,
-		'baldas' => $baldas,
-		'cajas' => $cajas,
-		'cajasSinUbicar' => $cajasSinUbicar,
-		'etiquetasProducto' => $etiquetasProducto,
-		'etiquetasUsuario' => $etiquetasUsuario
-	]);
 }

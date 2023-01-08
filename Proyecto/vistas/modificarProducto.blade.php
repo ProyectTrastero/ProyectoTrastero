@@ -2,7 +2,7 @@
 @extends('app')
 
 {{-- Sección aporta el título de la página --}}
-@section('title', 'Mi trastero Inicio')
+@section('title', 'Modificar producto')
 
 
 
@@ -21,13 +21,15 @@
       <section class="col-lg-6">
         <h1>Producto</h1>
         <div class="inputsForm">
-          <label for="nombreProducto">Nombre: </label>
+
+          <label for="nombreProducto">Nombre</label>
           <input type="text" name="nombreProducto" class="form-control" value="@isset($producto) {{$producto->getNombre()}} @endisset">
+          
           <div></div>
-          <div id="nombreInvalido"> </div>
+          <div id="nombreInvalido" class="my-2"> </div>
           
   
-          <label for="descripcionProducto">Descripción: </label>
+          <label for="descripcionProducto">Descripción</label>
           <input type="text" name="descripcionProducto" class="form-control" value="@isset($producto) {{$producto->getDescripcion()}} @endisset">
         </div>
   
@@ -35,30 +37,30 @@
       <section class="col-lg-6 mt-2">
         <h2>Ubicación</h2>
         <div class="d-flex flex-wrap">
-          <div>
-            <label for="radioUbicacionEstanteria">Ubicar en estanteria</label>
-            <input class="me-3" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria" @if (!is_null($producto->getIdEstanteria()))
+          <div class="form-check me-3">
+            <input class="form-check-input" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria" @if (!is_null($producto->getIdEstanteria()))
                 checked
             @endif>
+            <label class="form-check-label" for="radioUbicacionEstanteria">Ubicar en estanteria</label>
           </div>
-          <div>
-            <label for="radioCajasSinAsignar">Ubicar en caja sin ubicación</label>
-            <input class="me-3" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar" @if (is_null($producto->getIdEstanteria()) && !is_null($producto->getIdCaja()))
-                checked
+          <div class="form-check me-3">
+            <input class="form-check-input" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar" @if (is_null($producto->getIdEstanteria()) && !is_null($producto->getIdCaja()))
+              checked
             @endif>
+            <label class="form-check-label" for="radioCajasSinAsignar">Ubicar en caja sin ubicación</label>
           </div>
-          <div>
-            <label for="radioSinAsignar">No asignar ubicación</label>
-            <input type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" @if (is_null($producto->getIdEstanteria()) && is_null($producto->getIdCaja()))
+          <div class="form-check ">
+            <input class="form-check-input" type="radio" name="ubicacion" id="radioSinAsignar" value="ubicacionSinAsignar" @if (is_null($producto->getIdEstanteria()) && is_null($producto->getIdCaja()))
                 checked
             @endif>
+            <label class="form-check-label" for="radioSinAsignar">No asignar ubicación</label>
           </div>
 
         </div>
         
         <div id="idUbicacionEstanteria" class="hide inputsSelect mt-2">
           <label for="selectEstanterias">Estanteria: </label>
-          <select name="estanteria" id="selectEstanterias" disabled>
+          <select name="estanteria" id="selectEstanterias" class="form-select" disabled>
             @if (count($estanterias)==0)
               <option value="0">No hay estanterias</option>
             @endif
@@ -68,7 +70,7 @@
           </select>
 
           <label for="selectBaldas">Balda: </label>
-          <select name="balda" id="selectBaldas" disabled>
+          <select name="balda" id="selectBaldas" class="form-select" disabled>
             @if (count($baldas)==0)
               <option value="0">No hay baldas</option>
             @endif
@@ -78,7 +80,7 @@
           </select>
 
           <label for="selectCaja">Caja: </label>
-          <select name="caja" id="selectCaja" disabled>
+          <select name="caja" id="selectCaja" class="form-select" disabled>
             @if (count($cajas)==0)
                 <option value="0">No hay cajas</option>
             @else
@@ -94,7 +96,7 @@
   
         <div id="idUbicacionCajasSinUbicar" class="hide inputsSelect mt-2">
           <label for="selectCajasSinUbicar">Caja: </label>
-          <select name="cajasSinUbicar" id="selectCajasSinUbicar" disabled>
+          <select name="cajasSinUbicar" id="selectCajasSinUbicar" class="form-select" disabled>
             @if (count($cajasSinUbicar)==0)
               <option value="0">No hay cajas</option>
             @endif
@@ -109,7 +111,9 @@
     </div>
     <section class="containerEtiquetas mt-2">
       <h2>Etiquetas</h2>
+      {{-- div en donde tendremos los id's de las etiquetas que añadiremos al producto --}}
       <div id="inputEtiquetas"></div>
+      {{-- div donde se generan las etiquetas --}}
       <div id="etiquetasProducto">
         @foreach ($etiquetasProducto as $etiquetaProducto)
             <span class="etiqueta d-inline-flex align-items-center mb-1" id="{{$etiquetaProducto['idEtiqueta']}}"> 
@@ -119,19 +123,19 @@
         @endforeach
       </div>
 
-      <div>
-        <label for="">Seleccione etiqueta: </label>
-        <select name="etiquetas" id="selectEtiquetas">
-          @foreach ($etiquetasUsuario as $etiquetaUsuario)
-              <option value="{{$etiquetaUsuario->getId()}}">{{$etiquetaUsuario->getNombre()}}</option>
-          @endforeach
-        </select>
-        <div class="d-inline-block mt-1">
-          <button type="button" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
-        </div>
-      
+      <label for="">Seleccione etiqueta: </label>
+      <select name="etiquetas" id="selectEtiquetas" class="form-select mb-2">
+        @foreach ($etiquetasUsuario as $etiquetaUsuario)
+            <option value="{{$etiquetaUsuario->getId()}}">{{$etiquetaUsuario->getNombre()}}</option>
+        @endforeach
+      </select>
+      <div class="d-inline-block mb-2">
+        <button type="button" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eliminarEtiquetaModal" id="openEliminarEtiquetaModal">Eliminar etiqueta</button>
       </div>
+      
+      
     </section>
 
     <div class="text-end mt-3">
@@ -143,18 +147,18 @@
 </div>
 
 <!-- Modal crear Etiqueta-->
-<form>
+<form id="formCrearEtiqueta">
     <div class="modal fade" id="crearEtiquetaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="false" >
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5">Crear etiqueta</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body inputsForm">
                    
                     <label for="nombreEtiqueta">Nombre de la etiqueta: </label>
-                    <input type="text" name="nombreEtiqueta" id="nombreEtiqueta">
+                    <input class="ms-1" type="text" name="nombreEtiqueta" id="nombreEtiqueta">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
@@ -167,7 +171,28 @@
     </div>
 </form>
 
-
+<!-- Modal eliminal Etiqueta-->
+<form>
+  <div class="modal fade" id="eliminarEtiquetaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="false" >
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5">Eliminar etiqueta</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <p>Desea eliminar la etiqueta: <b><label id="nombreEtiquetaSelect"></label></b> </p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
+                  <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
+                  <button type="button"  class="btn btn-secondary" name="eliminarEtiqueta" id="eliminarEtiqueta" data-bs-dismiss="modal">Eliminar</button>
+                  <!--<input type="submit" name="crearEtiqueta" value="Crear">-->
+              </div>
+          </div>
+      </div>
+  </div>
+</form>
 
 
 @endsection

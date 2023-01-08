@@ -9,7 +9,7 @@ namespace App;
 
 // PDO se usa para interaccionar con la base de datos relacional
 use \PDO as PDO;
-
+use PDOException;
 
 /**
  * Description of Productos
@@ -256,15 +256,17 @@ class Producto {
     }
 
     public static function añadirEtiquetaProducto(PDO $bd, int $idEtiqueta, int $idProducto ):bool{
+       try {
         $query = "insert into etiquetasproductos (idEtiqueta, idProducto) values (:idEtiqueta, :idProducto)";
         $stmt =$bd->prepare($query);
-        if(!$stmt->execute([':idEtiqueta'=>$idEtiqueta, ':idProducto'=>$idProducto])){
-            $stmt = null;
-            return false;
-        }else{
-            $stmt = null;
-            return true;
-        }
+        $stmt->execute([':idEtiqueta'=>$idEtiqueta, ':idProducto'=>$idProducto]);
+        $stmt = null;
+        return true;
+        
+        } catch (PDOException $e ) {
+        $stmt = null;
+        return false;
+       }
     }
 
     public static function eliminarEtiquetaProducto(PDO $bd, int $idEtiquetaProducto):bool{

@@ -50,26 +50,20 @@ if (isset($_POST['registrarse'])) {
     
     //si tenemos errores volvemos a lanzar la vista registro 
     if (count($errores) > 0) {
-        echo $blade->run('registro', ['error' => $errores,'datos' => $datos]);
+        echo $blade->run('registro', ['error' => $errores,'datos' => $datos, 'submited'=> true]);
     } else {
-        // $_SESSION['msj']="Usuario registrado correctamente";
-        // $_SESSION['msj-type']="success";
+        
         $msj = ['msj'=>'Usuario registrado correctamente',
                 'msjType'=>'success'];
         //si no hay errores volvemos a registro y mostramos mensaje
-        echo $blade->run('registro', ['error' => $errores, 'msj'=> $msj]);
+        echo $blade->run('registro', ['error' => $errores, 'msj'=> $msj, 'submited'=> false]);
 
     }
 
-}else if(isset($_POST['volver'])){
-    header("location: ../public/index.php");
-
-}else if(isset($_POST['volver'])){
-    header("location: ../public/index.php");
-}
-else{
+}else{
     //por defecto muestra vista registro
-    echo $blade->run("registro");
+    $errores = array();
+    echo $blade->run("registro",['error'=>$errores,'submited'=> false]);
 }
 
 

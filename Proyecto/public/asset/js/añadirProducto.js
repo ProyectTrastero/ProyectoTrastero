@@ -41,11 +41,15 @@ function addEventToElements() {
 
   ////añadimos event click a btn añadir etiqueta
   document.getElementById('añadirEtiqueta').addEventListener('mousedown', function () {
-
-    let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
+  let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
     loadDoc('añadirProducto.php?añadirEtiqueta=' + idEtiquetaSelected, añadirEtiqueta);
   })
 
+  //añadimos event click a boton abrir modal eliminar etiqueta openEliminarEtiquetaModal
+  document.getElementById('openEliminarEtiquetaModal').addEventListener('click',getEtiquetaOfSelect);
+
+  //añadimos event click al boton eliminar etiqueta 
+  document.getElementById('eliminarEtiqueta').addEventListener('click',eliminarEtiqueta);
 
 
   //añadimos event click a el boton añadir del modal para añadir etiquetas
@@ -58,6 +62,10 @@ function addEventToElements() {
   //añadimos event click al boton añadir producto 
   document.getElementById('añadirProducto').addEventListener('click', añadirProducto);
 
+  document.getElementById('formCrearEtiqueta').addEventListener('submit',(e)=>{
+    e.preventDefault();
+  })
+
 }
 
 function loadDoc(url, cFunction) {
@@ -67,9 +75,9 @@ function loadDoc(url, cFunction) {
   xhttp.send();
 }
 
-//Example POST method implementation:
+// POST method implementation:
 async function postData(url = '', data = {}) {
-  // Default options are marked with *
+  
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify(data), // datos que vamos a enviar
@@ -79,6 +87,19 @@ async function postData(url = '', data = {}) {
   });
   return response.json(); // datos que recibimos
 }
+
+// GET method implementation:
+async function getData(url = '') {
+  
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  return response.json(); // datos que recibimos
+}
+
 
 
 
@@ -262,7 +283,7 @@ function añadirEtiqueta(xhttp) {
   inputAñadirEtiquetas.nodeType = 'text';
   inputAñadirEtiquetas.setAttribute('hidden', 'true');
   inputAñadirEtiquetas.name = 'inputAñadirEtiquetas';
-  inputAñadirEtiquetas.value = stringEtiquetasAñadidas;
+  inputAñadirEtiquetas.value = stringEtiquetasAñadidas.trim();
   //element en donde ubicaremos el input
   let inputEtiquetas = document.getElementById('inputEtiquetas');
   document.getElementById('inputEtiquetas').appendChild(inputAñadirEtiquetas);
@@ -276,28 +297,8 @@ function crearEtiqueta(xhttp) {
     document.getElementById('nombreEtiqueta').value = "";
     //recuperamos el mensaje
     let mensaje = JSON.parse(xhttp.responseText);
-    //creamos un div que sera el alert
-    let divElement = document.createElement('div');
-
-    //añadimos clases alert
-    divElement.classList.add('alert');
-    divElement.classList.add('alert-dismissible');
-    divElement.classList.add('fade');
-    divElement.classList.add('show');
-    divElement.classList.add('alert-' + mensaje['msj-type']);
-
-    divElement.role = 'alert';
-    divElement.innerHTML = mensaje['msj-content'];
-
-    //eliminamos el span despues de un tiempo establecido
-    //pendiente de mejorar
-    setTimeout(() => {
-      divElement.remove();
-    }, 5000);
-
-    //añadimos el div alert
-    document.getElementById('alerts').appendChild(divElement);
-
+    
+    createAlert(mensaje);
 
     //si etiqueta creada correctamente, recargamos select etiquetas
     if (mensaje['msj-type'] == 'success') {
@@ -411,6 +412,118 @@ function añadirProducto() {
       }
     })
     .catch(error => console.error('Error:', error));
+}
+
+//obtenemos el nombre de la etiqueta que se desea eliminar
+function getEtiquetaOfSelect(){
+  
+  document.getElementById('nombreEtiquetaSelect').innerText = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;               
+  
+}
+
+//enviamos id de la etiqueta que vamos a eliminar
+function eliminarEtiqueta(){
+  const idEtiqueta = document.getElementById('selectEtiquetas').selectedOptions[0].value;
+  getData('añadirProducto.php?idEliminarEtiqueta=' + idEtiqueta)
+    .then(response=>{
+      console.log(response);
+      //creamos el alert
+      createAlert(response);
+      
+      //si se ha eliminado la etiqueta
+      if(response['msj-type']=='success'){
+        //copia de los options
+        const selectEtiquetas = Array.from(document.getElementById('selectEtiquetas'));
+        //eliminamos los element option etiquetas
+          Array.from(document.getElementById('selectEtiquetas').childNodes).forEach(etiqueta => {
+            //eliminamos las etiquetas
+            etiqueta.remove();
+          })
+        //recorremos elements options del select etiquetas para eliminar del array la etiqueta eliminada
+        for (let i = 0; i < selectEtiquetas.length; i++) {
+          const element = selectEtiquetas[i];
+          if(element.value == idEtiqueta){
+            //eliminamos element option
+            selectEtiquetas.splice(i,1);
+            break;
+          }
+        }
+        //actualizamos el select etiquetas
+        //recorremos las etiquetas actualizadas
+        selectEtiquetas.forEach(etiqueta => {
+          //creamos element option
+          let optionElement = document.createElement('option');
+          optionElement.value = etiqueta.value;
+          optionElement.innerText = etiqueta.innerText;
+          //añadimos la etiqueta al select
+          document.getElementById('selectEtiquetas').appendChild(optionElement);
+        })
+
+        //recorremos las etiquetas que vamos a añadir
+        for (let i = 0; i < document.getElementById('etiquetasProducto').childNodes.length; i++) {
+          const element = document.getElementById('etiquetasProducto').childNodes[i];
+          if(element.id == idEtiqueta){
+            element.remove();
+            break;
+          }
+          
+        }
+
+        let etiquetasAñadidas = document.getElementById('etiquetasProducto').childNodes;
+        
+        //actualizamos input con id de las etiquetas
+        //creamos un string con los id de las etiquetas añadidas
+        let stringEtiquetasAñadidas = "";
+        for (let i = 0; i < etiquetasAñadidas.length; i++) {
+          let etiqueta = etiquetasAñadidas[i];
+          stringEtiquetasAñadidas += etiqueta.id + " ";
+        }
+        //eliminamos el input si esta creado
+        if (document.getElementById('inputAñadirEtiquetas')) {
+          document.getElementById('inputAñadirEtiquetas').remove();
+        }
+        //creamos un input con los id de las etiquetas añadidas
+        let inputAñadirEtiquetas = document.createElement('input');
+        inputAñadirEtiquetas.id = 'inputAñadirEtiquetas';
+        inputAñadirEtiquetas.nodeType = 'text';
+        inputAñadirEtiquetas.setAttribute('hidden', 'true');
+        inputAñadirEtiquetas.name = 'inputAñadirEtiquetas';
+        inputAñadirEtiquetas.value = stringEtiquetasAñadidas.trim();
+        //element en donde ubicaremos el input
+        let inputEtiquetas = document.getElementById('inputEtiquetas');
+        document.getElementById('inputEtiquetas').appendChild(inputAñadirEtiquetas);
+      }   
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function createAlert(mensaje){
+  //creamos un div que sera el alert
+  let divElement = document.createElement('div');
+
+  //añadimos clases al div
+  divElement.classList.add('alert');
+  divElement.classList.add('alert-dismissible');
+  divElement.classList.add('fade');
+  divElement.classList.add('show');
+  divElement.classList.add('alert-' + mensaje['msj-type']);
+
+  divElement.role = 'alert';
+  divElement.innerHTML = mensaje['msj-content'];
+
+  //añadimos el div alert
+  document.getElementById('alerts').appendChild(divElement);
+  
+  //añadimos una transicion a el alert despues de un tiempo establecido
+  setTimeout(() => {
+    divElement.classList.add('deleteAlert');
+    
+  }, 3000);
+
+  //eliminamos el alert despues de acabada la transicion
+  divElement.addEventListener('transitionend',()=>{
+    divElement.remove();
+  })
 }
 
 

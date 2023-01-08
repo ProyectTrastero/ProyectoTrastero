@@ -38,6 +38,14 @@ function addEventToElements() {
 	document.getElementById('añadirEtiqueta').addEventListener('click', añadirEtiqueta);
 	//event click boton modificar producto
 	document.getElementById('modificarProducto').addEventListener('click', modificarProducto);
+	//añadimos event click a boton abrir modal eliminar etiqueta openEliminarEtiquetaModal
+	document.getElementById('openEliminarEtiquetaModal').addEventListener('click',getEtiquetaOfSelect);
+	//añadimos event click al boton eliminar etiqueta 
+	document.getElementById('eliminarEtiqueta').addEventListener('click',eliminarEtiqueta);
+	//prevent submit form creat etiqueta
+	document.getElementById('formCrearEtiqueta').addEventListener('submit',(e)=>{
+		e.preventDefault();
+	})
 
 
 }
@@ -94,9 +102,9 @@ function cambiarUbicacion(idRadio) {
 
 }
 
-//Example POST method implementation:
+// POST method implementation:
 async function postData(url = '', data = {}) {
-	// Default options are marked with *
+	
 	const response = await fetch(url, {
 		method: 'POST',
 		body: JSON.stringify(data), // datos que vamos a enviar
@@ -106,6 +114,19 @@ async function postData(url = '', data = {}) {
 	});
 	return response.json(); // datos que recibimos
 }
+
+// GET method implementation:
+async function getData(url = '') {
+  
+	const response = await fetch(url, {
+	  method: 'GET',
+	  headers: {
+		'Content-Type': 'application/json'
+	  }
+	});
+	return response.json(); // datos que recibimos
+  }
+  
 
 function getCajasSinUbicacion() {
 	let idCajaSelected = selectCajasSinUbicar.value;
@@ -526,3 +547,94 @@ function modificarProducto() {
 		.catch(error => console.error('Error:', error));
 
 }
+
+//obtenemos el nombre de la etiqueta que se desea eliminar
+function getEtiquetaOfSelect(){
+  
+	document.getElementById('nombreEtiquetaSelect').innerText = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;               
+	
+  }
+
+//enviamos id de la etiqueta que vamos a eliminar
+function eliminarEtiqueta(){
+	const idEtiqueta = document.getElementById('selectEtiquetas').selectedOptions[0].value;
+	getData('añadirProducto.php?idEliminarEtiqueta=' + idEtiqueta)
+	  .then(response=>{
+		console.log(response);
+		//creamos el alert
+		createAlert(response);
+		
+		//si se ha eliminado la etiqueta
+		if(response['msj-type']=='success'){
+		  //copia de los options
+		  const selectEtiquetas = Array.from(document.getElementById('selectEtiquetas'));
+		  //eliminamos los element option etiquetas
+			Array.from(document.getElementById('selectEtiquetas').childNodes).forEach(etiqueta => {
+			  //eliminamos las etiquetas
+			  etiqueta.remove();
+			})
+		  //recorremos elements options del select etiquetas para eliminar del array la etiqueta eliminada
+		  for (let i = 0; i < selectEtiquetas.length; i++) {
+			const element = selectEtiquetas[i];
+			if(element.value == idEtiqueta){
+			  //eliminamos element option
+			  selectEtiquetas.splice(i,1);
+			  break;
+			}
+		  }
+		  //actualizamos el select etiquetas
+		  //recorremos las etiquetas actualizadas
+		  selectEtiquetas.forEach(etiqueta => {
+			//creamos element option
+			let optionElement = document.createElement('option');
+			optionElement.value = etiqueta.value;
+			optionElement.innerText = etiqueta.innerText;
+			//añadimos la etiqueta al select
+			document.getElementById('selectEtiquetas').appendChild(optionElement);
+		  })
+  
+		  //recorremos las etiquetas que vamos a añadir
+		  for (let i = 0; i < document.getElementById('etiquetasProducto').childNodes.length; i++) {
+			const element = document.getElementById('etiquetasProducto').childNodes[i];
+			if(element.id == idEtiqueta){
+			  element.remove();
+			  break;
+			}
+			
+		  }
+		  crearInputEtiquetasAñadidas();
+		  
+		}   
+	  })
+	  .catch(error => console.error('Error:', error));
+  }
+  
+  function createAlert(mensaje){
+	//creamos un div que sera el alert
+	let divElement = document.createElement('div');
+  
+	//añadimos clases al div
+	divElement.classList.add('alert');
+	divElement.classList.add('alert-dismissible');
+	divElement.classList.add('fade');
+	divElement.classList.add('show');
+	divElement.classList.add('alert-' + mensaje['msj-type']);
+  
+	divElement.role = 'alert';
+	divElement.innerHTML = mensaje['msj-content'];
+  
+	//añadimos el div alert
+	document.getElementById('alerts').appendChild(divElement);
+	
+	//añadimos una transicion a el alert despues de un tiempo establecido
+	setTimeout(() => {
+	  divElement.classList.add('deleteAlert');
+	  
+	}, 3000);
+  
+	//eliminamos el alert despues de acabada la transicion
+	divElement.addEventListener('transitionend',()=>{
+	  divElement.remove();
+	})
+  }
+  

@@ -118,6 +118,22 @@ class Etiqueta implements \JsonSerializable{
 
     }
 
+    public function eliminarEtiqueta(PDO $bd):bool{
+        try {
+            $sql="DELETE etiquetas, etiquetasproductos FROM etiquetas \n
+            LEFT JOIN etiquetasproductos \n
+            on etiquetas.id = etiquetasproductos.idEtiqueta \n
+            WHERE etiquetas.id = :idEtiqueta";
+            $stmt = $bd->prepare($sql);
+            $stmt->execute([':idEtiqueta'=>$this->getId()]);
+            $stmt = null;
+            return true;
+        } catch (\PDOException $e) {
+            $stmt =  null;
+            return false;
+        }
+    }
+
 }
 
 

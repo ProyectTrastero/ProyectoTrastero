@@ -299,24 +299,25 @@ nav button:hover{
 
 .inputsForm{
     display: grid;
-    gap: 1em;
-    grid-template-columns: max-content auto;
+    column-gap: 1rem;
+    grid-template-columns:auto;
     align-items: center;
-    text-align: right;
+    text-align: left;
+}
+
+.signUp{
+    background: whitesmoke;
+    padding: 1em;
+    border-radius: 5px;
 }
 
 .signUp, .formEditPerfil{
     max-width: 680px;
-    margin: auto;
-    margin-top: 2em;
+    margin: 2em auto 2em auto;
 }
 
-.textError{
-    border-radius: 0.375rem ;
-    color: #842029 !important;
-    background-color: #f8d7da;
-    border: 1px solid #f5c2c7;
-	
+.signUp label, .formEditPerfil label{
+    opacity: 0.65;
 }
 
 .deleteAlert{
@@ -328,7 +329,6 @@ nav button:hover{
 
 
 .hide{
-	display: none !important;
 	display: none !important;
 }
 
@@ -350,6 +350,11 @@ nav button:hover{
     display: grid;
     grid-template-columns: max-content max-content;
     gap: 0.5em;
+    align-items: center;
+}
+#selectEtiquetas{
+    width: max-content;
+    display: inline-block;
 }
 
 
@@ -386,6 +391,16 @@ nav button:hover{
 .titulo{
     text-transform: uppercase;
 }
+
+
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) { 
+    .inputsForm{
+        grid-template-columns: max-content auto;
+        
+    }  
+ }
 /*
 
 svg{
