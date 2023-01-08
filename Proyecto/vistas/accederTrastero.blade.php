@@ -26,9 +26,11 @@
 
 <div  class="opciones">
     <form method="POST" action="">
+        <div class="divVolver"> 
+             <button class ="volver" name="volverTodosTrasteros">Volver</button>
+        </div>
         <div class="vtVolver opcionesdiv">
-            <span class="inicial titulo">Opciones para el {{$miTrastero->getNombre()}}</span>
-            <button class ="volver" name="volverTodosTrasteros">Volver</button>
+            <span class="inicial titulo">Opciones para el trastero {{$miTrastero->getNombre()}}</span>
         </div>
         <div class="opcionesdiv">
             <button class="col-3" name="verTrastero" id="verTrastero"><span>Ver trastero</span></button>

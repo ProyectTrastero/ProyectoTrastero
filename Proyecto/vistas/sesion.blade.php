@@ -17,8 +17,6 @@
             <input id="inputAlias" type="text" placeholder="Nombre" name="alias" class="alias"><br/>
             <label>Contraseña: </label><br/>
             <input id="inputPassword" type="password" placeholder="Contraseña" name="clave" class="clave"><br>
-                         <!-- Button trigger modal -->
-                         <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">AÑADIR CAJA</button>-->
                          <a href="#href" id="solicitarContraseña" class="link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" > ¿Has olvidado tu contraseña?</a>
                          </br><br>
                     <button type="submit" id="procsesion" name="procsesion"><span> Login </span> </button>
@@ -54,8 +52,8 @@
                         </div>
                     </div> 
                 </div>
-                <div class="modal-footer">
-                    <button type="button" id="volver" data-bs-dismiss="modal">Volver</button>
+                <div class="modal-footer"> 
+                    <button type="button" id="volver" class="volver" data-bs-dismiss="modal">Volver</button>
                     <button type="button" id="comprobarContraseña">Enviar</button>
                 </div>
             </div>

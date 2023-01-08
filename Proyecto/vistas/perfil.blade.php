@@ -21,87 +21,87 @@
 
       <h1 class="text-center mt-5">Perfil {{$usuario->getNombre()}}</h1>
         <form class="formEditPerfil" method="POST" action="{{$_SERVER["PHP_SELF"]}}">
-            
-            <div class="mb-3 inputsForm">
-              <label for="nombre">Nombre: </label>
-              <input class="form-control" type="text" name="nombre" id="nombre" value="{{$datos['nombre']}}">
-              @if(isset($errores) && in_array("nombreInvalido", $errores)) 
-                <div></div>
-                <div class="textError form-text p-1">
-                  Solo se admiten letras y espacios en blanco.
+            <div class="divContainer">
+                <div class="mb-3 inputsForm">
+                  <label for="nombre">Nombre: </label>
+                  <input class="form-control" type="text" name="nombre" id="nombre" value="{{$datos['nombre']}}">
+                  @if(isset($errores) && in_array("nombreInvalido", $errores)) 
+                    <div></div>
+                    <div class="textError form-text p-1">
+                      Solo se admiten letras y espacios en blanco.
+                    </div>
+                  @endif
+
+
+
+
+                  <label for="apellidos">Apellidos: </label>
+                  <input class="form-control" type="text" name="apellidos" id="apellidos" value="{{$datos['apellidos']}}">
+                  @if(isset($errores) && in_array("apellidoInvalido", $errores)) 
+                    <div></div>
+                    <div class="textError form-text p-1">
+                        Solo se admiten letras y espacios en blanco.
+                    </div>  
+                  @endif
+
+
+
+                    <label for="alias">Alias: </label>
+                    <input class="form-control" type="text" name="alias" id="alias" value="{{$datos['alias']}}">
+                    @if(isset($errores) && in_array("aliasInvalido", $errores)) 
+                      <div></div>
+                      <div class="textError form-text p-1">
+                        Los alias solo pueden contener letras, números, guiones y guiones bajos.
+                      </div> 
+                    @endif
+                    @if(isset($errores) && in_array("aliasExiste", $errores)) 
+                      <div></div>
+                      <div class="textError form-text p-1">Este alias ya existe</div>
+                     @endif
+
+
+
+                  <label for="clave">Clave: </label>
+                  <input class="form-control" type="text" name="clave" id="clave" value="{{$datos['clave']}}">
+                  @if(isset($errores) && in_array("claveInvalida", $errores)) 
+                    <div></div>
+                    <div class="textError form-text p-1">
+                        Debe contener minimo 8 caracteres, una mayuscula una miniscula y un número. 
+                    </div>  
+                  @endif
+
+
+
+                  <label for="correo">Correo: </label>
+                  <input class="form-control" type="email" name="correo" id="Correo" value="{{$datos['correo']}}">
+                  @if(isset($errores) && in_array("correoInvalido", $errores))
+                    <div></div> 
+                    <div class="textError form-text p-1">
+                      Correo invalido
+                    </div>  
+
+                  @endif
+                  @if(isset($errores) && in_array("correoExiste", $errores))
+                    <div></div> 
+                    <div class="textError form-text p-1">
+                      Este correo ya existe
+                    </div>  
+
+                  @endif
+                  @if(isset($errores) && in_array("camposVacios", $errores)) 
+                    <div></div>
+                    <div class="textError form-text p-1">
+                      Rellene todos los campos
+                    </div>  
+                  @endif
+
                 </div>
-              @endif
-            
-            
-            
-            
-              <label for="apellidos">Apellidos: </label>
-              <input class="form-control" type="text" name="apellidos" id="apellidos" value="{{$datos['apellidos']}}">
-              @if(isset($errores) && in_array("apellidoInvalido", $errores)) 
-                <div></div>
-                <div class="textError form-text p-1">
-                    Solo se admiten letras y espacios en blanco.
-                </div>  
-              @endif
-            
-            
-            
-                <label for="alias">Alias: </label>
-                <input class="form-control" type="text" name="alias" id="alias" value="{{$datos['alias']}}">
-                @if(isset($errores) && in_array("aliasInvalido", $errores)) 
-                  <div></div>
-                  <div class="textError form-text p-1">
-                    Los alias solo pueden contener letras, números, guiones y guiones bajos.
-                  </div> 
-                @endif
-                @if(isset($errores) && in_array("aliasExiste", $errores)) 
-                  <div></div>
-                  <div class="textError form-text p-1">Este alias ya existe</div>
-                 @endif
-            
 
-            
-              <label for="clave">Clave: </label>
-              <input class="form-control" type="text" name="clave" id="clave" value="{{$datos['clave']}}">
-              @if(isset($errores) && in_array("claveInvalida", $errores)) 
-                <div></div>
-                <div class="textError form-text p-1">
-                    Debe contener minimo 8 caracteres, una mayuscula una miniscula y un número. 
-                </div>  
-              @endif
-            
-
-            
-              <label for="correo">Correo: </label>
-              <input class="form-control" type="email" name="correo" id="Correo" value="{{$datos['correo']}}">
-              @if(isset($errores) && in_array("correoInvalido", $errores))
-                <div></div> 
-                <div class="textError form-text p-1">
-                  Correo invalido
-                </div>  
-                
-              @endif
-              @if(isset($errores) && in_array("correoExiste", $errores))
-                <div></div> 
-                <div class="textError form-text p-1">
-                  Este correo ya existe
-                </div>  
-                
-              @endif
-              @if(isset($errores) && in_array("camposVacios", $errores)) 
-                <div></div>
-                <div class="textError form-text p-1">
-                  Rellene todos los campos
-                </div>  
-              @endif
-              
-            </div>
-              
-            <div class="text-end">
-              <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
-              <button type="submit" class="btn btn-primary " name="guardar">Guardar</button>
-            </div>
-
+                <div class="text-end">
+                  <button type="submit" class="volver" name="volver">Volver</button>
+                  <button type="submit" name="guardar">Guardar</button>
+                </div>
+            </div>    
 
         </form>
     </div>
@@ -126,8 +126,8 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Guardar</button>
+              <button id="btnClose" type="button" class="volver" data-bs-dismiss="modal">Close</button>
+              <button type="button">Guardar</button>
             </div>
           </div>
         </div>

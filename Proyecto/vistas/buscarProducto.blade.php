@@ -23,80 +23,85 @@
 @section('content')
 
     @if ($msj1 != "")  
-        <div class="alert alert-{{$msj1_tipo}} alert-dismissible fade show" role="alert"">
+        <div class="alert alert-{{$msj1_tipo}} alert-dismissible fade show" role="alert">
             {{$msj1}}
             <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
         </div>
     @endif
 
 
-<div  class='opciones'>
- 
-        <h3 class="inicial titulo">{{$miTrastero->getNombre()  }}</h3>
-
-        <form method="POST" action="" name="formBusqueda">
-            <label>Buscar por palabra: </label>
-            &emsp;<input type="text" name="palabraBuscar" placeholder="Producto"><br/>
-            @if (isset ($etiquetas))
-                <label for="etiquetas">Buscar por mis etiqueta: </label><br/>
-                    @if ($etiquetas != "")      
-                            @foreach ($etiquetas as $valor)
-                            <div class='etiqueta'>    
-                                <input type="checkbox" name="IdsEtiquetas[]" value="{{$valor->getId()  }}">
-                                &ensp; {{$valor->getNombre()  }}
-                            </div>
-                            @endforeach   
-                    @endif
-            @endif
-            <div>
-            <br/>
-            <button type="submit" name="buscarProducto">Buscar producto</button>
+<div class="opciones">
+    <form method="POST" action="" name="formBusqueda">
+        <div class="divVolver">
             <button class ="volver" name="volverTrasteros">Volver</button>
-            
+        </div>
+        <h3 class="inicial titulo">{{$miTrastero->getNombre()  }}</h3>
+        <div  class="bpCabecera">
+            <div>
+                <label>Buscar por palabra: </label>
+                &emsp;<input type="text" name="palabraBuscar" placeholder="Producto"><br/>
             </div>
-        </form><br/>
+            <div>
+                <button type="submit" name="buscarProducto">Buscar producto</button>
+            </div>
+            <div>
+                @if (isset ($etiquetas))
+                    <label for="etiquetas">Buscar por mis etiqueta: </label><br/>
+                        @if ($etiquetas != "")      
+                                @foreach ($etiquetas as $valor)
+                                <div class='etiqueta'>    
+                                    <input type="checkbox" name="IdsEtiquetas[]" value="{{$valor->getId()  }}">
+                                    &ensp; {{$valor->getNombre()  }}
+                                </div>
+                                @endforeach   
+                        @endif
+                @endif
+            </div>
+        </div>
+    </form>
+        
        
         @if (isset ($productos))
             @if ($productos != "")
-                       
+            <div class="bpresult">
                 <h3>Resultado</h3>
+            </div>      
+                
  
                 <form action="" method="POST" id='formEliminarProducto'>
-                    <table class="row">
-                        <tr>
-                        <th class="col-3">Seleccionar</th>
-                        
-                        <th class="col-3">Producto</th>
-                        <th class="col-3">Descripción</th>
-                        <th class="col-3">Ubicación</th>
-                        <th class="col-3">   </th>
+                    <table id="bpTable" class="row">
+                        <tr class="bpTrCabecera">
+                            <th class="col-1">Seleccionar</th>
+                            <th class="col-2">Producto</th>
+                            <th class="col-3">Descripción</th>
+                            <th class="col-4">Ubicación</th>
+                            <th class="col-2">   </th>
                         </tr>
                     @foreach ($productos as $valor)    
-                    <tr>
-                        <td><input type="checkbox" name="IdsProductos[]" value="{{$valor->getId()  }}"></td>  
-                      
-                        <td class="col-3"> {{$valor->getNombre()  }}</td> 
+                    <tr class="bpTr">
+                        <td><input type="checkbox" name="IdsProductos[]" value="{{$valor->getId()}}"></td>  
+                        <td class="col-2"> {{$valor->getNombre()  }}</td> 
                         <td class="col-3"> {{$valor->getDescripcion()  }}</td>
-                        <td class="col-3"> Estanteria: 
+                        <td class="col-4"> Estanteria: 
                                 @if ($valor->getIdEstanteria() == null)
                                     no asignada
                                 @else
-                                    {{$valor->getIdEstanteria()  }}
+                                    {{$valor->obtenerNumeroEstanteria($bd)  }}
                                 @endif
                             , Balda: 
-                                @if ($valor->getIdBalda() == null)
+                                @if ($valor->obtenerNumeroBalda($bd) == null)
                                     no asignada
                                 @else
-                                    {{$valor->getIdBalda()  }}
+                                    {{$valor->obtenerNumeroBalda($bd)  }}
                                 @endif
                             , Caja: 
-                                @if ($valor->getIdCaja() == null)
+                                @if ($valor->obtenerNumeroCaja($bd) == null)
                                     no asignada
                                 @else
-                                    {{$valor->getIdCaja()  }} 
+                                    {{$valor->obtenerNumeroCaja($bd)  }} 
                                 @endif
                                 </td>
-                        <td  class="col-3">
+                        <td  class="col-2">
                             <form method="POST" action="" id='produModificar'>
                                 <input type='hidden' name='id' value='{{$valor->getId()}}'>
                                 <button type="submit" name="modificarProducto" id="modificarProducto">Modificar Producto</button>
@@ -105,7 +110,10 @@
                     </tr>
                     @endforeach
                     </table>
-                    <br/><button type="submit" name="eliminarProducto" id='eleminarProducto'>Eliminar Seleccionados</button>
+                    <div class="bpbtnEliminar">
+                         <button type="submit" name="eliminarProducto" id='eleminarProducto'>Eliminar Seleccionados</button>
+                    </div>
+                   
                 </form>
             @endif
         @endif

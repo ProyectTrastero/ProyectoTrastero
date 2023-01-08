@@ -20,9 +20,9 @@
         
     @endif
 
-    
-    <div class="signUp">
-        <h2 class="mb-5 text-center">Registro usuario</h2>
+    <h2 class="mb-5 text-center">Registro usuario</h2>
+    <div class="signUp  divContainer">
+        
         <form action="{{$_SERVER["PHP_SELF"]}}" method="post">
 
             <div class="mb-3 inputsForm">
@@ -112,15 +112,11 @@
                     </div>  
                 @endif
             </div>
-           
-            
-           
 
             <div class="text-end">
-                <button type="submit" name="volver" class="btn btn-secondary" value="volver">Volver</button>
-                <button type="submit" name="registrarse" class="btn btn-primary" value="registrarse">Registrarse</button>
+                <button type="submit" class="volver" name="volver"  value="volver">Volver</button>
+                <button type="submit" name="registrarse" value="registrarse">Registrarse</button>
             </div>
-
         </form>
     </div>
 

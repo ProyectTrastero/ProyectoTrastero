@@ -5,23 +5,45 @@
         <group>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/modificarProducto.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/app.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/respuestaAjax.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/app/BD.php</file>
-            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/añadirProducto.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/modificarNombreAjax.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Etiqueta.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Producto.php</file>
-            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/verTrastero.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/añadirProducto.js</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/buscarProducto.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/buscarProducto.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Validacion.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/sesion.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Estanteria.php</file>
-            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/mostrarProductos.js</file>
-            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/bd/bdtrasteros.sql</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/accederTrastero.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/perfil.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/añadirTrastero.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/acceso.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/modificarProducto.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Balda.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Caja.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/css/verTrastero.css</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Usuario.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/añadirTrastero.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/contraseña.js</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/cnxbderror.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/añadirProducto.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/verTrastero.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/recuperarContraseña.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/mostrarProductos.js</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/index.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/bd/bdtrasteros.sql</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/registro.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Trasteros.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/css/style.css</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/verTrastero.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/modificarTrastero.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/ubicacionCaja.js</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/editarPerfil.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vendor/composer/ClassLoader.php</file>
-            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Caja.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/añadirTrastero.js</file>
-            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/css/verTrastero.css</file>
-            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/añadirTrastero.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/añadirProducto.blade.php</file>
         </group>
     </open-files>
 </project-private>

@@ -39,13 +39,15 @@
 <div class="container">
     <div class="row" id="atDiv1">
         <form action="" method="POST">
+            <div class="divVolver">
+                <button class="volver btn1Volver" type="submit" name="volverAcceso">Volver</button>
+            </div>
             <div id="atDiv2">
                 @if($datosTrastero['tipo']=="guardar")
                 <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 <button type="submit" name="guardar">Guardar</button>
                 @endif
-                <button class="volver" type="submit" name="volverAcceso">Volver</button>
             </div>
             <div id="atDiv3">
                 <div id="atDiv4">
@@ -119,21 +121,22 @@
         </div>
         @endforeach
     </div>
-
-    <div>
-        <ul>
+    @if(!empty($datosTrastero['almacenCajas']))
+    <div class="col-5 atCajas">
+        <ul class="row">
             @foreach ($datosTrastero['almacenCajas'] as $caja)
                 @if(($caja->getIdBalda()==null)&&($caja->getIdEstanteria()==null))
-                    <li>
-                        <form action="" method="POST">
-                            <input type="hidden" name="idCaja" value="{{$caja->getId()}}">
-                            <span class="papeleraOculta" contenteditable="false">{{$caja->getNombre()}}</span>
-                        </form>
-                    </li> 
+                <li class="col-4">
+                    <form action="" method="POST">
+                        <input type="hidden" name="idCaja" value="{{$caja->getId()}}">
+                        <span class="papeleraOculta" contenteditable="false">{{$caja->getNombre()}}</span>
+                    </form>
+                </li> 
                 @endif
             @endforeach   
         </ul>
     </div>
+    @endif
 </div>
 
 
@@ -167,7 +170,7 @@
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal">Volver</button>
+                    <button class="volver" type="button" data-bs-dismiss="modal">Volver</button>
                     <button type="submit" name="añadirCaja"  id="botonAñadir">Añadir</button>
                    
                 </div>
@@ -190,8 +193,8 @@
                     <p>¿Desea continuar?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="cancelar" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
-                    <button type="submit" name="aceptar" class="btn btn-secondary" data-bs-dismiss="modal">SI</button>
+                    <button class="volver" type="submit" name="cancelar" data-bs-dismiss="modal">NO</button>
+                    <button type="submit" name="aceptar" data-bs-dismiss="modal">SI</button>
                 </div>
             </div>
         </div>
@@ -203,14 +206,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <!--<h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>-->
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>{{$mensaje}}</p>
             </div>
             <div class="modal-footer">
-                <button type="submit" name="cancelar" data-bs-dismiss="modal">Volver</button>
+                <button class="volver" type="submit" name="cancelar" data-bs-dismiss="modal">Volver</button>
             </div>
         </div>
     </div>

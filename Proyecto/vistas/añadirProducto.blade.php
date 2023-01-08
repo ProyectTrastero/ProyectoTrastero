@@ -9,7 +9,7 @@
 {{-- Sección content --}}
 @section('content')
 
-<div class="container">
+<div class="container contenedorAñadir">
   {{-- alerts desde js --}}
   <div  id="alerts"></div>
   {{-- alerts desde php --}}
@@ -25,7 +25,7 @@
 
   <form action="{{$_SERVER["PHP_SELF"]}}" method="POST">
 
-    <div class="row mt-3">
+    <div class=" row mt-3">
       <section class="col-lg-6">
         <h1>Producto</h1>
         <div class="inputsForm">
@@ -102,16 +102,16 @@
           @endforeach
         </select>
         <div class="d-inline-block mt-1">
-          <button type="button" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
+          <button type="button" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+          <button type="button" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
         </div>
       
       </div>
     </section>
 
     <div class="text-end mt-3">
-      <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
-      <button type="submit" class="btn btn-primary "  name="añadir" id="añadirProducto">Añadir</button>
+      <button type="submit" class="volver" name="volver">Volver</button>
+      <button type="submit"  name="añadir" id="añadirProducto">Añadir</button>
     </div>
 
   </form>
@@ -132,9 +132,9 @@
                     <input type="text" name="nombreEtiqueta" id="nombreEtiqueta">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
+                    <button type="button" class="volver" name="volverModal" data-bs-dismiss="modal">Volver</button>
                     <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                    <button type="button"  class="btn btn-secondary" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
+                    <button type="button"  name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
                     <!--<input type="submit" name="crearEtiqueta" value="Crear">-->
                 </div>
             </div>

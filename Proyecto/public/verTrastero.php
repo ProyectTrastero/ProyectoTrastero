@@ -38,34 +38,6 @@ try {
 }
 session_start();
 
-//if(empty($_SESSION['datosTrastero'])){
-//    $datosTrastero = array();
-//    $idTrastero = $_SESSION['idTrastero'];
-//    $usuario = $_SESSION['usuario'];
-//    $baldas=array();
-//    $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
-//    foreach ($estanterias as $estanteria){
-//        $idEstanteria=$estanteria->getId();
-//        $listadoBaldas= Balda::recuperarBaldasPorIdEstanteria($bd, $idEstanteria);
-//        foreach($listadoBaldas as $balda){
-//            $baldas[]=$balda;
-//        }   
-//    }
-//    $cajas = Caja::recuperarCajasPorIdTrastero($bd, $idTrastero);
-//    
-//    //Falta Recuperar los productos
-//    $datosTrastero['cajas'] = $cajas;
-//    $datosTrastero['baldas']= $baldas;
-//    $datosTrastero['estanterias']=$estanterias;
-//    $_SESSION['datosTrastero']=$datosTrastero;
-//    
-//   
-//}else{
-//    $datosTrastero=$_SESSION['datosTrastero'];
-//    $usuario = $_SESSION['usuario'];
-//    
-//}
-
 
 $idTrastero = $_SESSION['id'];
 $miTrastero = Trasteros::recuperarTrasteroPorId($bd, $idTrastero);
@@ -79,16 +51,12 @@ foreach ($estanterias as $estanteria){
     }
 }
 $cajas= Caja::recuperarCajasPorIdTrastero($bd, $idTrastero);
-//$productos = App\Producto:: recuperarProductosPorIdTrastero($bd, $idTrastero);
-//if(isset($_SESSION['datosTrastero'])){
-//   $datosTrastero=$_SESSION['datosTrastero'];
-//}else{
-    $datosTrastero=array();
-    $datosTrastero['nombre']=$miTrastero->getNombre();
-    $datosTrastero['productos']=array();
-    $datosTrastero['baldas']=$baldas;
-    $datosTrastero['estanterias']=$estanterias;
-    $datosTrastero['cajas']=$cajas;
+$datosTrastero=array();
+$datosTrastero['nombre']=$miTrastero->getNombre();
+$datosTrastero['productos']=array();
+$datosTrastero['baldas']=$baldas;
+$datosTrastero['estanterias']=$estanterias;
+$datosTrastero['cajas']=$cajas;
 //}
 
 
