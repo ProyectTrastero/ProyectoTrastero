@@ -13,6 +13,9 @@ body {
     /*background-color: royalblue;*/
         
 }
+.divVolver{
+     text-align: right; 
+}
 
 
 /*////////////////////////////////////////////////////*/
@@ -97,7 +100,7 @@ body {
 table{
     background: rgb(255, 255, 255, 0.85);
     border:solid 0.5px;
-    border-radius: 8px;
+    border-radius: 2px;
     border-color: grey;
 }
 
@@ -120,18 +123,38 @@ td{
 /*ACCESO*/
 /*////////////////////////////////////////////////////*/
 /*AÑADIRTRASTERO*/
-#atDiv1{
-    margin: 0 auto;
-   
-}
 
+.divContainer{
+    padding:30px;
+    border-radius: 8px;
+    background-color: white;
+    border:solid 0.5px grey;
+}
 #atDiv2{
     margin: 0 auto;
-    padding:30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 #nombre{
     margin-right:50px;
+}
+.atCajas{
+    background: linear-gradient(#addf13, rgb(255, 255, 255, 0.8));
+    margin: 0 auto;
+    margin-bottom: 20px;
+    /*margin: 30px;*/
+    padding: 15px;
+    background-color: white;
+    border:solid 0.5px grey;
+   
+    
+}
+
+.atCajas>ul>li{
+    list-style-type: none;
+    margin-top:10px;
+    margin-bottom: 10px;
 }
 
 .estanteria{
@@ -144,7 +167,7 @@ td{
     background: linear-gradient(#addf13, rgb(255, 255, 255, 0.8));
     /*background: rgb(255, 255, 255, 0.9);*/
     border:solid 0.5px;
-    border-radius: 8px;
+    border-radius: 2px;
     border-color: grey;
 }
 
@@ -176,22 +199,24 @@ td{
 #menu{
     padding: 10px;
     border:solid 0.5px;
-    border-radius: 8px;
+    border-radius: 2px;
     border-color: grey;
     /*background: linear-gradient(rgb(255, 255, 255, 1), rgb(255, 255, 255, 0.7));*/
     background: linear-gradient(#addf13,rgb(255, 255, 255, 0.8));
 }
 #vtVolver{
     margin-top: 30px;
+    margin-right:1%;
     text-align: right;
 }
 
 #vtnombre{
+    text-align: center;
     font-size: 32px;
     padding-bottom: 30px;
     margin: 0 auto;
     height: auto;
-    width: 150px;
+/*    width: 150px;*/
     font-weight: 600;
     
    
@@ -206,29 +231,48 @@ td{
     margin-left: 5%;
    
 }
-#vtTable{
+#vtTable, #bpTable{
     /*width: 100%;*/
     /*table-layout: fixed;*/
     font-size: 15px;
-    border-radius: 8px;
-    border-color: grey;
+    border-radius: 2px;
     margin: 5px;
 }
 
-.vtTrCabecera{
+.vtTrCabecera, .bpTrCabecera{
     background: rgb(0, 168, 243, 0.5);
     text-align: center;
 
 }
 
-.vtTr{
+/*.bpTCabecera{
+     background: rgb(0, 168, 243, 0.5);
+}*/
+
+
+
+.vtTr, .bpTr{
     background: linear-gradient(rgb(0, 168, 243, 0.2), rgb(255, 255, 255, 0.2));
     text-align: left;
 }
+.bpTr, .bpTrCabecera{
+    border:solid grey 0.5px; 
+}
+#bpTable{
+    border-color: white;
+}
+.bpbtnEliminar{
+    margin:10px;
+    margin-top: 15px;
+}
+.bpresult{
+    margin-left: 15px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
 
-.vtTr:hover{
+.vtTr:hover, .bpTr:hover{
     background: rgb(0, 168, 243, 0.5);
-
 }
 .vtTdFecha{
     width: 115px;
@@ -266,7 +310,7 @@ nav button {
     border: none;
 }
 button{
-    padding: 0px 10px 0px 10px;
+    padding: 4px 10px 4px 10px;
     margin-left: 8px;
     margin-right: 8px;
     /*background-color: #B6DDF8;*/
@@ -277,8 +321,18 @@ button{
     /*background: linear-gradient(#ff7f27, rgb(255,255,255,0.4));*/
     border:solid 0.5px;
     border-color: grey;
-    border-radius: 8px;
+    border-radius: 2px;
      
+}
+
+.volver{
+    padding: 4px 10px 4px 10px;
+    margin-left: 8px;
+    margin-right: 8px;
+    background: linear-gradient(#B6DDF8, white);
+    border:solid 0.5px;
+    border-color: grey;
+    border-radius: 2px;
 }
 /*.btnEliminar{
     background: linear-gradient(#B6DDF8, rgb(234,30,10,0.4));
@@ -336,7 +390,7 @@ nav button:hover{
     display: inline-flex;
     border: 1px solid black;
     padding: 0.5em;
-    border-radius: 10px;
+    border-radius: 2px;
     background-color: wheat;
     margin-right: 0.3em;
 }
@@ -356,36 +410,47 @@ nav button:hover{
     width: max-content;
     display: inline-block;
 }
-
-
+/*PAGINA AÑADIR PRODUCTO*/
+.contenedorAñadir {
+    background-color: white;
+    border:solid 0.5px;
+    border-color: grey;
+    
+}
+/*PAGINA AÑADIR PRODUCTO*/
 /*PAGINA BUSCAR PRODUCTO*/
+
 .opciones{
 /*    margin: 100px 300px 100px 100px;
     padding-left: 10%;
     padding-right: 10%;*/
     margin: 0 auto;
-    width: 60%;
+    padding:15px 15px 10px 15px;
+    width: 80%;
     height: auto;
     background-color: white;
     border:solid 1px;
     border-color: grey;
-    border-radius: 8px; 
+    border-radius: 2px; 
 }
-
+.bpCabecera{
+    margin:0 auto;
+    
+}
+.bpCabecera div{
+    display:inline-block;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.bpCabecera .bpVolver {
+    margin-left: 90%;
+    
+}
+/*PAGINA BUSCAR PRODUCTO*/
 .opcionesdiv{
     margin: 0 auto;
     text-align: center;
     padding: 15px 0px 15px 0px;
-}
-
-
-
-.volver{
-    padding: 5px 10px 5px 10px;
-    background: linear-gradient(#B6DDF8, white);
-    border:solid 0.5px;
-    border-color: grey;
-    border-radius: 8px;
 }
 
 .titulo{

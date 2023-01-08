@@ -115,7 +115,6 @@
               <button type="submit" class="btn btn-primary " name="guardar">Guardar</button>
             </div>
 
-
         </form>
     </div>
     {{-- modal --}}
@@ -139,8 +138,8 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Guardar</button>
+              <button id="btnClose" type="button" class="volver" data-bs-dismiss="modal">Close</button>
+              <button type="button">Guardar</button>
             </div>
           </div>
         </div>

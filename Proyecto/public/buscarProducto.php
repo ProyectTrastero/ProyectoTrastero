@@ -46,12 +46,12 @@ if (isset($_POST['buscarProducto'])) {
             if ($productos==""){
                 $msj1_tipo="danger";
                 $msj1="No existen productos con esas caracteristicas";
-                echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo'));
+                echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo','bd'));
                 die; 
             //si hay productos no enviamos ningun mensaje
             }else{
                 $msj1="";
-                echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1'));
+                echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1','bd'));
                 die; 
             }
     //Si seleccionamos etiquetas para la busqueda        
@@ -63,7 +63,7 @@ if (isset($_POST['buscarProducto'])) {
             if ($etiquetas == null){
                 $msj1_tipo="info";
                 $msj1="Usted no tiene etiquetas";
-                echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo'));
+                echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo','bd'));
                 die; 
             //Si el usuario si tiene etiquetas
             }else{
@@ -78,12 +78,12 @@ if (isset($_POST['buscarProducto'])) {
                     if ($productos==""){
                         $msj1_tipo="danger";
                         $msj1="No existen productos con esas caracteristicas";
-                        echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo'));
+                        echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo', 'bd'));
                         die; 
                     //si hay productos no enviamos ningun mensaje
                     }else{
                         $msj1="";
-                        echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1'));
+                        echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1','bd'));
                         die; 
                     }
             }    
@@ -98,7 +98,7 @@ if (isset($_POST['buscarProducto'])) {
         $miTrastero=$_SESSION['miTrastero'];
         $usuario= $_SESSION['usuario'];
         $etiquetas = $_SESSION['etiquetas']; 
-        echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo'));
+        echo $blade->run("buscarProducto", compact ('usuario', 'productos', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo','bd'));
         die; 
     }
 //si pulsamos sobre modificar producto
@@ -127,7 +127,7 @@ if (isset($_POST['buscarProducto'])) {
         $idUsuario  = intval($idUsuario); 
         
         $etiquetas = App\Etiqueta::recuperaEtiquetasPorUsuario($bd, $idUsuario);
-        echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo'));
+        echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo','bd'));
     /*
      * si pulsamos sobre eliminar producto sin seleccionar ninguno, mandamos un mensaje tipo info
      * a la vista buscar producto
@@ -142,7 +142,7 @@ if (isset($_POST['buscarProducto'])) {
         $idUsuario  = intval($idUsuario); 
        
         $etiquetas = App\Etiqueta::recuperaEtiquetasPorUsuario($bd, $idUsuario);
-        echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo'));
+        echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas', 'msj1', 'msj1_tipo','bd'));
     }
     die;
 //Si no pulsamos sobre nada y solo cargamos la pagina
@@ -174,6 +174,6 @@ if (isset($_POST['buscarProducto'])) {
     $idUsuario  = intval($idUsuario); 
     $etiquetas = App\Etiqueta::recuperaEtiquetasPorUsuario($bd, $idUsuario);
     $_SESSION['etiquetas']=$etiquetas;
-    echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas','msj1'));
+    echo $blade->run("buscarProducto", compact ('usuario', 'miTrastero', 'etiquetas','msj1','bd'));
     die;
 }

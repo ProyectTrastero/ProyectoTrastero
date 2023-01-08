@@ -86,13 +86,6 @@ if(existeNombre($nuevoNombre, $almacenCajas, $almacenBaldas, $almacenEstanterias
     }
         
     }else{
-//        foreach($almacenBaldas as $clave=>$valor){
-//        if($valor->getNombre()==$nombre){
-//            $valor->setNombre($nuevoNombre);
-//            $valor->actualizarNombre($bd, $nuevoNombre);
-//            
-//        }
-//    }
     
     foreach($almacenCajas as $clave=>$valor){
         if($valor->getNombre()==$nombre){

@@ -26,6 +26,7 @@ try {
 
 session_start();
 
+//Recupero todas las ubicaciones del trastero
 $datosTrastero = $_SESSION['datosTrastero'];
 $almacenBaldas=$datosTrastero['almacenBaldas'];
 $almacenEstanterias = $datosTrastero['almacenEstanterias'];

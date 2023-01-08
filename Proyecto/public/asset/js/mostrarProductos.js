@@ -91,22 +91,16 @@ function añadirOjo(e){
         var oculto = e.target;
         var elemento= oculto.nextElementSibling;
         var estilo=elemento.getAttribute("style");
-        if(estilo=="color: rgb(255,255,255,0); border: white"){
+        if(estilo==="color: rgb(255,255,255,0); border: white"){
             elemento.setAttribute("style","color: blue; border: white");
         }
-        
-        
-//        if((elemento.children.length==0)&&(e.target.tagName==="SPAN")){
-//        elemento.appendChild(papelera);
-//    }
-
 }
 //Hace transparente el elemento para que no se vea
 function eliminarOjo(e){
     var oculto = e.target;
     var elemento= oculto.nextElementSibling;
         var estilo=elemento.getAttribute("style");
-        if(estilo=="color: blue; border: white"){
+        if(estilo==="color: blue; border: white"){
              var retardo=setTimeout(function(){
                  elemento.setAttribute("style","color: rgb(255,255,255,0); border: white"); 
             }, 1000); 

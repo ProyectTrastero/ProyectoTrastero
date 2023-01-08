@@ -9,13 +9,28 @@
 {{-- Sección content --}}
 @section('content')
 
+<div class="container contenedorAñadir">
+  {{-- alerts desde js --}}
+  <div  id="alerts"></div>
+  {{-- alerts desde php --}}
+  @if (@isset($msj['msj-content']))
+  <div id="alertsPhp" class="alert alert-{{$msj['msj-type']}} alert-dismissible fade show" role="alert"">
+    {{$msj['msj-content']}}
+
+    <?php $msj=array(); ?>
+
+  </div>
+@endif
+
+
+  <form action="{{$_SERVER["PHP_SELF"]}}" method="POST">
 <div class="container">
   {{-- alerts--}}
 <div  id="alerts"></div>
  
   <form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formAñadirProducto">
 
-    <div class="row mt-3">
+    <div class=" row mt-3">
       <section class="col-lg-6">
         <h1>Producto</h1>
         <div class="inputsForm">
@@ -152,9 +167,9 @@
                     <input class="ms-1" type="text" name="nombreEtiqueta" id="nombreEtiqueta">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
+                    <button type="button" class="volver" name="volverModal" data-bs-dismiss="modal">Volver</button>
                     <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                    <button type="button"  class="btn btn-secondary" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
+                    <button type="button"  name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
                     <!--<input type="submit" name="crearEtiqueta" value="Crear">-->
                 </div>
             </div>

@@ -139,8 +139,8 @@
     </section>
 
     <div class="text-end mt-3">
-      <button type="submit" class="btn btn-secondary " name="volver">Volver</button>
-      <button type="button" class="btn btn-primary " name="modificarProducto" id="modificarProducto" value="{{$producto->getId()}}">Modificar</button>
+      <button type="submit" class="volver" name="volver">Volver</button>
+      <button type="button" name="modificarProducto" id="modificarProducto" value="{{$producto->getId()}}">Modificar</button>
     </div>
 
   </form>
@@ -161,9 +161,9 @@
                     <input class="ms-1" type="text" name="nombreEtiqueta" id="nombreEtiqueta">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
+                    <button type="button" class="volver" name="volverModal" data-bs-dismiss="modal">Volver</button>
                     <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                    <button type="button"  class="btn btn-secondary" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
+                    <button type="button" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
                     <!--<input type="submit" name="crearEtiqueta" value="Crear">-->
                 </div>
             </div>
