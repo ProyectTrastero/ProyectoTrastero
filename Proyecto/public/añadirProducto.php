@@ -105,6 +105,13 @@ if(isset($_SESSION['usuario'])){
         die;
     
     }
+    
+    if(isset($_POST['eliminarEtiqueta'])){
+        $idEtiqueta = trim(filter_input(INPUT_POST, 'etiquetas', FILTER_SANITIZE_STRING));
+        Etiqueta::eliminarEtiqueta($bd, $idEtiqueta);
+        
+        die;        
+    }
 
     
     

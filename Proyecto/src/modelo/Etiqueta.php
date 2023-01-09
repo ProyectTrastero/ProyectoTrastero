@@ -117,6 +117,11 @@ class Etiqueta implements \JsonSerializable{
 
 
     }
+    
+     public static function eliminarEtiqueta($bd, $idEtiqueta){
+        $consulta="delete from etiquetas`where id=$idEtiqueta";
+        $bd->exec($consulta);
+    }
 
 }
 

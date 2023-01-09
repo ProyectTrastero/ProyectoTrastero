@@ -106,8 +106,10 @@
  </select>
  <div class="d-inline-block mt-1">
  <button type="button" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+ <button type="submit" name="eliminarEtiqueta" id="eliminarEtiqueta">EliminarEtiqueta</button>
  <button type="button" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
  </div>
+ 
  
  </div>
  </section>
