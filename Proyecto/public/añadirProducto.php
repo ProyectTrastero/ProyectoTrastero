@@ -106,15 +106,6 @@ if(isset($_SESSION['usuario'])){
     
     }
     
-    if(isset($_POST['eliminarEtiqueta'])){
-        $idEtiqueta = trim(filter_input(INPUT_POST, 'etiquetas', FILTER_SANITIZE_STRING));
-        Etiqueta::eliminarEtiqueta($bd, $idEtiqueta);
-        
-        die;        
-    }
-
-    
-    
     if(isset($_GET['añadirEtiqueta'])){
         $idEtiqueta = intval($_REQUEST['añadirEtiqueta']);
         $objectEtiqueta = Etiqueta::recuperarEtiquetaPorId($bd, $idEtiqueta);
