@@ -117,7 +117,7 @@ if (isset($_SESSION['usuario'])) {
             } else {
                 //guardamos la etiqueta
                 $etiqueta->guardarEtiqueta($bd);
-                $mensaje = ['msj-content' => 'Etiqueta añadida.', 'msj-type' => 'success'];
+                $mensaje = ['msj-content' => 'Etiqueta creada.', 'msj-type' => 'success'];
             }
         } else {
             $mensaje = ['msj-content' => 'El campo nombre de etiqueta es obligatorio.', 'msj-type' => 'danger'];
