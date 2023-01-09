@@ -374,10 +374,14 @@ nav button:hover{
     opacity: 0.65;
 }
 
+.alertRight{
+    position: absolute;
+    right: 3%;
+}
+
 .deleteAlert{
     translate: 100vw;
-    transition: translate 2s;
-    
+    transition: translate 2s;    
 }
 
 .textError{
@@ -413,7 +417,7 @@ nav button:hover{
     display: inline-block;
 }
 /*PAGINA AÑADIR PRODUCTO*/
-.contenedorAñadir {
+.contenedorAñadir,.contenedorModificarProducto {
     background-color: white;
     border:solid 0.5px;
     border-color: grey;

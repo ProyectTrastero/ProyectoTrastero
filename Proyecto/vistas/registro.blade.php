@@ -132,7 +132,7 @@
             </div>
 
             <div class="text-end">
-                <button type="submit" class="volver" name="volver"  value="volver">Volver</button>
+                <a href="index.php" class="volver btn">Volver</a>
                 <button type="submit" name="registrarse" value="registrarse">Registrarse</button>
             </div>
         </form>

@@ -9,12 +9,10 @@
 {{-- Sección content --}}
 @section('content')
 
-<div class="container">
+<div class="container contenedorModificarProducto">
   {{-- alerts --}}
   <div  id="alerts"></div>
   
-
-
   <form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formProducto">
 
     <div class="row mt-3">
@@ -37,13 +35,13 @@
       <section class="col-lg-6 mt-2">
         <h2>Ubicación</h2>
         <div class="d-flex flex-wrap">
-          <div class="form-check me-3">
+          <div class="form-check me-4">
             <input class="form-check-input" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria" @if (!is_null($producto->getIdEstanteria()))
                 checked
             @endif>
             <label class="form-check-label" for="radioUbicacionEstanteria">Ubicar en estanteria</label>
           </div>
-          <div class="form-check me-3">
+          <div class="form-check me-4">
             <input class="form-check-input" type="radio" name="ubicacion" id="radioCajasSinAsignar" value="ubicacionCajasSinAsignar" @if (is_null($producto->getIdEstanteria()) && !is_null($producto->getIdCaja()))
               checked
             @endif>
@@ -130,16 +128,16 @@
         @endforeach
       </select>
       <div class="d-inline-block mb-2">
-        <button type="button" class="btn btn-secondary" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
-        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eliminarEtiquetaModal" id="openEliminarEtiquetaModal">Eliminar etiqueta</button>
+        <button type="button" class="volver mb-2" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+        <button type="button" class="volver mb-2" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
+        <button type="button" class="volver mb-2" data-bs-toggle="modal" data-bs-target="#eliminarEtiquetaModal" id="openEliminarEtiquetaModal">Eliminar etiqueta</button>
       </div>
       
       
     </section>
 
     <div class="text-end mt-3">
-      <button type="submit" class="volver" name="volver">Volver</button>
+      <a href="buscarProducto.php" class="volver btn">Volver</a>
       <button type="button" name="modificarProducto" id="modificarProducto" value="{{$producto->getId()}}">Modificar</button>
     </div>
 
@@ -163,7 +161,7 @@
                 <div class="modal-footer">
                     <button type="button" class="volver" name="volverModal" data-bs-dismiss="modal">Volver</button>
                     <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                    <button type="button" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
+                    <button type="submit" name="crearEtiqueta" id="crearEtiqueta" data-bs-dismiss="modal">Crear</button>
                     <!--<input type="submit" name="crearEtiqueta" value="Crear">-->
                 </div>
             </div>
@@ -172,7 +170,7 @@
 </form>
 
 <!-- Modal eliminal Etiqueta-->
-<form>
+<form id="formEliminarEtiqueta">
   <div class="modal fade" id="eliminarEtiquetaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="false" >
       <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -184,9 +182,9 @@
                   <p>Desea eliminar la etiqueta: <b><label id="nombreEtiquetaSelect"></label></b> </p>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" name="volverModal" data-bs-dismiss="modal">Volver</button>
+                  <button type="button" class="volver" name="volverModal" data-bs-dismiss="modal">Volver</button>
                   <!--<button type="submit" name="añadirUbicacion" id="botonAñadir" class="btn btn-secondary" data-bs-dismiss="modal">AÑADIR</button>-->
-                  <button type="button"  class="btn btn-secondary" name="eliminarEtiqueta" id="eliminarEtiqueta" data-bs-dismiss="modal">Eliminar</button>
+                  <button type="submit" name="eliminarEtiqueta" id="eliminarEtiqueta" data-bs-dismiss="modal">Eliminar</button>
                   <!--<input type="submit" name="crearEtiqueta" value="Crear">-->
               </div>
           </div>

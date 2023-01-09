@@ -32,21 +32,23 @@ function addEventToElements() {
 	document.getElementById('selectEstanterias').addEventListener('change', getBaldasCajas);
 	//event change select baldas
 	document.getElementById('selectBaldas').addEventListener('change', getCajas);
-	//event click boton crear etiqueta del modal
-	document.getElementById('crearEtiqueta').addEventListener('click', crearEtiqueta);
+
+	//event submit boton crear etiqueta del modal
+	document.getElementById('formCrearEtiqueta').addEventListener('submit', (e)=>{
+		e.preventDefault();
+		crearEtiqueta();
+	})
 	//event click boton añadir etiqueta
 	document.getElementById('añadirEtiqueta').addEventListener('click', añadirEtiqueta);
 	//event click boton modificar producto
 	document.getElementById('modificarProducto').addEventListener('click', modificarProducto);
 	//añadimos event click a boton abrir modal eliminar etiqueta openEliminarEtiquetaModal
 	document.getElementById('openEliminarEtiquetaModal').addEventListener('click',getEtiquetaOfSelect);
-	//añadimos event click al boton eliminar etiqueta 
-	document.getElementById('eliminarEtiqueta').addEventListener('click',eliminarEtiqueta);
-	//prevent submit form creat etiqueta
-	document.getElementById('formCrearEtiqueta').addEventListener('submit',(e)=>{
+	//añadimos event submit al boton eliminar etiqueta 
+	document.getElementById('formEliminarEtiqueta').addEventListener('submit',(e)=>{
 		e.preventDefault();
-	})
-
+		eliminarEtiqueta();
+	  })
 
 }
 
@@ -348,29 +350,7 @@ function crearEtiqueta() {
 		nombreEtiqueta: nombreEtiqueta,
 	})
 		.then(data => {
-			//creamos element div que sera el alert
-			divElement = document.createElement('div');
-			//añadimos clases
-			divElement.classList.add('alert');
-			divElement.classList.add('alert-dismissible');
-			divElement.classList.add('fade');
-			divElement.classList.add('show');
-			divElement.classList.add('alert-' + data['msj-type']);
-			divElement.role = 'alert';
-			divElement.innerHTML = data['msj-content'];
-
-			//eliminamos el alert despues de un tiempo establecido
-			//pendiente de mejorar
-			setTimeout(() => {
-				divElement.classList.remove('show');
-			}, 5000);
-			divElement.addEventListener('transitionend', () => {
-				divElement.remove();
-			})
-
-			//añadimos el div alert
-			document.getElementById('alerts').appendChild(divElement);
-			document.getElementById('alerts').style.overflowX = 'hidden';
+			createAlert(data);
 
 			//si etiqueta creada correctamente, recargamos select etiquetas
 			if (data['msj-type'] == 'success') {
@@ -516,32 +496,7 @@ function modificarProducto() {
 
 			} else {
 
-				//creamos un div que sera el alert
-				let divElement = document.createElement('div');
-
-				//añadimos clases al div
-				divElement.classList.add('alert');
-				divElement.classList.add('alert-dismissible');
-				divElement.classList.add('fade');
-				divElement.classList.add('show');
-				divElement.classList.add('alert-' + data['msj-type']);
-
-				divElement.role = 'alert';
-				divElement.innerHTML = data['msj-content'];
-
-				//añadimos el div alert
-				document.getElementById('alerts').appendChild(divElement);
-
-				//añadimos una transicion a el alert despues de un tiempo establecido
-				setTimeout(() => {
-					divElement.classList.add('deleteAlert');
-
-				}, 3000);
-
-				//eliminamos el alert despues de acabada la transicion
-				divElement.addEventListener('transitionend', () => {
-					divElement.remove();
-				})
+				createAlert(data);
 			}
 		})
 		.catch(error => console.error('Error:', error));
@@ -615,12 +570,9 @@ function eliminarEtiqueta(){
   
 	//añadimos clases al div
 	divElement.classList.add('alert');
-	divElement.classList.add('alert-dismissible');
-	divElement.classList.add('fade');
-	divElement.classList.add('show');
+	divElement.classList.add('alertRight');
 	divElement.classList.add('alert-' + mensaje['msj-type']);
   
-	divElement.role = 'alert';
 	divElement.innerHTML = mensaje['msj-content'];
   
 	//añadimos el div alert

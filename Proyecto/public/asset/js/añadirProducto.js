@@ -49,23 +49,25 @@ function addEventToElements() {
   document.getElementById('openEliminarEtiquetaModal').addEventListener('click',getEtiquetaOfSelect);
 
   //añadimos event click al boton eliminar etiqueta 
-  document.getElementById('eliminarEtiqueta').addEventListener('click',eliminarEtiqueta);
-
-
-  //añadimos event click a el boton añadir del modal para añadir etiquetas
-  document.getElementById('crearEtiqueta').addEventListener('click', () => {
-    //recuperamos el nombre de la etiqueta
-    let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
-    loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, crearEtiqueta);
+  document.getElementById('formEliminarEtiqueta').addEventListener('submit',(e)=>{
+    e.preventDefault();
+    eliminarEtiqueta();
   })
 
-  //añadimos event click al boton añadir producto 
-  document.getElementById('añadirProducto').addEventListener('click', añadirProducto);
-
+  //prevent event submit del form crearEtiqueta
   document.getElementById('formCrearEtiqueta').addEventListener('submit',(e)=>{
     e.preventDefault();
+     //recuperamos el nombre de la etiqueta
+     let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
+     loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, crearEtiqueta);
   })
 
+  //prevent event submit del form crearEtiqueta
+  document.getElementById('formAñadirProducto').addEventListener('submit',(e)=>{
+    e.preventDefault();
+    añadirProducto();
+  })
+  
 }
 
 function loadDoc(url, cFunction) {
@@ -365,31 +367,7 @@ function añadirProducto() {
       }
 
       //creamos un div que sera el alert
-      let divElement = document.createElement('div');
-
-      //añadimos clases al div
-      divElement.classList.add('alert');
-      divElement.classList.add('alert-dismissible');
-      divElement.classList.add('fade');
-      divElement.classList.add('show');
-      divElement.classList.add('alert-' + response['msj-type']);
-
-      divElement.role = 'alert';
-      divElement.innerHTML = response['msj-content'];
-
-      //añadimos el div alert
-      document.getElementById('alerts').appendChild(divElement);
-      
-      //añadimos una transicion a el alert despues de un tiempo establecido
-      setTimeout(() => {
-        divElement.classList.add('deleteAlert');
-        
-      }, 3000);
-
-      //eliminamos el alert despues de acabada la transicion
-      divElement.addEventListener('transitionend',()=>{
-        divElement.remove();
-      })
+      createAlert(response);
 
       //si producto añadido correctamente 
       if (response['msj-type'] == 'success') {
@@ -503,12 +481,9 @@ function createAlert(mensaje){
 
   //añadimos clases al div
   divElement.classList.add('alert');
-  divElement.classList.add('alert-dismissible');
-  divElement.classList.add('fade');
-  divElement.classList.add('show');
+  divElement.classList.add('alertRight');
+  
   divElement.classList.add('alert-' + mensaje['msj-type']);
-
-  divElement.role = 'alert';
   divElement.innerHTML = mensaje['msj-content'];
 
   //añadimos el div alert

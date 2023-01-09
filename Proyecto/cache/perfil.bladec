@@ -111,39 +111,13 @@
  
  <div class="text-end">
  
- <a href="acceso.php" class="btn btn-secondary " name="volver">Volver</a>
- <button type="submit" class="btn btn-primary " name="guardar">Guardar</button>
+ <a href="acceso.php" class="btn volver">Volver</a>
+ <button type="submit" name="guardar">Guardar</button>
  </div>
 
  </form>
  </div>
- <?php /* modal */ ?>
- <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true" style="display: none;">
- <div class="modal-dialog">
- <div class="modal-content">
- <div class="modal-header">
- <h1 class="modal-title fs-5" id="perfilModalLabel"></h1>
  
- </div>
- <div class="modal-body">
- <form>
- <div class="mb-3">
- <label id="lblCampo" for="inputCampo" class="col-form-label"></label>
- <input id="inputCampo" type="text" class="form-control" disabled>
- </div>
- <div class="mb-3">
- <label id="lblNewCampo" for="inputNewCampo" class="col-form-label"></label>
- <input id="inputNewCampo" class="form-control" ></input>
- </div>
- </form>
- </div>
- <div class="modal-footer">
- <button id="btnClose" type="button" class="volver" data-bs-dismiss="modal">Close</button>
- <button type="button">Guardar</button>
- </div>
- </div>
- </div>
- </div>
 <?php $this->stopSection(); ?>
 
 <?php if (isset($_shouldextend[1])) { echo $this->runChild('app'); } ?>
