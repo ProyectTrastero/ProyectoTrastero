@@ -380,7 +380,9 @@ nav button:hover{
     
 }
 
-
+.textError{
+    color: red;
+}
 
 .hide{
 	display: none !important;
