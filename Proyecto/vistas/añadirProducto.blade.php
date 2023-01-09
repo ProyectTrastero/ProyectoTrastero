@@ -8,10 +8,10 @@
 
 {{-- Sección content --}}
 @section('content')
+{{-- alerts --}}
+<div  id="alerts"></div>
 
 <div class="container contenedorAñadir">
-  {{-- alerts desde js --}}
-  <div  id="alerts"></div>
  
   <form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formAñadirProducto">
   

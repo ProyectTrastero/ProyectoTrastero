@@ -45,11 +45,6 @@ if (isset($_SESSION['usuario'])) {
         die;
     }
 
-    if (isset($_POST['volver'])) {
-        header('location: accederTrastero.php');
-        die;
-    }
-
 
     $usuario = $_SESSION['usuario'];
     $idTrastero = $_SESSION['miTrastero']->getId();

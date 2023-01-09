@@ -43,17 +43,9 @@ if (isset($_SESSION['usuario'])) {
 		header("Location: editarPerfil.php");
 		die;
 	}
-	if (isset($_POST['volver'])) {
-		header('location: buscarProducto.php');
-		die;
-	}
 
 	$miTrastero = $_SESSION['miTrastero'];
 	$usuario = $_SESSION['usuario'];
-
-
-
-
 
 	//recuperamos el id del producto que vamos a modificar
 	if (isset($_GET['idProducto'])) {

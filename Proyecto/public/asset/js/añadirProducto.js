@@ -481,7 +481,7 @@ function createAlert(mensaje){
 
   //añadimos clases al div
   divElement.classList.add('alert');
-  divElement.classList.add('alertRight');
+  
   
   divElement.classList.add('alert-' + mensaje['msj-type']);
   divElement.innerHTML = mensaje['msj-content'];
