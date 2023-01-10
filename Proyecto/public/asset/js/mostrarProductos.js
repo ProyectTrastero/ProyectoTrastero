@@ -92,7 +92,7 @@ function añadirOjo(e){
         var elemento= oculto.nextElementSibling;
         var estilo=elemento.getAttribute("style");
         if(estilo==="color: rgb(255,255,255,0); border: white"){
-            elemento.setAttribute("style","color: blue; border: white");
+            elemento.setAttribute("style","color: rgb(28, 87, 236, 0.8); border: white");
         }
 }
 //Hace transparente el elemento para que no se vea
@@ -100,7 +100,7 @@ function eliminarOjo(e){
     var oculto = e.target;
     var elemento= oculto.nextElementSibling;
         var estilo=elemento.getAttribute("style");
-        if(estilo==="color: blue; border: white"){
+        if(estilo==="color: rgb(28, 87, 236, 0.8); border: white"){
              var retardo=setTimeout(function(){
                  elemento.setAttribute("style","color: rgb(255,255,255,0); border: white"); 
             }, 1000); 

@@ -237,6 +237,9 @@ class Producto {
     public function eliminar($bd){
         $consulta="delete from productos where id=$this->id";
         $bd->exec($consulta);
+        $consulta2="delete from etiquetasproductos where idProducto=$this->id";
+        $bd->exec($consulta2);
+        
     }
 
     public static function añadirEtiquetaProducto(PDO $bd, int $idEtiqueta, int $idProducto ):bool{
@@ -283,6 +286,8 @@ class Producto {
     public static function eliminarProductoporID($bd, int $idProducto){
             $consulta="delete from productos where id=$idProducto";
             $bd->exec($consulta);
+            $consulta2="delete from etiquetasproductos where idProducto=$idProducto";
+            $bd->exec($consulta2);
     }
  
     public static function buscarProductosPorIdEtiquetaYTrastero($bd, array $idEtiquetas, $idTrastero){

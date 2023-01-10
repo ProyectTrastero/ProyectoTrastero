@@ -42,6 +42,7 @@ if(empty($_SESSION['datosTrastero'])){
     $almacenBaldas = array();
     $almacenCajas = array();
     $mensaje="";
+    $tipoMensaje = "";
     $indiceNombre = 1;
     $trasteroGuardado = false;
     $tipo="guardar"; 
@@ -71,7 +72,7 @@ if(empty($_SESSION['datosTrastero'])){
     $_SESSION['datosTrastero']=$datosTrastero;
     //Si no cargamos la sesión creada con anterioridad.
 }else{
-    
+    $tipoMensaje = "";
     $usuario = $_SESSION['usuario'];
     $idUsuario = $usuario->getId();
     $datosTrastero=$_SESSION['datosTrastero'];
@@ -235,18 +236,20 @@ if(empty($_SESSION['datosTrastero'])){
             $trasteroGuardado = true;
             $datosTrastero['guardado']=$trasteroGuardado;
             $_SESSION['datosTrastero'] = $datosTrastero;
-            
+            $tipoMensaje = "info";
             $mensaje = "Su trastero se ha creado correctamente. Pulse volver para volver a la página principal";
-            echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
+            echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'tipoMensaje', 'bd'));
             //En el caso de que ya exista un trastero con ese nombre. 
         }else{
+            $tipoMensaje = "danger";
             $mensaje = "Ya existe un trastero para este usuario con ese nombre.";
-            echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
+            echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'tipoMensaje', 'bd'));
         }
     //En el caso de que el nombre esté vacío.
     }else{
+        $tipoMensaje ="danger";
         $mensaje = "El nombre del trastero no puede estar vacío.";
-        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
+        echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'tipoMensaje', 'bd'));
     } 
 //Elimina estantería seleccionada en la base de datos.      
 }else if(isset($_POST['eliminarEstanteria'])){
@@ -274,7 +277,7 @@ if(empty($_SESSION['datosTrastero'])){
     $datosTrastero['almacenBaldas']= Balda::recuperarBaldasPorIdTrastero($bd, $nuevoTrastero->getId());
     $datosTrastero['almacenCajas']=$almacenCajas;
     $_SESSION['datosTrastero']=$datosTrastero;
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
+    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'tipoMensaje', 'bd'));
 //Elimina la balda seleccionada.   
 }else if(isset($_POST['eliminarBalda'])){
     $numeroEstanteria = trim(filter_input(INPUT_POST, 'numeroEstanteria', FILTER_SANITIZE_STRING));
@@ -297,7 +300,7 @@ if(empty($_SESSION['datosTrastero'])){
     $datosTrastero['almacenCajas']=$almacenCajas;
     $_SESSION['datosTrastero']=$datosTrastero;
     
-     echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
+     echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'tipoMensaje', 'bd'));
 //Eliminamos la caja seleccionada. 
 }else if(isset($_POST['eliminarCaja'])){
     $idCaja = trim(filter_input(INPUT_POST, 'idCaja', FILTER_SANITIZE_STRING));
@@ -311,9 +314,9 @@ if(empty($_SESSION['datosTrastero'])){
     $datosTrastero['almacenCajas']=$almacenCajas;
     $_SESSION['datosTrastero']=$datosTrastero;
     
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
+    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'tipoMensaje', 'bd'));
 }else{
-    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));
+    echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'tipoMensaje', 'bd'));
 }
 
 

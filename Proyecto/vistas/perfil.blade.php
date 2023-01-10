@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="container">
-
+        
       @if (@isset($_SESSION['msj']))
         <div class="alert alert-{{$_SESSION['msj-type']}} alert-dismissible fade show" role="alert"">
           {{$_SESSION['msj']}}
@@ -21,7 +21,7 @@
 
       <h1 class="text-center mt-5">Perfil {{$usuario->getNombre()}}</h1>
         <form class="formEditPerfil" method="POST" action="{{$_SERVER["PHP_SELF"]}}">
-            
+        <div class="divContainer">    
             <div class="form-floating mb-3">
               <input type="text" name="nombre" id="nombre" placeholder="Nombre" value="{{$datos['nombre']}}" required
                 class="form-control @if(in_array('nombreInvalido', $errores)) is-invalid  @endif
@@ -114,7 +114,7 @@
               <a href="acceso.php" class="btn volver">Volver</a>
               <button type="submit" name="guardar">Guardar</button>
             </div>
-
+        </div>
         </form>
     </div>
    

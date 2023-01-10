@@ -9,7 +9,10 @@
 {{-- Sección content --}}
 @section('content')
 {{-- alerts --}}
-<div  id="alerts"></div>
+<div class="avisos">
+   <div  id="alerts"></div> 
+</div>
+
 
 <div class="container contenedorAñadir">
  
@@ -124,9 +127,9 @@
       
 
       <div class="d-inline-block mb-2">
-        <button type="button" class="volver mb-2" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
-        <button type="button" class="volver mb-2" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear etiqueta</button>
-        <button type="button" class="volver mb-2" data-bs-toggle="modal" data-bs-target="#eliminarEtiquetaModal" id="openEliminarEtiquetaModal">Eliminar etiqueta</button>
+        <button type="button" class="mb-2" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+        <button type="button" class="mb-2" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Nueva etiqueta</button>
+        <button type="button" class="mb-2" data-bs-toggle="modal" data-bs-target="#eliminarEtiquetaModal" id="openEliminarEtiquetaModal">Eliminar etiqueta</button>
       </div>
       
       
@@ -136,7 +139,7 @@
       <a href="accederTrastero.php" class="volver btn">Volver</a>
       <button type="submit" name="añadir" id="añadirProducto">Añadir</button>
     </div>
-
+      
   </form>
 </div>
 
@@ -164,7 +167,7 @@
     </div>
 </form>
 
-<!-- Modal eliminal Etiqueta-->
+<!-- Modal eliminar Etiqueta-->
 <form id="formEliminarEtiqueta">
   <div class="modal fade" id="eliminarEtiquetaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="false" >
       <div class="modal-dialog modal-dialog-centered">

@@ -15,8 +15,6 @@ function iniciar(){
     infoModal=modal.value;
     var modal2=document.getElementById("mostrarModal2");
     infoModal2=modal2.value;
-    var modal3=document.getElementById("mostrarModal3");
-    infoModal3=modal3.value;
     guardado=tipo.getAttribute("value");
     ocultos= document.getElementsByClassName("papeleraOculta");
     habilitarmodal();
@@ -43,9 +41,6 @@ function habilitarmodal(){
     
     if(infoModal2=="si"){
        $("#staticBackdrop").modal("show");
-    }
-    if(infoModal3=="si"){
-       $("#staticBackdrop2").modal("show");
     }
     
    
@@ -111,7 +106,7 @@ function añadirPapelera(e){
         var atributo=document.createAttribute("type");
         var atributo2 = document.createAttribute("name");
         var atributo3 = document.createAttribute("style");
-        atributo3.value = "color: red; border: white";
+        atributo3.value = "color: rgb(236, 28, 36, 0.8); border: white";
         var elementoAnterior=elemento.previousElementSibling;
         var nombre = elementoAnterior.getAttribute("name");
         

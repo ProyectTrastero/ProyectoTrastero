@@ -10,7 +10,9 @@
 @section('content')
 
 {{-- alerts --}}
-<div  id="alerts"></div>
+<div class="avisos">
+    <div  id="alerts"></div>
+</div>
 <div class="container contenedorModificarProducto">
   
   <form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formProducto">
@@ -128,9 +130,9 @@
         @endforeach
       </select>
       <div class="d-inline-block mb-2">
-        <button type="button" class="volver mb-2" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
-        <button type="button" class="volver mb-2" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Crear Etiqueta</button>
-        <button type="button" class="volver mb-2" data-bs-toggle="modal" data-bs-target="#eliminarEtiquetaModal" id="openEliminarEtiquetaModal">Eliminar etiqueta</button>
+        <button type="button" class="mb-2" name="añadirEtiqueta" id="añadirEtiqueta">Añadir etiqueta</button>
+        <button type="button" class="mb-2" data-bs-toggle="modal" data-bs-target="#crearEtiquetaModal">Nueva Etiqueta</button>
+        <button type="button" class="mb-2" data-bs-toggle="modal" data-bs-target="#eliminarEtiquetaModal" id="openEliminarEtiquetaModal">Eliminar etiqueta</button>
       </div>
       
       

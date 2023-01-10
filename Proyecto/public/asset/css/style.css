@@ -1,8 +1,4 @@
 *{
-/*	margin: 0;
-	padding: 0;*/
-/*	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;*/
         font-family: Times New Roman, initial;
 }
 
@@ -17,15 +13,17 @@ body {
      text-align: right; 
 }
 
+.avisos{
+    margin-bottom: 10px;
+    padding:0px;
+    height: 60px;
+}
 
 /*////////////////////////////////////////////////////*/
  /*APP Y NAVBAR*/ 
 
 .inicio{
-    /*background-color: #47a2db;*/
     background-image: url("../img/imagen5.png"); 
-/*    background-image: url("../img/fondo.png");
-    background-image: url("../img/Geometric-Background-012.jpg"); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -245,12 +243,6 @@ td{
 
 }
 
-/*.bpTCabecera{
-     background: rgb(0, 168, 243, 0.5);
-}*/
-
-
-
 .vtTr, .bpTr{
     background: linear-gradient(rgb(0, 168, 243, 0.2), rgb(255, 255, 255, 0.2));
     text-align: left;
@@ -289,9 +281,6 @@ td{
 /*VERTRASTERO*/
 /*////////////////////////////////////////////////////*/
 /*BOTONES*/
-/*.volver{
-    background: linear-gradient(grey, white);
-}*/
 
 .papeleraOculta button{
     background: rgb(255, 255, 255, 0);

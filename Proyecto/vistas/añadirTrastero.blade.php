@@ -12,7 +12,7 @@
 
 <script src="asset/js/añadirTrastero.js"></script>
 <script src="asset/js/ubicacionCaja.js"></script>
-<div class="row">
+<div>
         @if($datosTrastero['guardado'])
         <span id="guardadoModificado" value="true" ></span>
         @else
@@ -30,11 +30,19 @@
         <input type="hidden" id="mostrarModal2" value="no">
         @endif
         
-        @if($mensaje!="")
+<!--        @if($mensaje!="")
         <input type="hidden" id="mostrarModal3" value="si">
         @else
         <input type="hidden" id="mostrarModal3" value="no">
-        @endif
+        @endif-->
+</div>
+<div class="avisos">
+    @if($mensaje!="")
+    <div class="alert alert-{{$tipoMensaje}} alert-dismissible fade show" role="alert">
+        {{$mensaje}}
+        <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
+    </div>
+    @endif
 </div>
 <div class="container">
     <div class="row" id="atDiv1">
@@ -47,6 +55,8 @@
                 <label for="nombre">NOMBRE:</label>
                 <input type="text" name="nombre" id="nombre">
                 <button type="submit" name="guardar">Guardar</button>
+                @else
+                <h3><b>{{$datosTrastero['trastero']->getNombre()}}</b></h3>
                 @endif
             </div>
             <div id="atDiv3">
@@ -202,7 +212,7 @@
 </form>
 
 <!-- Modal error nombre-->
-<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" >
+<!--<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -216,6 +226,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 @endsection

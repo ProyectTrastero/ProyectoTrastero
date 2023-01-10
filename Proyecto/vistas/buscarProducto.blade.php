@@ -2,33 +2,23 @@
 @extends('app')
 
 {{-- Sección aporta el título de la página --}}
-@section('title', 'Mi trastero Inicio')
+@section('title', 'Buscar Producto')
 
 {{-- Sección de la barra de navegación con el usuario identificado --}}
 @section('navbar')
-<!--<form action="{{ $_SERVER["PHP_SELF"] }}">
-  <div class="nav-item dropdown">
-    <div class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      {{$usuario->getNombre()}} <i class="fa-solid fa-user fa-2xl"></i>
-    </div>
-    <ul class="dropdown-menu">
-      <li><button class="dropdown" type="submit" name="perfilUsuario">Perfil usuario</button></li>
-      <li><button class="dropdown" type="submit" name="cerrarSesion">Cerrar sesión</button></li>
-    </ul>
-  </div>
-</form>-->
+
 @endsection
 
 {{-- Sección mensaje --}}
 @section('content')
-
+    <div class="avisos">
     @if ($msj1 != "")  
         <div class="alert alert-{{$msj1_tipo}} alert-dismissible fade show" role="alert">
             {{$msj1}}
             <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
         </div>
     @endif
-
+    </div>
 
 <div class="opciones">
     <form method="POST" action="" name="formBusqueda">
@@ -36,14 +26,17 @@
             <button class ="volver" name="volverTrasteros">Volver</button>
         </div>
         <h3 class="inicial titulo">{{$miTrastero->getNombre()  }}</h3>
-        <div  class="bpCabecera">
-            <div>
+        <div  class="bpCabecera row">
+            <div class="col-12">
+                <div>
                 <label>Buscar por palabra: </label>
                 &emsp;<input type="text" name="palabraBuscar" placeholder="Producto"><br/>
             </div>
             <div>
                 <button type="submit" name="buscarProducto">Buscar producto</button>
             </div>
+            </div>
+            
             <div>
                 @if (isset ($etiquetas))
                     <label for="etiquetas">Buscar por mis etiqueta: </label><br/>
