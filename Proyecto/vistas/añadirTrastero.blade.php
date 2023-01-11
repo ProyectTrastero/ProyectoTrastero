@@ -77,7 +77,8 @@
                     <form action="" method="POST">
                         <input type="hidden" name="nombreEstanteria" value="{{$estanteria->getNombre()}}">
                         <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
-                        <span class="papeleraOculta" contenteditable="false">{{$estanteria->getNombre()}}</span>
+                        <span class="editable" contenteditable="false">{{$estanteria->getNombre()}}</span>
+                        <button type="submit" class="papeleraOculta fa-sharp fa-solid fa-trash-can" name="eliminarEstanteria" style="color: rgb(255,255,255,0)"></button>   
                     </form>
                 </li>
 
@@ -96,10 +97,11 @@
                         <form action="" method="POST">
                             <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
                             <input type="hidden" name="idBalda" value="{{$balda->getId()}}">
+                            <span class="editable"  contenteditable="false">{{$balda->getNombre()}}</span>
                             @if(count($baldasRecuperadas)==1)
-                            <span class="papeleraOculta primerabalda"  contenteditable="false">{{$balda->getNombre()}}</span>
+                            <button type="submit" class="papeleraOculta primerabalda fa-sharp fa-solid fa-trash-can" name="eliminarBalda" style="color: rgb(255,255,255,0)"></button>
                             @else
-                            <span class="papeleraOculta"  contenteditable="false">{{$balda->getNombre()}}</span>
+                            <button type="submit" class="papeleraOculta fa-sharp fa-solid fa-trash-can" name="eliminarBalda" style="color: rgb(255,255,255,0)"></button>
                             @endif
                         </form>
                     </li> 
@@ -112,7 +114,8 @@
                                     <input type="hidden" name="idBalda" value="{{$balda->getId()}}"> 
                                     <input type="hidden" name="idEstanteria" value="{{$estanteria->getId()}}">
                                     <input type="hidden" name="idCaja" value="{{$caja->getId()}}">
-                                    <span class="papeleraOculta" contenteditable="false">{{$caja->getNombre()}}</span>
+                                    <span class="editable" contenteditable="false">{{$caja->getNombre()}}</span>
+                                    <button type="submit" class="papeleraOculta fa-sharp fa-solid fa-trash-can" name="eliminarCaja" style="color: rgb(255,255,255,0)"></button>
                                 </form>
                             </li>
                             @endif
@@ -131,21 +134,28 @@
         </div>
         @endforeach
     </div>
+   
     @if(!empty($datosTrastero['almacenCajas']))
-    <div class="col-5 atCajas">
-        <ul class="row">
-            @foreach ($datosTrastero['almacenCajas'] as $caja)
-                @if(($caja->getIdBalda()==null)&&($caja->getIdEstanteria()==null))
-                <li class="col-4">
-                    <form action="" method="POST">
-                        <input type="hidden" name="idCaja" value="{{$caja->getId()}}">
-                        <span class="papeleraOculta" contenteditable="false">{{$caja->getNombre()}}</span>
-                    </form>
-                </li> 
-                @endif
-            @endforeach   
-        </ul>
-    </div>
+        @php
+            $cajasSinUbicar=$datosTrastero['almacenCajas'][0]->obtenerCajasSinUbicar($bd);
+        @endphp
+        @if(!empty($cajasSinUbicar))
+        <div class="col-5 atCajas">
+            <ul class="row">
+                @foreach ($datosTrastero['almacenCajas'] as $caja)
+                    @if(($caja->getIdBalda()==null)&&($caja->getIdEstanteria()==null))
+                    <li class="col-4">
+                        <form action="" method="POST">
+                            <input type="hidden" name="idCaja" value="{{$caja->getId()}}">
+                            <span class="editable" contenteditable="false">{{$caja->getNombre()}}</span>
+                            <button type="submit" class="papeleraOculta fa-sharp fa-solid fa-trash-can" name="eliminarCaja" style="color: rgb(255,255,255,0)"></button>
+                        </form>
+                    </li> 
+                    @endif
+                @endforeach   
+            </ul>
+        </div>
+        @endif
     @endif
 </div>
 
@@ -211,21 +221,5 @@
     </div>
 </form>
 
-<!-- Modal error nombre-->
-<!--<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>{{$mensaje}}</p>
-            </div>
-            <div class="modal-footer">
-                <button class="volver" type="submit" name="cancelar" data-bs-dismiss="modal">Volver</button>
-            </div>
-        </div>
-    </div>
-</div>-->
 
 @endsection

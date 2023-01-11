@@ -14,7 +14,6 @@ function iniciar(){
     for(i=0;i<ocultos.length;i++){
         //A cada elemento le añadimos los eventos correspondientes.
         ocultos[i].addEventListener("mouseover", añadirOjo);
-        ocultos[i].addEventListener("mouseout", eliminarOjo);
     }  
     for(i=0;i<elementos.length;i++){
         elementos[i].addEventListener("click", mostrarProductos);
@@ -86,25 +85,15 @@ function mostrarProductos(e){
     }); 
 }
 
-//Función que añade color al elemento para ser visible.
+//Función que añade color al elemento para ser visible y luego se lo quita con un retardo.
 function añadirOjo(e){
         var oculto = e.target;
         var elemento= oculto.nextElementSibling;
-        var estilo=elemento.getAttribute("style");
-        if(estilo==="color: rgb(255,255,255,0); border: white"){
-            elemento.setAttribute("style","color: rgb(28, 87, 236, 0.8); border: white");
-        }
+        elemento.setAttribute("style","color: rgb(28, 87, 236, 0.8); border: white");
+        var retardo=setTimeout(function(){
+            elemento.setAttribute("style","color: rgb(255,255,255,0); border: white"); 
+        }, 2000); 
 }
-//Hace transparente el elemento para que no se vea
-function eliminarOjo(e){
-    var oculto = e.target;
-    var elemento= oculto.nextElementSibling;
-        var estilo=elemento.getAttribute("style");
-        if(estilo==="color: rgb(28, 87, 236, 0.8); border: white"){
-             var retardo=setTimeout(function(){
-                 elemento.setAttribute("style","color: rgb(255,255,255,0); border: white"); 
-            }, 1000); 
-        }
-}
+
 
 

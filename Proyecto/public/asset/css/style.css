@@ -282,10 +282,6 @@ td{
 /*////////////////////////////////////////////////////*/
 /*BOTONES*/
 
-.papeleraOculta button{
-    background: rgb(255, 255, 255, 0);
-}
-
 nav button {
     margin: 0px;
     width: 100%;
@@ -331,6 +327,11 @@ button{
 nav button:hover{
    /*background-color: #B6DDF8;*/
    background: linear-gradient(#ff7f27, white);
+}
+
+.papeleraOculta{
+    background: rgb(255, 255, 255, 0);
+    border: rgb(255, 255, 255, 0);
 }
 
 /*BOTONES*/

@@ -7,9 +7,11 @@ var guardado;
 var infoModal;
 var infoModal2;
 var infoModal3;
-
+var editable;
+var visible;
 //Inicializa las variables tras haber cargado la página.
 function iniciar(){
+    visible=false;
     var tipo = document.getElementById("guardadoModificado");
     var modal=document.getElementById("mostrarModal");
     infoModal=modal.value;
@@ -17,19 +19,19 @@ function iniciar(){
     infoModal2=modal2.value;
     guardado=tipo.getAttribute("value");
     ocultos= document.getElementsByClassName("papeleraOculta");
+    editable= document.getElementsByClassName("editable")
     habilitarmodal();
     habilitarmodal();
     deshabilitarBotones();
+    deshabilitarPrimeraBalda();
     if(guardado=="false"){
         for(i=0;i<ocultos.length;i++){
             var clase = ocultos[i].getAttribute("class");
-            if(clase!="papeleraOculta primerabalda"){
-                ocultos[i].addEventListener("mouseover", añadirPapelera);
-                ocultos[i].addEventListener("mouseout", eliminarPapelera);
+            if(clase!="papeleraOculta primerabalda fa-sharp fa-solid fa-trash-can"){
+                editable[i].addEventListener("mouseover", añadirPapelera);
             }
-        
-        ocultos[i].addEventListener("click", habilitarEdicion);
-        ocultos[i].addEventListener("blur", deshabilitarEdicion);
+        editable[i].addEventListener("click", habilitarEdicion);
+        editable[i].addEventListener("blur", deshabilitarEdicion);
         }
     }  
 }
@@ -45,6 +47,14 @@ function habilitarmodal(){
     
    
 }
+
+function deshabilitarPrimeraBalda(){
+    var primeros = document.getElementsByClassName("primerabalda");
+    for(i=0;i<primeros.length;i++){
+        primeros[i].setAttribute("disabled", "true");
+    }
+}
+
 //Tras presionar botón guardar desabilita todos los botones exceptuando el de volver.
 function deshabilitarBotones(){
     if(guardado=="true"){
@@ -74,16 +84,19 @@ function deshabilitarEdicion(e){
                 data: {nuevoNombre: nombre, nombre: antiguoNombre, id: idElemento},
                 success: function(result){
                     var respuesta = result.cambiado;
-                    var antiguoNombre = result.nombre;
+                    nombre = nombre.trim();
                     //Si la respuesta a la peticíón es false se recupera el antiguo nombre y se avisa con un alert.
                     if(!respuesta){
-                        alert ("Ya existe un elemento con ese nombre.");
                         elemento.innerText = antiguoNombre;
+                        alert ("Ya existe un elemento con ese nombre.");
                     }
-                     
+                    //Si el nuevo nombre está vacío mantenemos el antiguo.
+                    if(nombre==""){
+                        elemento.innerText = antiguoNombre;   
+                    }              
             }}); 
     });  
-    
+    editando = false;
     
 }
 
@@ -93,50 +106,18 @@ function habilitarEdicion(e){
     primerElemento = elemento.previousElementSibling;
     idElemento = primerElemento.getAttribute("value");
     antiguoNombre = elemento.innerText;
-    elemento.setAttribute("contenteditable", "true");
-    
-    
+    elemento.setAttribute("contenteditable", "true");   
 }
     
 //Añade la papelera para poder eliminar el elemento seleccionado.   
 function añadirPapelera(e){
         var elemento = e.target;
-        var papelera= document.createElement("button");
-        papelera.className="fa-sharp fa-solid fa-trash-can";
-        var atributo=document.createAttribute("type");
-        var atributo2 = document.createAttribute("name");
-        var atributo3 = document.createAttribute("style");
-        atributo3.value = "color: rgb(236, 28, 36, 0.8); border: white";
-        var elementoAnterior=elemento.previousElementSibling;
-        var nombre = elementoAnterior.getAttribute("name");
+        var papelera = elemento.nextElementSibling;
+//        var clase = papelera.get
+        papelera.setAttribute("style","color: rgb(236, 28, 36, 0.8)"); 
+        var retardo=setTimeout(function(){
+            papelera.setAttribute("style","color: rgb(255,255,255,0)");
+        }, 2000); 
         
-        atributo.value = "submit";
-        if(nombre.includes("Estanteria")){
-            atributo2.value = "eliminarEstanteria";
-        }
-         if(nombre.includes("Balda")){
-            atributo2.value = "eliminarBalda";
-        }
-         if(nombre.includes("Caja")){
-            atributo2.value = "eliminarCaja";
-        }
-      
-       
-        papelera.setAttributeNode(atributo);
-        papelera.setAttributeNode(atributo2);
-        papelera.setAttributeNode(atributo3);
-        
-        if((elemento.children.length==0)&&(e.target.tagName==="SPAN")){
-        elemento.appendChild(papelera);
-    }
-
 }
 
-//Tras un retardo elimina la papelera creada con anterioridad.
-function eliminarPapelera(e){
-     var elemento = e.target;
-    var papelera=elemento.children[0];
-    var retardo=setTimeout(function(){
-        elemento.removeChild(papelera);
-    }, 1000);  
-}

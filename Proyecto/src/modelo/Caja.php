@@ -160,6 +160,13 @@ class Caja implements \JsonSerializable {
         }
      return $numero;  
    }
+   
+   public function obtenerCajasSinUbicar($bd){
+        $consulta ="select count(*) from cajas where idEstanteria is NULL and idBalda is NULL and idTrastero = $this->idTrastero";
+        $registro = $bd->query($consulta);
+        $cantidad = $registro->fetchColumn();
+        return $cantidad;  
+   }
     
 
     
