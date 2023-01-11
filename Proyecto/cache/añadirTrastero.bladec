@@ -30,11 +30,6 @@
  <input type="hidden" id="mostrarModal2" value="no">
  <?php endif; ?>
  
-<!--        <?php if($mensaje!=""): ?>
- <input type="hidden" id="mostrarModal3" value="si">
- <?php else: ?>
- <input type="hidden" id="mostrarModal3" value="no">
- <?php endif; ?>-->
 </div>
 <div class="avisos">
  <?php if($mensaje!=""): ?>

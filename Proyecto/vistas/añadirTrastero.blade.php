@@ -30,11 +30,6 @@
         <input type="hidden" id="mostrarModal2" value="no">
         @endif
         
-<!--        @if($mensaje!="")
-        <input type="hidden" id="mostrarModal3" value="si">
-        @else
-        <input type="hidden" id="mostrarModal3" value="no">
-        @endif-->
 </div>
 <div class="avisos">
     @if($mensaje!="")
