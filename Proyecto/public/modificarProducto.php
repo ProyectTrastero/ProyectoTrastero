@@ -126,54 +126,7 @@ if (isset($_SESSION['usuario'])) {
 	//recibimos las peticiones del cliente 
 	if (!is_null($data = json_decode(file_get_contents('php://input'), true))) {
 
-		//peticion para devolver cajas sin asignar
-		if (array_key_exists('getCajasSinUbicar', $data)) {
-			$cajasSinUbicar = Caja::recuperarCajasSinUbicarPorIdTrastero($bd, $miTrastero->getId());
-			echo json_encode($cajasSinUbicar);
-			die;
-		}
-		//peticion para devolver estanterias
-		if (array_key_exists('getEstanteriasBaldasCajas', $data)) {
-
-			//obtenemos las estanterias del trastero
-			$estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $miTrastero->getId());
-			//si no tenemos estanterias
-			if (count($estanterias) == 0) {
-				$arrResponse = array('estanterias' => $estanterias = array(), 'baldas' => $baldas = array(), 'cajas' => $cajas = array(), 'productoSelected' => $productoSelected = array());
-				echo json_encode($arrResponse);
-				die;
-			}
-			//saneamos el idEstanteria
-			(isset($data['idEstanteriaSelected'])) ? $idEstanteriaSelected = Validacion::sanearInput($data['idEstanteriaSelected']) : $idEstanteriaSelected = "";
-			//si tenemos id estanteria selected buscamos las baldas de la estanteria selected
-			if ($idEstanteriaSelected != '') {
-				$baldas = Balda::recuperarBaldasPorIdEstanteria($bd, intval($idEstanteriaSelected));
-			} else {
-				//si no tenemos id estanteria selected buscamos las baldas de la primera estanteria
-				$baldas = Balda::recuperarBaldasPorIdEstanteria($bd, $estanterias[0]->getId());
-			}
-
-			//saneamos el idbalda
-			(isset($data['idBaldaSelected'])) ? $idBaldaSelected = Validacion::sanearInput($data['idBaldaSelected']) : $idBaldaSelected = "";
-			//si tenemos el id balda selected buscamos las cajas de la balda selected
-			if ($idBaldaSelected != '') {
-				$cajas = Caja::recuperarCajaPorIdBalda($bd, intval($idBaldaSelected));
-			} else {
-				//si no tenemos el id de la balda selected buscamos las cajas de la primera balda
-				$cajas = caja::recuperarCajaPorIdBalda($bd, $baldas[0]->getId());
-			}
-
-			//saneamos el idCaja
-			(isset($data['idCajaSelected'])) ? $idCajaSelected = Validacion::sanearInput(($data['idCajaSelected'])) : $idCajaSelected = "";
-
-			//array con los id de la ubicacion del producto
-			$productoSelected = array('idEstanteriaSelected' => $idEstanteriaSelected, 'idBaldaSelected' => $idBaldaSelected, 'idCajaSelected' => $idCajaSelected);
-
-			//guardamos en un array los datos
-			$arrResponse = array('estanterias' => $estanterias, 'baldas' => $baldas, 'cajas' => $cajas, 'productoSelected' => $productoSelected);
-			echo json_encode($arrResponse);
-			die;
-		}
+		
 		//peticion para devolver baldas y cajas de una estanteria selecionada
 		if (array_key_exists('getBaldasCajas', $data)) {
 			//saneamos el id de la estanteria seleccionada
@@ -185,8 +138,8 @@ if (isset($_SESSION['usuario'])) {
 			$cajas = Caja::recuperarCajaPorIdBalda($bd, $baldas[0]->getId());
 
 			//formamos array con la respuesta
-			$arrResponse = array('baldas' => $baldas, 'cajas' => $cajas);
-			echo json_encode($arrResponse);
+			$response = array('baldas' => $baldas, 'cajas' => $cajas);
+			echo json_encode($response);
 			die;
 		}
 		//peticion para devolver cajas de una balda seleccionada
@@ -194,11 +147,10 @@ if (isset($_SESSION['usuario'])) {
 			//saneamos el id de la balda seleccionada
 			(isset($data['idBaldaSelected'])) ? $idBaldaSelected = Validacion::sanearInput($data['idBaldaSelected']) : $idBaldaSelected = "";
 
-			//si no tenemos id no hacemos la consulta
-			if ($idBaldaSelected == '') die;
 			//recuperamos las cajas
 			$cajas = Caja::recuperarCajaPorIdBalda($bd, $idBaldaSelected);
-			echo json_encode($cajas);
+			$response = array('cajas'=>$cajas);
+			echo json_encode($response);
 			die;
 		}
 
@@ -251,7 +203,7 @@ if (isset($_SESSION['usuario'])) {
 			//comprobamos si se ha ingresado un nombre 
 			if ($nombreProducto == '') {
 				$mensaje['error'] = 'nombreInvalido';
-				$mensaje['msj-content'] = "Ingresa un nombre al producto.";
+				$mensaje['msj-content'] = "Error al modificar el producto";
 				$mensaje['msj-type'] = "danger";
 				echo json_encode($mensaje);
 				die;

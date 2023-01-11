@@ -40,34 +40,31 @@ function addEventToElements() {
   }
 
   ////añadimos event click a btn añadir etiqueta
-  document.getElementById('añadirEtiqueta').addEventListener('mousedown', function () {
-  let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
-    loadDoc('añadirProducto.php?añadirEtiqueta=' + idEtiquetaSelected, añadirEtiqueta);
-  })
+  document.getElementById('añadirEtiqueta').addEventListener('click', añadirEtiqueta);
 
   //añadimos event click a boton abrir modal eliminar etiqueta openEliminarEtiquetaModal
-  document.getElementById('openEliminarEtiquetaModal').addEventListener('click',getEtiquetaOfSelect);
+  document.getElementById('openEliminarEtiquetaModal').addEventListener('click', getEtiquetaOfSelect);
 
   //añadimos event click al boton eliminar etiqueta 
-  document.getElementById('formEliminarEtiqueta').addEventListener('submit',(e)=>{
+  document.getElementById('formEliminarEtiqueta').addEventListener('submit', (e) => {
     e.preventDefault();
     eliminarEtiqueta();
   })
 
   //prevent event submit del form crearEtiqueta
-  document.getElementById('formCrearEtiqueta').addEventListener('submit',(e)=>{
+  document.getElementById('formCrearEtiqueta').addEventListener('submit', (e) => {
     e.preventDefault();
-     //recuperamos el nombre de la etiqueta
-     let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
-     loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, crearEtiqueta);
+    //recuperamos el nombre de la etiqueta
+    let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
+    loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, crearEtiqueta);
   })
 
   //prevent event submit del form crearEtiqueta
-  document.getElementById('formAñadirProducto').addEventListener('submit',(e)=>{
+  document.getElementById('formAñadirProducto').addEventListener('submit', (e) => {
     e.preventDefault();
     añadirProducto();
   })
-  
+
 }
 
 function loadDoc(url, cFunction) {
@@ -79,7 +76,7 @@ function loadDoc(url, cFunction) {
 
 // POST method implementation:
 async function postData(url = '', data = {}) {
-  
+
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify(data), // datos que vamos a enviar
@@ -92,7 +89,7 @@ async function postData(url = '', data = {}) {
 
 // GET method implementation:
 async function getData(url = '') {
-  
+
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -125,15 +122,26 @@ function setBaldasCajas(xhttp) {
   let response = JSON.parse(xhttp.responseText);
   let baldas = response.baldas;
   let cajas = response.cajas;
-  //creamos los elementos option en el select baldas
-  baldas.forEach(balda => {
-    baldaElement = document.createElement("option");
-    baldaElement.value = balda.id;
-    baldaElement.innerText = balda.nombre;
-    selectBaldas.appendChild(baldaElement);
-  });
 
-  //si no tenemos cajas
+  //comprobamos la cantidad de baldas
+  if(baldas.length == 0){
+    let baldaElement = document.createElement('option');
+    baldaElement.value = 0;
+    baldaElement.innerText = 'No hay baldas';
+    selectBaldas.appendChild(baldaElement);
+  }else{
+    //si tenemos baldas
+    baldas.forEach(balda => {
+      //creamos los elementos option en el select baldas
+      baldaElement = document.createElement("option");
+      baldaElement.value = balda.id;
+      baldaElement.innerText = balda.nombre;
+      selectBaldas.appendChild(baldaElement);
+    });
+
+  }
+
+  //comprobamos cantidad de cajas
   if (cajas.length == 0) {
     //agregamos la opcion si no hay cajas
     let opcionDefault = document.createElement('option');
@@ -168,21 +176,35 @@ function setCajas(xhttp) {
   Array.from(selectCajas.childNodes).forEach(optionElement => {
     optionElement.remove();
   })
-  //agregamos la opcion por defecto
-  let opcionDefault = document.createElement('option');
-  opcionDefault.value = 0;
-  opcionDefault.innerText = 'No ubicar en caja';
-  opcionDefault.setAttribute('selected', 'true');
-  selectCajas.appendChild(opcionDefault);
-  //recibimos las cajas
-  let cajas = JSON.parse(xhttp.responseText);
-  cajas.forEach(caja => {
-    //creamos los elementos option
-    let cajaElement = document.createElement('option');
-    cajaElement.value = caja.id;
-    cajaElement.innerText = caja.nombre;
-    selectCajas.appendChild(cajaElement);
-  })
+  //recibimos la respuesta
+  let response = JSON.parse(xhttp.responseText);
+  let cajas = response.cajas;
+
+  //si no tenemos cajas
+  if (cajas.length == 0) {
+    //agregamos la opcion si no hay cajas
+    let opcionDefault = document.createElement('option');
+    opcionDefault.value = 0;
+    opcionDefault.innerText = 'No hay cajas';
+    opcionDefault.setAttribute('selected', 'true');
+    selectCajas.appendChild(opcionDefault);
+  } else {
+    //agregamos la opcion por defecto para el select cajas
+    let opcionDefault = document.createElement('option');
+    opcionDefault.value = 0;
+    opcionDefault.innerText = 'No ubicar en caja';
+    opcionDefault.setAttribute('selected', 'true');
+    selectCajas.appendChild(opcionDefault);
+
+    //creamos los elementos option en el select cajas
+    cajas.forEach(caja => {
+      let cajaElement = document.createElement('option');
+      cajaElement.value = caja.id;
+      cajaElement.innerText = caja.nombre;
+      selectCajas.appendChild(cajaElement);
+    })
+  }
+
 }
 
 
@@ -228,7 +250,7 @@ function añadirEtiqueta(xhttp) {
     return;
   }
   //texto del select 
-  let textEtiquetaSelected = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;
+  let nombreEtiquetaSelected = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;
 
   //verificamos que la etiqueta no este añadida
   let etiquetasAñadidas = document.getElementById('etiquetasProducto').childNodes;
@@ -238,9 +260,9 @@ function añadirEtiqueta(xhttp) {
       return;
     }
   }
-  //creasmos elemento span
+  //creamos elemento span
   let spanElement = document.createElement('span');
-  spanElement.innerText = textEtiquetaSelected;
+  spanElement.innerText = nombreEtiquetaSelected;
   spanElement.id = idEtiquetaSelected;
   spanElement.classList.add('etiqueta');
   spanElement.classList.add('d-inline-flex');
@@ -257,24 +279,27 @@ function añadirEtiqueta(xhttp) {
   //añadimos el span x al span etiqueta
   document.getElementById(idEtiquetaSelected).appendChild(spanX);
 
-  //añadimos event click a los span con la clase close-etiqueta
-  let elementCloseEtiqueta = document.getElementsByClassName('close-etiqueta');
-  for (let i = 0; i < elementCloseEtiqueta.length; i++) {
-    const element = elementCloseEtiqueta[i];
-    element.addEventListener('click', (e) => {
-      //eliminamos elemento padre del span x 
-      e.target.parentNode.remove();
-    })
-  }
+  //añadimos event click al span x para remover la etiqueta
+  spanX.addEventListener('click',(e) =>{
+    e.target.parentNode.remove();
+    crearInputEtiquetasAñadidas()
+  })
+  
+  crearInputEtiquetasAñadidas();
 
+}
 
+function crearInputEtiquetasAñadidas(){
+  let etiquetasAñadidas = document.getElementById('etiquetasProducto').childNodes;
   //creamos un string con los id de las etiquetas añadidas
   let stringEtiquetasAñadidas = "";
   for (let i = 0; i < etiquetasAñadidas.length; i++) {
     let etiqueta = etiquetasAñadidas[i];
-    stringEtiquetasAñadidas += etiqueta.id + " ";
+    if(etiqueta.localName == 'span'){
+      stringEtiquetasAñadidas += etiqueta.id + " ";
+    }
   }
-  //guardamos la informacion en un input
+  
   //eliminamos el input si esta creado
   if (document.getElementById('inputAñadirEtiquetas')) {
     document.getElementById('inputAñadirEtiquetas').remove();
@@ -289,8 +314,6 @@ function añadirEtiqueta(xhttp) {
   //element en donde ubicaremos el input
   let inputEtiquetas = document.getElementById('inputEtiquetas');
   document.getElementById('inputEtiquetas').appendChild(inputAñadirEtiquetas);
-
-
 }
 
 function crearEtiqueta(xhttp) {
@@ -299,7 +322,7 @@ function crearEtiqueta(xhttp) {
     document.getElementById('nombreEtiqueta').value = "";
     //recuperamos el mensaje
     let mensaje = JSON.parse(xhttp.responseText);
-    
+
     createAlert(mensaje);
 
     //si etiqueta creada correctamente, recargamos select etiquetas
@@ -351,8 +374,11 @@ function añadirProducto() {
       if (document.getElementById('nombreInvalido').firstChild != null)
         document.getElementById('nombreInvalido').firstChild.remove();
 
-        //si no se ha especificado un nombre al producto
+      //si no se ha especificado un nombre al producto
       if (response.error == 'nombreInvalido') {
+
+        createAlert(response);
+
         //div para mostrar error
         let divElement = document.createElement('div');
         divElement.classList.add('textError');
@@ -393,112 +419,80 @@ function añadirProducto() {
 }
 
 //obtenemos el nombre de la etiqueta que se desea eliminar
-function getEtiquetaOfSelect(){
-  
-  document.getElementById('nombreEtiquetaSelect').innerText = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;               
-  
+function getEtiquetaOfSelect() {
+
+  document.getElementById('nombreEtiquetaSelect').innerText = document.getElementById('selectEtiquetas').selectedOptions[0].innerText;
+
 }
 
 //enviamos id de la etiqueta que vamos a eliminar
-function eliminarEtiqueta(){
+function eliminarEtiqueta() {
   const idEtiqueta = document.getElementById('selectEtiquetas').selectedOptions[0].value;
   getData('añadirProducto.php?idEliminarEtiqueta=' + idEtiqueta)
-    .then(response=>{
-      console.log(response);
+    .then(response => {
+      
       //creamos el alert
       createAlert(response);
-      
+
       //si se ha eliminado la etiqueta
-      if(response['msj-type']=='success'){
-        //copia de los options
-        const selectEtiquetas = Array.from(document.getElementById('selectEtiquetas'));
-        //eliminamos los element option etiquetas
-          Array.from(document.getElementById('selectEtiquetas').childNodes).forEach(etiqueta => {
-            //eliminamos las etiquetas
+      if (response['msj-type'] == 'success') {
+        //select etiquetas
+        const selectEtiquetas = document.getElementById('selectEtiquetas');
+        //eliminamos del select la etiqueta
+        for (let i = 0; i < selectEtiquetas.childNodes.length; i++) {
+          const etiqueta = selectEtiquetas.childNodes[i];
+          if(etiqueta.value== idEtiqueta){
             etiqueta.remove();
-          })
-        //recorremos elements options del select etiquetas para eliminar del array la etiqueta eliminada
-        for (let i = 0; i < selectEtiquetas.length; i++) {
-          const element = selectEtiquetas[i];
-          if(element.value == idEtiqueta){
-            //eliminamos element option
-            selectEtiquetas.splice(i,1);
-            break;
           }
         }
-        //actualizamos el select etiquetas
-        //recorremos las etiquetas actualizadas
-        selectEtiquetas.forEach(etiqueta => {
-          //creamos element option
-          let optionElement = document.createElement('option');
-          optionElement.value = etiqueta.value;
-          optionElement.innerText = etiqueta.innerText;
-          //añadimos la etiqueta al select
-          document.getElementById('selectEtiquetas').appendChild(optionElement);
-        })
-
-        //recorremos las etiquetas que vamos a añadir
+       
+        //recorremos los span etiquetas para remover el eliminado
         for (let i = 0; i < document.getElementById('etiquetasProducto').childNodes.length; i++) {
           const element = document.getElementById('etiquetasProducto').childNodes[i];
-          if(element.id == idEtiqueta){
+          if (element.id == idEtiqueta) {
             element.remove();
             break;
           }
-          
         }
 
-        let etiquetasAñadidas = document.getElementById('etiquetasProducto').childNodes;
-        
-        //actualizamos input con id de las etiquetas
-        //creamos un string con los id de las etiquetas añadidas
-        let stringEtiquetasAñadidas = "";
-        for (let i = 0; i < etiquetasAñadidas.length; i++) {
-          let etiqueta = etiquetasAñadidas[i];
-          stringEtiquetasAñadidas += etiqueta.id + " ";
-        }
-        //eliminamos el input si esta creado
-        if (document.getElementById('inputAñadirEtiquetas')) {
-          document.getElementById('inputAñadirEtiquetas').remove();
-        }
-        //creamos un input con los id de las etiquetas añadidas
-        let inputAñadirEtiquetas = document.createElement('input');
-        inputAñadirEtiquetas.id = 'inputAñadirEtiquetas';
-        inputAñadirEtiquetas.nodeType = 'text';
-        inputAñadirEtiquetas.setAttribute('hidden', 'true');
-        inputAñadirEtiquetas.name = 'inputAñadirEtiquetas';
-        inputAñadirEtiquetas.value = stringEtiquetasAñadidas.trim();
-        //element en donde ubicaremos el input
-        let inputEtiquetas = document.getElementById('inputEtiquetas');
-        document.getElementById('inputEtiquetas').appendChild(inputAñadirEtiquetas);
-      }   
+      crearInputEtiquetasAñadidas();
+      }
     })
     .catch(error => console.error('Error:', error));
 }
 
-function createAlert(mensaje){
+function createAlert(mensaje) {
+  //select div alert
+	const divAlerts = document.getElementById('alerts');
+
+	//check si existe un alert
+	if(divAlerts.childNodes.length > 0){
+		//eliminamos el alert
+		divAlerts.childNodes[0].remove();
+	}
   //creamos un div que sera el alert
   let divElement = document.createElement('div');
 
   //añadimos clases al div
   divElement.classList.add('alert');
-  
-  
+  divElement.classList.add('alert-dismissible');
   divElement.classList.add('alert-' + mensaje['msj-type']);
   divElement.innerHTML = mensaje['msj-content'];
 
-  //añadimos el div alert
-  document.getElementById('alerts').appendChild(divElement);
-  
-  //añadimos una transicion a el alert despues de un tiempo establecido
-  setTimeout(() => {
-    divElement.classList.add('deleteAlert');
-    
-  }, 3000);
+  //añadimos el div element en el div alerts
+  divAlerts.appendChild(divElement);
 
-  //eliminamos el alert despues de acabada la transicion
-  divElement.addEventListener('transitionend',()=>{
-    divElement.remove();
-  })
+  //creamos element span para cerrar el alert
+  let spanElement = document.createElement('span');
+  //añadimos clases y atributos
+  spanElement.classList.add('btn-close');
+  spanElement.setAttribute('data-bs-dismiss','alert');
+  spanElement.setAttribute('type','button');
+  spanElement.setAttribute('aria-label','Close');
+  //añadimos button element al alert
+  divElement.appendChild(spanElement);
+
+  
 }
 
 
