@@ -22,12 +22,12 @@
         <div class="col-3">
             <ul id="menu">
                 <span class="ocultos titulo">Trastero {{$datosTrastero['nombre']}}</span>
-                <i id="trastero{{$datosTrastero['nombre']}}" class="productos  fa-solid fa-magnifying-glass"  name="{{$datosTrastero['nombre']}}" style="color: rgb(255,255,255,0); border: white"></i>
+                <i id="trastero{{$datosTrastero['nombre']}}" class="productos  fa-solid fa-magnifying-glass"  name="{{$datosTrastero['nombre']}}" style="color: rgb(255,255,255,0)"></i>
                 @foreach($datosTrastero['estanterias'] as $estanteria)
                 <li>
                     <input type="checkbox" name="list" id="{{$estanteria->getId()}}">
                     <label class="ocultos" for="{{$estanteria->getId()}}">{{$estanteria->getNombre()}}</label>
-                    <i id="estanteria{{$estanteria->getId()}}" class="productos  fa-solid fa-magnifying-glass" name="{{$estanteria->getId()}}" style="color: rgb(255,255,255,0); border: white"></i>                    
+                    <i id="estanteria{{$estanteria->getId()}}" class="productos  fa-solid fa-magnifying-glass" name="{{$estanteria->getId()}}" style="color: rgb(255,255,255,0)"></i>                    
                     <ul class="interior">
                         @php 
                         $baldasRecuperadas = array()
@@ -53,14 +53,14 @@
                         @if(empty($cajasRecuperadas))
                         <li>
                             <a class="ocultos" id="{{$balda->getId()}}" href="#r">{{$balda->getNombre()}}</a>
-                            <i id="balda{{$balda->getId()}}"class="productos  fa-solid fa-magnifying-glass"  name="{{$balda->getId()}}" style="color: rgb(255,255,255,0); border: white"></i> 
+                            <i id="balda{{$balda->getId()}}"class="productos  fa-solid fa-magnifying-glass"  name="{{$balda->getId()}}" style="color: rgb(255,255,255,0)"></i> 
          
                         </li>
                         @else
                         <li>
                             <input type="checkbox" name="list" id="{{$balda->getId()}}">
                             <label class="ocultos" for="{{$balda->getId()}}">{{$balda->getNombre()}}</label>
-                            <i id="balda{{$balda->getId()}}" class="productos  fa-solid fa-magnifying-glass"  name="{{$balda->getId()}}"  style="color: rgb(255,255,255,0); border: white"></i> 
+                            <i id="balda{{$balda->getId()}}" class="productos  fa-solid fa-magnifying-glass"  name="{{$balda->getId()}}"  style="color: rgb(255,255,255,0)"></i> 
                              
                             <ul class="interior">
                                 <li>
@@ -69,7 +69,7 @@
                                        
                                         <li>
                                             <a class ="ocultos" id ="{{$caja->getId()}}">{{$caja->getNombre()}}</a>
-                                            <i id="caja{{$caja->getId()}}" class="productos  fa-solid fa-magnifying-glass"  name="{{$caja->getId()}}"  style="color: rgb(255,255,255,0); border: white"></i> 
+                                            <i id="caja{{$caja->getId()}}" class="productos  fa-solid fa-magnifying-glass"  name="{{$caja->getId()}}"  style="color: rgb(255,255,255,0)"></i> 
                                         </li>
                                        
                                         @endforeach
@@ -89,7 +89,7 @@
                     <div class="col-6">
                         <li>
                             <a class="ocultos" id ="{{$caja->getId()}}">{{$caja->getNombre()}}</a>
-                            <i id="caja{{$caja->getId()}}" class="productos  fa-solid fa-magnifying-glass"  name="{{$caja->getId()}}"  style="color: rgb(255,255,255,0); border: white"></i> 
+                            <i id="caja{{$caja->getId()}}" class="productos  fa-solid fa-magnifying-glass"  name="{{$caja->getId()}}"  style="color: rgb(255,255,255,0)"></i> 
                         </li>
                     </div>
                     
@@ -107,7 +107,7 @@
                     <th class="vtTdUbicacion">Ubicación</th>    
                 </tr>
             </table>
-
+            <span id="anotacion" class="anotacion"></span>
         </div>
 
     </div>

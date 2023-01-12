@@ -64,49 +64,52 @@
                 <form action="" method="POST" id='formEliminarProducto'>
                     <table id="bpTable" class="row">
                         <tr class="bpTrCabecera">
-                            <th class="col-1">Seleccionar</th>
-                            <th class="col-2">Producto</th>
+                            <th></th>
+                            <th>Fecha</th>
+                            <th>Producto</th>
                             <th class="col-3">Descripción</th>
                             <th class="col-4">Ubicación</th>
-                            <th class="col-2">   </th>
+                            <th class="col-1">   </th>
                         </tr>
                     @foreach ($productos as $valor)    
                     <tr class="bpTr">
-                        <td><input type="checkbox" name="IdsProductos[]" value="{{$valor->getId()}}"></td>  
-                        <td class="col-2"> {{$valor->getNombre()  }}</td> 
+                        <td><input type="checkbox" name="IdsProductos[]" value="{{$valor->getId()}}"></td>
+                        <td class="tdCenter"> {{$valor->getFechaIngreso()  }}</td> 
+                        <td class="tdCenter"> {{$valor->getNombre()  }}</td> 
                         <td class="col-3"> {{$valor->getDescripcion()  }}</td>
-                        <td class="col-4"> Estanteria: 
+                        <td class="col-4"><b> *E:</b> 
                                 @if ($valor->getIdEstanteria() == null)
-                                    no asignada
+                                    Sin asignar
                                 @else
-                                    {{$valor->obtenerNumeroEstanteria($bd)  }}
+                                    {{$valor->obtenerNombreEstanteria($bd)  }}
                                 @endif
-                            , Balda: 
-                                @if ($valor->obtenerNumeroBalda($bd) == null)
-                                    no asignada
+                                 <b>*B:</b> 
+                                @if ($valor->obtenerNombreBalda($bd) == null)
+                                    Sin asignar
                                 @else
-                                    {{$valor->obtenerNumeroBalda($bd)  }}
+                                    {{$valor->obtenerNombreBalda($bd)  }}
                                 @endif
-                            , Caja: 
-                                @if ($valor->obtenerNumeroCaja($bd) == null)
-                                    no asignada
+                                   <b>*C:</b> 
+                                @if ($valor->obtenerNombreCaja($bd) == null)
+                                    Sin asignar
                                 @else
-                                    {{$valor->obtenerNumeroCaja($bd)  }} 
+                                    {{$valor->obtenerNombreCaja($bd)  }} 
                                 @endif
                                 </td>
-                        <td  class="col-2">
+                        <td  class="col-1">
                             <form method="POST" action="" id='produModificar'>
                                 <input type='hidden' name='id' value='{{$valor->getId()}}'>
-                                <button type="submit" name="modificarProducto" id="modificarProducto">Modificar Producto</button>
+                                <button type="submit" name="modificarProducto" style="margin: 0px;padding: 7px;" id="modificarProducto">Modificar</button>
                             </form>
                         </td>
                     </tr>
                     @endforeach
                     </table>
+                    <span class="anotacion">*<sub>1</sub> Estanteria *<sub>2</sub> Balda *<sub>3</sub> Caja</span>
                     <div class="bpbtnEliminar">
                          <button type="submit" name="eliminarProducto" id='eleminarProducto'>Eliminar Seleccionados</button>
                     </div>
-                   
+                    
                 </form>
             @endif
         @endif
