@@ -1,5 +1,7 @@
 window.addEventListener('load', iniciar);
 
+//borra esto xd era para hacer el commit
+
 function iniciar() {
 	checkSelectRadio();
 	//creamos input en el que guardamos los id de las etiquetas que vamos a asignar al producto
