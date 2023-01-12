@@ -81,16 +81,12 @@ function deshabilitarEdicion(e){
                 data: {nuevoNombre: nombre, nombre: antiguoNombre, id: idElemento},
                 success: function(result){
                     var respuesta = result.cambiado;
-                    nombre = nombre.trim();
+                    
                     //Si la respuesta a la peticíón es false se recupera el antiguo nombre y se avisa con un alert.
                     if(!respuesta){
                         elemento.innerText = antiguoNombre;
-                        alert ("Ya existe un elemento con ese nombre.");
-                    }
-                    //Si el nuevo nombre está vacío mantenemos el antiguo.
-                    if(nombre==""){
-                        elemento.innerText = antiguoNombre;   
-                    }              
+                        alert (result.mensaje);
+                    }       
             }}); 
     });  
     editando = false;
@@ -115,7 +111,6 @@ function añadirPapelera(e){
         papelera.setAttribute("style","color: rgb(236, 28, 36, 0.8)"); 
         var retardo=setTimeout(function(){
             papelera.setAttribute("style","color: rgb(255,255,255,0)");
-            eliminado = true;
         }, 2000); 
     }      
 }

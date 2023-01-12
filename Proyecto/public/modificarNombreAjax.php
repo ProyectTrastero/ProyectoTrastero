@@ -71,19 +71,22 @@ $idElemento = trim(filter_input(INPUT_POST, 'id',FILTER_SANITIZE_STRING));
 $nombre = trim(filter_input(INPUT_POST, 'nombre',FILTER_SANITIZE_STRING));
 $nuevoNombre = trim(filter_input(INPUT_POST, 'nuevoNombre',FILTER_SANITIZE_STRING));
 $response=[];
-if(existeNombre($nuevoNombre, $almacenCajas, $almacenBaldas, $almacenEstanterias)){
+if(trim($nuevoNombre)==""){
     $response['cambiado']=false;
-    $response['nombre'] = $nombre;
+    $response['mensaje'] = "El nombre del elemento no puede estar vacío."; 
+}else if(existeNombre($nuevoNombre, $almacenCajas, $almacenBaldas, $almacenEstanterias)){
+    $response['cambiado']=false;
+    $response['mensaje'] = "Ya existe un elemento con ese nombre.";
 }else{
     
     if(str_contains($nombre, 'Balda')){
         $idEstanteria = Balda::obtenerIdEstanteria($bd, $idElemento);
         foreach($almacenBaldas as $clave=>$valor){
-        if($valor->getNombre()==$nombre && $valor->getIdEstanteria()==$idEstanteria){
-            $valor->setNombre($nuevoNombre);
-            $valor->actualizarNombre($bd, $nuevoNombre);
+            if($valor->getNombre()==$nombre && $valor->getIdEstanteria()==$idEstanteria){
+                $valor->setNombre($nuevoNombre);
+                $valor->actualizarNombre($bd, $nuevoNombre);
+            }
         }
-    }
         
     }else{
     

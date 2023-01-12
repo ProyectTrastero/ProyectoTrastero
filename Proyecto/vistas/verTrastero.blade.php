@@ -109,10 +109,7 @@
             </table>
             <span id="anotacion" class="anotacion"></span>
         </div>
-
     </div>
-    
 </div>
-
 
 @endsection
