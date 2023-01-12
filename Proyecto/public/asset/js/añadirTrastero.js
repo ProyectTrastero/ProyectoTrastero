@@ -6,12 +6,9 @@ var primerElemento;
 var guardado;
 var infoModal;
 var infoModal2;
-var infoModal3;
 var editable;
-var visible;
 //Inicializa las variables tras haber cargado la página.
 function iniciar(){
-    visible=false;
     var tipo = document.getElementById("guardadoModificado");
     var modal=document.getElementById("mostrarModal");
     infoModal=modal.value;
@@ -113,11 +110,13 @@ function habilitarEdicion(e){
 function añadirPapelera(e){
         var elemento = e.target;
         var papelera = elemento.nextElementSibling;
-//        var clase = papelera.get
+        var color=papelera.getAttribute("style");
+        if(color=="color: rgb(255,255,255,0)"){
         papelera.setAttribute("style","color: rgb(236, 28, 36, 0.8)"); 
         var retardo=setTimeout(function(){
             papelera.setAttribute("style","color: rgb(255,255,255,0)");
+            eliminado = true;
         }, 2000); 
-        
+    }      
 }
 

@@ -18,7 +18,14 @@ body {
     padding:0px;
     height: 60px;
 }
-
+.anotacion{
+    margin:0px;
+    font-size: 10px;
+    margin-left: 2%;
+    padding:0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
 /*////////////////////////////////////////////////////*/
  /*APP Y NAVBAR*/ 
 
@@ -236,11 +243,17 @@ td{
     border-radius: 2px;
     margin: 5px;
 }
+.bpTr>td{
+    padding: 5px;
+}
 
 .vtTrCabecera, .bpTrCabecera{
     background: rgb(0, 168, 243, 0.5);
     text-align: center;
 
+}
+.tdCenter{
+    text-align: center;
 }
 
 .vtTr, .bpTr{

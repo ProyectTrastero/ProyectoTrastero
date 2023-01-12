@@ -35,6 +35,7 @@ function mostrarProductos(e){
                 dataType: "json", 
                 data: {id: idSeleccionado, tipo: tipo},
                 success: function(result){
+                    var anotacion = document.getElementById("anotacion");
                     var listadoProductos=eval(result);
                     var listado=eval(listadoProductos);
                     var tabla=document.getElementById("vtTable");
@@ -48,6 +49,11 @@ function mostrarProductos(e){
                             body.removeChild(eliminado);
                            
                         }while(filas.length>1)
+                    }
+                    if(listadoProductos.length==0){
+                        anotacion.innerHTML="";
+                    }else{
+                        anotacion.innerHTML="*<sub>1</sub> Estanteria *<sub>2</sub> Balda *<sub>3</sub> Caja";
                     }
                     //Por cada elemento creamos una fila en la tabla
                     for(i=0;i<listadoProductos.length;i++){
@@ -67,11 +73,11 @@ function mostrarProductos(e){
                         columna1.innerHTML = listadoProductos[i].fechaingreso;
                         columna2.innerHTML = listadoProductos[i].nombre;
                         columna3.innerHTML = listadoProductos[i].descripcion;
-                        var numEstanteria=listadoProductos[i].estanteria;
-                        var numBalda = listadoProductos[i].balda;
-                        var numCaja = listadoProductos[i].caja;
+                        var nomEstanteria=listadoProductos[i].estanteria;
+                        var nomBalda = listadoProductos[i].balda;
+                        var nomCaja = listadoProductos[i].caja;
                         
-                        columna4.innerHTML = "Estanteria "+ numEstanteria+" - Balda "+numBalda+" - Caja "+numCaja;
+                        columna4.innerHTML = "<b>*E:</b> "+ nomEstanteria+"<b> *B:</b> "+nomBalda+"<b>  *C:</b> "+nomCaja;
                         //Añadimos a cada fila las celdas creadas
                         fila.appendChild(columna1);
                         fila.appendChild(columna2);
@@ -89,10 +95,15 @@ function mostrarProductos(e){
 function añadirOjo(e){
         var oculto = e.target;
         var elemento= oculto.nextElementSibling;
-        elemento.setAttribute("style","color: rgb(28, 87, 236, 0.8); border: white");
+        var color=elemento.getAttribute("style");
+        if(color=="color: rgb(255,255,255,0)"){
+        elemento.setAttribute("style","color: rgb(28, 87, 236, 0.8)");
         var retardo=setTimeout(function(){
-            elemento.setAttribute("style","color: rgb(255,255,255,0); border: white"); 
+            eliminado = true;
+            elemento.setAttribute("style","color: rgb(255,255,255,0)"); 
         }, 2000); 
+    }
+       
 }
 
 

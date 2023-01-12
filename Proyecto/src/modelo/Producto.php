@@ -351,44 +351,44 @@ class Producto {
             }
     }
     
-    public function obtenerNumeroEstanteria($bd){
+    public function obtenerNombreEstanteria($bd){
         if($this->idEstanteria==null){
-            $numero="Sin asignar";
+            $nombre="Sin asignar";
             
         }else{
-            $consulta="select numero from estanterias where id = $this->idEstanteria";
+            $consulta="select nombre from estanterias where id = $this->idEstanteria";
             $registro= $bd->query($consulta);
             $reg= $registro->fetch(PDO::FETCH_OBJ);
-            $numero=$reg->numero;
+            $nombre=$reg->nombre;
         }
-        return $numero;
+        return $nombre;
     }
     
-    public function obtenerNumeroBalda($bd){
+    public function obtenerNombreBalda($bd){
         if($this->idBalda==null){
-            $numero="Sin asignar";
+            $nombre="Sin asignar";
             
         }else{
-            $consulta="select numero from baldas where id = $this->idBalda";
+            $consulta="select nombre from baldas where id = $this->idBalda";
             $registro= $bd->query($consulta);
             $reg= $registro->fetch(PDO::FETCH_OBJ);
-            $numero=$reg->numero;
+            $nombre=$reg->nombre;
         }
-        return $numero;
+        return $nombre;
     }
     
-    public function obtenerNumeroCaja($bd){
+    public function obtenerNombreCaja($bd){
         if($this->idCaja==null){
-            $numero="Sin asignar";
+            $nombre="Sin asignar";
             
         }else{
-            $consulta="select numero from cajas where id = $this->idCaja";
+            $consulta="select nombre from cajas where id = $this->idCaja";
             $registro= $bd->query($consulta);
             $reg= $registro->fetch(PDO::FETCH_OBJ);
-            $numero=$reg->numero;
+            $nombre=$reg->nombre;
         }
         
-        return $numero;
+        return $nombre;
     }
     
     public static function obtenerFechaIngreso(){

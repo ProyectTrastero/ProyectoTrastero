@@ -113,9 +113,9 @@ if(!empty($_REQUEST)){
         $productonuevo['fechaingreso']=$producto->getFechaIngreso();
         $productonuevo['nombre']=$producto->getNombre();
         $productonuevo['descripcion']=$producto->getDescripcion();
-        $productonuevo['estanteria']=$producto->obtenerNumeroEstanteria($bd);
-        $productonuevo['balda']=$producto->obtenerNumeroBalda($bd);
-        $productonuevo['caja']=$producto->obtenerNumeroCaja($bd);
+        $productonuevo['estanteria']=$producto->obtenerNombreEstanteria($bd);
+        $productonuevo['balda']=$producto->obtenerNombreBalda($bd);
+        $productonuevo['caja']=$producto->obtenerNombreCaja($bd);
         
         $productos[]=$productonuevo;
     }
