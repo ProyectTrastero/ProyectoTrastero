@@ -3,6 +3,8 @@
 namespace App;
 
 use \PDO as PDO;
+use PDOException;
+
 /**
  * Description of Etiqueta
  *
@@ -90,9 +92,17 @@ class Etiqueta implements \JsonSerializable{
         return $etiqueta;
     }
     
-    public function guardarEtiqueta($bd){
-        $consulta="INSERT INTO `etiquetas` (nombre, idUsuario) VALUES ('$this->nombre', $this->idUsuario);";
-        $bd->exec($consulta);
+    public function guardarEtiqueta($bd):int{
+        try {
+            $consulta="INSERT INTO `etiquetas` (nombre, idUsuario) VALUES ('$this->nombre', $this->idUsuario);";
+            $bd->exec($consulta);
+            $id=intval($bd->lastInsertId());
+            $bd=null;
+            return $id;
+        } catch (PDOException $e) {
+            $bd=null;
+            return -1;
+        }
     }
 
     public function checkExisteNombreEtiqueta(PDO $bd):bool{

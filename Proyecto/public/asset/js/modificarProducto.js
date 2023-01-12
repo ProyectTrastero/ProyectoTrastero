@@ -114,7 +114,11 @@ async function postData(url = '', data = {}) {
 			'Content-Type': 'application/json'
 		}
 	});
-	return response.json(); // datos que recibimos
+	if(!response.ok){
+		throw new Error(`HTTP error status: ${response.status}`)
+	}else{
+		return response.json(); // datos que recibimos
+	}
 }
 
 // GET method implementation:
@@ -126,7 +130,11 @@ async function getData(url = '') {
 		'Content-Type': 'application/json'
 	  }
 	});
-	return response.json(); // datos que recibimos
+	if(!response.ok){
+		throw new Error(`HTTP error status: ${response.status}`)
+	}else{
+		return response.json(); // datos que recibimos
+	}
   }
   
 
@@ -146,10 +154,7 @@ function getBaldasCajas() {
 		optionElement.remove();
 	})
 	//hacemos la peticion al servidor
-	postData('modificarProducto.php', {
-		getBaldasCajas: '',
-		idEstanteriaSelected: idEstanteriaSelected
-	})
+	getData('modificarProducto.php?idEstanteria='+idEstanteriaSelected)
 		//recibimos los datos
 		.then(data => {
 			//comprobamos cantidad de baldas
@@ -202,10 +207,7 @@ function getCajas() {
 		optionElement.remove();
 	})
 	//hacemos la peticion al servidor
-	postData('modificarProducto.php', {
-		getCajas: '',
-		idBaldaSelected: idBaldaSelected
-	})
+	getData('modificarProducto.php?idBalda='+idBaldaSelected)
 		.then(data => {
 			//comprobamos cantidad de cajas
 			if(data.cajas.length==0){
@@ -237,42 +239,26 @@ function crearEtiqueta() {
 	//limpiamos el input
 	document.getElementById('nombreEtiqueta').value = "";
 	//hacemos peticion al servidor
-	postData('modificarProducto.php', {
-		crearEtiqueta: '',
-		nombreEtiqueta: nombreEtiqueta,
-	})
+	getData('modificarProducto.php?nombreEtiqueta='+nombreEtiqueta)
 		.then(data => {
 			createAlert(data);
 
-			//si etiqueta creada correctamente, recargamos select etiquetas
+			//si etiqueta creada correctamente, añadimos la etiqueta al select etiquetas
 			if (data['msj-type'] == 'success') {
-				getEtiquetas();
+				insertEtiquetaSelect(nombreEtiqueta, data.idEtiqueta);
 			}
 		})
 		.catch(error => console.error('Error:', error));
 }
 
-//recibimos las etiquetas del usuario
-function getEtiquetas() {
-	//eliminamos los option elment del select etiquetas
-	Array.from(selectEtiquetas.childNodes).forEach(etiqueta => {
-		//eliminamos las etiquetas
-		etiqueta.remove();
-	})
-	//hacemos peticion al servidor para obtener las etiquetas
-	postData('modificarProducto.php', { getEtiquetas: '' })
-		.then(data => {
-			data.forEach(etiqueta => {
-				//creamos element option
-				let optionElement = document.createElement('option');
-				optionElement.value = etiqueta.id;
-				optionElement.innerText = etiqueta.nombre;
-				//añadimos la etiqueta al select
-				selectEtiquetas.appendChild(optionElement);
-
-			})
-		})
-		.catch(error => console.error('Error:', error));
+//insertamos etiqueta en el select etiquetas
+function insertEtiquetaSelect(nombreEtiqueta,idEtiqueta) {
+  let selectEtiquetas = document.getElementById('selectEtiquetas');
+  //creamos elemento option
+  let optionElement = document.createElement('option');
+  optionElement.value = idEtiqueta;
+  optionElement.innerText = nombreEtiqueta;
+  selectEtiquetas.appendChild(optionElement);
 }
 
 function añadirEtiqueta() {

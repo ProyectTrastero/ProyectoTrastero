@@ -104,7 +104,7 @@ if (isset($_SESSION['usuario'])) {
 	//peticion para eliminar etiqueta
     if(isset($_GET['idEliminarEtiqueta'])){
         //recibimos el id de la etiqueta
-        $idEliminarEtiqueta = $_GET['idEliminarEtiqueta'];
+        $idEliminarEtiqueta = Validacion::sanearInput($_GET['idEliminarEtiqueta']);
         //creamos objeto etiqueta
         $etiqueta = new Etiqueta();
         $etiqueta->setId($idEliminarEtiqueta);
@@ -123,67 +123,64 @@ if (isset($_SESSION['usuario'])) {
         die;
     }
 
-	//recibimos las peticiones del cliente 
-	if (!is_null($data = json_decode(file_get_contents('php://input'), true))) {
+	//peticion para devolver baldas y cajas de una estanteria selecionada
+	if(isset($_GET['idEstanteria'])){
+		$idEstanteriaSelected = Validacion::sanearInput($_GET['idEstanteria']);
+		//recuperamos las baldas 
+		$baldas = Balda::recuperarBaldasPorIdEstanteria($bd, intval($idEstanteriaSelected));
+		//recuperamos las cajas de la primera balda
+		$cajas = Caja::recuperarCajaPorIdBalda($bd, $baldas[0]->getId());
 
-		
-		//peticion para devolver baldas y cajas de una estanteria selecionada
-		if (array_key_exists('getBaldasCajas', $data)) {
-			//saneamos el id de la estanteria seleccionada
-			(isset($data['idEstanteriaSelected'])) ? $idEstanteriaSelected = Validacion::sanearInput($data['idEstanteriaSelected']) : $idEstanteriaSelected = "";
+		//formamos array con la respuesta
+		$response = array('baldas' => $baldas, 'cajas' => $cajas);
+		echo json_encode($response);
+		die;
+	}
 
-			//recuperamos las baldas 
-			$baldas = Balda::recuperarBaldasPorIdEstanteria($bd, intval($idEstanteriaSelected));
-			//recuperamos las cajas de la primera balda
-			$cajas = Caja::recuperarCajaPorIdBalda($bd, $baldas[0]->getId());
+	//peticion para devolver cajas de una balda seleccionada
+	if (isset($_GET['idBalda'])) {
+		//saneamos el id de la balda seleccionada
+		$idBaldaSelected = Validacion::sanearInput($_GET['idBalda']);
+		//recuperamos las cajas
+		$cajas = Caja::recuperarCajaPorIdBalda($bd, $idBaldaSelected);
+		$response = array('cajas'=>$cajas);
+		echo json_encode($response);
+		die;
+	}
 
-			//formamos array con la respuesta
-			$response = array('baldas' => $baldas, 'cajas' => $cajas);
-			echo json_encode($response);
-			die;
-		}
-		//peticion para devolver cajas de una balda seleccionada
-		if (array_key_exists('getCajas', $data)) {
-			//saneamos el id de la balda seleccionada
-			(isset($data['idBaldaSelected'])) ? $idBaldaSelected = Validacion::sanearInput($data['idBaldaSelected']) : $idBaldaSelected = "";
-
-			//recuperamos las cajas
-			$cajas = Caja::recuperarCajaPorIdBalda($bd, $idBaldaSelected);
-			$response = array('cajas'=>$cajas);
-			echo json_encode($response);
-			die;
-		}
-
-		//peticion para crear etiqueta
-		if (array_key_exists('crearEtiqueta', $data)) {
-			//saneamos el nombre de la etiqueta
-			(isset($data['nombreEtiqueta'])) ? $nombreEtiqueta = Validacion::sanearInput($data['nombreEtiqueta']) : $nombreEtiqueta = "";
-			if ($nombreEtiqueta != '') {
-				//creamos objeto etiqueta
-				$etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
-				//comprobamos si el nombre de la etiqueta ya existe
-				if (!$etiqueta->checkExisteNombreEtiqueta($bd)) {
-					//el nombre de la etiqueta ya exite
-					$mensaje = ['msj-content' => 'Nombre de etiqueta ya existe, elija otro.', 'msj-type' => 'danger'];
-				} else {
-					//guardamos la etiqueta
-					$etiqueta->guardarEtiqueta($bd);
-					$mensaje = ['msj-content' => 'Etiqueta creada.', 'msj-type' => 'success'];
-				}
+	//peticion para crear etiqueta
+	if (isset($_GET['nombreEtiqueta'])) {
+		//saneamos el nombre de la etiqueta
+		$nombreEtiqueta = Validacion::sanearInput($_GET['nombreEtiqueta']);
+		if ($nombreEtiqueta != '') {
+			//creamos objeto etiqueta
+			$etiqueta = new Etiqueta(null, $nombreEtiqueta, $usuario->getId());
+			//comprobamos si el nombre de la etiqueta ya existe
+			if (!$etiqueta->checkExisteNombreEtiqueta($bd)) {
+				//el nombre de la etiqueta ya exite
+				$mensaje = ['msj-content' => 'Nombre de etiqueta ya existe, elija otro.', 'msj-type' => 'danger'];
 			} else {
-				//si nombre de etiqueta vacio
-				$mensaje = ['msj-content' => 'El campo nombre de etiqueta es obligatorio.', 'msj-type' => 'danger'];
+				//guardamos la etiqueta
+				$idEtiqueta = $etiqueta->guardarEtiqueta($bd);
+				$mensaje = ['msj-content' => 'Etiqueta creada.', 'msj-type' => 'success','idEtiqueta'=>$idEtiqueta];
 			}
-			echo json_encode($mensaje);
-			die;
+		} else {
+			//si nombre de etiqueta vacio
+			$mensaje = ['msj-content' => 'El campo nombre de etiqueta es obligatorio.', 'msj-type' => 'danger'];
 		}
+		echo json_encode($mensaje);
+		die;
+	}
 
-		//peticion para obtener las etiquetas del usuario
-		if (array_key_exists('getEtiquetas', $data)) {
-			$etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd, $usuario->getId());
-			echo json_encode($etiquetas);
-			die;
-		}
+	//peticion para obtener las etiquetas del usuario
+	if (isset($_GET['getEtiquetas'])) {
+		$etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd, $usuario->getId());
+		echo json_encode($etiquetas);
+		die;
+	}
+	
+	//recibimos las peticiones post del cliente en formato json
+	if (!is_null($data = json_decode(file_get_contents('php://input'), true))) {
 
 		//peticion para modificar el producto 
 		if (array_key_exists('modificarProducto', $data)) {

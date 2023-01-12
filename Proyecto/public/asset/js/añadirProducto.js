@@ -3,17 +3,9 @@ window.addEventListener("load", iniciar);
 var infoModal;
 
 function iniciar() {
-  // comprobamos si tenemos un alert
-  if (document.getElementById('alertsPhp')) {
-    // eliminamos los alerts en un tiempo establecido
-    setTimeout(() => {
-      document.getElementById('alertsPhp').remove();
-    }, 5000);
-  }
 
   //add events a los elementos
   addEventToElements();
-
 
 }
 
@@ -21,13 +13,13 @@ function iniciar() {
 function addEventToElements() {
   //añadimos event change a selectEstanterias
   //cuando seleccionamos una estanteria enviamos el id que hemos seleccionado al server
-  document.getElementById('selectEstanterias').addEventListener('change', function () {
-    loadDoc('añadirProducto.php?idEstanteria=' + this.value, setBaldasCajas);
-  })
+  document.getElementById('selectEstanterias').addEventListener('change',(e)=>{
+    setBaldasCajas(e);
+  });
 
   //añadimos event change a selectBaldas
-  document.getElementById('selectBaldas').addEventListener('change', function () {
-    loadDoc('añadirProducto.php?idBalda=' + this.value, setCajas);
+  document.getElementById('selectBaldas').addEventListener('change',(e)=>{
+    setCajas(e);
   })
 
   ////añadimos event change a los radio buttons 
@@ -54,9 +46,7 @@ function addEventToElements() {
   //prevent event submit del form crearEtiqueta
   document.getElementById('formCrearEtiqueta').addEventListener('submit', (e) => {
     e.preventDefault();
-    //recuperamos el nombre de la etiqueta
-    let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
-    loadDoc('añadirProducto.php?crearEtiqueta=' + nombreEtiqueta, crearEtiqueta);
+    crearEtiqueta();
   })
 
   //prevent event submit del form crearEtiqueta
@@ -67,12 +57,7 @@ function addEventToElements() {
 
 }
 
-function loadDoc(url, cFunction) {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onload = function () { cFunction(this); }
-  xhttp.open("GET", url, false);
-  xhttp.send();
-}
+
 
 // POST method implementation:
 async function postData(url = '', data = {}) {
@@ -84,7 +69,11 @@ async function postData(url = '', data = {}) {
       'Content-Type': 'application/json'
     }
   });
-  return response.json(); // datos que recibimos
+  if(!response.ok){
+    throw new Error(`HTTP error status: ${response.status}`)
+  }else{
+    return response.json(); // datos que recibimos
+  }
 }
 
 // GET method implementation:
@@ -96,13 +85,21 @@ async function getData(url = '') {
       'Content-Type': 'application/json'
     }
   });
-  return response.json(); // datos que recibimos
+  if(!response.ok){
+    throw new Error(`HTTP error status: ${response.status}`)
+  }else{
+    return response.json(); // datos que recibimos
+  }
 }
 
 
 
 
-function setBaldasCajas(xhttp) {
+function setBaldasCajas(e) {
+
+  //obtenemos el id de la estanteria
+  let idEstanteria = e.target.value;
+
   //select en donde iran las baldas
   const selectBaldas = document.getElementById('selectBaldas');
   //select en donde iran las cajas que tienen ubicacion
@@ -118,92 +115,98 @@ function setBaldasCajas(xhttp) {
     optionElement.remove();
   })
 
-  //recibimos la respuesta
-  let response = JSON.parse(xhttp.responseText);
-  let baldas = response.baldas;
-  let cajas = response.cajas;
-
-  //comprobamos la cantidad de baldas
-  if(baldas.length == 0){
-    let baldaElement = document.createElement('option');
-    baldaElement.value = 0;
-    baldaElement.innerText = 'No hay baldas';
-    selectBaldas.appendChild(baldaElement);
-  }else{
-    //si tenemos baldas
-    baldas.forEach(balda => {
-      //creamos los elementos option en el select baldas
-      baldaElement = document.createElement("option");
-      baldaElement.value = balda.id;
-      baldaElement.innerText = balda.nombre;
+  getData('añadirProducto.php?idEstanteria='+idEstanteria)
+  .then(response =>{
+    
+    let baldas = response.baldas;
+    let cajas = response.cajas;
+  
+    //comprobamos la cantidad de baldas
+    if(baldas.length == 0){
+      let baldaElement = document.createElement('option');
+      baldaElement.value = 0;
+      baldaElement.innerText = 'No hay baldas';
       selectBaldas.appendChild(baldaElement);
-    });
-
-  }
-
-  //comprobamos cantidad de cajas
-  if (cajas.length == 0) {
-    //agregamos la opcion si no hay cajas
-    let opcionDefault = document.createElement('option');
-    opcionDefault.value = 0;
-    opcionDefault.innerText = 'No hay cajas';
-    opcionDefault.setAttribute('selected', 'true');
-    selectCajas.appendChild(opcionDefault);
-  } else {
-    //agregamos la opcion por defecto para el select cajas
-    let opcionDefault = document.createElement('option');
-    opcionDefault.value = 0;
-    opcionDefault.innerText = 'No ubicar en caja';
-    opcionDefault.setAttribute('selected', 'true');
-    selectCajas.appendChild(opcionDefault);
-
-    //creamos los elementos option en el select cajas
-    cajas.forEach(caja => {
-      let cajaElement = document.createElement('option');
-      cajaElement.value = caja.id;
-      cajaElement.innerText = caja.nombre;
-      selectCajas.appendChild(cajaElement);
-    })
-  }
-
-
+    }else{
+      //si tenemos baldas
+      baldas.forEach(balda => {
+        //creamos los elementos option en el select baldas
+        baldaElement = document.createElement("option");
+        baldaElement.value = balda.id;
+        baldaElement.innerText = balda.nombre;
+        selectBaldas.appendChild(baldaElement);
+      });
+  
+    }
+  
+    //comprobamos cantidad de cajas
+    if (cajas.length == 0) {
+      //agregamos la opcion si no hay cajas
+      let opcionDefault = document.createElement('option');
+      opcionDefault.value = 0;
+      opcionDefault.innerText = 'No hay cajas';
+      opcionDefault.setAttribute('selected', 'true');
+      selectCajas.appendChild(opcionDefault);
+    } else {
+      //agregamos la opcion por defecto para el select cajas
+      let opcionDefault = document.createElement('option');
+      opcionDefault.value = 0;
+      opcionDefault.innerText = 'No ubicar en caja';
+      opcionDefault.setAttribute('selected', 'true');
+      selectCajas.appendChild(opcionDefault);
+  
+      //creamos los elementos option en el select cajas
+      cajas.forEach(caja => {
+        let cajaElement = document.createElement('option');
+        cajaElement.value = caja.id;
+        cajaElement.innerText = caja.nombre;
+        selectCajas.appendChild(cajaElement);
+      })
+    }
+  })
+  .catch(error => console.error('Error:', error));
 }
 
-function setCajas(xhttp) {
+function setCajas(e) {
+  //obtenemos id de la balda
+  let idBalda = e.target.value;
   //select en donde iran las cajas que tienen ubicacion
   const selectCajas = document.getElementById('selectCaja');
   //eliminamos los elementos option del select cajas
   Array.from(selectCajas.childNodes).forEach(optionElement => {
     optionElement.remove();
   })
-  //recibimos la respuesta
-  let response = JSON.parse(xhttp.responseText);
-  let cajas = response.cajas;
+  getData('añadirProducto.php?idBalda='+idBalda)
+  .then(response=>{
+    let cajas = response.cajas;
+  
+    //si no tenemos cajas
+    if (cajas.length == 0) {
+      //agregamos la opcion si no hay cajas
+      let opcionDefault = document.createElement('option');
+      opcionDefault.value = 0;
+      opcionDefault.innerText = 'No hay cajas';
+      opcionDefault.setAttribute('selected', 'true');
+      selectCajas.appendChild(opcionDefault);
+    } else {
+      //agregamos la opcion por defecto para el select cajas
+      let opcionDefault = document.createElement('option');
+      opcionDefault.value = 0;
+      opcionDefault.innerText = 'No ubicar en caja';
+      opcionDefault.setAttribute('selected', 'true');
+      selectCajas.appendChild(opcionDefault);
+  
+      //creamos los elementos option en el select cajas
+      cajas.forEach(caja => {
+        let cajaElement = document.createElement('option');
+        cajaElement.value = caja.id;
+        cajaElement.innerText = caja.nombre;
+        selectCajas.appendChild(cajaElement);
+      })
+    }
 
-  //si no tenemos cajas
-  if (cajas.length == 0) {
-    //agregamos la opcion si no hay cajas
-    let opcionDefault = document.createElement('option');
-    opcionDefault.value = 0;
-    opcionDefault.innerText = 'No hay cajas';
-    opcionDefault.setAttribute('selected', 'true');
-    selectCajas.appendChild(opcionDefault);
-  } else {
-    //agregamos la opcion por defecto para el select cajas
-    let opcionDefault = document.createElement('option');
-    opcionDefault.value = 0;
-    opcionDefault.innerText = 'No ubicar en caja';
-    opcionDefault.setAttribute('selected', 'true');
-    selectCajas.appendChild(opcionDefault);
-
-    //creamos los elementos option en el select cajas
-    cajas.forEach(caja => {
-      let cajaElement = document.createElement('option');
-      cajaElement.value = caja.id;
-      cajaElement.innerText = caja.nombre;
-      selectCajas.appendChild(cajaElement);
-    })
-  }
+  })
+  .catch(error => console.error('Error:', error));
 
 }
 
@@ -242,7 +245,7 @@ function showHide(e) {
 
 }
 
-function añadirEtiqueta(xhttp) {
+function añadirEtiqueta() {
   //value del select
   let idEtiquetaSelected = document.getElementById('selectEtiquetas').value;
   //si no recuperamos el id salimos
@@ -316,46 +319,34 @@ function crearInputEtiquetasAñadidas(){
   document.getElementById('inputEtiquetas').appendChild(inputAñadirEtiquetas);
 }
 
-function crearEtiqueta(xhttp) {
-  if (xhttp.statusText == 'OK') {
+function crearEtiqueta() {
+  let nombreEtiqueta = document.getElementById('nombreEtiqueta').value;
+  getData('añadirProducto.php?crearEtiqueta='+nombreEtiqueta)
+  .then(response=>{
     //limpiamos el input
     document.getElementById('nombreEtiqueta').value = "";
     //recuperamos el mensaje
-    let mensaje = JSON.parse(xhttp.responseText);
-
+    let mensaje = response;
+    //creamos alert
     createAlert(mensaje);
-
+  
     //si etiqueta creada correctamente, recargamos select etiquetas
     if (mensaje['msj-type'] == 'success') {
-      loadDoc('añadirProducto.php?getEtiquetas', getEtiquetas);
+      insertEtiquetaSelect(nombreEtiqueta,mensaje.idEtiqueta);
     }
 
-  }
-
-
+  })
+  .catch(error => console.error('Error:', error));
 }
 
-//recibimos las etiquetas del usuario
-function getEtiquetas(xhttp) {
-  //parse json la response
-  let etiquetasToUpdate = JSON.parse(xhttp.responseText);
-  //seleccionamos el select etiquetas
+//insertamos etiqueta en el select etiquetas
+function insertEtiquetaSelect(nombreEtiqueta,idEtiqueta) {
   let selectEtiquetas = document.getElementById('selectEtiquetas');
-  //eliminamos las etiquetas
-  Array.from(selectEtiquetas.childNodes).forEach(etiqueta => {
-    //eliminamos las etiquetas
-    etiqueta.remove();
-  })
-
-  //recorremos las etiquetas actualizadas
-  etiquetasToUpdate.forEach(etiqueta => {
-    //creamos element option
-    let optionElement = document.createElement('option');
-    optionElement.value = etiqueta.id;
-    optionElement.innerText = etiqueta.nombre;
-    //añadimos la etiqueta al select
-    selectEtiquetas.appendChild(optionElement);
-  })
+  //creamos elemento option
+  let optionElement = document.createElement('option');
+  optionElement.value = idEtiqueta;
+  optionElement.innerText = nombreEtiqueta;
+  selectEtiquetas.appendChild(optionElement);
 }
 
 function añadirProducto() {
