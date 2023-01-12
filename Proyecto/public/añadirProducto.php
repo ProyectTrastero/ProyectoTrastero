@@ -180,30 +180,22 @@ if (isset($_SESSION['usuario'])) {
             //separamos los id de las etiquetas
             $arrayInputAñadirEtiquetas = preg_split("/\s/", $añadirEtiquetas);
 
-
             //fecha creacion producto
             $fechaIngreso = Producto::obtenerFechaIngreso();
 
-            $datos = [
-                'nombreProducto' => $nombreProducto,
-                'descripcionProducto' => $descripcionProducto,
-                'fechaIngreso' => $fechaIngreso,
-                'estanteria' => $estanteria,
-                'balda' => $balda,
-                'caja' => $caja,
-                'idTrastero' => $idTrastero
-            ];
 
-            //set a null todos los campos vacios para añadir a la base de datos como null
-            foreach ($datos as $key => $value) {
-                if ($value == '') {
-                    $datos[$key] = null;
-                }
-            }
+            $producto = new Producto();
+            $producto->setNombre(($nombreProducto!='') ? $nombreProducto : null);
+            $producto->setDescripcion(($descripcionProducto != '') ? $descripcionProducto : null);
+            $producto->setFechaIngreso(($fechaIngreso != '') ? $fechaIngreso : null);
+            $producto->setIdEstanteria(($estanteria != '') ? $estanteria : null);
+            $producto->setIdBalda(($balda != '') ? $balda : null);
+            $producto->setIdCaja(($caja != '') ? $caja : null);
+            $producto->setIdTrastero(($idTrastero != '') ? $idTrastero : null);
 
 
             //añadimos el producto
-            $idProducto = Producto::añadirProducto($bd, $datos);
+            $idProducto = $producto->añadirProducto($bd);
             //si producto añadido correctamente
             if ($idProducto != -1) {
                 //mensaje producto añadido correctamente

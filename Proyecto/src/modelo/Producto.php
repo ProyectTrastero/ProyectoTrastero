@@ -194,12 +194,17 @@ class Producto {
         $bd->exec($consulta);
     }
   
-    public static function añadirProducto (PDO $bd, array $datos):int{
+    public function añadirProducto (PDO $bd, ):int{
         $query =    "insert into productos (nombre, descripcion, fechaIngreso,idTrastero,idEstanteria,idBalda,idCaja) 
                     values (:nombre, :descripcion,:fechaIngreso, :idTrastero, :idEstanteria, :idBalda, :idCaja)";
         $stmt = $bd->prepare($query);
-        if (!$stmt->execute([':nombre'=>$datos['nombreProducto'], ':descripcion'=>$datos['descripcionProducto'],':fechaIngreso'=>$datos['fechaIngreso'], ':idTrastero'=>$datos['idTrastero'], 
-                            ':idEstanteria'=>$datos['estanteria'], ':idBalda'=>$datos['balda'], ':idCaja'=>$datos['caja']])) {
+        if (!$stmt->execute([   ':nombre'=>$this->getNombre(), 
+                                ':descripcion'=>$this->getDescripcion(),
+                                ':fechaIngreso'=>$this->getFechaIngreso(),
+                                ':idTrastero'=>$this->getIdTrastero(), 
+                                ':idEstanteria'=>$this->getIdEstanteria(),
+                                ':idBalda'=>$this->getIdBalda(),
+                                ':idCaja'=>$this->getIdCaja()])) {
             //si falla el insert
             $stmt = null;
             return -1;

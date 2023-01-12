@@ -237,12 +237,12 @@ if (isset($_SESSION['usuario'])) {
 
 			//creamos object producto
 			$objProductoUpdate = new Producto();
-			$objProductoUpdate->setId(intval($idProducto));
+			$objProductoUpdate->setId(($idProducto != '') ? intval($idProducto) : null);
 			$objProductoUpdate->setNombre(($nombreProducto != '') ? $nombreProducto : null);
 			$objProductoUpdate->setDescripcion(($descripcionProducto != '') ? $descripcionProducto : null);
-			$objProductoUpdate->setIdEstanteria($estanteria);
-			$objProductoUpdate->setIdBalda($balda);
-			$objProductoUpdate->setIdCaja($caja);
+			$objProductoUpdate->setIdEstanteria(($estanteria != '') ? $estanteria : null);
+			$objProductoUpdate->setIdBalda(($balda != '') ? $balda : null);
+			$objProductoUpdate->setIdCaja(($caja != '') ? $caja : null);
 			$objProductoUpdate->setIdTrastero($miTrastero->getId());
 
 			//modificamos el producto
