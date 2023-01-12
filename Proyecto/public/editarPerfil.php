@@ -63,19 +63,24 @@ if (isset($_SESSION['usuario'])) {
             'clave' => $clave, 
             'correo' => $correo
         );
+        $mensaje = array();
         //validamos los datos, si datos validos, se actualiza el usuario en la base de datos
         $errores = array();
         $errores = validarCambiosPerfil($bd, $datos,$usuario);
         //comprobamos si tenemos errores
         if (count($errores) > 0) {
+
            if(in_array("noModificado", $errores)){
-                //inicializamos variable para mostrar mensaje
-                $_SESSION['msj']="No se ha modificado ningun campo";
-                $_SESSION['msj-type']="info";
-                echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos, 'usuario'=>$usuario, 'submited'=>false]);
+                // mensaje
+                $mensaje=[  'msj'=>'No se ha modificado ningun campo', 
+                            'msj-type'=>'info'];
+                echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos, 'usuario'=>$usuario, 'submited'=>false, 'mensaje'=>$mensaje]);
                 die;
             }
-            echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos, 'usuario'=>$usuario, 'submited'=>true]);
+
+            $mensaje=[  'msj'=>'Error al actualizar el perfil', 
+                        'msj-type'=>'danger'];
+            echo $blade->run('perfil', ['errores' => $errores, 'datos' => $datos, 'usuario'=>$usuario, 'submited'=>true,'mensaje'=>$mensaje]);
             die;
         } else {
             //si no obtenemos errores actualizamos el $usuario en local
@@ -84,14 +89,15 @@ if (isset($_SESSION['usuario'])) {
             $usuario->setAlias($alias);
             $usuario->setClave($clave);
             $usuario->setCorreo($correo);
-            //inicializamos variable para mostrar mensaje
-            $_SESSION['msj']="Perfil actualizado con exito";
-            $_SESSION['msj-type']="success";
-            
+            //mensaje 
+            $mensaje=['msj'=>'Perfil actualizado con exito','msj-type'=>'success'];
+            echo $blade->run("perfil",['datos'=>$datos,'usuario'=>$usuario,'errores'=>$errores,'submited'=>false,'mensaje'=>$mensaje]);   
+            die;
         }
         
     }
 
+    //actualizamos los datos 
     $datos = array(
         'nombre' => $usuario->getNombre(),
         'apellidos' => $usuario->getApellidos(),
@@ -99,7 +105,7 @@ if (isset($_SESSION['usuario'])) {
         'clave' => $usuario->getClave(),
         'correo' => $usuario->getCorreo()
     );
-    echo $blade->run("perfil", ['datos' => $datos, 'usuario'=>$usuario,'errores'=>array(), 'submited'=>false] );
+    echo $blade->run("perfil", ['datos' => $datos, 'usuario'=>$usuario,'errores'=>array(), 'submited'=>false, 'mensaje'=>array()] );
     die;
 }
 

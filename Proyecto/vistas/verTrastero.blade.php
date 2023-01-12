@@ -4,7 +4,7 @@
 {{-- Sección aporta el título de la página --}}
 @section('title', 'Ver Trastero')
 
-{{-- Sección mensaje --}}
+{{-- Sección content --}}
 @section('content')
 <link rel="stylesheet" href="asset/css/verTrastero.css">
 <script src="asset/js/mostrarProductos.js"></script>

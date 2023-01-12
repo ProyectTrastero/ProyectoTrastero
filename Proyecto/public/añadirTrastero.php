@@ -237,6 +237,7 @@ if(empty($_SESSION['datosTrastero'])){
             $datosTrastero['guardado']=$trasteroGuardado;
             $_SESSION['datosTrastero'] = $datosTrastero;
             $tipoMensaje = "info";
+            
             $mensaje = "Su trastero se ha creado correctamente. Pulse volver para volver a la página principal";
             echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'tipoMensaje', 'bd'));
             //En el caso de que ya exista un trastero con ese nombre. 

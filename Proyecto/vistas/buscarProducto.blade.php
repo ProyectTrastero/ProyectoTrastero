@@ -13,7 +13,7 @@
 @section('content')
     <div class="avisos">
     @if ($msj1 != "")  
-        <div class="alert alert-{{$msj1_tipo}} alert-dismissible fade show" role="alert">
+        <div class="alert alert-{{$msj1_tipo}} alert-dismissible fade show" id="alert" role="alert">
             {{$msj1}}
             <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
         </div>
@@ -116,3 +116,4 @@
 </div>
 @endsection
 
+<script src="asset/js/eliminarAlert.js"></script>

@@ -33,7 +33,7 @@
 </div>
 <div class="avisos">
     @if($mensaje!="")
-    <div class="alert alert-{{$tipoMensaje}} alert-dismissible fade show" role="alert">
+    <div class="alert alert-{{$tipoMensaje}} alert-dismissible fade show" id="alert" role="alert">
         {{$mensaje}}
         <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
     </div>

@@ -4,20 +4,15 @@
 @section('title', 'Perfil Usuario')
 
 @section('content')
-    <div class="container">
-        
-      @if (@isset($_SESSION['msj']))
-        <div class="alert alert-{{$_SESSION['msj-type']}} alert-dismissible fade show" role="alert"">
-          {{$_SESSION['msj']}}
-          {{-- {{unset($_SESSION['msj'])}} --}}
-          <?php
-           unset($_SESSION['msj']); 
-           unset($_SESSION['msj-type']);
-           ?>
-           
-           <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
-        </div>
+    <div class="avisos">
+      @if (count($mensaje) > 0)
+      <div class="alert alert-{{$mensaje['msj-type']}} alert-dismissible fade show" id="alert" role="alert"">
+        {{$mensaje['msj']}}           
+        <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
+      </div>
       @endif
+    </div>
+    <div class="container">
 
       <h1 class="text-center mt-5">Perfil {{$usuario->getNombre()}}</h1>
         <form class="formEditPerfil" method="POST" action="{{$_SERVER["PHP_SELF"]}}">
@@ -119,3 +114,6 @@
     </div>
    
 @endsection
+
+
+<script src="asset/js/eliminarAlert.js"></script>

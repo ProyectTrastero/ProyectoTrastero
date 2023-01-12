@@ -483,6 +483,13 @@ function createAlert(mensaje) {
   //añadimos button element al alert
   divElement.appendChild(spanElement);
 
+  setTimeout(() => {
+    divElement.classList.add('deleteAlert');
+  }, 7000);
+
+  divElement.addEventListener('transitionend',()=>{
+    divElement.remove();
+  })
   
 }
 

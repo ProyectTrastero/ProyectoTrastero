@@ -8,17 +8,17 @@
 
 {{-- Sección content --}}
 @section('content')
-<div class="container">
+<div class="avisos">
     @if (isset($msj))
-        <div class="alert alert-{{$msj['msjType']}} alert-dismissible fade show" role="alert">
-            {{$msj['msj']}}
-            <?php
-                $msj = null;
-            ?>
-            <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
-        </div>
-        
-    @endif
+    <div class="alert alert-{{$msj['msjType']}} alert-dismissible fade show" id="alert" role="alert">
+        {{$msj['msj']}}
+
+        <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
+    </div>
+    
+@endif
+</div>
+<div class="container">
 
     <h2 class="mb-5 text-center">Registro usuario</h2>
     <div class="signUp  divContainer">
@@ -142,3 +142,5 @@
 
 
 @endsection
+
+<script src="asset/js/eliminarAlert.js"></script>

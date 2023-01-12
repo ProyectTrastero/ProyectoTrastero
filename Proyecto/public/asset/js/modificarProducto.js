@@ -463,5 +463,13 @@ function eliminarEtiqueta(){
 	spanElement.setAttribute('aria-label','Close');
 	//añadimos button element al alert
 	divElement.appendChild(spanElement);
+
+	setTimeout(() => {
+		divElement.classList.add('deleteAlert');
+	}, 7000);
+	
+	divElement.addEventListener('transitionend',()=>{
+	divElement.remove();
+	})
   }
   

@@ -31,6 +31,21 @@ function iniciar(){
         editable[i].addEventListener("blur", deshabilitarEdicion);
         }
     }  
+
+    //si tenemos elemento con id alert
+    if(document.getElementById('alert')){
+        let alertElement = document.getElementById('alert');
+        setTimeout(() => {
+            //añadimos clase para desaparecer alert
+            alertElement.classList.add('deleteAlert');
+        }, 7000);
+        //establecemos listener transition end
+        alertElement.addEventListener('transitionend',()=>{
+            //eliminamos alert element
+            alertElement.remove();
+        })
+    }
+
 }
 //Si el valor de la variable recogida tiene como valor "si" visualia el modal que le corresponde. 
 function habilitarmodal(){
@@ -119,4 +134,7 @@ function añadirPapelera(e){
         }, 2000); 
     }      
 }
+
+
+
 
