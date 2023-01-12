@@ -49,35 +49,8 @@ if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
     $idTrastero = $_SESSION['miTrastero']->getId();
 
-    //recuperamos las estanterias del trastero
-    $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
-
-    //comprobamos si tenemos estanterias
-    if (count($estanterias) > 0) {
-        //recuperamos baldas
-        $baldas = Balda::recuperarBaldasPorIdEstanteria($bd, $estanterias[0]->getId());
-        //recuperamos las cajas
-        $cajas = Caja::recuperarCajaPorIdBalda($bd, $baldas[0]->getId());
-    } else {
-        //inicializamos baldas con un array vacio
-        $baldas = array();
-        //inicializamos cajas con un array vacio
-        $cajas = array();
-    }
-
-    //recuperamos las cajas sin ubicar
-    $cajasSinUbicar = Caja::recuperarCajasSinUbicarPorIdTrastero($bd, $idTrastero);
-
-    //recuperamos las etiquetas del usuario
-    $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd, $usuario->getId());
-
-    $arrayAñadirEtiquetas = array();
-
-    $errores = array();
-    $msj = array();
-
+    
     ///peticiones del front
-
 
     if (isset($_GET["idEstanteria"])) {
         //recuperamos el id de la estanteria seleccionada
@@ -95,7 +68,8 @@ if (isset($_SESSION['usuario'])) {
         $baldaSelected = $_REQUEST['idBalda'];
         //recuperamos las cajas
         $cajas = Caja::recuperarCajaPorIdBalda($bd, $baldaSelected);
-        echo json_encode($cajas);
+        $response = array('cajas'=>$cajas);
+        echo json_encode($response);
         die;
     }
 
@@ -111,8 +85,8 @@ if (isset($_SESSION['usuario'])) {
                 $mensaje = ['msj-content' => 'Nombre de etiqueta ya existe, elija otro.', 'msj-type' => 'danger'];
             } else {
                 //guardamos la etiqueta
-                $etiqueta->guardarEtiqueta($bd);
-                $mensaje = ['msj-content' => 'Etiqueta creada.', 'msj-type' => 'success'];
+                $idEtiqueta = $etiqueta->guardarEtiqueta($bd);
+                $mensaje = ['msj-content' => 'Etiqueta creada.', 'msj-type' => 'success','idEtiqueta'=>$idEtiqueta];
             }
         } else {
             $mensaje = ['msj-content' => 'El campo nombre de etiqueta es obligatorio.', 'msj-type' => 'danger'];
@@ -122,16 +96,7 @@ if (isset($_SESSION['usuario'])) {
     }
 
 
-
-    if (isset($_GET['añadirEtiqueta'])) {
-        $idEtiqueta = intval($_REQUEST['añadirEtiqueta']);
-        $objectEtiqueta = Etiqueta::recuperarEtiquetaPorId($bd, $idEtiqueta);
-        array_push($arrayAñadirEtiquetas, $objectEtiqueta);
-        echo json_encode($arrayAñadirEtiquetas);
-
-        die;
-    }
-    //despues de crear una etiqueta, recuperamos las etiquetas para actualizar el select
+    //recuperamos las etiquetas para actualizar el select
     if (isset($_GET['getEtiquetas'])) {
         //recuperamos las etiquetas del usuario
         $etiquetasUpdate = Etiqueta::recuperaEtiquetasPorUsuario($bd, $usuario->getId());
@@ -180,7 +145,7 @@ if (isset($_SESSION['usuario'])) {
             //comprobamos si se ha ingresado un nombre 
             if ($nombreProducto == '') {
                 $mensaje['error'] = 'nombreInvalido';
-                $mensaje['msj-content'] = "Ingresa un nombre al producto.";
+                $mensaje['msj-content'] = "Error al crear el producto";
                 $mensaje['msj-type'] = "danger";
                 echo json_encode($mensaje);
                 die;
@@ -264,7 +229,27 @@ if (isset($_SESSION['usuario'])) {
     }
 
 
+    //recuperamos las estanterias del trastero
+    $estanterias = Estanteria::recuperarEstanteriasPorIdTrastero($bd, $idTrastero);
 
+    //comprobamos si tenemos estanterias
+    if (count($estanterias) > 0) {
+        //recuperamos baldas
+        $baldas = Balda::recuperarBaldasPorIdEstanteria($bd, $estanterias[0]->getId());
+        //recuperamos las cajas
+        $cajas = Caja::recuperarCajaPorIdBalda($bd, $baldas[0]->getId());
+    } else {
+        //inicializamos baldas con un array vacio
+        $baldas = array();
+        //inicializamos cajas con un array vacio
+        $cajas = array();
+    }
+
+    //recuperamos las cajas sin ubicar
+    $cajasSinUbicar = Caja::recuperarCajasSinUbicarPorIdTrastero($bd, $idTrastero);
+
+    //recuperamos las etiquetas del usuario
+    $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd, $usuario->getId());
 
     echo $blade->run('añadirProducto', [
         'usuario' => $usuario,
@@ -272,8 +257,7 @@ if (isset($_SESSION['usuario'])) {
         'baldas' => $baldas,
         'cajas' => $cajas,
         'cajasSinUbicar' => $cajasSinUbicar,
-        'etiquetas' => $etiquetas,
-        'errores' => $errores,
-        'msj' => $msj
+        'etiquetas' => $etiquetas
+        
     ]);
 }

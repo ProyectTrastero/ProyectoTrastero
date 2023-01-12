@@ -140,7 +140,7 @@
 
     <div class="text-end mt-3">
       <a href="buscarProducto.php" class="volver btn">Volver</a>
-      <button type="button" name="modificarProducto" id="modificarProducto" value="{{$producto->getId()}}">Modificar</button>
+      <button type="submit" name="modificarProducto" id="modificarProducto" value="{{$producto->getId()}}">Modificar</button>
     </div>
 
   </form>
