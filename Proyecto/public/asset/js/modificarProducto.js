@@ -41,7 +41,10 @@ function addEventToElements() {
 	//event click boton añadir etiqueta
 	document.getElementById('añadirEtiqueta').addEventListener('click', añadirEtiqueta);
 	//event click boton modificar producto
-	document.getElementById('modificarProducto').addEventListener('click', modificarProducto);
+	document.getElementById('formProducto').addEventListener('submit', (e)=>{
+		e.preventDefault();
+		modificarProducto();
+	});
 	//añadimos event click a boton abrir modal eliminar etiqueta openEliminarEtiquetaModal
 	document.getElementById('openEliminarEtiquetaModal').addEventListener('click',getEtiquetaOfSelect);
 	//añadimos event submit al boton eliminar etiqueta 
