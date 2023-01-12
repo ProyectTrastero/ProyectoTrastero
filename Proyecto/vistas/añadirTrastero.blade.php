@@ -95,7 +95,7 @@
                             <span class="editable"  contenteditable="false">{{$balda->getNombre()}}</span>
                             @if(count($baldasRecuperadas)==1)
                             <button type="submit" class="papeleraOculta primerabalda fa-sharp fa-solid fa-trash-can" name="eliminarBalda" style="color: rgb(255,255,255,0)"></button>
-                            @else
+                            @else 
                             <button type="submit" class="papeleraOculta fa-sharp fa-solid fa-trash-can" name="eliminarBalda" style="color: rgb(255,255,255,0)"></button>
                             @endif
                         </form>
