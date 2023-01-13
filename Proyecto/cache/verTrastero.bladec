@@ -4,7 +4,7 @@
 <?php /* Sección aporta el título de la página */ ?>
 <?php $this->startSection('title', 'Ver Trastero'); ?>
 
-<?php /* Sección mensaje */ ?>
+<?php /* Sección content */ ?>
 <?php $this->startSection('content'); ?>
 <link rel="stylesheet" href="asset/css/verTrastero.css">
 <script src="asset/js/mostrarProductos.js"></script>

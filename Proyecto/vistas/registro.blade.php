@@ -16,7 +16,7 @@
         <span type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></span>
     </div>
     
-@endif
+    @endif
 </div>
 <div class="container">
 

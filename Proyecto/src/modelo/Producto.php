@@ -194,7 +194,7 @@ class Producto {
         $bd->exec($consulta);
     }
   
-    public function añadirProducto (PDO $bd, ):int{
+    public function añadirProducto (PDO $bd):int{
         $query =    "insert into productos (nombre, descripcion, fechaIngreso,idTrastero,idEstanteria,idBalda,idCaja) 
                     values (:nombre, :descripcion,:fechaIngreso, :idTrastero, :idEstanteria, :idBalda, :idCaja)";
         $stmt = $bd->prepare($query);
