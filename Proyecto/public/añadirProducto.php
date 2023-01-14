@@ -48,7 +48,7 @@ if (isset($_SESSION['usuario'])) {
 
     $usuario = $_SESSION['usuario'];
     $idTrastero = $_SESSION['miTrastero']->getId();
-
+    $miTrastero = $_SESSION['miTrastero'];
     
     ///peticiones del front
 
@@ -244,6 +244,7 @@ if (isset($_SESSION['usuario'])) {
     $etiquetas = Etiqueta::recuperaEtiquetasPorUsuario($bd, $usuario->getId());
 
     echo $blade->run('añadirProducto', [
+        'miTrastero' => $miTrastero,
         'usuario' => $usuario,
         'estanterias' => $estanterias,
         'baldas' => $baldas,

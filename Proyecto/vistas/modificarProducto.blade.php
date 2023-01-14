@@ -13,13 +13,18 @@
 <div class="avisos">
     <div  id="alerts"></div>
 </div>
+<div class="vtVolver opcionesdiv">
+    <span class="inicial titulo">Trastero {{$miTrastero->getNombre()}}</span>
+</div>
 <div class="container contenedorModificarProducto">
   
-  <form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formProducto">
-
+<form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formProducto">
+    <div class="vtVolver opcionesdiv">
+        <span class="inicial titulo">MODIFICAR PRODUCTO</span>
+    </div>
     <div class="row mt-3">
       <section class="col-lg-6">
-        <h1>Producto</h1>
+        <h3>Producto</h3>
         <div class="inputsForm">
 
           <label for="nombreProducto">Nombre</label>
@@ -35,7 +40,7 @@
   
       </section>
       <section class="col-lg-6 mt-2">
-        <h2>Ubicación</h2>
+        <h3>Ubicación</h3>
         <div class="d-flex flex-wrap">
           <div class="form-check me-4">
             <input class="form-check-input" type="radio" name="ubicacion" id="radioUbicacionEstanteria" value="ubicacionEstanteria" @if (!is_null($producto->getIdEstanteria()))

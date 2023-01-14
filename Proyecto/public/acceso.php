@@ -79,7 +79,7 @@ if (isset($_REQUEST['acceder'])) {
     die;
     
 //Esta parte la he añadido yo. Emma   
-}elseif (isset($_REQUEST['eliminar'])){
+}elseif (isset($_REQUEST['aceptarEliminar'])){
     $idTrastero=($_POST['id']);
     $trastero = Trasteros::recuperarTrasteroPorId($bd, $idTrastero);
     $trastero->eliminar($bd);

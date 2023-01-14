@@ -54,7 +54,7 @@ body {
     margin: 0px;
     margin-bottom: 20px;
     padding: 5px;
-    background-color: #00a8f3;
+    background-color: #38a8f3;
 }
 
 .fa-user, .nav-link, .navbar-brand{
@@ -114,7 +114,7 @@ td{
 }
 .inicial{
     font-weight:bold;
-    font-size: 20px;
+    font-size: 25px;
     text-align:center;
 }
 /*

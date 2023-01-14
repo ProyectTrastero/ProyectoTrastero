@@ -19,13 +19,17 @@
         </div>
     @endif
     </div>
-
+    <div class="vtVolver opcionesdiv">
+        <span class="inicial titulo">Trastero {{$miTrastero->getNombre()}}</span>
+    </div>
 <div class="opciones">
     <form method="POST" action="" name="formBusqueda">
         <div class="divVolver">
             <button class ="volver" name="volverTrasteros">Volver</button>
         </div>
-        <h3 class="inicial titulo">{{$miTrastero->getNombre()  }}</h3>
+        <div class="vtVolver opcionesdiv">
+            <span class="inicial titulo">BUSCAR PRODUCTO</span>
+        </div>
         <div  class="bpCabecera row">
             <div class="col-12">
                 <div>

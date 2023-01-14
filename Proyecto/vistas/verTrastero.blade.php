@@ -14,8 +14,8 @@
         <a href="accederTrastero.php"><button class="volver" name="volver">Volver</button></a>
     </div>
     
-    <div id="vtnombre">
-        <span>{{$datosTrastero['nombre']}}</span>
+    <div class="vtVolver opcionesdiv">
+        <span class="inicial titulo">Trastero {{$datosTrastero['nombre']}}</span>
     </div>
     
     <div class="row">

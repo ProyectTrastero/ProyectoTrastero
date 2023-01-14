@@ -25,27 +25,23 @@ function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
     $mail->isSMTP();
     $mail->Host       = 'smtp.office365.com';
     $mail->SMTPAuth   = true;  
-    $mail->Username   = 'emmamania@hotmail.com';
-    $mail->Password   = 'secreta1;)';
+    $mail->Username   = 'virtualboxroom@hotmail.com';
+    $mail->Password   = 'miTrastero';
     $mail->SMTPSecure = 'STARTTLS';
     $mail->Port       = 587;
 
     //Recipients
-    $mail->setFrom('emmamania@hotmail.com', 'MiTrastero.com');
+    $mail->setFrom('virtualboxroom@hotmail.com', 'VirtualBoxRoom');
     $mail->addAddress($correo);    
 
 
     //Content
     $mail->isHTML(true);                                 
     $mail->Subject = 'Credenciales de acceso';
-    $mail->Body    = 'Sus credenciales de acceso  a MiTrastero.com son :<br>Usuario: ' . $aliasRecuperado . '<br> Contraseña: '. $contraseñaRecuperada;
+    $mail->Body    = 'Sus credenciales de acceso  a VirtualBoxRoom son :<br>Usuario: ' . $aliasRecuperado . '<br> Contraseña: '. $contraseñaRecuperada;
     $mail->send();
     
-    
-  
-    
-    
-  
+
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }

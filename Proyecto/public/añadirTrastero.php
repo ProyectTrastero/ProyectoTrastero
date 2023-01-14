@@ -228,7 +228,7 @@ if(empty($_SESSION['datosTrastero'])){
     header("Location: acceso.php");
 //Si se selecciona guardar recogemos el nombre del trastero y lo guardamos en la base de datos.     
 }else if(isset($_POST['guardar'])){
-    $nombreTrastero = trim(filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_STRING));
+    $nombreTrastero = ucfirst(trim(filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_STRING)));
     
     if($nombreTrastero!=""){
         if(!Trasteros::existeNombre($bd, $nombreTrastero, $idUsuario)){

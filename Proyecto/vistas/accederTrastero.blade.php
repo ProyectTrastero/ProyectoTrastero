@@ -14,13 +14,16 @@
 {{-- Sección mensaje --}}
 @section('content')
 <div class="avisos"></div>
+<div class="vtVolver opcionesdiv">
+    <span class="inicial titulo">Trastero {{$miTrastero->getNombre()}}</span>
+</div>
 <div  class="opciones">
     <form method="POST" action="">
         <div class="divVolver"> 
              <button class ="volver" name="volverTodosTrasteros">Volver</button>
         </div>
         <div class="vtVolver opcionesdiv">
-            <span class="inicial titulo">Opciones para el trastero {{$miTrastero->getNombre()}}</span>
+            <span class="inicial titulo"> OPCIONES</span>
         </div>
         <div class="opcionesdiv">
             <button class="col-3" name="verTrastero" id="verTrastero"><span>Ver trastero</span></button>

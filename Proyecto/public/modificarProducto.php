@@ -91,6 +91,7 @@ if (isset($_SESSION['usuario'])) {
 		$cajasSinUbicar = Caja::recuperarCajasSinUbicarPorIdTrastero($bd, $miTrastero->getId());
 		
 		echo $blade->run('modificarProducto', [
+                        'miTrastero' => $miTrastero,
 			'producto' => $producto,
 			'estanterias' => $estanterias,
 			'baldas' => $baldas,
