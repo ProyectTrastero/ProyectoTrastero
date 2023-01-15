@@ -14,15 +14,13 @@
 </div>
 <div class="vtVolver opcionesdiv">
     <span class="inicial titulo">Trastero {{$miTrastero->getNombre()}}</span>
+    <h4>AÑADIR PRODUCTO</h4>
 </div>
 
 
 <div class="container contenedorAñadir">
  
 <form action="{{$_SERVER["PHP_SELF"]}}" method="POST" id="formAñadirProducto">
-    <div class="vtVolver opcionesdiv">
-        <span class="inicial titulo">AÑADIR PRODUCTO</span>
-    </div>
     <div class=" row mt-3">
       <section class="col-lg-6">
         <h3>Producto</h3>

@@ -16,6 +16,7 @@
     
     <div class="vtVolver opcionesdiv">
         <span class="inicial titulo">Trastero {{$datosTrastero['nombre']}}</span>
+        <h4>VER TRASTERO</h4>
     </div>
     
     <div class="row">

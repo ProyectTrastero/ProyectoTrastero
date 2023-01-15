@@ -21,7 +21,7 @@ function enviarCorreo($correo, $contraseñaRecuperada, $aliasRecuperado){
     try {
     //Server settings
     
-    //$mail->SMTPDebug = SMTP::DEBUG_SERVER; //Nos muestra en pantalla cada acción realizada por phpmailer
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Nos muestra en pantalla cada acción realizada por phpmailer
     $mail->isSMTP();
     $mail->Host       = 'smtp.office365.com';
     $mail->SMTPAuth   = true;  
