@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/modificarProducto.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/modificarNombreAjax.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Etiqueta.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/accederTrastero.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Producto.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/buscarProducto.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/añadirProducto.js</file>
@@ -19,7 +21,11 @@
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/añadirTrastero.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/añadirProducto.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/verTrastero.blade.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/recuperarContraseña.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/mostrarProductos.js</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/index.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/bd/bdtrasteros.sql</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/registro.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/src/modelo/Trasteros.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/css/style.css</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/verTrastero.php</file>
@@ -27,6 +33,7 @@
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/ubicacionCaja.js</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/editarPerfil.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vendor/composer/ClassLoader.php</file>
+            <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/acceso.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/vistas/añadirProducto.blade.php</file>
             <file>file:/C:/wamp64/www/ProyectoTrastero/pasoagithub/ProyectoTrastero/Proyecto/public/asset/js/añadirTrastero.js</file>
         </group>
