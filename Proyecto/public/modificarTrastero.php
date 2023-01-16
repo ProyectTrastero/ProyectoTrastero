@@ -217,7 +217,7 @@ if(empty($_SESSION['datosTrastero'])){
 
         $datosTrastero['almacenEstanterias']= Estanteria::recuperarEstanteriasPorIdTrastero($bd, $nuevoTrastero->getId());
         $datosTrastero['almacenBaldas']= Balda::recuperarBaldasPorIdTrastero($bd, $nuevoTrastero->getId());
-        $datosTrastero['almacenCajas']=$almacenCajas;
+        $datosTrastero['almacenCajas']=Caja::recuperarCajasPorIdTrastero($bd, $nuevoTrastero->getId());
         $_SESSION['datosTrastero']=$datosTrastero;
 
         echo $blade->run('añadirTrastero', compact('datosTrastero', 'mensaje', 'bd'));

@@ -44,11 +44,8 @@ $almacenCajas = $datosTrastero['almacenCajas'];
 
 function existeNombre($nombre, $almacenBaldas, $almacenCajas, $almacenEstanterias){
     $encontrado = false;
-    foreach($almacenBaldas as $clave=>$valor){
-        if($valor->getNombre()==$nombre){
-            $encontrado = true;
-        }
-    }
+        //Solo vamos a restringir las entradas con nombres iguales en las cajas y en las estanterías,
+    //en las baldas no ya que entendemos que se darán repeticiones en ellas.
 
     foreach($almacenCajas as $clave=>$valor){
         if($valor->getNombre()==$nombre){
@@ -74,7 +71,7 @@ $response=[];
 if(trim($nuevoNombre)==""){
     $response['cambiado']=false;
     $response['mensaje'] = "El nombre del elemento no puede estar vacío."; 
-}else if(existeNombre($nuevoNombre, $almacenCajas, $almacenBaldas, $almacenEstanterias)){
+}else if(existeNombre($nuevoNombre, $almacenBaldas, $almacenCajas, $almacenEstanterias)){
     $response['cambiado']=false;
     $response['mensaje'] = "Ya existe un elemento con ese nombre.";
 }else{
