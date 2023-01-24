@@ -58,9 +58,9 @@
                         </td>
                         <td  class="col-2">
                             <form method="POST" action="" id='formeliminar'>
-                                <input type='hidden' name='id' value='{{$valor->getId()}}'>
-                                <button type="button" class="mb-2" data-bs-toggle="modal" data-bs-target="#eliminarTrasteroModal" id="openEliminarTrasteroModal">Eliminar</button>
-                                <div class="modal fade" id="eliminarTrasteroModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="false" >
+                                <input type='hidden' name='id' value='{{$valor->getId()}}'> 
+                                <button type="button" class="mb-2" data-bs-toggle="modal" data-bs-target="#eliminarTrasteroModal{{$valor->getId()}}" id="openEliminarTrasteroModal{{$valor->getId()}}">Eliminar</button>
+                                <div class="modal fade" id="eliminarTrasteroModal{{$valor->getId()}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="false" >
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
